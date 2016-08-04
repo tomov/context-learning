@@ -28,8 +28,68 @@ N = size(x{1}, 1); % # of trials
 D = size(x{1}, 2); % # of stimuli
 K = 3;             % # of contexts
 
-% x -> x~ for M3
-x{3} = [x{3} zeros(N, K)];
-x{3}(sub2ind(size(x{3}), [1:length(c{3})]', c{3} + D)) = 1;
+%
+% RUN THE TRIALS
+%
 
+% constants
+sigma_r = sqrt(0.01);
+sigma_w = sqrt(1);
+tau = sqrt(0.001);
+
+% initialize Kalman filter
+ww_n{1} = zeros(D, 1);
+ww_n{2} = zeros(D, K);
+ww_n{3} = zeros(D + K, 1);
+
+Sigma_n{1} = sigma_w^2 * eye(D);
+Sigma_n{2} = repmat(sigma_w^2 * eye(D), 1, 1, K); % note the third dimension is the context
+Sigma_n{3} = sigma_w^2 * eye(D + K);
+
+P = [1 1 1];
+
+gain = @(x_n, SSigma_n) SSigma_n * x_n / (x_n' * SSigma_n * x_n + sigma_r^2);
+
+g = 3; % group 1 TODO 
+for n = 1:N % for each trial
+    x_n = x{g}(n, :)';
+    c_n = c{g}(n, :);
+    r_n = r{g}(n, :);
+    k = c_n;
+    
+    xx_n = [x_n; zeros(K, 1)];
+    xx_n(D + k) = 1;
+
+    % predict
+    V_n = (x_n' * ww_n{1}) * P(1) + ... % M1 
+        (x_n' * ww_n{2}(:, k)) * P(2) + ... % M2
+        (xx_n' * ww_n{3}) * P(3); % M3
+    out = 1 / (1 + exp(-2 * V_n + 1));
+    fprintf('predction for x = %d, c = %d is %f (actual is %f)\n', find(x_n), c_n, out, r_n);
+
+    % get reward and update
+    %
+    SSigma_n{1} = Sigma_n{1} + tau^2 * eye(D);
+    SSigma_n{2} = Sigma_n{2}(:,:,k) + tau^2 * eye(D);
+    SSigma_n{3} = Sigma_n{3} + tau^2 * eye(D + K);
+    
+    g_n{1} = gain(x_n, SSigma_n{1});    
+    g_n{2} = gain(x_n, SSigma_n{2});    
+    g_n{3} = gain(xx_n, SSigma_n{3});    
+    
+    Sigma_n{1} = SSigma_n{1} - g_n{1} * x_n' * SSigma_n{1};
+    Sigma_n{2}(:,:,k) = SSigma_n{2} - g_n{2} * x_n' * SSigma_n{2};
+    Sigma_n{3} = SSigma_n{3} - g_n{3} * xx_n' * SSigma_n{3};
+        
+    ww_n{1} = ww_n{1} + g_n{1} * (r_n - ww_n{1}' * x_n);
+    ww_n{2}(:,k) = ww_n{2}(:,k) + g_n{2} * (r_n - ww_n{2}(:,k)' * x_n);
+    ww_n{3} = ww_n{3} + g_n{3} * (r_n - ww_n{3}' * xx_n);
+        
+    P(1) = P(1) * normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2);
+    P(2) = P(2) * normpdf(r_n, x_n' * ww_n{2}(:,k), x_n' * SSigma_n{2} * x_n + sigma_r^2);
+    P(3) = P(3) * normpdf(r_n, xx_n' * ww_n{3}, xx_n' * SSigma_n{3} * xx_n + sigma_r^2);
+    P = P / sum(P);
+    
+    fprintf('            new Ps = %f %f %f\n', P(1), P(2), P(3));
+end
 
