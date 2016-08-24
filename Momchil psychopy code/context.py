@@ -14,8 +14,18 @@ nTrain = 20
 groups = [1,2,3]  # subject group(s)
 random.shuffle(groups)
 
-restaurants = ["Molina's Cantina", "Restaurante Arroyo", "El Coyote Cafe"]
-foods = ["food1.png", "food2.png","food3.png"]
+restaurants = [
+    ["Molina's Cantina", "Restaurante Arroyo", "El Coyote Cafe"],
+    ["Le Parisien", "Chez Toinette", "Au Petit Sud Ouest"],
+    ["Lau's Dim Sum Bar", "OO Kook Korean BBQ", "Happy Sheep Hot Pot"]
+]
+foods = [
+    ["mexican_food1.png", "mexican_food2.png","mexican_food3.png"],
+    ["french_food1.png", "french_food2.png", "french_food3.png"],
+    ["asian_food1.png", "asian_food2.png", "asian_food3.png"]
+]
+cuisines = [0, 1, 2]
+random.shuffle(cuisines)
 train = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3] # sequence of training trials
 random.shuffle(train)
 test = [0,1,2,3] # sequence of test trials
@@ -24,7 +34,7 @@ Test = 0 # are we in the testing phase?
 
 now = datetime.datetime.now()
 subjId = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
-filename = subjId + '_' + now.strftime('%Y-%m-%d_%H-%M-%S') + '_' + str(groups[0]) + str(groups[1]) + str(groups[2]) + '.csv'
+filename = subjId + '_' + now.strftime('%Y-%m-%d_%H-%M-%S') + '_' + ''.join(str(g) for g in groups) + '_' + ''.join(str(c) for c in cuisines) + '.csv'
 print 'filename = ', filename
 filename = os.path.join('data', filename)
 dataFile = open(filename, 'w') # TODO bufsize 0 to flush always?
@@ -64,7 +74,7 @@ test_context = [0, 2, 0, 2] # testing restaurant for each trial type
 
 win = visual.Window([1000,800],allowGUI=True, monitor='testMonitor', units='deg')
 restaurant_txt = visual.TextStim(win, pos=[0, +6.5], text="Restaurant name")
-food_img = visual.ImageStim(win, "food1.png", pos=[0, +3])
+food_img = visual.ImageStim(win, pos=[0, +3])
 sick_img = visual.ImageStim(win, "sick.png")
 sick_txt = visual.TextStim(win, pos=[-6,-9],text='Sick\n<-') # sick = left
 notsick_img = visual.ImageStim(win, "smiley.png")
@@ -83,11 +93,12 @@ globalClock = core.Clock()
 #
 print 'groups = ', groups
 
-for m in groups:
-    print '\n\n ------ group ', m, ' -----\n\n' 
-    r = outcomes[m - 1]
+for i in range(3):
+    group = groups[i]
+    cuisine = cuisines[i]
+    print '\n\n ------ group ', group, ', cuisine ', cuisine, '-----\n\n' 
     
-    trial = 18 # current trial TODO -1
+    trial = -1 # current trial
     Test = 0
     for _ in range(nTrain + nTest):
         trial += 1
@@ -106,8 +117,8 @@ for m in groups:
         else:
             cue = train_cue[train[trial]]
             context = train_context[train[trial]]
-        food = foods[cue]
-        restaurant = restaurants[context]
+        food = foods[cuisine][cue]
+        restaurant = restaurants[cuisine][context]
         
         print _, ' -- trial:', trial, 'Test:', Test, 'food:', food, 'restaurant', restaurant
         
@@ -147,7 +158,7 @@ for m in groups:
         # give feedback
         #
         if not Test:
-            outcome = r[train[trial]]
+            outcome = outcomes[group - 1][train[trial]]
             if outcome:
                 sick_img.pos = [0, -5];
                 feedback_txt.setText("The customer got sick!\nWait for next trial")
