@@ -12,13 +12,10 @@ import string
 nTest = 4
 nTrain = 20
 trial = -1 # current trial
-# d = new Date()
 groups = [1,2,3]  # subject group(s)
 random.shuffle(groups)
 m = groups[0] # pick one TODO do all
 
-# subjID = '7' + Math.random().toString().substring(3,8);
-#filename = 'data/' + subjID + '_' + d.getTime() + '_' + m +  '.csv';
 reward = 0
 mode = 1
 restaurants = ["Molina's Cantina", "Restaurante Arroyo", "El Coyote Cafe"]
@@ -32,7 +29,15 @@ context = 0
 Test = 0 # are we in the testing phase?
 f = 0
 
-# outcomes -- did the customer get sick on train[trial] ? (or test[trial])
+now = datetime.datetime.now()
+subjId = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+filename = subjId + '_' + now.strftime('%Y-%m-%d_%H-%M-%S') + '_' + str(groups[0]) + str(groups[1]) + str(groups[2]) + '.csv'
+print 'filename = ', filename
+filename = os.path.join('data', filename)
+dataFile = open(filename, 'w') # TODO bufsize 0 to flush always?
+
+# outcomes -- did the customer get sick on train[trial] (not defined for test trials)
+# 1 = sick, 0 = not sick
 #
 r = None
 if m == 1:
@@ -64,40 +69,23 @@ test_context = [0, 2, 0, 2] # testing restaurant for each trial type
 
 # ipython/cmd line -- how to?
 
-try: #try to get a previous parameters file
-    expInfo = fromFile('lastParams.pickle')
-except: #if not there then use a default set
-    expInfo = {'observer':'jwp', 'refOrientation':0}
 
-
-now = datetime.datetime.now()
-subjId = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
-filename = subjId + '_' + now.strftime('%Y-%m-%d_%H-%M-%S') + '_' + str(groups[0]) + str(groups[1]) + str(groups[2])
-print 'filename = ', filename
-filename = os.path.join('data', filename)
-# present a dialogue to change params
-#dlg = gui.DlgFromDict(expInfo, title='simple JND Exp', fixed=['dateStr'])
-#if dlg.OK:
-#    toFile('lastParams.pickle', expInfo)#save params to file for next time
-#else:        
-    #quit
-#    core.quit()
-
-print 'expInfo = ', expInfo
 
 #
 # Create window and stimuli
 #
 
-win = visual.Window([800,600],allowGUI=True, monitor='testMonitor', units='deg')
+win = visual.Window([1000,800],allowGUI=True, monitor='testMonitor', units='deg')
 restaurant_txt = visual.TextStim(win, pos=[0, +6.5], text="Restaurant name")
 food_img = visual.ImageStim(win, "food1.png", pos=[0, +3])
 sick_img = visual.ImageStim(win, "sick.png")
-sick_txt = visual.TextStim(win, pos=[-6,-8],text='Sick\n<-')
+sick_txt = visual.TextStim(win, pos=[-6,-9],text='Sick\n<-') # sick = left
 notsick_img = visual.ImageStim(win, "smiley.png")
-notsick_txt = visual.TextStim(win, pos=[+6,-8],
-    text="Not sick\n->")
-feedback_txt = visual.TextStim(win, pos=[0, -8])
+notsick_txt = visual.TextStim(win, pos=[+6,-9],
+    text="Not sick\n->") # not sick = right
+feedback_txt = visual.TextStim(win, pos=[0, -9])
+correct_txt = visual.TextStim(win, pos=[0, -1.5], text="CORRECT", color='blue', bold=True)
+wrong_txt = visual.TextStim(win, pos=[0, -1.5], text="WRONG", color='red', bold=True)
 #and some handy clocks to keep track of time
 globalClock = core.Clock()
 
@@ -115,12 +103,12 @@ for _ in range(nTrain + nTest):
         trial = 0
 
     if Test == 1:
-        f = test_cue[test[trial]]
+        cue = test_cue[test[trial]]
         context = test_context[test[trial]]
     else:
-        f = train_cue[train[trial]]
+        cue = train_cue[train[trial]]
         context = train_context[train[trial]]
-    food = foods[f]
+    food = foods[cue]
     restaurant = restaurants[context]
     
     print _, ' -- trial:', trial, 'Test:', Test, 'food:', food, 'restaurant', restaurant
@@ -129,8 +117,8 @@ for _ in range(nTrain + nTest):
     #
     food_img.setImage(food)
     restaurant_txt.setText(restaurant)
-    sick_img.pos = [-6, -4];
-    notsick_img.pos = [+6, -4];
+    sick_img.pos = [-6, -5];
+    notsick_img.pos = [+6, -5];
     
     # show restaurant & food
     #
@@ -145,23 +133,45 @@ for _ in range(nTrain + nTest):
 
     # get user response
     #
-    allKeys = event.waitKeys()
+    response = None
+    while response is None: # keep trying until user presses left or right
+        allKeys = event.waitKeys()
+        print '          key = ', allKeys
+        for thisKey in allKeys:
+            if thisKey=='left': # sick = left
+                response = 1
+            elif thisKey=='right':
+                response = 0
+            elif thisKey in ['q', 'escape']:
+                core.quit() #abort experiment
+    assert response is not None
    
     # give feedback
     #
     if not Test:
         outcome = r[train[trial]]
         if outcome:
-            sick_img.pos = [0, -4];
+            sick_img.pos = [0, -5];
             feedback_txt.setText("The customer got sick!\nPress any key to continue")
             sick_img.draw()
         else:
-            notsick_img.pos = [0, -4];
+            notsick_img.pos = [0, -5];
             feedback_txt.setText("The customer didn't get sick!\nPress any key to continue")
             notsick_img.draw()
         food_img.draw()
         restaurant_txt.draw()
         feedback_txt.draw()
+        if outcome == response:
+            correct_txt.draw()
+        else:
+            wrong_txt.draw()
         win.flip()
         
-        allKeys = event.waitKeys()    
+        allKeys = event.waitKeys()
+    else:
+        outcome = -1 # no "known" outcome in test case
+        
+    dataFile.write("%d,%d,%d,%d\n" % (outcome, context, cue, response))
+        
+    
+    
