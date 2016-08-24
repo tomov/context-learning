@@ -11,7 +11,7 @@ import string
 
 nTest = 4
 nTrain = 20
-trial = -1 # current trial
+trial = 18 # current trial
 groups = [1,2,3]  # subject group(s)
 random.shuffle(groups)
 m = groups[0] # pick one TODO do all
@@ -55,14 +55,11 @@ test_context = [0, 2, 0, 2] # testing restaurant for each trial type
 
 # TODO
 
-# record responses
 
 # have diff conditions in each subject
 # cross-balance based on subject id (6 perms, use mod 6)
 # have different foods & restaurant names (french? italian?)
 
-# better UI -- correct / wrong
-# style it -- colors, etc
 # instructions / extra messages & boilerplate from Sam JS script
 
 # QUESTIONS
@@ -86,6 +83,8 @@ notsick_txt = visual.TextStim(win, pos=[+6,-9],
 feedback_txt = visual.TextStim(win, pos=[0, -9])
 correct_txt = visual.TextStim(win, pos=[0, -1.5], text="CORRECT", color='blue', bold=True)
 wrong_txt = visual.TextStim(win, pos=[0, -1.5], text="WRONG", color='red', bold=True)
+predict_txt = visual.TextStim(win, pos=[0, +9], text="Predict whether the customer will get sick from this food.", wrapWidth=20)
+done_txt = visual.TextStim(win, pos=[0, 0], text="You are done! Thank your for your participation. Please wait for the experimenter.", wrapWidth=20)
 #and some handy clocks to keep track of time
 globalClock = core.Clock()
 
@@ -101,6 +100,8 @@ for _ in range(nTrain + nTest):
     if Test == 0 and trial == nTrain:
         Test = 1
         trial = 0
+    elif Test == 1 and trial == nTest:
+        break
 
     if Test == 1:
         cue = test_cue[test[trial]]
@@ -128,8 +129,8 @@ for _ in range(nTrain + nTest):
     sick_txt.draw()
     notsick_img.draw()
     notsick_txt.draw()
+    predict_txt.draw()
     win.flip()
-    #core.wait(1)
 
     # get user response
     #
@@ -152,11 +153,11 @@ for _ in range(nTrain + nTest):
         outcome = r[train[trial]]
         if outcome:
             sick_img.pos = [0, -5];
-            feedback_txt.setText("The customer got sick!\nPress any key to continue")
+            feedback_txt.setText("The customer got sick!\nWait for next trial")
             sick_img.draw()
         else:
             notsick_img.pos = [0, -5];
-            feedback_txt.setText("The customer didn't get sick!\nPress any key to continue")
+            feedback_txt.setText("The customer didn't get sick!\nWait for next trial")
             notsick_img.draw()
         food_img.draw()
         restaurant_txt.draw()
@@ -165,13 +166,16 @@ for _ in range(nTrain + nTest):
             correct_txt.draw()
         else:
             wrong_txt.draw()
-        win.flip()
-        
-        allKeys = event.waitKeys()
     else:
         outcome = -1 # no "known" outcome in test case
-        
+        feedback_txt.setText("Wait for next trial")
+        feedback_txt.draw()
+    win.flip()
+    
     dataFile.write("%d,%d,%d,%d\n" % (outcome, context, cue, response))
+    core.wait(2) # so the subject can see the feedback
         
-    
-    
+done_txt.draw()
+win.flip()
+
+core.wait(10)
