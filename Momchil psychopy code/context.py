@@ -11,23 +11,16 @@ import string
 
 nTest = 4
 nTrain = 20
-trial = 18 # current trial
 groups = [1,2,3]  # subject group(s)
 random.shuffle(groups)
-m = groups[0] # pick one TODO do all
 
-reward = 0
-mode = 1
 restaurants = ["Molina's Cantina", "Restaurante Arroyo", "El Coyote Cafe"]
 foods = ["food1.png", "food2.png","food3.png"]
 train = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3] # sequence of training trials
 random.shuffle(train)
 test = [0,1,2,3] # sequence of test trials
 random.shuffle(test)
-food = 0
-context = 0
 Test = 0 # are we in the testing phase?
-f = 0
 
 now = datetime.datetime.now()
 subjId = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
@@ -39,14 +32,11 @@ dataFile = open(filename, 'w') # TODO bufsize 0 to flush always?
 # outcomes -- did the customer get sick on train[trial] (not defined for test trials)
 # 1 = sick, 0 = not sick
 #
-r = None
-if m == 1:
-    r = [1, 0, 1, 0]
-elif m == 2:
-    r = [1, 0, 0, 1]
-else:
-    assert m == 3
-    r = [1, 1, 0, 0]
+outcomes = [
+    [1, 0, 1, 0],   # group = 1 (irrelevant context)
+    [1, 0, 0, 1],   # group = 2 (modulatory context)
+    [1, 1, 0, 0]    # group = 3 (additive context)
+]
 
 train_cue = [0, 1, 0, 1] # training foods for each trial type
 train_context = [0, 0, 1, 1] # training restaurant for each trial type
@@ -91,89 +81,96 @@ globalClock = core.Clock()
 #
 # Run experiment
 #
+print 'groups = ', groups
 
-for _ in range(nTrain + nTest):
-    trial += 1
+for m in groups:
+    print '\n\n ------ group ', m, ' -----\n\n' 
+    r = outcomes[m - 1]
     
-    # get restaurant & food on trial X
-    #
-    if Test == 0 and trial == nTrain:
-        Test = 1
-        trial = 0
-    elif Test == 1 and trial == nTest:
-        break
+    trial = 18 # current trial TODO -1
+    Test = 0
+    for _ in range(nTrain + nTest):
+        trial += 1
+        
+        # get restaurant & food on trial X
+        #
+        if Test == 0 and trial == nTrain:
+            Test = 1
+            trial = 0
+        elif Test == 1 and trial == nTest:
+            break
 
-    if Test == 1:
-        cue = test_cue[test[trial]]
-        context = test_context[test[trial]]
-    else:
-        cue = train_cue[train[trial]]
-        context = train_context[train[trial]]
-    food = foods[cue]
-    restaurant = restaurants[context]
-    
-    print _, ' -- trial:', trial, 'Test:', Test, 'food:', food, 'restaurant', restaurant
-    
-    # UI setup
-    #
-    food_img.setImage(food)
-    restaurant_txt.setText(restaurant)
-    sick_img.pos = [-6, -5];
-    notsick_img.pos = [+6, -5];
-    
-    # show restaurant & food
-    #
-    food_img.draw()
-    restaurant_txt.draw()
-    sick_img.draw()
-    sick_txt.draw()
-    notsick_img.draw()
-    notsick_txt.draw()
-    predict_txt.draw()
-    win.flip()
-
-    # get user response
-    #
-    response = None
-    while response is None: # keep trying until user presses left or right
-        allKeys = event.waitKeys()
-        print '          key = ', allKeys
-        for thisKey in allKeys:
-            if thisKey=='left': # sick = left
-                response = 1
-            elif thisKey=='right':
-                response = 0
-            elif thisKey in ['q', 'escape']:
-                core.quit() #abort experiment
-    assert response is not None
-   
-    # give feedback
-    #
-    if not Test:
-        outcome = r[train[trial]]
-        if outcome:
-            sick_img.pos = [0, -5];
-            feedback_txt.setText("The customer got sick!\nWait for next trial")
-            sick_img.draw()
+        if Test == 1:
+            cue = test_cue[test[trial]]
+            context = test_context[test[trial]]
         else:
-            notsick_img.pos = [0, -5];
-            feedback_txt.setText("The customer didn't get sick!\nWait for next trial")
-            notsick_img.draw()
+            cue = train_cue[train[trial]]
+            context = train_context[train[trial]]
+        food = foods[cue]
+        restaurant = restaurants[context]
+        
+        print _, ' -- trial:', trial, 'Test:', Test, 'food:', food, 'restaurant', restaurant
+        
+        # UI setup
+        #
+        food_img.setImage(food)
+        restaurant_txt.setText(restaurant)
+        sick_img.pos = [-6, -5];
+        notsick_img.pos = [+6, -5];
+        
+        # show restaurant & food
+        #
         food_img.draw()
         restaurant_txt.draw()
-        feedback_txt.draw()
-        if outcome == response:
-            correct_txt.draw()
+        sick_img.draw()
+        sick_txt.draw()
+        notsick_img.draw()
+        notsick_txt.draw()
+        predict_txt.draw()
+        win.flip()
+
+        # get user response
+        #
+        response = None
+        while response is None: # keep trying until user presses left or right
+            allKeys = event.waitKeys()
+            print '          key = ', allKeys
+            for thisKey in allKeys:
+                if thisKey=='left': # sick = left
+                    response = 1
+                elif thisKey=='right':
+                    response = 0
+                elif thisKey in ['q', 'escape']:
+                    core.quit() #abort experiment
+        assert response is not None
+       
+        # give feedback
+        #
+        if not Test:
+            outcome = r[train[trial]]
+            if outcome:
+                sick_img.pos = [0, -5];
+                feedback_txt.setText("The customer got sick!\nWait for next trial")
+                sick_img.draw()
+            else:
+                notsick_img.pos = [0, -5];
+                feedback_txt.setText("The customer didn't get sick!\nWait for next trial")
+                notsick_img.draw()
+            food_img.draw()
+            restaurant_txt.draw()
+            feedback_txt.draw()
+            if outcome == response:
+                correct_txt.draw()
+            else:
+                wrong_txt.draw()
         else:
-            wrong_txt.draw()
-    else:
-        outcome = -1 # no "known" outcome in test case
-        feedback_txt.setText("Wait for next trial")
-        feedback_txt.draw()
-    win.flip()
-    
-    dataFile.write("%d,%d,%d,%d\n" % (outcome, context, cue, response))
-    core.wait(2) # so the subject can see the feedback
+            outcome = -1 # no "known" outcome in test case
+            feedback_txt.setText("Wait for next trial")
+            feedback_txt.draw()
+        win.flip()
+        
+        dataFile.write("%d,%d,%d,%d\n" % (outcome, context, cue, response))
+        core.wait(2) # so the subject can see the feedback
         
 done_txt.draw()
 win.flip()
