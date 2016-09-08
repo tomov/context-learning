@@ -4,23 +4,23 @@ clear all;
 % Set up the experiment
 %
 
-% irrelevant context group
+% irrelevant context group = group 1
 x{1} = [1 0 0; 0 1 0; 1 0 0; 0 1 0];
 c{1} = [1; 1; 2; 2];
 r{1} = [1; 0; 1; 0];
 
-% modulatory context group
+% modulatory context group = group 2
 x{2} = x{1};
 c{2} = c{1};
 r{2} = [1; 0; 0; 1];
 
-% additive context group
+% additive context group = group 3
 x{3} = x{1};
 c{3} = c{1};
 r{3} = [1; 1; 0; 0];
 
 % repeat trials for each group
-reps = 10;
+reps = 5;
 for g = 1:3
     x{g} = repmat(x{g}, reps, 1);
     c{g} = repmat(c{g}, reps, 1);
@@ -60,9 +60,9 @@ for g=1:3 % for each group
     Sigma_n{2} = repmat(sigma_w^2 * eye(D), 1, 1, K); % note the third dimension is the context
     Sigma_n{3} = sigma_w^2 * eye(D + K);
 
-    P = [1 1 1];
+    P = [1 1 1] / 3;
 
-    fprintf('\n\n GROUP %d\n\n', g);
+    fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
     % train
     %
@@ -81,7 +81,7 @@ for g=1:3 % for each group
                                 (xx_n' * ww_n{3}) * P(3); % M3
         V_n = value(x_n, xx_n, k);
         out = predict(V_n);
-        fprintf('predction for x = %d, c = %d is %f (actual is %f)\n', find(x_n), c_n, out, r_n);
+        fprintf('\npredction for x = %d, c = %d is %f (actual is %f)\n\n', find(x_n), c_n, out, r_n);
 
         % get reward and update
         %
@@ -92,8 +92,10 @@ for g=1:3 % for each group
         gain = @(x_n, SSigma_n) SSigma_n * x_n / (x_n' * SSigma_n * x_n + sigma_r^2);
         g_n{1} = gain(x_n, SSigma_n{1});    
         g_n{2} = gain(x_n, SSigma_n{2});    
-        g_n{3} = gain(xx_n, SSigma_n{3});    
+        g_n{3} = gain(xx_n, SSigma_n{3}); 
         
+        fprintf('    g_ns = %.4f %.4f %.4f | %.4f %4.f %.4f | %.4f %.4f %.4f %.4f %.4f %.4f\n', g_n{1}, g_n{2}, g_n{3});        
+                
         Sigma_n{1} = SSigma_n{1} - g_n{1} * x_n' * SSigma_n{1};
         Sigma_n{2}(:,:,k) = SSigma_n{2} - g_n{2} * x_n' * SSigma_n{2};
         Sigma_n{3} = SSigma_n{3} - g_n{3} * xx_n' * SSigma_n{3};
@@ -101,14 +103,25 @@ for g=1:3 % for each group
         ww_n{1} = ww_n{1} + g_n{1} * (r_n - ww_n{1}' * x_n);
         ww_n{2}(:,k) = ww_n{2}(:,k) + g_n{2} * (r_n - ww_n{2}(:,k)' * x_n);
         ww_n{3} = ww_n{3} + g_n{3} * (r_n - ww_n{3}' * xx_n);
-            
+
+        disp('    ww_n{1} =');
+        disp(ww_n{1});
+        disp('    ww_n{2} =');
+        disp(ww_n{2});
+        disp('    ww_n{3} =');
+        disp(ww_n{3});
+        
         P(1) = P(1) * normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2);
         P(2) = P(2) * normpdf(r_n, x_n' * ww_n{2}(:,k), x_n' * SSigma_n{2} * x_n + sigma_r^2);
         P(3) = P(3) * normpdf(r_n, xx_n' * ww_n{3}, xx_n' * SSigma_n{3} * xx_n + sigma_r^2);
         P = P / sum(P);
-        
+
+        fprintf('    P = %.4f %.4f %.4f', P);   
+
      %   fprintf('            new Ps = %f %f %f\n', P(1), P(2), P(3));
     end
+    
+    fprintf('\n\n');
 
     % test
     %
