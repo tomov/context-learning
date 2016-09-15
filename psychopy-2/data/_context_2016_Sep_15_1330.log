@@ -1,0 +1,105 @@
+0.3190 	WARNING 	Movie2 stim could not be imported and won't be available
+0.5664 	WARNING 	TextBox stim could not be imported and won't be available.
+0.5664 	WARNING 	TextBox Font Manager Found No Fonts.
+2.4958 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor instance at 0xef9c850>, name='window1', pos=[0, 0], screen=0, size=array([1440,  900]), stereo=False, units=u'norm', useFBO=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+2.4959 	EXP 	window1: recordFrameIntervals = False
+2.6608 	EXP 	window1: recordFrameIntervals = True
+2.8445 	EXP 	window1: recordFrameIntervals = False
+2.9219 	EXP 	Created trialInstrText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='trialInstrText', opacity=1.0, ori=0, pos=array([ 0. ,  0.8]), rgb=array([ 0.,  0.,  0.]), text=unicode(...), units=u'norm', win=Window(...), wrapWidth=20)
+2.9299 	EXP 	Created restaurantText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'blue', colorSpace='named', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='restaurantText', opacity=1.0, ori=0, pos=array([ 0.  ,  0.35]), rgb=array([   0.,    0.,  255.]), text=u'default text', units=u'norm', win=Window(...), wrapWidth=1)
+2.9330 	EXP 	Created foodImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, image='sin', interpolate=True, mask=None, maskParams=None, name='foodImg', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.5,  0.5]), texRes=128, units=u'norm', win=Window(...))
+2.9393 	EXP 	Created fixationJitterText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='fixationJitterText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+2.9446 	EXP 	Created sickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-6.0, flipHoriz=False, flipVert=False, image=u'images/sick.png', interpolate=True, mask=None, maskParams=None, name='sickImg', opacity=1.0, ori=0.0, pos=array([-0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9480 	EXP 	Created notsickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-7.0, flipHoriz=False, flipVert=False, image=u'images/smiley.png', interpolate=True, mask=None, maskParams=None, name='notsickImg', opacity=1.0, ori=0.0, pos=array([ 0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9508 	EXP 	Created fixationITIText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-8.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='fixationITIText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+2.9575 	EXP 	Created sickHighlight = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'white', colorSpace='named', contrast=1.0, depth=-11.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=1.0, italic=False, name='sickHighlight', opacity=1.0, ori=0, pos=array([-0.5 , -0.35]), rgb=array([ 255.,  255.,  255.]), text=u'_', units=u'norm', win=Window(...), wrapWidth=1)
+2.9605 	EXP 	Created notsickHighlight = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'white', colorSpace='named', contrast=1.0, depth=-12.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=1, italic=False, name='notsickHighlight', opacity=1.0, ori=0, pos=array([-0.5 , -0.35]), rgb=array([ 255.,  255.,  255.]), text=u'_', units=u'norm', win=Window(...), wrapWidth=1)
+2.9680 	EXP 	Imported irrelevant.xlsx as conditions, 4 conditions, 4 params
+2.9684 	EXP 	Created sequence: random, trialTypes=4, nReps=1, seed=None
+2.9688 	EXP 	New trial (rep=0, index=0): {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u"Molina's Cantina"}
+2.9810 	EXP 	window1: recordFrameIntervals = False
+2.9867 	EXP 	restaurantText: text = u"Molina's Cantina"
+2.9867 	EXP 	foodImg: image = u'foods/mexican_food1.png'
+2.9867 	EXP 	notsickHighlight: opacity = 0
+2.9867 	EXP 	sickHighlight: opacity = 0
+2.9867 	EXP 	fixationITIText: autoDraw = True
+2.9947 	EXP 	window1: recordFrameIntervals = False
+4.0266 	EXP 	trialInstrText: autoDraw = True
+4.0266 	EXP 	restaurantText: autoDraw = True
+4.0266 	EXP 	foodImg: autoDraw = True
+4.0266 	EXP 	sickImg: autoDraw = True
+4.0266 	EXP 	notsickImg: autoDraw = True
+4.0266 	EXP 	fixationITIText: autoDraw = False
+4.0266 	EXP 	sickHighlight: autoDraw = True
+4.0266 	EXP 	notsickHighlight: autoDraw = True
+6.9772 	EXP 	trialInstrText: autoDraw = False
+6.9772 	EXP 	restaurantText: autoDraw = False
+6.9772 	EXP 	foodImg: autoDraw = False
+6.9772 	EXP 	sickImg: autoDraw = False
+6.9772 	EXP 	notsickImg: autoDraw = False
+6.9772 	EXP 	sickHighlight: autoDraw = False
+6.9772 	EXP 	notsickHighlight: autoDraw = False
+6.9774 	EXP 	window1: recordFrameIntervals = False
+6.9948 	EXP 	fixationJitterText: autoDraw = True
+6.9949 	EXP 	window1: recordFrameIntervals = False
+7.4960 	EXP 	New trial (rep=0, index=1): {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u'Restaurante Arroyo'}
+7.5079 	EXP 	window1: recordFrameIntervals = False
+7.5284 	EXP 	trialInstrText: autoDraw = False
+7.5284 	EXP 	restaurantText: autoDraw = False
+7.5284 	EXP 	foodImg: autoDraw = False
+7.5284 	EXP 	fixationJitterText: autoDraw = False
+7.5284 	EXP 	sickImg: autoDraw = False
+7.5284 	EXP 	notsickImg: autoDraw = False
+7.5284 	EXP 	fixationITIText: autoDraw = False
+7.5284 	EXP 	sickHighlight: autoDraw = False
+7.5284 	EXP 	notsickHighlight: autoDraw = False
+7.5284 	EXP 	restaurantText: text = u'Restaurante Arroyo'
+7.5284 	EXP 	foodImg: image = u'foods/mexican_food2.png'
+7.5284 	EXP 	notsickHighlight: opacity = 0
+7.5284 	EXP 	sickHighlight: opacity = 0
+7.5284 	EXP 	fixationITIText: autoDraw = True
+7.5286 	EXP 	window1: recordFrameIntervals = False
+8.5453 	EXP 	trialInstrText: autoDraw = True
+8.5453 	EXP 	restaurantText: autoDraw = True
+8.5453 	EXP 	foodImg: autoDraw = True
+8.5453 	EXP 	sickImg: autoDraw = True
+8.5453 	EXP 	notsickImg: autoDraw = True
+8.5453 	EXP 	fixationITIText: autoDraw = False
+8.5453 	EXP 	sickHighlight: autoDraw = True
+8.5453 	EXP 	notsickHighlight: autoDraw = True
+11.5112 	EXP 	trialInstrText: autoDraw = False
+11.5112 	EXP 	restaurantText: autoDraw = False
+11.5112 	EXP 	foodImg: autoDraw = False
+11.5112 	EXP 	sickImg: autoDraw = False
+11.5112 	EXP 	notsickImg: autoDraw = False
+11.5112 	EXP 	sickHighlight: autoDraw = False
+11.5112 	EXP 	notsickHighlight: autoDraw = False
+11.5114 	EXP 	window1: recordFrameIntervals = False
+11.5289 	EXP 	fixationJitterText: autoDraw = True
+11.5290 	EXP 	window1: recordFrameIntervals = False
+12.0302 	EXP 	New trial (rep=0, index=2): {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u'Restaurante Arroyo'}
+12.0405 	EXP 	window1: recordFrameIntervals = False
+12.0623 	EXP 	trialInstrText: autoDraw = False
+12.0623 	EXP 	restaurantText: autoDraw = False
+12.0623 	EXP 	foodImg: autoDraw = False
+12.0623 	EXP 	fixationJitterText: autoDraw = False
+12.0623 	EXP 	sickImg: autoDraw = False
+12.0623 	EXP 	notsickImg: autoDraw = False
+12.0623 	EXP 	fixationITIText: autoDraw = False
+12.0623 	EXP 	sickHighlight: autoDraw = False
+12.0623 	EXP 	notsickHighlight: autoDraw = False
+12.0623 	EXP 	restaurantText: text = u'Restaurante Arroyo'
+12.0623 	EXP 	foodImg: image = u'foods/mexican_food1.png'
+12.0623 	EXP 	notsickHighlight: opacity = 0
+12.0623 	EXP 	sickHighlight: opacity = 0
+12.0623 	EXP 	fixationITIText: autoDraw = True
+12.0625 	EXP 	window1: recordFrameIntervals = False
+13.0795 	EXP 	trialInstrText: autoDraw = True
+13.0795 	EXP 	restaurantText: autoDraw = True
+13.0795 	EXP 	foodImg: autoDraw = True
+13.0795 	EXP 	sickImg: autoDraw = True
+13.0795 	EXP 	notsickImg: autoDraw = True
+13.0795 	EXP 	fixationITIText: autoDraw = False
+13.0795 	EXP 	sickHighlight: autoDraw = True
+13.0795 	EXP 	notsickHighlight: autoDraw = True
+14.2119 	DATA 	Keypress: escape

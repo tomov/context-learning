@@ -20,7 +20,7 @@ c{3} = c{1};
 r{3} = [1; 1; 0; 0];
 
 % repeat trials for each group
-reps = 5;
+reps = 5; % = nTrials / 4
 for g = 1:3
     x{g} = repmat(x{g}, reps, 1);
     c{g} = repmat(c{g}, reps, 1);

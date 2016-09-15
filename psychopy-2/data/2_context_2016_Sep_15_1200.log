@@ -1,0 +1,24 @@
+0.3089 	WARNING 	Movie2 stim could not be imported and won't be available
+0.5484 	WARNING 	TextBox stim could not be imported and won't be available.
+0.5484 	WARNING 	TextBox Font Manager Found No Fonts.
+2.4328 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor instance at 0xf0ca6c0>, name='window1', pos=[0, 0], screen=0, size=array([1440,  900]), stereo=False, units=u'norm', useFBO=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+2.4329 	EXP 	window1: recordFrameIntervals = False
+2.5981 	EXP 	window1: recordFrameIntervals = True
+2.7816 	EXP 	window1: recordFrameIntervals = False
+2.8491 	EXP 	Created trialInstrText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='trialInstrText', opacity=1.0, ori=0, pos=array([ 0. ,  0.8]), rgb=array([ 0.,  0.,  0.]), text=unicode(...), units=u'norm', win=Window(...), wrapWidth=1)
+2.8556 	EXP 	Created restaurantText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'blue', colorSpace='named', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='restaurantText', opacity=1.0, ori=0, pos=array([ 0. ,  0.5]), rgb=array([   0.,    0.,  255.]), text=u'default text', units=u'norm', win=Window(...), wrapWidth=1)
+2.8584 	EXP 	Created foodImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, image='sin', interpolate=True, mask=None, maskParams=None, name='foodImg', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.5,  0.5]), texRes=128, units=u'norm', win=Window(...))
+2.8639 	EXP 	Created fixationtext = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='fixationtext', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+2.8699 	EXP 	Imported irrelevant.xlsx as conditions, 4 conditions, 4 params
+2.8703 	EXP 	Created sequence: random, trialTypes=4, nReps=1, seed=None
+2.8707 	EXP 	New trial (rep=0, index=0): {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u'Restaurante Arroyo'}
+2.8852 	EXP 	window1: recordFrameIntervals = False
+2.8982 	EXP 	restaurantText: text = u'Restaurante Arroyo'
+2.8982 	EXP 	foodImg: image = u'foods/mexican_food2.png'
+2.8982 	EXP 	fixationtext: autoDraw = True
+2.8984 	EXP 	window1: recordFrameIntervals = False
+3.4149 	EXP 	trialInstrText: autoDraw = True
+3.4149 	EXP 	restaurantText: autoDraw = True
+3.4149 	EXP 	foodImg: autoDraw = True
+3.4149 	EXP 	fixationtext: autoDraw = False
+6.0144 	DATA 	Keypress: escape

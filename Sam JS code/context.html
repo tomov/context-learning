@@ -1,0 +1,81 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="context.js"></script>
+<link rel=stylesheet href="style.css" type="text/css" media="screen">
+
+<head>
+<title>Prediction experiment</title>
+</head>
+    
+<div id="experiment">
+
+<div id="title"> <h3>Prediction experiment</h3> </div>
+
+<div id="Instructions">
+	In this task, imagine that your are a health inspector trying to determine the cause of illness in different restaurants. On each trial you will see the name of the restaurant and a particular food. Your job is to predict whether a customer will get sick from eating the food. The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out). In some cases you will make predictions about the same food in different restaurants. You will make 24 total predictions. After each prediction (except for the last 4), you will receive feedback about whether or not the customer got sick. <br><br>
+	
+	   Press start to begin the first game.
+</div>
+
+<div id="consent">
+	Please consider this information carefully before deciding whether to participate in this research. <br><br>
+	
+	Purpose of the research: To examine the way people make decisions and learn about the relationships between stimuli, actions and rewards.<br><br>
+	
+	What you will do in this research:  Stimuli (images) will be presented on the computer and you will be asked to choose between different actions in order to earn monetary reward.<br><br>
+	
+	Time required: Participation will take between 1 and 45 minutes to complete.<br><br>
+	
+	Risks:  There are no anticipated risks associated with participating in this study.  The effects of participating should be comparable to those you would experience from viewing a computer monitor for 10 minutes and using a mouse or keyboard.<br><br>
+	
+	Benefits:  This study provides no benefits to you individually. The study provides important information about the nature of learning and decision making. This has potential implications for public domains, such as healthcare policy and the justice system, where understanding the processes governing choice (e.g., of insurance, medical care, illegal substances) can lead to more psychologically effective public policy.<br><br>
+	
+	Confidentiality:  Your participation in this study will remain confidential. No personally identifiable information will be associated with your data. Your de-identified data may be shared with other researchers and used in future projects.<br><br>
+	
+	Participation and withdrawal:  Your participation in this study is completely voluntary and you may refuse to participate or you may choose to withdraw at any time without penalty or loss of benefits to which you are otherwise entitled.<br><br>
+	
+	How to contact the researchers: If you have questions or concerns about your participation or payment, or want to request a summary of research findings, please contact Sam Gershman, gershman@fas.harvard.edu, (773) 607-9817.<br><br>
+	
+	Whom to contact about your rights as a participant in this research: For questions, concerns, suggestions, or complaints that have not been or cannot be addressed by the researcher, or to report research-related harm, please contact the Committee on the Use of Human Subjects in Research at Harvard University, 1414 Massachusetts Avenue, Second Floor, Cambridge, MA  02138.  Phone:  617-496-2847.  Email: cuhs@fas.harvard.edu<br><br>
+	
+	Please print or save a copy of this form for your records.<br><br>
+	
+	Agreement:
+	
+	The nature and purpose of this research have been sufficiently explained and I agree to participate in this study.  I understand that I am free to withdraw at any time without incurring any penalty.<br><br>
+	
+	Please consent by clicking the button below to continue. Otherwise, please exit the study at this time.
+
+</div>
+
+<div id="container">
+ <a href="javascript:StartExperiment()" id="startExperiment">Begin experiment</a>
+ <a href="javascript:StartGame()" id="startGame">Start game 1</a>
+ <div id="feedback">feedback</div>
+ <div id="endExperiment">Thanks! Please press the submit button.
+</div>
+ 
+ <div id="restaurant"> <h3>Restaurant</h3> </div>
+ <img src="food1.png" id="food1">
+ <img src="food2.png" id="food2">
+ <img src="food3.png" id="food3">
+	 
+ <img src="sick.png" id="sick">
+ <img src="smiley.png" id="smiley">
+	
+<div id = "buttons">
+	<p><button id="button1" text="Sick"></button></p>
+	<p><button id="button2" text="Not sick"></button></p>
+	<button id="submit" text="Next"></button></p>
+</div>
+
+</div>
+
+<body>
+	<noscript>
+		<h1>Warning: Javascript seems to be disabled</h1>
+		<p>This website requires that Javascript be enabled on your browser.</p>
+		<p>Instructions for enabling Javascript in your browser can be found <a
+			href="http://support.google.com/bin/answer.py?hl=en&answer=23852">here</a><p>
+	</noscript>
+</body>
+

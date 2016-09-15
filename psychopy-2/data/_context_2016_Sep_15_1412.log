@@ -1,0 +1,104 @@
+0.3323 	WARNING 	Movie2 stim could not be imported and won't be available
+0.5931 	WARNING 	TextBox stim could not be imported and won't be available.
+0.5931 	WARNING 	TextBox Font Manager Found No Fonts.
+2.4825 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor instance at 0xeed3a08>, name='window1', pos=[0, 0], screen=0, size=array([1440,  900]), stereo=False, units=u'norm', useFBO=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+2.4825 	EXP 	window1: recordFrameIntervals = False
+2.6484 	EXP 	window1: recordFrameIntervals = True
+2.8319 	EXP 	window1: recordFrameIntervals = False
+2.8977 	EXP 	Created trialInstrText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, name='trialInstrText', opacity=1.0, ori=0, pos=array([ 0. ,  0.8]), rgb=array([ 0.,  0.,  0.]), text=unicode(...), units=u'norm', win=Window(...), wrapWidth=20)
+2.9053 	EXP 	Created restaurantText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='blue', colorSpace='named', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, name='restaurantText', opacity=1.0, ori=0, pos=array([ 0.  ,  0.35]), rgb=array([   0.,    0.,  255.]), text=u'default text', units=u'norm', win=Window(...), wrapWidth=1)
+2.9082 	EXP 	Created foodImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, image='sin', interpolate=True, mask=None, maskParams=None, name='foodImg', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.5,  0.5]), texRes=128, units=u'norm', win=Window(...))
+2.9145 	EXP 	Created fixationJitterText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, name='fixationJitterText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+2.9193 	EXP 	Created sickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-6.0, flipHoriz=False, flipVert=False, image='images/sick.png', interpolate=True, mask=None, maskParams=None, name='sickImg', opacity=1.0, ori=0.0, pos=array([-0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9219 	EXP 	Created notsickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-7.0, flipHoriz=False, flipVert=False, image='images/smiley.png', interpolate=True, mask=None, maskParams=None, name='notsickImg', opacity=1.0, ori=0.0, pos=array([ 0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9245 	EXP 	Created fixationITIText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-8.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, name='fixationITIText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+2.9299 	EXP 	Created sickHighlight = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=-10.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, name='sickHighlight', opacity=1.0, ori=0, pos=array([-0.5 , -0.35]), rgb=array([ 255.,  255.,  255.]), text=u'_', units=u'norm', win=Window(...), wrapWidth=1)
+2.9331 	EXP 	Created notsickHighlight = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=-11.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1, italic=False, name='notsickHighlight', opacity=1.0, ori=0, pos=array([ 0.5 , -0.35]), rgb=array([ 255.,  255.,  255.]), text=u'_', units=u'norm', win=Window(...), wrapWidth=1)
+2.9446 	EXP 	Created correctText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'blue', colorSpace='named', contrast=1.0, depth=-13.0, flipHoriz=False, flipVert=False, font=u'Arial Bold', fontFiles=[], height=0.1, italic=False, name='correctText', opacity=1.0, ori=0, pos=array([ 0. , -0.3]), rgb=array([   0.,    0.,  255.]), text=u'CORRECT', units=u'norm', win=Window(...), wrapWidth=1)
+2.9510 	EXP 	Created wrongText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'red', colorSpace='named', contrast=1.0, depth=-14.0, flipHoriz=False, flipVert=False, font=u'Arial Bold', fontFiles=[], height=0.1, italic=False, name='wrongText', opacity=1.0, ori=0, pos=array([ 0. , -0.3]), rgb=array([ 255.,    0.,    0.]), text=u'WRONG', units=u'norm', win=Window(...), wrapWidth=1)
+2.9572 	EXP 	Created timeoutText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'purple', colorSpace='named', contrast=1.0, depth=-15.0, flipHoriz=False, flipVert=False, font=u'Arial Bold', fontFiles=[], height=0.1, italic=False, name='timeoutText', opacity=1.0, ori=0, pos=array([ 0. , -0.3]), rgb=array([ 128.,    0.,  128.]), text=u'TIMEOUT', units=u'norm', win=Window(...), wrapWidth=1)
+2.9611 	EXP 	Created sickFeedback = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-16.0, flipHoriz=False, flipVert=False, image='images/sick.png', interpolate=True, mask=None, maskParams=None, name='sickFeedback', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9641 	EXP 	Created notsickFeedback = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-17.0, flipHoriz=False, flipVert=False, image='images/smiley.png', interpolate=True, mask=None, maskParams=None, name='notsickFeedback', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+2.9794 	EXP 	Created gotSickText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'white', colorSpace='named', contrast=1.0, depth=-18.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.05, italic=False, name='gotSickText', opacity=1.0, ori=0, pos=array([ 0.,  4.]), rgb=array([ 255.,  255.,  255.]), text=u'The customer got sick!', units=u'norm', win=Window(...), wrapWidth=1)
+2.9941 	EXP 	Created didntGetSickText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'white', colorSpace='named', contrast=1.0, depth=-19.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.05, italic=False, name='didntGetSickText', opacity=1.0, ori=0, pos=array([ 0. ,  0.4]), rgb=array([ 255.,  255.,  255.]), text=u"The customer didn't get sick!", units=u'norm', win=Window(...), wrapWidth=1)
+3.0305 	EXP 	Imported irrelevant.xlsx as conditions, 4 conditions, 4 params
+3.0308 	EXP 	Created sequence: random, trialTypes=4, nReps=1, seed=None
+3.0312 	EXP 	New trial (rep=0, index=0): {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u'Restaurante Arroyo'}
+3.0578 	EXP 	window1: recordFrameIntervals = False
+3.0687 	EXP 	restaurantText: text = u'Restaurante Arroyo'
+3.0687 	EXP 	foodImg: image = u'foods/mexican_food2.png'
+3.0687 	EXP 	sickHighlight: opacity = 0.0
+3.0687 	EXP 	notsickHighlight: opacity = 0.0
+3.0687 	EXP 	sickHighlight: text = u'_'
+3.0687 	EXP 	notsickHighlight: text = u'_'
+3.0687 	EXP 	correctText: opacity = 0.0
+3.0687 	EXP 	wrongText: opacity = 0.0
+3.0687 	EXP 	timeoutText: opacity = 0.0
+3.0687 	EXP 	sickFeedback: opacity = 0.0
+3.0687 	EXP 	notsickFeedback: opacity = 0.0
+3.0687 	EXP 	correctText: text = u'CORRECT'
+3.0687 	EXP 	wrongText: text = u'WRONG'
+3.0687 	EXP 	timeoutText: text = u'TIMEOUT'
+3.0687 	EXP 	fixationITIText: autoDraw = True
+3.0687 	EXP 	sickHighlight: text = u'_'
+3.0687 	EXP 	notsickHighlight: text = u'_'
+3.0687 	EXP 	didntGetSickText: autoDraw = True
+3.0739 	EXP 	window1: recordFrameIntervals = False
+4.0699 	EXP 	sickHighlight: text = u'_'
+4.0699 	EXP 	notsickHighlight: text = u'_'
+4.0985 	EXP 	trialInstrText: autoDraw = True
+4.0985 	EXP 	restaurantText: autoDraw = True
+4.0985 	EXP 	foodImg: autoDraw = True
+4.0985 	EXP 	sickImg: autoDraw = True
+4.0985 	EXP 	notsickImg: autoDraw = True
+4.0985 	EXP 	fixationITIText: autoDraw = False
+4.0985 	EXP 	sickHighlight: autoDraw = True
+4.0985 	EXP 	notsickHighlight: autoDraw = True
+4.0985 	EXP 	sickHighlight: text = u'_'
+4.0985 	EXP 	notsickHighlight: text = u'_'
+4.0985 	EXP 	didntGetSickText: autoDraw = False
+4.1202 	EXP 	sickHighlight: text = u'_'
+4.1202 	EXP 	notsickHighlight: text = u'_'
+4.1471 	EXP 	sickHighlight: text = u'_'
+4.1471 	EXP 	notsickHighlight: text = u'_'
+4.1611 	EXP 	sickHighlight: text = u'_'
+4.1611 	EXP 	notsickHighlight: text = u'_'
+4.1810 	EXP 	sickHighlight: text = u'_'
+4.1810 	EXP 	notsickHighlight: text = u'_'
+4.1950 	EXP 	sickHighlight: text = u'_'
+4.1950 	EXP 	notsickHighlight: text = u'_'
+4.2140 	EXP 	sickHighlight: text = u'_'
+4.2140 	EXP 	notsickHighlight: text = u'_'
+4.2279 	EXP 	sickHighlight: text = u'_'
+4.2279 	EXP 	notsickHighlight: text = u'_'
+4.2471 	EXP 	sickHighlight: text = u'_'
+4.2471 	EXP 	notsickHighlight: text = u'_'
+4.2703 	EXP 	sickHighlight: text = u'_'
+4.2703 	EXP 	notsickHighlight: text = u'_'
+4.2839 	EXP 	sickHighlight: text = u'_'
+4.2839 	EXP 	notsickHighlight: text = u'_'
+4.3040 	EXP 	sickHighlight: text = u'_'
+4.3040 	EXP 	notsickHighlight: text = u'_'
+4.3177 	EXP 	sickHighlight: text = u'_'
+4.3177 	EXP 	notsickHighlight: text = u'_'
+4.3376 	EXP 	sickHighlight: text = u'_'
+4.3376 	EXP 	notsickHighlight: text = u'_'
+4.3513 	EXP 	sickHighlight: text = u'_'
+4.3513 	EXP 	notsickHighlight: text = u'_'
+4.3711 	EXP 	sickHighlight: text = u'_'
+4.3711 	EXP 	notsickHighlight: text = u'_'
+4.3851 	EXP 	sickHighlight: text = u'_'
+4.3851 	EXP 	notsickHighlight: text = u'_'
+4.4039 	EXP 	sickHighlight: text = u'_'
+4.4039 	EXP 	notsickHighlight: text = u'_'
+4.4178 	EXP 	sickHighlight: text = u'_'
+4.4178 	EXP 	notsickHighlight: text = u'_'
+4.4373 	EXP 	sickHighlight: text = u'_'
+4.4373 	EXP 	notsickHighlight: text = u'_'
+4.4507 	EXP 	sickHighlight: text = u'_'
+4.4507 	EXP 	notsickHighlight: text = u'_'
+4.4706 	EXP 	sickHighlight: text = u'_'
+4.4706 	EXP 	notsickHighlight: text = u'_'
+4.4855 	EXP 	sickHighlight: text = u'_'
+4.4855 	EXP 	notsickHighlight: text = u'_'
+4.4860 	DATA 	Keypress: escape

@@ -1,0 +1,3 @@
+food,corrAns,sick,restaurant,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,responseKey.keys,responseKey.corr,responseKey.rt,date,frameRate,expName,session,participant,
+mexican_food1,left,Yes,Molina's Cantina,0,0,0,0,None,0,,2016_Sep_15_1258,60.0289961687,context,001,,
+mexican_food1,left,Yes,Restaurante Arroyo,0,1,1,2,5,0,0.0190198421478,2016_Sep_15_1258,60.0289961687,context,001,,

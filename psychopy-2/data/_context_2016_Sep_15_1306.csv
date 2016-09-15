@@ -1,0 +1,4 @@
+food,corrAns,sick,restaurant,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,key_resp_2.keys,key_resp_2.rt,key_resp_3.keys,key_resp_3.rt,date,frameRate,expName,session,participant,
+,,,,,,,,space,0.524765968323,,,2016_Sep_15_1306,59.9128940516,context,001,,
+mexican_food2,right,No,Restaurante Arroyo,0,0,0,3,,,left,4.03664708138,2016_Sep_15_1306,59.9128940516,context,001,,
+mexican_food1,left,Yes,Molina's Cantina,0,1,1,0,,,left,1.01501488686,2016_Sep_15_1306,59.9128940516,context,001,,

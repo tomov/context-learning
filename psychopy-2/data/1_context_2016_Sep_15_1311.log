@@ -1,0 +1,158 @@
+0.3142 	WARNING 	Movie2 stim could not be imported and won't be available
+0.5722 	WARNING 	TextBox stim could not be imported and won't be available.
+0.5722 	WARNING 	TextBox Font Manager Found No Fonts.
+3.2166 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor instance at 0xf0f47b0>, name='window1', pos=[0, 0], screen=0, size=array([1440,  900]), stereo=False, units=u'norm', useFBO=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+3.2166 	EXP 	window1: recordFrameIntervals = False
+3.3827 	EXP 	window1: recordFrameIntervals = True
+3.5663 	EXP 	window1: recordFrameIntervals = False
+3.6362 	EXP 	Created trialInstrText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='trialInstrText', opacity=1.0, ori=0, pos=array([ 0. ,  0.8]), rgb=array([ 0.,  0.,  0.]), text=unicode(...), units=u'norm', win=Window(...), wrapWidth=20)
+3.6436 	EXP 	Created restaurantText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'blue', colorSpace='named', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='restaurantText', opacity=1.0, ori=0, pos=array([ 0.  ,  0.35]), rgb=array([   0.,    0.,  255.]), text=u'default text', units=u'norm', win=Window(...), wrapWidth=1)
+3.6466 	EXP 	Created foodImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, image='sin', interpolate=True, mask=None, maskParams=None, name='foodImg', opacity=1.0, ori=0.0, pos=array([ 0.,  0.]), size=array([ 0.5,  0.5]), texRes=128, units=u'norm', win=Window(...))
+3.6524 	EXP 	Created fixationJitterText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='fixationJitterText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+3.6572 	EXP 	Created sickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-6.0, flipHoriz=False, flipVert=False, image=u'images/sick.png', interpolate=True, mask=None, maskParams=None, name='sickImg', opacity=1.0, ori=0.0, pos=array([-0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+3.6597 	EXP 	Created notsickImg = ImageStim(autoLog=True, color=array([ 1.,  1.,  1.]), colorSpace='rgb', contrast=1.0, depth=-7.0, flipHoriz=False, flipVert=False, image=u'images/smiley.png', interpolate=True, mask=None, maskParams=None, name='notsickImg', opacity=1.0, ori=0.0, pos=array([ 0.5, -0.6]), size=array([ 0.3 ,  0.45]), texRes=128, units=u'norm', win=Window(...))
+3.6623 	EXP 	Created fixationITIText = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'black', colorSpace='named', contrast=1.0, depth=-8.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='fixationITIText', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 0.,  0.,  0.]), text=u'+', units=u'norm', win=Window(...), wrapWidth=1)
+3.6704 	EXP 	Imported irrelevant.xlsx as conditions, 4 conditions, 4 params
+3.6708 	EXP 	Created sequence: random, trialTypes=4, nReps=1, seed=None
+3.6714 	EXP 	New trial (rep=0, index=0): {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u"Molina's Cantina"}
+3.6854 	EXP 	window1: recordFrameIntervals = False
+3.6991 	EXP 	restaurantText: text = u"Molina's Cantina"
+3.6991 	EXP 	foodImg: image = u'foods/mexican_food2.png'
+3.6991 	EXP 	fixationITIText: autoDraw = True
+3.6993 	EXP 	window1: recordFrameIntervals = False
+4.7159 	EXP 	trialInstrText: autoDraw = True
+4.7159 	EXP 	restaurantText: autoDraw = True
+4.7159 	EXP 	foodImg: autoDraw = True
+4.7159 	EXP 	sickImg: autoDraw = True
+4.7159 	EXP 	notsickImg: autoDraw = True
+4.7159 	EXP 	fixationITIText: autoDraw = False
+4.9822 	DATA 	Keypress: left
+4.9984 	EXP 	sickImg: opacity = 1
+5.0151 	EXP 	sickImg: opacity = 1
+5.0318 	EXP 	sickImg: opacity = 1
+5.0485 	EXP 	sickImg: opacity = 1
+5.0651 	EXP 	sickImg: opacity = 1
+5.0820 	EXP 	sickImg: opacity = 1
+5.0984 	EXP 	sickImg: opacity = 1
+5.1153 	EXP 	sickImg: opacity = 1
+5.1320 	EXP 	sickImg: opacity = 1
+5.1485 	EXP 	sickImg: opacity = 1
+5.1653 	EXP 	sickImg: opacity = 1
+5.1819 	EXP 	sickImg: opacity = 1
+5.1984 	EXP 	sickImg: opacity = 1
+5.2152 	EXP 	sickImg: opacity = 1
+5.2318 	EXP 	sickImg: opacity = 1
+5.2485 	EXP 	sickImg: opacity = 1
+5.2650 	EXP 	sickImg: opacity = 1
+5.2820 	EXP 	sickImg: opacity = 1
+5.2983 	EXP 	sickImg: opacity = 1
+5.3154 	EXP 	sickImg: opacity = 1
+5.3319 	EXP 	sickImg: opacity = 1
+5.3482 	EXP 	sickImg: opacity = 1
+5.3487 	DATA 	Keypress: right
+5.3650 	EXP 	sickImg: opacity = 0
+5.3815 	EXP 	sickImg: opacity = 0
+5.3985 	EXP 	sickImg: opacity = 0
+5.4152 	EXP 	sickImg: opacity = 0
+5.4319 	EXP 	sickImg: opacity = 0
+5.4482 	EXP 	sickImg: opacity = 0
+5.4649 	EXP 	sickImg: opacity = 0
+5.4817 	EXP 	sickImg: opacity = 0
+5.4983 	EXP 	sickImg: opacity = 0
+5.5151 	EXP 	sickImg: opacity = 0
+5.5318 	EXP 	sickImg: opacity = 0
+5.5483 	EXP 	sickImg: opacity = 0
+5.5653 	EXP 	sickImg: opacity = 0
+5.5818 	EXP 	sickImg: opacity = 0
+5.5983 	EXP 	sickImg: opacity = 0
+5.6149 	EXP 	sickImg: opacity = 0
+5.6153 	DATA 	Keypress: right
+5.6317 	EXP 	sickImg: opacity = 0
+5.6484 	EXP 	sickImg: opacity = 0
+5.6651 	EXP 	sickImg: opacity = 0
+5.6816 	EXP 	sickImg: opacity = 0
+5.6986 	EXP 	sickImg: opacity = 0
+5.7150 	EXP 	sickImg: opacity = 0
+5.7320 	EXP 	sickImg: opacity = 0
+5.7484 	EXP 	sickImg: opacity = 0
+5.7649 	EXP 	sickImg: opacity = 0
+5.7820 	EXP 	sickImg: opacity = 0
+5.7984 	EXP 	sickImg: opacity = 0
+5.8152 	EXP 	sickImg: opacity = 0
+5.8316 	EXP 	sickImg: opacity = 0
+5.8485 	EXP 	sickImg: opacity = 0
+5.8650 	EXP 	sickImg: opacity = 0
+5.8815 	EXP 	sickImg: opacity = 0
+5.8983 	EXP 	sickImg: opacity = 0
+5.8989 	DATA 	Keypress: left
+5.9150 	EXP 	sickImg: opacity = 1
+5.9316 	EXP 	sickImg: opacity = 1
+5.9484 	EXP 	sickImg: opacity = 1
+5.9653 	EXP 	sickImg: opacity = 1
+5.9817 	EXP 	sickImg: opacity = 1
+5.9983 	EXP 	sickImg: opacity = 1
+6.0153 	EXP 	sickImg: opacity = 1
+6.0317 	EXP 	sickImg: opacity = 1
+6.0486 	EXP 	sickImg: opacity = 1
+6.0653 	EXP 	sickImg: opacity = 1
+6.0817 	EXP 	sickImg: opacity = 1
+6.0983 	EXP 	sickImg: opacity = 1
+6.0991 	DATA 	Keypress: left
+6.1150 	EXP 	sickImg: opacity = 1
+6.1318 	EXP 	sickImg: opacity = 1
+6.1484 	EXP 	sickImg: opacity = 1
+6.1653 	EXP 	sickImg: opacity = 1
+6.1817 	EXP 	sickImg: opacity = 1
+6.1984 	EXP 	sickImg: opacity = 1
+6.2152 	EXP 	sickImg: opacity = 1
+6.2319 	EXP 	sickImg: opacity = 1
+6.2483 	EXP 	sickImg: opacity = 1
+6.2489 	DATA 	Keypress: left
+6.2653 	EXP 	sickImg: opacity = 1
+6.2820 	EXP 	sickImg: opacity = 1
+6.2987 	EXP 	sickImg: opacity = 1
+6.3151 	EXP 	sickImg: opacity = 1
+6.3319 	EXP 	sickImg: opacity = 1
+6.3485 	EXP 	sickImg: opacity = 1
+6.3651 	EXP 	sickImg: opacity = 1
+6.3818 	EXP 	sickImg: opacity = 1
+6.3984 	EXP 	sickImg: opacity = 1
+6.4152 	EXP 	sickImg: opacity = 1
+6.4158 	DATA 	Keypress: right
+6.4319 	EXP 	sickImg: opacity = 0
+6.4485 	EXP 	sickImg: opacity = 0
+6.4651 	EXP 	sickImg: opacity = 0
+6.4817 	EXP 	sickImg: opacity = 0
+6.4987 	EXP 	sickImg: opacity = 0
+6.5151 	EXP 	sickImg: opacity = 0
+6.5323 	EXP 	sickImg: opacity = 0
+6.5484 	EXP 	sickImg: opacity = 0
+6.5655 	EXP 	sickImg: opacity = 0
+6.5818 	EXP 	sickImg: opacity = 0
+6.5823 	DATA 	Keypress: right
+6.5987 	EXP 	sickImg: opacity = 0
+6.6152 	EXP 	sickImg: opacity = 0
+6.6317 	EXP 	sickImg: opacity = 0
+6.6486 	EXP 	sickImg: opacity = 0
+6.6650 	EXP 	sickImg: opacity = 0
+6.6818 	EXP 	sickImg: opacity = 0
+6.6985 	EXP 	sickImg: opacity = 0
+6.7153 	EXP 	sickImg: opacity = 0
+6.7319 	EXP 	sickImg: opacity = 0
+6.7487 	EXP 	sickImg: opacity = 0
+6.7653 	EXP 	sickImg: opacity = 0
+6.7818 	EXP 	sickImg: opacity = 0
+6.7986 	EXP 	sickImg: opacity = 0
+6.8152 	EXP 	sickImg: opacity = 0
+6.8157 	DATA 	Keypress: left
+6.8319 	EXP 	sickImg: opacity = 1
+6.8484 	EXP 	sickImg: opacity = 1
+6.8650 	EXP 	sickImg: opacity = 1
+6.8819 	EXP 	sickImg: opacity = 1
+6.8988 	EXP 	sickImg: opacity = 1
+6.9154 	EXP 	sickImg: opacity = 1
+6.9319 	EXP 	sickImg: opacity = 1
+6.9488 	EXP 	sickImg: opacity = 1
+6.9493 	DATA 	Keypress: grave
+6.9653 	EXP 	sickImg: opacity = 1
+6.9658 	DATA 	Keypress: escape
