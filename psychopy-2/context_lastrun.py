@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 07:52:13 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 08:57:57 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -59,9 +59,9 @@ else:
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=u'You are about to learn about a new set of restaurants and foods.',    font=u'Arial',
+    text='You are about to learn about a new set of restaurants and foods.',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0)
 
 
@@ -76,9 +76,9 @@ trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     color='black', colorSpace='rgb', opacity=1,
     depth=-2.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'purple', colorSpace='rgb', opacity=1,
+    color='purple', colorSpace='rgb', opacity=1,
     depth=-3.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -87,9 +87,9 @@ foodImg = visual.ImageStim(win=win, name='foodImg',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-4.0)
 fixationJitterText = visual.TextStim(win=win, ori=0, name='fixationJitterText',
-    text='+',    font='Arial',
+    text=u'+',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=-5.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -121,19 +121,19 @@ notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
     depth=-12.0)
 
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text=u'CORRECT',    font=u'Arial Bold',
+    text='CORRECT',    font='Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color=u'blue', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-14.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text=u'WRONG',    font=u'Arial Bold',
+    text='WRONG',    font='Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-15.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text=u'TIMEOUT',    font=u'Arial Bold',
+    text='TIMEOUT',    font='Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-16.0)
 sickFeedback = visual.ImageStim(win=win, name='sickFeedback',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -148,15 +148,16 @@ notsickFeedback = visual.ImageStim(win=win, name='notsickFeedback',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text=u'The customer got sick!',    font=u'Arial',
+    text='The customer got sick!',    font='Arial',
     pos=[0, -0.5], height=0.075, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-19.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text=u"The customer didn't get sick!",    font=u'Arial',
+    text="The customer didn't get sick!",    font='Arial',
     pos=[0, -0.5], height=0.075, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-20.0)
+
 
 
 # Initialize components for Routine "test_2"
@@ -168,7 +169,7 @@ trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font=u'Arial',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color=u'purple', colorSpace='rgb', opacity=1,
     depth=-2.0)
@@ -213,6 +214,7 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     depth=-11.0)
 
 
+
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
@@ -220,7 +222,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions(u'runs.xlsx', selection=range(1,4)),
+    trialList=data.importConditions('runs.xlsx', selection='range(1,4)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -326,7 +328,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -346,7 +348,6 @@ for thisRun in runs:
         t = 0
         trialClock.reset()  # clock 
         frameN = -1
-        routineTimer.add(5.500000)
         # update component parameters for each repeat
         assert contextRolesWereShuffled
         restaurantText.setText(restaurants[contextId])
@@ -375,6 +376,11 @@ for thisRun in runs:
         timeoutText.setText(timeoutText.text)
         gotSickText.setText(gotSickText.text)
         didntGetSickText.setText(didntGetSickText.text)
+        # uniform 0-2 seconds for each trial
+        #
+        jitterTime = random() * 2
+        
+        print 'train jitter = ', jitterTime
         # keep track of which components have finished
         trialComponents = []
         trialComponents.append(ITI)
@@ -402,7 +408,7 @@ for thisRun in runs:
         
         #-------Start Routine "trial"-------
         continueRoutine = True
-        while continueRoutine and routineTimer.getTime() > 0:
+        while continueRoutine:
             # get current time
             t = trialClock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -442,7 +448,7 @@ for thisRun in runs:
                 fixationJitterText.tStart = t  # underestimates by a little under one frame
                 fixationJitterText.frameNStart = frameN  # exact frame index
                 fixationJitterText.setAutoDraw(True)
-            if fixationJitterText.status == STARTED and t >= (5.0 + (0.5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if fixationJitterText.status == STARTED and t >= (5.0 + (jitterTime-win.monitorFramePeriod*0.75)): #most of one frame period left
                 fixationJitterText.setAutoDraw(False)
             
             # *responseKey* updates
@@ -470,8 +476,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg* updates
             if t >= 1 and sickImg.status == NOT_STARTED:
@@ -632,6 +636,7 @@ for thisRun in runs:
                     gotSickText.setText(gotSickText.text)
                     didntGetSickText.setText(didntGetSickText.text)
             
+            
             # *ITI* period
             if t >= 0 and ITI.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -645,7 +650,7 @@ for thisRun in runs:
                 # keep track of start time/frame for later
                 Jitter.tStart = t  # underestimates by a little under one frame
                 Jitter.frameNStart = frameN  # exact frame index
-                Jitter.start(0.5)
+                Jitter.start(jitterTime)
             elif Jitter.status == STARTED: #one frame should pass before updating params and completing
                 Jitter.complete() #finish the static period
             
@@ -684,6 +689,9 @@ for thisRun in runs:
             trials.addData('responseKey.rt', responseKey.rt)
         
         
+        
+        # the Routine "trial" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         thisExp.nextEntry()
         
     # completed 1 repeats of 'trials'
@@ -692,7 +700,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     test_trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=range(6,10)),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
     thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -712,7 +720,6 @@ for thisRun in runs:
         t = 0
         test_2Clock.reset()  # clock 
         frameN = -1
-        routineTimer.add(4.500000)
         # update component parameters for each repeat
         restaurantText_2.setText(restaurants[contextId])
         foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cueId) + '.png'))
@@ -725,6 +732,9 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
+        jitterTime = random() * 2
+        
+        print 'test jitter = ', jitterTime
         # keep track of which components have finished
         test_2Components = []
         test_2Components.append(ITI_2)
@@ -745,7 +755,7 @@ for thisRun in runs:
         
         #-------Start Routine "test_2"-------
         continueRoutine = True
-        while continueRoutine and routineTimer.getTime() > 0:
+        while continueRoutine:
             # get current time
             t = test_2Clock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -784,7 +794,7 @@ for thisRun in runs:
                 fixationJitterText_2.tStart = t  # underestimates by a little under one frame
                 fixationJitterText_2.frameNStart = frameN  # exact frame index
                 fixationJitterText_2.setAutoDraw(True)
-            if fixationJitterText_2.status == STARTED and t >= (4.0 + (0.5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if fixationJitterText_2.status == STARTED and t >= (4.0 + (jitterTime-win.monitorFramePeriod*0.75)): #most of one frame period left
                 fixationJitterText_2.setAutoDraw(False)
             
             # *responseKey_2* updates
@@ -812,8 +822,6 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -873,6 +881,7 @@ for thisRun in runs:
             # hack to re-render the text with new opacity
             sickHighlight_2.setText(sickHighlight_2.text)
             notsickHighlight_2.setText(notsickHighlight_2.text)
+            
             # *ITI_2* period
             if t >= 0 and ITI_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -886,7 +895,7 @@ for thisRun in runs:
                 # keep track of start time/frame for later
                 Jitter_2.tStart = t  # underestimates by a little under one frame
                 Jitter_2.frameNStart = frameN  # exact frame index
-                Jitter_2.start(0.5)
+                Jitter_2.start(jitterTime)
             elif Jitter_2.status == STARTED: #one frame should pass before updating params and completing
                 Jitter_2.complete() #finish the static period
             
@@ -917,13 +926,15 @@ for thisRun in runs:
            # was no response the correct answer?!
            if str(corrAns).lower() == 'none': responseKey_2.corr = 1  # correct non-response
            else: responseKey_2.corr = 0  # failed to respond (incorrectly)
-        # store data for thisExp (ExperimentHandler)
-        thisExp.addData('responseKey_2.keys',responseKey_2.keys)
-        thisExp.addData('responseKey_2.corr', responseKey_2.corr)
+        # store data for test_trials (TrialHandler)
+        test_trials.addData('responseKey_2.keys',responseKey_2.keys)
+        test_trials.addData('responseKey_2.corr', responseKey_2.corr)
         if responseKey_2.keys != None:  # we had a response
-            thisExp.addData('responseKey_2.rt', responseKey_2.rt)
-        thisExp.nextEntry()
+            test_trials.addData('responseKey_2.rt', responseKey_2.rt)
         
+        
+        # the Routine "test_2" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         thisExp.nextEntry()
         
     # completed 1 repeats of 'test_trials'
@@ -931,6 +942,8 @@ for thisRun in runs:
     thisExp.nextEntry()
     
 # completed 1 repeats of 'runs'
+
+
 
 
 
