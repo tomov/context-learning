@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Sep 15 20:24:08 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 07:52:13 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -65,96 +65,98 @@ runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
     depth=0.0)
 
 
+
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
+
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-1.0)
+    depth=-2.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color=u'purple', colorSpace='rgb', opacity=1,
-    depth=-2.0)
+    depth=-3.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-3.0)
+    texRes=128, interpolate=True, depth=-4.0)
 fixationJitterText = visual.TextStim(win=win, ori=0, name='fixationJitterText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-4.0)
+    depth=-5.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-6.0)
+    texRes=128, interpolate=True, depth=-7.0)
 notsickImg = visual.ImageStim(win=win, name='notsickImg',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-7.0)
+    texRes=128, interpolate=True, depth=-8.0)
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-9.0)
 Jitter = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
     text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-10.0)
+    depth=-11.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
     text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-11.0)
+    depth=-12.0)
 
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
     text=u'CORRECT',    font=u'Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
     color=u'blue', colorSpace='rgb', opacity=1,
-    depth=-13.0)
+    depth=-14.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
     text=u'WRONG',    font=u'Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
     color=u'red', colorSpace='rgb', opacity=1,
-    depth=-14.0)
+    depth=-15.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
     text=u'TIMEOUT',    font=u'Arial Bold',
     pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color=u'purple', colorSpace='rgb', opacity=1,
-    depth=-15.0)
+    color=u'black', colorSpace='rgb', opacity=1,
+    depth=-16.0)
 sickFeedback = visual.ImageStim(win=win, name='sickFeedback',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[0, 0], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-16.0)
+    texRes=128, interpolate=True, depth=-17.0)
 notsickFeedback = visual.ImageStim(win=win, name='notsickFeedback',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[0, 0], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-17.0)
+    texRes=128, interpolate=True, depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
     text=u'The customer got sick!',    font=u'Arial',
     pos=[0, -0.5], height=0.075, wrapWidth=None,
     color=u'black', colorSpace='rgb', opacity=1,
-    depth=-18.0)
+    depth=-19.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
     text=u"The customer didn't get sick!",    font=u'Arial',
     pos=[0, -0.5], height=0.075, wrapWidth=None,
     color=u'black', colorSpace='rgb', opacity=1,
-    depth=-19.0)
+    depth=-20.0)
 
 
 # Initialize components for Routine "test_2"
@@ -242,6 +244,35 @@ for thisRun in runs:
     # update component parameters for each repeat
     restaurants = [r.strip() for r in restaurantNames.split(',')]
     assert len(restaurants) == 3, "There should be 3 comma-separated restaurant names per run; found " + str(len(restaurants))
+    # Random shuffle the context roles so they're independent from the
+    # restaurants / foods.
+    #
+    try:
+        assert contextRolesWereShuffled
+    except NameError:
+        # hack to make sure this happens only once
+        # we can't put in Begin Experiment b/c runs is not initialized there
+        #
+        contextRoles = [run['contextRole'] for run in runs.trialList]
+        print 'contextRoles = ', contextRoles
+        shuffle(contextRoles)
+        print 'Shuffled context roles = ', contextRoles
+        # reassign the shuffled context roles
+        #
+        i = 0
+        for run in runs.trialList:
+            run['contextRole'] = contextRoles[i]
+            i += 1
+        # the loop is already initiated => take special care of first one
+        #
+        thisRun.contextRole = contextRoles[0]
+        # set the flag so we don't run this code again
+        #
+        contextRolesWereShuffled = True
+    
+    # sanity check to make sure we're actually picking up the shuffled roles
+    #
+    assert contextRoles[runs.thisN] == thisRun.contextRole
     # keep track of which components have finished
     new_runComponents = []
     new_runComponents.append(runInstr)
@@ -267,6 +298,7 @@ for thisRun in runs:
             runInstr.setAutoDraw(False)
         
         
+        
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
             break
@@ -290,8 +322,9 @@ for thisRun in runs:
             thisComponent.setAutoDraw(False)
     
     
+    
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='sequential', 
+    trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
         trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
@@ -315,6 +348,7 @@ for thisRun in runs:
         frameN = -1
         routineTimer.add(5.500000)
         # update component parameters for each repeat
+        assert contextRolesWereShuffled
         restaurantText.setText(restaurants[contextId])
         foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cueId) + '.png'))
         responseKey = event.BuilderKeyResponse()  # create an object of type KeyResponse
@@ -373,6 +407,7 @@ for thisRun in runs:
             t = trialClock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
+            
             
             # *trialInstrText* updates
             if t >= 1 and trialInstrText.status == NOT_STARTED:
@@ -435,6 +470,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg* updates
             if t >= 1 and sickImg.status == NOT_STARTED:
@@ -633,6 +670,7 @@ for thisRun in runs:
         for thisComponent in trialComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
+        
         # check responses
         if responseKey.keys in ['', [], None]:  # No response was made
            responseKey.keys=None
@@ -774,6 +812,8 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -891,6 +931,8 @@ for thisRun in runs:
     thisExp.nextEntry()
     
 # completed 1 repeats of 'runs'
+
+
 
 
 

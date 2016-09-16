@@ -24,6 +24,14 @@
   <Routines>
     <Routine name="test"/>
     <Routine name="trial">
+      <CodeComponent name="sanityChecks">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="sanityChecks" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="assert contextRolesWereShuffled" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
       <StaticComponent name="ITI">
         <Param name="code" val="" valType="code" updates="None"/>
         <Param name="name" val="ITI" valType="code" updates="None"/>
@@ -71,7 +79,7 @@
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="1" valType="code" updates="None"/>
-        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="font" val="Arial Bold" valType="str" updates="constant"/>
         <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
       </TextComponent>
       <ImageComponent name="foodImg">
@@ -297,7 +305,7 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="timeoutText" valType="code" updates="None"/>
-        <Param name="color" val="purple" valType="str" updates="constant"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
@@ -431,6 +439,14 @@
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="getRestaurants" valType="code" updates="None"/>
         <Param name="Begin Routine" val="restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="shuffleContextRoles">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="shuffleContextRoles" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # reassign the shuffled context roles&#10;    #&#10;    i = 0&#10;    for run in runs.trialList:&#10;        run['contextRole'] = contextRoles[i]&#10;        i += 1&#10;    # the loop is already initiated =&gt; take special care of first one&#10;    #&#10;    thisRun.contextRole = contextRoles[0]&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# sanity check to make sure we're actually picking up the shuffled roles&#10;#&#10;assert contextRoles[runs.thisN] == thisRun.contextRole" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
@@ -687,7 +703,7 @@
       <Param name="name" val="trials" valType="code" updates="None"/>
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
-      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="loopType" val="fullRandom" valType="str" updates="None"/>
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
