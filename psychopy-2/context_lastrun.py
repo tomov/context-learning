@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 09:26:35 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 11:05:11 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -71,14 +71,32 @@ Press any button to begin the first block.
 '''
 instrText = visual.TextStim(win=win, ori=0, name='instrText',
     text=instruction
-,    font=u'Arial',
+,    font='Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
+
+# Initialize components for Routine "waitForTrigger"
+waitForTriggerClock = core.Clock()
+trigger = 'parallel'
+# trigger = 'usb'
+if trigger == 'parallel':
+    from psychopy import parallel 
+elif trigger == 'usb':
+    from psychopy.hardware.emulator import launchScan    
+
+    # settings for launchScan:
+    MR_settings = { 
+        'TR': 2.5, # duration (sec) per volume
+        'volumes': 141, # number of whole-brain 3D volumes / frames
+        'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume
+        'skip': 0, # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
+        }
+
 
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
-runInstructions = '''Beginning new block with a new set of restaurants and foods.
+runInstructions = '''You are about to begin new block with a new set of restaurants and foods.
 
 You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
 
@@ -90,9 +108,9 @@ You will have 3 seconds to press on each trial.
 
 Press any button to begin the first trial.'''
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=runInstructions,    font=u'Arial',
+    text=runInstructions,    font='Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 
@@ -190,6 +208,8 @@ didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
     depth=-20.0)
 
 
+import time
+expInfo['expStartWallTime'] = time.ctime()
 
 # Initialize components for Routine "test_2"
 test_2Clock = core.Clock()
@@ -245,6 +265,15 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     depth=-11.0)
 
 
+
+# Initialize components for Routine "waitForFinish"
+waitForFinishClock = core.Clock()
+EXP_DURATION = 352.5
+finishText = visual.TextStim(win=win, ori=0, name='finishText',
+    text='Please wait for scanner to finish...',    font='Arial',
+    pos=[0, 0], height=0.1, wrapWidth=None,
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-1.0)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -338,10 +367,78 @@ thisExp.nextEntry()
 # the Routine "instr" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
+#------Prepare to start Routine "waitForTrigger"-------
+t = 0
+waitForTriggerClock.reset()  # clock 
+frameN = -1
+# update component parameters for each repeat
+if 'mriMode' in expInfo and expInfo['mriMode'] != 'Off':
+    if trigger == 'usb':
+        vol = launchScan(win, MR_settings, 
+              globalClock=logging.defaultClock, 
+              mode=expInfo['mriMode'])
+    elif trigger == 'parallel':
+        parallel.setPortAddress(0x378)
+        pin = 10; wait_msg = "Waiting for scanner..."
+        pinStatus = parallel.readPin(pin)
+        waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)
+        waitMsgStim.draw()
+        win.flip()
+        while True:
+            if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):
+               break
+               # start exp when pin values change
+        globalClock.reset()
+        logging.defaultClock.reset()
+        logging.exp('parallel trigger: start of scan')
+        win.flip()  # blank the screen on first sync pulse received
+
+expInfo['triggerWallTime'] = time.ctime()
+core.wait(1)
+# keep track of which components have finished
+waitForTriggerComponents = []
+for thisComponent in waitForTriggerComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+#-------Start Routine "waitForTrigger"-------
+continueRoutine = True
+while continueRoutine:
+    # get current time
+    t = waitForTriggerClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in waitForTriggerComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+#-------Ending Routine "waitForTrigger"-------
+for thisComponent in waitForTriggerComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+routineTimer.reset()
+# the Routine "waitForTrigger" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
 # set up handler to look after randomisation of conditions etc
-runs = data.TrialHandler(nReps=1, method='sequential', 
+runs = data.TrialHandler(nReps=1, method='fullRandom', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions('runs.xlsx', selection='range(1,4)'),
+    trialList=data.importConditions(u'runs.xlsx', selection=u'range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -375,25 +472,18 @@ for thisRun in runs:
         # we can't put in Begin Experiment b/c runs is not initialized there
         #
         contextRoles = [run['contextRole'] for run in runs.trialList]
-        print 'contextRoles = ', contextRoles
+        print 'original contextRoles = ', contextRoles
         shuffle(contextRoles)
         print 'Shuffled context roles = ', contextRoles
-        # reassign the shuffled context roles
-        #
-        i = 0
-        for run in runs.trialList:
-            run['contextRole'] = contextRoles[i]
-            i += 1
-        # the loop is already initiated => take special care of first one
-        #
-        thisRun.contextRole = contextRoles[0]
         # set the flag so we don't run this code again
         #
         contextRolesWereShuffled = True
     
-    # sanity check to make sure we're actually picking up the shuffled roles
+    # very important to set it here so
+    # 1) it gets used to initialize the trial loop, and
+    # 2) it gets written out to the data file
     #
-    assert contextRoles[runs.thisN] == thisRun.contextRole
+    thisRun.contextRole = contextRoles[runs.thisN]
     startRunResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
     startRunResp.status = NOT_STARTED
     # keep track of which components have finished
@@ -482,7 +572,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -533,6 +623,7 @@ for thisRun in runs:
         # uniform 0-2 seconds for each trial
         #
         jitterTime = random() * 2
+        trials.addData('trialStartWallTime', time.ctime())
         # keep track of which components have finished
         trialComponents = []
         trialComponents.append(ITI)
@@ -628,6 +719,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg* updates
             if t >= 1 and sickImg.status == NOT_STARTED:
@@ -789,6 +882,7 @@ for thisRun in runs:
                     didntGetSickText.setText(didntGetSickText.text)
             
             
+            
             # *ITI* period
             if t >= 0 and ITI.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -842,6 +936,7 @@ for thisRun in runs:
         
         
         
+        trials.addData('trialEndWallTime', time.ctime())
         # the Routine "trial" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         thisExp.nextEntry()
@@ -852,7 +947,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     test_trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
     thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -972,6 +1067,8 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -1094,6 +1191,63 @@ for thisRun in runs:
 # completed 1 repeats of 'runs'
 
 
+#------Prepare to start Routine "waitForFinish"-------
+t = 0
+waitForFinishClock.reset()  # clock 
+frameN = -1
+# update component parameters for each repeat
+
+# keep track of which components have finished
+waitForFinishComponents = []
+waitForFinishComponents.append(finishText)
+for thisComponent in waitForFinishComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+#-------Start Routine "waitForFinish"-------
+continueRoutine = True
+while continueRoutine:
+    # get current time
+    t = waitForFinishClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    if logging.defaultClock.getTime() > EXP_DURATION:
+        continueRoutine = False
+        finishText.status = FINISHED
+        finishText.setAutoDraw(False)
+    
+    # *finishText* updates
+    if t >= 0.0 and finishText.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        finishText.tStart = t  # underestimates by a little under one frame
+        finishText.frameNStart = frameN  # exact frame index
+        finishText.setAutoDraw(True)
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in waitForFinishComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+#-------Ending Routine "waitForFinish"-------
+for thisComponent in waitForFinishComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+logging.exp("Experiment Finished")
+
+# the Routine "waitForFinish" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
 
 
 
@@ -1103,5 +1257,9 @@ for thisRun in runs:
 
 
 
+
+
+
+#win.saveMovieFrames('thumb.png')
 win.close()
 core.quit()

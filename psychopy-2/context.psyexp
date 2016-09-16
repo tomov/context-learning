@@ -70,7 +70,7 @@
     </Routine>
     <Routine name="new_run">
       <CodeComponent name="runInstrCode">
-        <Param name="Begin Experiment" val="runInstructions = '''Beginning new block with a new set of restaurants and foods.&#10;&#10;You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.&#10;&#10;Press with you index finger if you believe the customer will get sick from eating the food.&#10;&#10;Press with your middle finger if you believe the customer will NOT get sick.&#10;&#10;You will have 3 seconds to press on each trial.&#10;&#10;Press any button to begin the first trial.'''" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Experiment" val="runInstructions = '''You are about to begin new block with a new set of restaurants and foods.&#10;&#10;You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.&#10;&#10;Press with you index finger if you believe the customer will get sick from eating the food.&#10;&#10;Press with your middle finger if you believe the customer will NOT get sick.&#10;&#10;You will have 3 seconds to press on each trial.&#10;&#10;Press any button to begin the first trial.'''" valType="extendedCode" updates="constant"/>
         <Param name="name" val="runInstrCode" valType="code" updates="None"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
@@ -108,7 +108,7 @@
       <CodeComponent name="shuffleContextRoles">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="shuffleContextRoles" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # reassign the shuffled context roles&#10;    #&#10;    i = 0&#10;    for run in runs.trialList:&#10;        run['contextRole'] = contextRoles[i]&#10;        i += 1&#10;    # the loop is already initiated =&gt; take special care of first one&#10;    #&#10;    thisRun.contextRole = contextRoles[0]&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# sanity check to make sure we're actually picking up the shuffled roles&#10;#&#10;assert contextRoles[runs.thisN] == thisRun.contextRole" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'original contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# very important to set it here so&#10;# 1) it gets used to initialize the trial loop, and&#10;# 2) it gets written out to the data file&#10;#&#10;thisRun.contextRole = contextRoles[runs.thisN]" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
@@ -527,6 +527,14 @@
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
+      <CodeComponent name="timeLoggingCode">
+        <Param name="Begin Experiment" val="import time&#10;expInfo['expStartWallTime'] = time.ctime()" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="timeLoggingCode" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="trials.addData('trialStartWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="trials.addData('trialEndWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
     </Routine>
     <Routine name="test_2">
       <StaticComponent name="ITI_2">
@@ -766,21 +774,70 @@
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
+      <CodeComponent name="timeLoggingCode_2">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="timeLoggingCode_2" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="trials.addData('trialStartWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="trials.addData('trialEndWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="waitForTrigger">
+      <CodeComponent name="waitForTriggerCode">
+        <Param name="Begin Experiment" val="trigger = 'parallel'&#10;# trigger = 'usb'&#10;if trigger == 'parallel':&#10;    from psychopy import parallel &#10;elif trigger == 'usb':&#10;    from psychopy.hardware.emulator import launchScan    &#10;&#10;    # settings for launchScan:&#10;    MR_settings = { &#10;        'TR': 2.5, # duration (sec) per volume&#10;        'volumes': 141, # number of whole-brain 3D volumes / frames&#10;        'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume&#10;        'skip': 0, # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)&#10;        }&#10;" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="waitForTriggerCode" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="if 'mriMode' in expInfo and expInfo['mriMode'] != 'Off':&#10;    if trigger == 'usb':&#10;        vol = launchScan(win, MR_settings, &#10;              globalClock=logging.defaultClock, &#10;              mode=expInfo['mriMode'])&#10;    elif trigger == 'parallel':&#10;        parallel.setPortAddress(0x378)&#10;        pin = 10; wait_msg = &quot;Waiting for scanner...&quot;&#10;        pinStatus = parallel.readPin(pin)&#10;        waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)&#10;        waitMsgStim.draw()&#10;        win.flip()&#10;        while True:&#10;            if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):&#10;               break&#10;               # start exp when pin values change&#10;        globalClock.reset()&#10;        logging.defaultClock.reset()&#10;        logging.exp('parallel trigger: start of scan')&#10;        win.flip()  # blank the screen on first sync pulse received&#10;&#10;expInfo['triggerWallTime'] = time.ctime()&#10;core.wait(1)" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="routineTimer.reset()" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
     </Routine>
     <Routine name="test"/>
+    <Routine name="waitForFinish">
+      <CodeComponent name="finishCode">
+        <Param name="Begin Experiment" val="EXP_DURATION = 352.5" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="finishCode" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="logging.exp(&quot;Experiment Finished&quot;)&#10;" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="#win.saveMovieFrames('thumb.png')" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="if logging.defaultClock.getTime() &gt; EXP_DURATION:&#10;    continueRoutine = False&#10;    finishText.status = FINISHED&#10;    finishText.setAutoDraw(False)" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <TextComponent name="finishText">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="finishText" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="text" val="Please wait for scanner to finish..." valType="str" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="instr"/>
+    <Routine name="waitForTrigger"/>
     <LoopInitiator loopType="TrialHandler" name="runs">
       <Param name="conditionsFile" val="runs.xlsx" valType="str" updates="None"/>
       <Param name="name" val="runs" valType="code" updates="None"/>
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
-      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="loopType" val="fullRandom" valType="str" updates="None"/>
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
-      <Param name="conditions" val="[{u'restaurantNames': u'Okay here\'s how this works. Each row is a different run -- a list of restaurant names + the prefix of the filenames of its corresponding foods. The list of restaurant names should be comma-separated and should contain exactly 3 restaurants. For each food prefix, there should be 3 corresponding files in the \'foods\' directory in the format &quot;[food prefix][cueId].png&quot;. For example, for the prefix &quot;mexican_food&quot;, there should be files &quot;mexican_food0.png&quot;, &quot;mexican_food1.png&quot; and &quot;mexican_food2.png&quot;.  The third column is randomly shuffled so different foods/restaurants can be used with different context roles across subjects. The context role also corresponds to the filename where the context/cue pairs are, in the format &quot;[contextRole].xlsx&quot;. In each of these files, the contextId and cueId are matched with the restaurants and foods, respectively. Sorry it\'s so complicated but there is no other way to make it work with psychopy', u'foodFilesPrefix': None, u'contextRole': None}, {u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Caf\xe9&quot;, u'foodFilesPrefix': u'mexican_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,OO Kook Korean BBQ,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'asian_food', u'contextRole': u'additive'}]" valType="str" updates="None"/>
-      <Param name="Selected rows" val="range(1,4)" valType="str" updates="None"/>
+      <Param name="conditions" val="[{u'restaurantNames': u'Okay here\'s how this works. Each row is a different run -- a list of restaurant names + the prefix of the filenames of its corresponding foods. The list of restaurant names should be comma-separated and should contain exactly 3 restaurants (no unicode characters please -- stick to ASCII). For each food prefix, there should be 3 corresponding files in the \'foods\' directory in the format &quot;[food prefix][cueId].png&quot;. For example, for the prefix &quot;mexican_food&quot;, there should be files &quot;mexican_food0.png&quot;, &quot;mexican_food1.png&quot; and &quot;mexican_food2.png&quot;.  The third column is randomly shuffled so different foods/restaurants can be used with different context roles across subjects. The context role also corresponds to the filename where the context/cue pairs are, in the format &quot;[contextRole].xlsx&quot;. In each of these files, the contextId and cueId are matched with the restaurants and foods, respectively. Sorry it\'s so complicated but there is no other way to make it work with psychopy', u'foodFilesPrefix': None, u'contextRole': None}, {u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Cafe&quot;, u'foodFilesPrefix': u'mexican_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,Shanghai Dumpling King,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'chinese_food', u'contextRole': u'additive'}, {u'restaurantNames': u&quot;Breakfast at Tiffany's,Sweet Maple,Mission Beach Cafe&quot;, u'foodFilesPrefix': u'brunch_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Myconos Restaurant,Mediterranean Grill,Gyro King', u'foodFilesPrefix': u'greek_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u'Izakaya Sozai,Onigilly Express,Sanraku Restaurant', u'foodFilesPrefix': u'japanese_food', u'contextRole': u'additive'}, {u'restaurantNames': u'Kusakabe,Sara Sushi Bar,Wako Sushi Place', u'foodFilesPrefix': u'sushi_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Restorante Milano,Trattoria Contadina,Fino Bar &amp; Restorante', u'foodFilesPrefix': u'italian_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;McRonald's,Burger Queen,Metro Drive-In&quot;, u'foodFilesPrefix': u'fast_food', u'contextRole': u'additive'}]" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(1,10)" valType="str" updates="None"/>
     </LoopInitiator>
     <Routine name="new_run"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
@@ -810,5 +867,6 @@
     <Routine name="test_2"/>
     <LoopTerminator name="test_trials"/>
     <LoopTerminator name="runs"/>
+    <Routine name="waitForFinish"/>
   </Flow>
 </PsychoPy2experiment>
