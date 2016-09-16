@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 08:57:57 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 09:26:35 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -56,13 +56,44 @@ if expInfo['frameRate']!=None:
 else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
+# Initialize components for Routine "instr"
+instrClock = core.Clock()
+instruction ='''Imagine that your are a health inspector trying to determine the cause of illness in different restaurants.''' \
++ ''' On each trial you will see the name of the restaurant and a particular food.''' \
++ ''' Your job is to predict whether a customer will get sick from eating the food.''' \
++ ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \
++ ''' In some cases you will make predictions about the same food in different restaurants.
+
+The experiment consists of 9 blocks. In each block, you will be presented with a different set of restaurants and foods.''' \
++ ''' There will be a short pause between blocks.
+
+Press any button to begin the first block.
+'''
+instrText = visual.TextStim(win=win, ori=0, name='instrText',
+    text=instruction
+,    font=u'Arial',
+    pos=[0, 0], height=0.08, wrapWidth=1.5,
+    color=u'black', colorSpace='rgb', opacity=1,
+    depth=-1.0)
+
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
+runInstructions = '''Beginning new block with a new set of restaurants and foods.
+
+You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
+
+Press with you index finger if you believe the customer will get sick from eating the food.
+
+Press with your middle finger if you believe the customer will NOT get sick.
+
+You will have 3 seconds to press on each trial.
+
+Press any button to begin the first trial.'''
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text='You are about to learn about a new set of restaurants and foods.',    font='Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
-    depth=0.0)
+    text=runInstructions,    font=u'Arial',
+    pos=[0, 0], height=0.08, wrapWidth=1.5,
+    color=u'black', colorSpace='rgb', opacity=1,
+    depth=-1.0)
 
 
 
@@ -87,9 +118,9 @@ foodImg = visual.ImageStim(win=win, name='foodImg',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-4.0)
 fixationJitterText = visual.TextStim(win=win, ori=0, name='fixationJitterText',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-5.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -169,9 +200,9 @@ trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'purple', colorSpace='rgb', opacity=1,
+    color='purple', colorSpace='rgb', opacity=1,
     depth=-2.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
@@ -180,9 +211,9 @@ foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-3.0)
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-4.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -219,6 +250,94 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
+#------Prepare to start Routine "instr"-------
+t = 0
+instrClock.reset()  # clock 
+frameN = -1
+# update component parameters for each repeat
+
+startExpResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
+startExpResp.status = NOT_STARTED
+# keep track of which components have finished
+instrComponents = []
+instrComponents.append(instrText)
+instrComponents.append(startExpResp)
+for thisComponent in instrComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+#-------Start Routine "instr"-------
+continueRoutine = True
+while continueRoutine:
+    # get current time
+    t = instrClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    
+    # *instrText* updates
+    if t >= 0.0 and instrText.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        instrText.tStart = t  # underestimates by a little under one frame
+        instrText.frameNStart = frameN  # exact frame index
+        instrText.setAutoDraw(True)
+    if instrText.status == STARTED and t >= (0.0 + (60-win.monitorFramePeriod*0.75)): #most of one frame period left
+        instrText.setAutoDraw(False)
+    
+    # *startExpResp* updates
+    if t >= 5.0 and startExpResp.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        startExpResp.tStart = t  # underestimates by a little under one frame
+        startExpResp.frameNStart = frameN  # exact frame index
+        startExpResp.status = STARTED
+        # keyboard checking is just starting
+        startExpResp.clock.reset()  # now t=0
+        event.clearEvents(eventType='keyboard')
+    if startExpResp.status == STARTED:
+        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
+        
+        # check for quit:
+        if "escape" in theseKeys:
+            endExpNow = True
+        if len(theseKeys) > 0:  # at least one key was pressed
+            startExpResp.keys = theseKeys[-1]  # just the last key pressed
+            startExpResp.rt = startExpResp.clock.getTime()
+            # a response ends the routine
+            continueRoutine = False
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in instrComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+#-------Ending Routine "instr"-------
+for thisComponent in instrComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+
+# check responses
+if startExpResp.keys in ['', [], None]:  # No response was made
+   startExpResp.keys=None
+# store data for thisExp (ExperimentHandler)
+thisExp.addData('startExpResp.keys',startExpResp.keys)
+if startExpResp.keys != None:  # we had a response
+    thisExp.addData('startExpResp.rt', startExpResp.rt)
+thisExp.nextEntry()
+# the Routine "instr" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
@@ -242,8 +361,8 @@ for thisRun in runs:
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(1.000000)
     # update component parameters for each repeat
+    
     restaurants = [r.strip() for r in restaurantNames.split(',')]
     assert len(restaurants) == 3, "There should be 3 comma-separated restaurant names per run; found " + str(len(restaurants))
     # Random shuffle the context roles so they're independent from the
@@ -275,20 +394,24 @@ for thisRun in runs:
     # sanity check to make sure we're actually picking up the shuffled roles
     #
     assert contextRoles[runs.thisN] == thisRun.contextRole
+    startRunResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
+    startRunResp.status = NOT_STARTED
     # keep track of which components have finished
     new_runComponents = []
     new_runComponents.append(runInstr)
+    new_runComponents.append(startRunResp)
     for thisComponent in new_runComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
     
     #-------Start Routine "new_run"-------
     continueRoutine = True
-    while continueRoutine and routineTimer.getTime() > 0:
+    while continueRoutine:
         # get current time
         t = new_runClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        
         
         # *runInstr* updates
         if t >= 0.0 and runInstr.status == NOT_STARTED:
@@ -296,10 +419,31 @@ for thisRun in runs:
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (1.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (60.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
         
         
+        
+        # *startRunResp* updates
+        if t >= 5.0 and startRunResp.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            startRunResp.tStart = t  # underestimates by a little under one frame
+            startRunResp.frameNStart = frameN  # exact frame index
+            startRunResp.status = STARTED
+            # keyboard checking is just starting
+            startRunResp.clock.reset()  # now t=0
+            event.clearEvents(eventType='keyboard')
+        if startRunResp.status == STARTED:
+            theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
+            
+            # check for quit:
+            if "escape" in theseKeys:
+                endExpNow = True
+            if len(theseKeys) > 0:  # at least one key was pressed
+                startRunResp.keys = theseKeys[-1]  # just the last key pressed
+                startRunResp.rt = startRunResp.clock.getTime()
+                # a response ends the routine
+                continueRoutine = False
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -324,6 +468,16 @@ for thisRun in runs:
             thisComponent.setAutoDraw(False)
     
     
+    
+    # check responses
+    if startRunResp.keys in ['', [], None]:  # No response was made
+       startRunResp.keys=None
+    # store data for runs (TrialHandler)
+    runs.addData('startRunResp.keys',startRunResp.keys)
+    if startRunResp.keys != None:  # we had a response
+        runs.addData('startRunResp.rt', startRunResp.rt)
+    # the Routine "new_run" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
@@ -379,8 +533,6 @@ for thisRun in runs:
         # uniform 0-2 seconds for each trial
         #
         jitterTime = random() * 2
-        
-        print 'train jitter = ', jitterTime
         # keep track of which components have finished
         trialComponents = []
         trialComponents.append(ITI)
@@ -733,8 +885,6 @@ for thisRun in runs:
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
         jitterTime = random() * 2
-        
-        print 'test jitter = ', jitterTime
         # keep track of which components have finished
         test_2Components = []
         test_2Components.append(ITI_2)
@@ -942,6 +1092,8 @@ for thisRun in runs:
     thisExp.nextEntry()
     
 # completed 1 repeats of 'runs'
+
+
 
 
 
