@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Sep 15 19:51:34 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Sep 15 20:24:08 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -216,9 +216,9 @@ globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
 # set up handler to look after randomisation of conditions etc
-runs = data.TrialHandler(nReps=3, method='random', 
+runs = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions(u'runs.xlsx'),
+    trialList=data.importConditions(u'runs.xlsx', selection=range(1,4)),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -291,9 +291,9 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='random', 
+    trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(u'irrelevant.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -435,8 +435,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg* updates
             if t >= 1 and sickImg.status == NOT_STARTED:
@@ -654,23 +652,23 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    test_trials_2 = data.TrialHandler(nReps=1, method='sequential', 
+    test_trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(u'irrelevant.xlsx', selection=range(6,10)),
-        seed=None, name='test_trials_2')
-    thisExp.addLoop(test_trials_2)  # add the loop to the experiment
-    thisTest_trial_2 = test_trials_2.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb=thisTest_trial_2.rgb)
-    if thisTest_trial_2 != None:
-        for paramName in thisTest_trial_2.keys():
-            exec(paramName + '= thisTest_trial_2.' + paramName)
+        trialList=data.importConditions(contextRole + '.xlsx', selection=range(6,10)),
+        seed=None, name='test_trials')
+    thisExp.addLoop(test_trials)  # add the loop to the experiment
+    thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb=thisTest_trial.rgb)
+    if thisTest_trial != None:
+        for paramName in thisTest_trial.keys():
+            exec(paramName + '= thisTest_trial.' + paramName)
     
-    for thisTest_trial_2 in test_trials_2:
-        currentLoop = test_trials_2
-        # abbreviate parameter names if possible (e.g. rgb = thisTest_trial_2.rgb)
-        if thisTest_trial_2 != None:
-            for paramName in thisTest_trial_2.keys():
-                exec(paramName + '= thisTest_trial_2.' + paramName)
+    for thisTest_trial in test_trials:
+        currentLoop = test_trials
+        # abbreviate parameter names if possible (e.g. rgb = thisTest_trial.rgb)
+        if thisTest_trial != None:
+            for paramName in thisTest_trial.keys():
+                exec(paramName + '= thisTest_trial.' + paramName)
         
         #------Prepare to start Routine "test_2"-------
         t = 0
@@ -776,8 +774,6 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -890,11 +886,11 @@ for thisRun in runs:
         
         thisExp.nextEntry()
         
-    # completed 1 repeats of 'test_trials_2'
+    # completed 1 repeats of 'test_trials'
     
     thisExp.nextEntry()
     
-# completed 3 repeats of 'runs'
+# completed 1 repeats of 'runs'
 
 
 

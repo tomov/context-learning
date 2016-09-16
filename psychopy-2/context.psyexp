@@ -675,39 +675,39 @@
       <Param name="name" val="runs" valType="code" updates="None"/>
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
-      <Param name="loopType" val="random" valType="str" updates="None"/>
+      <Param name="loopType" val="sequential" valType="str" updates="None"/>
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
-      <Param name="conditions" val="[{u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Caf\xe9&quot;, u'foodFilesPrefix': u'mexican_food'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,OO Kook Korean BBQ,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'asian_food'}]" valType="str" updates="None"/>
-      <Param name="Selected rows" val="" valType="code" updates="None"/>
+      <Param name="conditions" val="[{u'restaurantNames': u'Okay here\'s how this works. Each row is a different run -- a list of restaurant names + the prefix of the filenames of its corresponding foods. The list of restaurant names should be comma-separated and should contain exactly 3 restaurants. For each food prefix, there should be 3 corresponding files in the \'foods\' directory in the format &quot;[food prefix][cueId].png&quot;. For example, for the prefix &quot;mexican_food&quot;, there should be files &quot;mexican_food0.png&quot;, &quot;mexican_food1.png&quot; and &quot;mexican_food2.png&quot;.  The third column is randomly shuffled so different foods/restaurants can be used with different context roles across subjects. The context role also corresponds to the filename where the context/cue pairs are, in the format &quot;[contextRole].xlsx&quot;. In each of these files, the contextId and cueId are matched with the restaurants and foods, respectively. Sorry it\'s so complicated but there is no other way to make it work with psychopy', u'foodFilesPrefix': None, u'contextRole': None}, {u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Caf\xe9&quot;, u'foodFilesPrefix': u'mexican_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,OO Kook Korean BBQ,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'asian_food', u'contextRole': u'additive'}]" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(1,4)" valType="code" updates="None"/>
     </LoopInitiator>
     <Routine name="new_run"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
-      <Param name="conditionsFile" val="irrelevant.xlsx" valType="str" updates="None"/>
+      <Param name="conditionsFile" val="$contextRole + '.xlsx'" valType="str" updates="None"/>
       <Param name="name" val="trials" valType="code" updates="None"/>
-      <Param name="isTrials" val="True" valType="bool" updates="None"/>
-      <Param name="random seed" val="" valType="code" updates="None"/>
-      <Param name="loopType" val="random" valType="str" updates="None"/>
-      <Param name="nReps" val="1" valType="code" updates="None"/>
-      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
-      <Param name="conditions" val="[{u'contextId': u'Training', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': 1, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 1, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': u' Test', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 2, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': None, u'sick': None, u'cueId': 2}, {u'contextId': 2, u'corrAns': None, u'sick': None, u'cueId': 2}]" valType="str" updates="None"/>
-      <Param name="Selected rows" val="range(1,5)" valType="str" updates="None"/>
-    </LoopInitiator>
-    <Routine name="trial"/>
-    <LoopTerminator name="trials"/>
-    <LoopInitiator loopType="TrialHandler" name="test_trials_2">
-      <Param name="conditionsFile" val="irrelevant.xlsx" valType="str" updates="None"/>
-      <Param name="name" val="test_trials_2" valType="code" updates="None"/>
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
       <Param name="loopType" val="sequential" valType="str" updates="None"/>
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
-      <Param name="conditions" val="[{u'contextId': u'Training', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': 1, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 1, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': u' Test', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 2, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': None, u'sick': None, u'cueId': 2}, {u'contextId': 2, u'corrAns': None, u'sick': None, u'cueId': 2}]" valType="str" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(1,5)" valType="str" updates="None"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+    <LoopInitiator loopType="TrialHandler" name="test_trials">
+      <Param name="conditionsFile" val="$contextRole + '.xlsx'" valType="str" updates="None"/>
+      <Param name="name" val="test_trials" valType="code" updates="None"/>
+      <Param name="isTrials" val="True" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
       <Param name="Selected rows" val="range(6,10)" valType="code" updates="None"/>
     </LoopInitiator>
     <Routine name="test_2"/>
-    <LoopTerminator name="test_trials_2"/>
+    <LoopTerminator name="test_trials"/>
     <LoopTerminator name="runs"/>
   </Flow>
 </PsychoPy2experiment>
