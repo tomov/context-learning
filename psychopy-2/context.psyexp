@@ -22,6 +22,7 @@
     <Param name="Screen" val="1" valType="num" updates="None"/>
   </Settings>
   <Routines>
+    <Routine name="test"/>
     <Routine name="trial">
       <StaticComponent name="ITI">
         <Param name="code" val="" valType="code" updates="None"/>
@@ -37,15 +38,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="trialInstrText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
         <Param name="color" val="black" valType="str" updates="constant"/>
-        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
         <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0.8]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -57,15 +58,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="restaurantText" valType="code" updates="None"/>
+        <Param name="color" val="purple" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
-        <Param name="color" val="blue" valType="str" updates="constant"/>
-        <Param name="text" val="$restaurant" valType="str" updates="set every repeat"/>
         <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, +0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="$restaurants[$contextId]" valType="str" updates="set every repeat"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -92,22 +93,22 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="1" valType="code" updates="None"/>
         <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
-        <Param name="image" val="'foods/' + $food + '.png'" valType="str" updates="set every repeat"/>
+        <Param name="image" val="os.path.join('foods', $foodFilesPrefix + str($cueId) + '.png')" valType="str" updates="set every repeat"/>
         <Param name="size" val="[0.5, 0.5]" valType="code" updates="constant"/>
       </ImageComponent>
       <TextComponent name="fixationJitterText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="fixationJitterText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="black" valType="str" updates="constant"/>
-        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="0.5" valType="code" updates="constant"/>
         <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -149,7 +150,7 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="1" valType="code" updates="None"/>
         <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
-        <Param name="image" val="images/sick.png" valType="str" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'sick.png')" valType="str" updates="constant"/>
         <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
       </ImageComponent>
       <ImageComponent name="notsickImg">
@@ -171,22 +172,22 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="1.0" valType="code" updates="None"/>
         <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
-        <Param name="image" val="images/smiley.png" valType="str" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'smiley.png')" valType="str" updates="constant"/>
         <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
       </ImageComponent>
       <TextComponent name="fixationITIText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="fixationITIText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="black" valType="str" updates="constant"/>
-        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -208,15 +209,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="sickHighlight" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="3" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[-0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -228,15 +229,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="notsickHighlight" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="3" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -247,24 +248,24 @@
       <CodeComponent name="highlightChoice">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="highlightChoice" valType="code" updates="None"/>
+        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey.keys:&#10;    if responseKey.keys == 'left': # sick&#10;        sickHighlight.opacity = 1&#10;        notsickHighlight.opacity = 0&#10;    elif responseKey.keys == 'right': # not sick&#10;        sickHighlight.opacity = 0&#10;        notsickHighlight.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# don't highlight anything initially&#10;#&#10;sickHighlight.setOpacity(0)&#10;notsickHighlight.setOpacity(0)&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey.keys:&#10;    if responseKey.keys == 'left': # sick&#10;        sickHighlight.opacity = 1&#10;        notsickHighlight.opacity = 0&#10;    elif responseKey.keys == 'right': # not sick&#10;        sickHighlight.opacity = 0&#10;        notsickHighlight.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="correctText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="correctText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="blue" valType="str" updates="constant"/>
-        <Param name="text" val="CORRECT" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.3]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="CORRECT" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -276,15 +277,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="wrongText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="red" valType="str" updates="constant"/>
-        <Param name="text" val="WRONG" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.3]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="WRONG" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -296,15 +297,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="timeoutText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="purple" valType="str" updates="constant"/>
-        <Param name="text" val="TIMEOUT" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.3]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="TIMEOUT" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -331,7 +332,7 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="4.0" valType="code" updates="None"/>
         <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
-        <Param name="image" val="images/sick.png" valType="str" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'sick.png')" valType="str" updates="constant"/>
         <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
       </ImageComponent>
       <ImageComponent name="notsickFeedback">
@@ -353,22 +354,22 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="4.0" valType="code" updates="None"/>
         <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
-        <Param name="image" val="images/smiley.png" valType="str" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'smiley.png')" valType="str" updates="constant"/>
         <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
       </ImageComponent>
       <TextComponent name="gotSickText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="gotSickText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="black" valType="str" updates="constant"/>
-        <Param name="text" val="The customer got sick!" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.5]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="The customer got sick!" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -380,15 +381,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="didntGetSickText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="black" valType="str" updates="constant"/>
-        <Param name="text" val="The customer didn't get sick!" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.5]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="The customer didn't get sick!" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -399,15 +400,288 @@
       <CodeComponent name="showFeedback">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="showFeedback" valType="code" updates="None"/>
+        <Param name="Each Frame" val="# show user some feedback&#10;#&#10;if t &gt;= 4.0 and not isFeedbackShown: # TODO don't hardcode&#10;    isFeedbackShown = True&#10;    if not responseKey.keys: # no response was made&#10;        timeoutText.setOpacity(1)&#10;        timeoutText.setText(timeoutText.text)&#10;    else: # response was made&#10;        if responseKey.corr == 1:&#10;            correctText.setOpacity(1)&#10;            wrongText.setOpacity(0)&#10;        elif responseKey.corr == 0:&#10;            correctText.setOpacity(0)&#10;            wrongText.setOpacity(1)&#10;        else:&#10;            print responseKey.corr&#10;            assert False, &quot;responseKey.corr = 0 or 1&quot;&#10;&#10;        if sick == 'Yes':&#10;            sickFeedback.setOpacity(1)&#10;            notsickFeedback.setOpacity(0)&#10;            gotSickText.setOpacity(1)&#10;            didntGetSickText.setOpacity(0)&#10;        elif sick == 'No':&#10;            sickFeedback.setOpacity(0)&#10;            notsickFeedback.setOpacity(1)&#10;            gotSickText.setOpacity(0)&#10;            didntGetSickText.setOpacity(1)&#10;        else:&#10;            print sick&#10;            assert False, &quot;sick can only be Yes or No&quot;&#10;&#10;        # hack to redraw the texts with new opacity&#10;        correctText.setText(correctText.text)&#10;        wrongText.setText(wrongText.text)&#10;        gotSickText.setText(gotSickText.text)&#10;        didntGetSickText.setText(didntGetSickText.text)&#10;" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# clear the feedback&#10;isFeedbackShown = False&#10;correctText.setOpacity(0)&#10;wrongText.setOpacity(0)&#10;timeoutText.setOpacity(0)&#10;sickFeedback.setOpacity(0)&#10;notsickFeedback.setOpacity(0)&#10;gotSickText.setOpacity(0)&#10;didntGetSickText.setOpacity(0)&#10;# hack to re-render the texts with new opacity&#10;correctText.setText(correctText.text)&#10;wrongText.setText(wrongText.text)&#10;timeoutText.setText(timeoutText.text)&#10;gotSickText.setText(gotSickText.text)&#10;didntGetSickText.setText(didntGetSickText.text)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="# show user some feedback&#10;#&#10;if t &gt;= 4.0 and not isFeedbackShown: # TODO don't hardcode&#10;    isFeedbackShown = True&#10;    if not responseKey.keys: # no response was made&#10;        timeoutText.setOpacity(1)&#10;        timeoutText.setText(timeoutText.text)&#10;    else: # response was made&#10;        if responseKey.corr == 1:&#10;            correctText.setOpacity(1)&#10;            wrongText.setOpacity(0)&#10;        elif responseKey.corr == 0:&#10;            correctText.setOpacity(0)&#10;            wrongText.setOpacity(1)&#10;        else:&#10;            print responseKey.corr&#10;            assert False, &quot;responseKey.corr = 0 or 1&quot;&#10;&#10;        if sick == 'Yes':&#10;            sickFeedback.setOpacity(1)&#10;            notsickFeedback.setOpacity(0)&#10;            gotSickText.setOpacity(1)&#10;            didntGetSickText.setOpacity(0)&#10;        elif sick == 'No':&#10;            sickFeedback.setOpacity(0)&#10;            notsickFeedback.setOpacity(1)&#10;            gotSickText.setOpacity(0)&#10;            didntGetSickText.setOpacity(1)&#10;        else:&#10;            print sick&#10;            assert False, &quot;sick can only be Yes or No&quot;&#10;&#10;        # hack to redraw the texts with new opacity&#10;        correctText.setText(correctText.text)&#10;        wrongText.setText(wrongText.text)&#10;        gotSickText.setText(gotSickText.text)&#10;        didntGetSickText.setText(didntGetSickText.text)&#10;" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="new_run">
+      <TextComponent name="runInstr">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="runInstr" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="text" val="You are about to learn about a new set of restaurants and foods." valType="str" updates="constant"/>
+        <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <CodeComponent name="getRestaurants">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="getRestaurants" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
     </Routine>
     <Routine name="feedback"/>
+    <Routine name="test_2">
+      <StaticComponent name="ITI_2">
+        <Param name="code" val="" valType="code" updates="None"/>
+        <Param name="name" val="ITI_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="1" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+      </StaticComponent>
+      <TextComponent name="trialInstrText_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="trialInstrText_2" valType="code" updates="None"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0.8]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <TextComponent name="restaurantText_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="restaurantText_2" valType="code" updates="None"/>
+        <Param name="color" val="purple" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, +0.35]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="$restaurants[$contextId]" valType="str" updates="set every repeat"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <ImageComponent name="foodImg_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="flipVert" val="False" valType="bool" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="foodImg_2" valType="code" updates="None"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[0, 0.0]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
+        <Param name="image" val="os.path.join('foods', $foodFilesPrefix + str($cueId) + '.png')" valType="str" updates="set every repeat"/>
+        <Param name="size" val="[0.5, 0.5]" valType="code" updates="constant"/>
+      </ImageComponent>
+      <TextComponent name="fixationJitterText_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="fixationJitterText_2" valType="code" updates="None"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="stopVal" val="0.5" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="4.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="responseKey_2">
+        <Param name="correctAns" val="$corrAns" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="True" valType="bool" updates="constant"/>
+        <Param name="name" val="responseKey_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'left','right'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="store" val="last key" valType="str" updates="constant"/>
+      </KeyboardComponent>
+      <ImageComponent name="sickImg_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="flipVert" val="False" valType="bool" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="sickImg_2" valType="code" updates="None"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[-0.5, -0.6]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'sick.png')" valType="str" updates="constant"/>
+        <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
+      </ImageComponent>
+      <ImageComponent name="notsickImg_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="flipVert" val="False" valType="bool" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="notsickImg_2" valType="code" updates="None"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[+0.5, -0.6]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1.0" valType="code" updates="None"/>
+        <Param name="flipHoriz" val="False" valType="bool" updates="constant"/>
+        <Param name="image" val="$os.path.join('images', 'smiley.png')" valType="str" updates="constant"/>
+        <Param name="size" val="[0.3, 0.45]" valType="code" updates="constant"/>
+      </ImageComponent>
+      <TextComponent name="fixationITIText_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="fixationITIText_2" valType="code" updates="None"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <StaticComponent name="Jitter_2">
+        <Param name="code" val="" valType="code" updates="None"/>
+        <Param name="name" val="Jitter_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="0.5" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="4.0" valType="code" updates="None"/>
+      </StaticComponent>
+      <TextComponent name="sickHighlight_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="sickHighlight_2" valType="code" updates="None"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[-0.5, -0.35]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="1.0" valType="code" updates="constant"/>
+      </TextComponent>
+      <TextComponent name="notsickHighlight_2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="notsickHighlight_2" valType="code" updates="None"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0.5, -0.35]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="1" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="1" valType="code" updates="constant"/>
+      </TextComponent>
+      <CodeComponent name="highlightChoice_2">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="highlightChoice_2" valType="code" updates="None"/>
+        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey_2.keys:&#10;    if responseKey_2.keys == 'left': # sick&#10;        sickHighlight_2.opacity = 1&#10;        notsickHighlight_2.opacity = 0&#10;    elif responseKey_2.keys == 'right': # not sick&#10;        sickHighlight_2.opacity = 0&#10;        notsickHighlight_2.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight_2.setText(sickHighlight_2.text)&#10;notsickHighlight_2.setText(notsickHighlight_2.text)" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="# don't highlight anything initially&#10;#&#10;sickHighlight_2.setOpacity(0)&#10;notsickHighlight_2.setOpacity(0)&#10;# hack to re-render the text with new opacity&#10;sickHighlight_2.setText(sickHighlight_2.text)&#10;notsickHighlight_2.setText(notsickHighlight_2.text)" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+    </Routine>
   </Routines>
   <Flow>
+    <LoopInitiator loopType="TrialHandler" name="runs">
+      <Param name="conditionsFile" val="runs.xlsx" valType="str" updates="None"/>
+      <Param name="name" val="runs" valType="code" updates="None"/>
+      <Param name="isTrials" val="True" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="random" valType="str" updates="None"/>
+      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="[{u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Caf\xe9&quot;, u'foodFilesPrefix': u'mexican_food'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,OO Kook Korean BBQ,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'asian_food'}]" valType="str" updates="None"/>
+      <Param name="Selected rows" val="" valType="code" updates="None"/>
+    </LoopInitiator>
+    <Routine name="new_run"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
       <Param name="conditionsFile" val="irrelevant.xlsx" valType="str" updates="None"/>
       <Param name="name" val="trials" valType="code" updates="None"/>
@@ -416,10 +690,24 @@
       <Param name="loopType" val="random" valType="str" updates="None"/>
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
-      <Param name="conditions" val="[{u'food': None, u'corrAns': None, u'sick': None, u'restaurant': u'Training'}, {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u&quot;Molina's Cantina&quot;}, {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u&quot;Molina's Cantina&quot;}, {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u'Restaurante Arroyo'}, {u'food': u'mexican_food2', u'corrAns': u'right', u'sick': u'No', u'restaurant': u'Restaurante Arroyo'}, {u'food': None, u'corrAns': None, u'sick': None, u'restaurant': u' Test'}, {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u&quot;Molina's Cantina&quot;}, {u'food': u'mexican_food1', u'corrAns': u'left', u'sick': u'Yes', u'restaurant': u'Restaurante Arroyo'}, {u'food': u'mexican_food3', u'corrAns': None, u'sick': None, u'restaurant': u&quot;Molina's Cantina&quot;}, {u'food': u'mexican_food3', u'corrAns': None, u'sick': None, u'restaurant': u'Restaurante Arroyo'}]" valType="str" updates="None"/>
+      <Param name="conditions" val="[{u'contextId': u'Training', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': 1, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 1, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': u' Test', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 2, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': None, u'sick': None, u'cueId': 2}, {u'contextId': 2, u'corrAns': None, u'sick': None, u'cueId': 2}]" valType="str" updates="None"/>
       <Param name="Selected rows" val="range(1,5)" valType="str" updates="None"/>
     </LoopInitiator>
     <Routine name="trial"/>
     <LoopTerminator name="trials"/>
+    <LoopInitiator loopType="TrialHandler" name="test_trials_2">
+      <Param name="conditionsFile" val="irrelevant.xlsx" valType="str" updates="None"/>
+      <Param name="name" val="test_trials_2" valType="code" updates="None"/>
+      <Param name="isTrials" val="True" valType="bool" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="[{u'contextId': u'Training', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': 1, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 1, u'corrAns': u'right', u'sick': u'No', u'cueId': 1}, {u'contextId': u' Test', u'corrAns': None, u'sick': None, u'cueId': None}, {u'contextId': 0, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 2, u'corrAns': u'left', u'sick': u'Yes', u'cueId': 0}, {u'contextId': 0, u'corrAns': None, u'sick': None, u'cueId': 2}, {u'contextId': 2, u'corrAns': None, u'sick': None, u'cueId': 2}]" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(6,10)" valType="code" updates="None"/>
+    </LoopInitiator>
+    <Routine name="test_2"/>
+    <LoopTerminator name="test_trials_2"/>
+    <LoopTerminator name="runs"/>
   </Flow>
 </PsychoPy2experiment>
