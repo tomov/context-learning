@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Sep 16 11:05:11 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 19 13:42:49 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -33,7 +33,7 @@ filename = _thisDir + os.sep + 'data/%s_%s_%s' %(expInfo['participant'], expName
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
+    originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 #save a log file for detail verbose info
@@ -64,10 +64,10 @@ instruction ='''Imagine that your are a health inspector trying to determine the
 + ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \
 + ''' In some cases you will make predictions about the same food in different restaurants.
 
-The experiment consists of 9 blocks. In each block, you will be presented with a different set of restaurants and foods.''' \
-+ ''' There will be a short pause between blocks.
+The experiment consists of 9 rounds. In each rounds, you will be presented with a different set of restaurants and foods.''' \
++ ''' There will be a short pause between rounds.
 
-Press any button to begin the first block.
+Press any button to begin the first round.
 '''
 instrText = visual.TextStim(win=win, ori=0, name='instrText',
     text=instruction
@@ -96,7 +96,7 @@ elif trigger == 'usb':
 
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
-runInstructions = '''You are about to begin new block with a new set of restaurants and foods.
+runInstructions = '''You are about to begin new round with a new set of restaurants and foods.
 
 You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
 
@@ -266,6 +266,7 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
 
 
 
+
 # Initialize components for Routine "waitForFinish"
 waitForFinishClock = core.Clock()
 EXP_DURATION = 352.5
@@ -283,6 +284,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 t = 0
 instrClock.reset()  # clock 
 frameN = -1
+routineTimer.add(60.000000)
 # update component parameters for each repeat
 
 startExpResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
@@ -297,7 +299,7 @@ for thisComponent in instrComponents:
 
 #-------Start Routine "instr"-------
 continueRoutine = True
-while continueRoutine:
+while continueRoutine and routineTimer.getTime() > 0:
     # get current time
     t = instrClock.getTime()
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -322,6 +324,8 @@ while continueRoutine:
         # keyboard checking is just starting
         startExpResp.clock.reset()  # now t=0
         event.clearEvents(eventType='keyboard')
+    if startExpResp.status == STARTED and t >= (5.0 + (55-win.monitorFramePeriod*0.75)): #most of one frame period left
+        startExpResp.status = STOPPED
     if startExpResp.status == STARTED:
         theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
         
@@ -364,8 +368,6 @@ thisExp.addData('startExpResp.keys',startExpResp.keys)
 if startExpResp.keys != None:  # we had a response
     thisExp.addData('startExpResp.rt', startExpResp.rt)
 thisExp.nextEntry()
-# the Routine "instr" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
 
 #------Prepare to start Routine "waitForTrigger"-------
 t = 0
@@ -437,8 +439,8 @@ routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='fullRandom', 
-    extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions(u'runs.xlsx', selection=u'range(1,10)'),
+    extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+    trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -458,6 +460,7 @@ for thisRun in runs:
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
+    routineTimer.add(60.000000)
     # update component parameters for each repeat
     
     restaurants = [r.strip() for r in restaurantNames.split(',')]
@@ -496,7 +499,7 @@ for thisRun in runs:
     
     #-------Start Routine "new_run"-------
     continueRoutine = True
-    while continueRoutine:
+    while continueRoutine and routineTimer.getTime() > 0:
         # get current time
         t = new_runClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -523,6 +526,8 @@ for thisRun in runs:
             # keyboard checking is just starting
             startRunResp.clock.reset()  # now t=0
             event.clearEvents(eventType='keyboard')
+        if startRunResp.status == STARTED and t >= (5.0 + (55-win.monitorFramePeriod*0.75)): #most of one frame period left
+            startRunResp.status = STOPPED
         if startRunResp.status == STARTED:
             theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
             
@@ -566,13 +571,11 @@ for thisRun in runs:
     runs.addData('startRunResp.keys',startRunResp.keys)
     if startRunResp.keys != None:  # we had a response
         runs.addData('startRunResp.rt', startRunResp.rt)
-    # the Routine "new_run" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
-        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -719,8 +722,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg* updates
             if t >= 1 and sickImg.status == NOT_STARTED:
@@ -946,8 +947,8 @@ for thisRun in runs:
     
     # set up handler to look after randomisation of conditions etc
     test_trials = data.TrialHandler(nReps=1, method='sequential', 
-        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(6,10)'),
+        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
     thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -980,6 +981,7 @@ for thisRun in runs:
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
         jitterTime = random() * 2
+        trials.addData('trialStartWallTime', time.ctime())
         # keep track of which components have finished
         test_2Components = []
         test_2Components.append(ITI_2)
@@ -1067,8 +1069,6 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -1129,6 +1129,7 @@ for thisRun in runs:
             sickHighlight_2.setText(sickHighlight_2.text)
             notsickHighlight_2.setText(notsickHighlight_2.text)
             
+            
             # *ITI_2* period
             if t >= 0 and ITI_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -1180,6 +1181,7 @@ for thisRun in runs:
             test_trials.addData('responseKey_2.rt', responseKey_2.rt)
         
         
+        trials.addData('trialEndWallTime', time.ctime())
         # the Routine "test_2" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         thisExp.nextEntry()
@@ -1248,6 +1250,7 @@ logging.exp("Experiment Finished")
 
 # the Routine "waitForFinish" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
+
 
 
 
