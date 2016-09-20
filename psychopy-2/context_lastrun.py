@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 12:29:14 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 13:41:37 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -58,13 +58,16 @@ else:
 
 # Initialize components for Routine "instr"
 instrClock = core.Clock()
-instruction ='''Imagine that your are a health inspector trying to determine the cause of illness in different restaurants.''' \
+# some hardcoded experiment params
+#
+isBehavioral = True # are we doing a behavioral pilot?
+instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
 + ''' Your job is to predict whether a customer will get sick from eating the food.''' \
 + ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \
 + ''' In some cases you will make predictions about the same food in different restaurants.
 
-The experiment consists of 9 rounds. In each rounds, you will be presented with a different set of restaurants and foods.''' \
+The experiment consists of 9 rounds. In each round, you will be presented with a different set of restaurants and foods.''' \
 + ''' There will be a short pause between rounds.
 
 Press any button to begin the first round.
@@ -74,7 +77,7 @@ instrText = visual.TextStim(win=win, ori=0, name='instrText',
 ,    font='Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-1.0)
+    depth=-2.0)
 
 # Initialize components for Routine "waitForTrigger"
 waitForTriggerClock = core.Clock()
@@ -96,21 +99,35 @@ elif trigger == 'usb':
 
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
-runInstructions = '''You are about to begin new round with a new set of restaurants and foods.
+# Put 'em here for good indentation
+#
+if isBehavioral:
+    sickPressInstr = "the left arrow key (<-)"
+    notsickPressInstr = "the right arrow key (->)"
+else:
+    sickPressInstr = "with your index finger"
+    notsickPressInstr = "with your middle finger"
 
-You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
+runInstructionsRound1 = '''You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
 
-Press with you index finger if you believe the customer will get sick from eating the food.
+Press %s if you believe the customer will get sick from eating the food.
 
-Press with your middle finger if you believe the customer will NOT get sick.
+Press %s if you believe the customer will NOT get sick.
 
 You will have 3 seconds to press on each trial.
 
+Press any button to begin the first trial.''' % (sickPressInstr, notsickPressInstr)
+
+runInstructionsOtherRounds = '''You are about to begin a new round with a new set of restaurants and foods.
+
 Press any button to begin the first trial.'''
+
+
+
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=runInstructions,    font='Arial',
+    text=u'this value is set in the code depending on the run number',    font=u'Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 
@@ -287,6 +304,7 @@ frameN = -1
 routineTimer.add(60.000000)
 # update component parameters for each repeat
 
+
 startExpResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
 startExpResp.status = NOT_STARTED
 # keep track of which components have finished
@@ -304,6 +322,7 @@ while continueRoutine and routineTimer.getTime() > 0:
     t = instrClock.getTime()
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
+    
     
     
     # *instrText* updates
@@ -359,6 +378,7 @@ while continueRoutine and routineTimer.getTime() > 0:
 for thisComponent in instrComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
+
 
 # check responses
 if startExpResp.keys in ['', [], None]:  # No response was made
@@ -462,7 +482,10 @@ for thisRun in runs:
     frameN = -1
     routineTimer.add(60.000000)
     # update component parameters for each repeat
-    
+    if runs.thisN == 0: # first round
+        runInstr.setText(runInstructionsRound1)
+    else: # other rounds
+        runInstr.setText(runInstructionsOtherRounds)
     restaurants = [r.strip() for r in restaurantNames.split(',')]
     assert len(restaurants) == 3, "There should be 3 comma-separated restaurant names per run; found " + str(len(restaurants))
     # Random shuffle the context roles so they're independent from the
@@ -1250,6 +1273,7 @@ logging.exp("Experiment Finished")
 
 # the Routine "waitForFinish" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
+
 
 
 
