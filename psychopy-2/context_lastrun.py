@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 13:41:37 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 14:01:26 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -137,14 +137,14 @@ trialClock = core.Clock()
 
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text='Predict whether the customer will get sick from this food.',    font='Arial',
+    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=-2.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font='Arial Bold',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color='purple', colorSpace='rgb', opacity=1,
+    color=u'purple', colorSpace='rgb', opacity=1,
     depth=-3.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -162,13 +162,13 @@ sickImg = visual.ImageStim(win=win, name='sickImg',
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-7.0)
+    texRes=128, interpolate=True, depth=-6.0)
 notsickImg = visual.ImageStim(win=win, name='notsickImg',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-8.0)
+    texRes=128, interpolate=True, depth=-7.0)
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
@@ -176,53 +176,41 @@ fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     depth=-9.0)
 Jitter = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-11.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-12.0)
 
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text='CORRECT',    font='Arial Bold',
-    pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color='blue', colorSpace='rgb', opacity=1,
+    text=u'CORRECT',    font=u'Arial Bold',
+    pos=[0, -0.4], height=0.1, wrapWidth=None,
+    color=u'blue', colorSpace='rgb', opacity=1,
     depth=-14.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text='WRONG',    font='Arial Bold',
-    pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color='red', colorSpace='rgb', opacity=1,
+    text=u'WRONG',    font=u'Arial Bold',
+    pos=[0, -0.4], height=0.1, wrapWidth=None,
+    color=u'red', colorSpace='rgb', opacity=1,
     depth=-15.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text='TIMEOUT',    font='Arial Bold',
-    pos=[0, -0.3], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    text=u'TIMEOUT',    font=u'Arial Bold',
+    pos=[0, -0.4], height=0.1, wrapWidth=None,
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=-16.0)
-sickFeedback = visual.ImageStim(win=win, name='sickFeedback',
-    image=os.path.join('images', 'sick.png'), mask=None,
-    ori=0, pos=[0, 0], size=[0.3, 0.45],
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-17.0)
-notsickFeedback = visual.ImageStim(win=win, name='notsickFeedback',
-    image=os.path.join('images', 'smiley.png'), mask=None,
-    ori=0, pos=[0, 0], size=[0.3, 0.45],
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text='The customer got sick!',    font='Arial',
-    pos=[0, -0.5], height=0.075, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
-    depth=-19.0)
+    text=u'The customer got sick!',    font=u'Arial',
+    pos=[0, -0.6], height=0.075, wrapWidth=None,
+    color=u'black', colorSpace='rgb', opacity=1,
+    depth=-17.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text="The customer didn't get sick!",    font='Arial',
-    pos=[0, -0.5], height=0.075, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
-    depth=-20.0)
+    text=u"The customer didn't get sick!",    font=u'Arial',
+    pos=[0, -0.6], height=0.075, wrapWidth=None,
+    color=u'black', colorSpace='rgb', opacity=1,
+    depth=-18.0)
 
 
 import time
@@ -335,7 +323,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         instrText.setAutoDraw(False)
     
     # *startExpResp* updates
-    if t >= 5.0 and startExpResp.status == NOT_STARTED:
+    if t >= 0 and startExpResp.status == NOT_STARTED:
         # keep track of start time/frame for later
         startExpResp.tStart = t  # underestimates by a little under one frame
         startExpResp.frameNStart = frameN  # exact frame index
@@ -343,7 +331,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         # keyboard checking is just starting
         startExpResp.clock.reset()  # now t=0
         event.clearEvents(eventType='keyboard')
-    if startExpResp.status == STARTED and t >= (5.0 + (55-win.monitorFramePeriod*0.75)): #most of one frame period left
+    if startExpResp.status == STARTED and t >= (60-win.monitorFramePeriod*0.75): #most of one frame period left
         startExpResp.status = STOPPED
     if startExpResp.status == STARTED:
         theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
@@ -541,7 +529,7 @@ for thisRun in runs:
         
         
         # *startRunResp* updates
-        if t >= 5.0 and startRunResp.status == NOT_STARTED:
+        if t >= 0 and startRunResp.status == NOT_STARTED:
             # keep track of start time/frame for later
             startRunResp.tStart = t  # underestimates by a little under one frame
             startRunResp.frameNStart = frameN  # exact frame index
@@ -549,7 +537,7 @@ for thisRun in runs:
             # keyboard checking is just starting
             startRunResp.clock.reset()  # now t=0
             event.clearEvents(eventType='keyboard')
-        if startRunResp.status == STARTED and t >= (5.0 + (55-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if startRunResp.status == STARTED and t >= (0 + (60-win.monitorFramePeriod*0.75)): #most of one frame period left
             startRunResp.status = STOPPED
         if startRunResp.status == STARTED:
             theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
@@ -636,8 +624,6 @@ for thisRun in runs:
         correctText.setOpacity(0)
         wrongText.setOpacity(0)
         timeoutText.setOpacity(0)
-        sickFeedback.setOpacity(0)
-        notsickFeedback.setOpacity(0)
         gotSickText.setOpacity(0)
         didntGetSickText.setOpacity(0)
         # hack to re-render the texts with new opacity
@@ -657,9 +643,9 @@ for thisRun in runs:
         trialComponents.append(restaurantText)
         trialComponents.append(foodImg)
         trialComponents.append(fixationJitterText)
-        trialComponents.append(responseKey)
         trialComponents.append(sickImg)
         trialComponents.append(notsickImg)
+        trialComponents.append(responseKey)
         trialComponents.append(fixationITIText)
         trialComponents.append(Jitter)
         trialComponents.append(sickHighlight)
@@ -667,8 +653,6 @@ for thisRun in runs:
         trialComponents.append(correctText)
         trialComponents.append(wrongText)
         trialComponents.append(timeoutText)
-        trialComponents.append(sickFeedback)
-        trialComponents.append(notsickFeedback)
         trialComponents.append(gotSickText)
         trialComponents.append(didntGetSickText)
         for thisComponent in trialComponents:
@@ -690,7 +674,7 @@ for thisRun in runs:
                 trialInstrText.tStart = t  # underestimates by a little under one frame
                 trialInstrText.frameNStart = frameN  # exact frame index
                 trialInstrText.setAutoDraw(True)
-            if trialInstrText.status == STARTED and t >= (1 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if trialInstrText.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 trialInstrText.setAutoDraw(False)
             
             # *restaurantText* updates
@@ -699,7 +683,7 @@ for thisRun in runs:
                 restaurantText.tStart = t  # underestimates by a little under one frame
                 restaurantText.frameNStart = frameN  # exact frame index
                 restaurantText.setAutoDraw(True)
-            if restaurantText.status == STARTED and t >= (1 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if restaurantText.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 restaurantText.setAutoDraw(False)
             
             # *foodImg* updates
@@ -708,7 +692,7 @@ for thisRun in runs:
                 foodImg.tStart = t  # underestimates by a little under one frame
                 foodImg.frameNStart = frameN  # exact frame index
                 foodImg.setAutoDraw(True)
-            if foodImg.status == STARTED and t >= (1 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if foodImg.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 foodImg.setAutoDraw(False)
             
             # *fixationJitterText* updates
@@ -719,6 +703,24 @@ for thisRun in runs:
                 fixationJitterText.setAutoDraw(True)
             if fixationJitterText.status == STARTED and t >= (5.0 + (jitterTime-win.monitorFramePeriod*0.75)): #most of one frame period left
                 fixationJitterText.setAutoDraw(False)
+            
+            # *sickImg* updates
+            if t >= 1 and sickImg.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                sickImg.tStart = t  # underestimates by a little under one frame
+                sickImg.frameNStart = frameN  # exact frame index
+                sickImg.setAutoDraw(True)
+            if sickImg.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+                sickImg.setAutoDraw(False)
+            
+            # *notsickImg* updates
+            if t >= 1.0 and notsickImg.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                notsickImg.tStart = t  # underestimates by a little under one frame
+                notsickImg.frameNStart = frameN  # exact frame index
+                notsickImg.setAutoDraw(True)
+            if notsickImg.status == STARTED and t >= (1.0 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+                notsickImg.setAutoDraw(False)
             
             # *responseKey* updates
             if t >= 1 and responseKey.status == NOT_STARTED:
@@ -746,24 +748,6 @@ for thisRun in runs:
                     else:
                         responseKey.corr = 0
             
-            # *sickImg* updates
-            if t >= 1 and sickImg.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                sickImg.tStart = t  # underestimates by a little under one frame
-                sickImg.frameNStart = frameN  # exact frame index
-                sickImg.setAutoDraw(True)
-            if sickImg.status == STARTED and t >= (1 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-                sickImg.setAutoDraw(False)
-            
-            # *notsickImg* updates
-            if t >= 1.0 and notsickImg.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                notsickImg.tStart = t  # underestimates by a little under one frame
-                notsickImg.frameNStart = frameN  # exact frame index
-                notsickImg.setAutoDraw(True)
-            if notsickImg.status == STARTED and t >= (1.0 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
-                notsickImg.setAutoDraw(False)
-            
             # *fixationITIText* updates
             if t >= 0.0 and fixationITIText.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -779,7 +763,7 @@ for thisRun in runs:
                 sickHighlight.tStart = t  # underestimates by a little under one frame
                 sickHighlight.frameNStart = frameN  # exact frame index
                 sickHighlight.setAutoDraw(True)
-            if sickHighlight.status == STARTED and t >= (1 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickHighlight.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickHighlight.setAutoDraw(False)
             
             # *notsickHighlight* updates
@@ -788,7 +772,7 @@ for thisRun in runs:
                 notsickHighlight.tStart = t  # underestimates by a little under one frame
                 notsickHighlight.frameNStart = frameN  # exact frame index
                 notsickHighlight.setAutoDraw(True)
-            if notsickHighlight.status == STARTED and t >= (1 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickHighlight.status == STARTED and t >= (1 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickHighlight.setAutoDraw(False)
             # highlight subject's response
             #
@@ -832,24 +816,6 @@ for thisRun in runs:
             if timeoutText.status == STARTED and t >= (4 + (1.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 timeoutText.setAutoDraw(False)
             
-            # *sickFeedback* updates
-            if t >= 4.0 and sickFeedback.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                sickFeedback.tStart = t  # underestimates by a little under one frame
-                sickFeedback.frameNStart = frameN  # exact frame index
-                sickFeedback.setAutoDraw(True)
-            if sickFeedback.status == STARTED and t >= (4.0 + (1.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-                sickFeedback.setAutoDraw(False)
-            
-            # *notsickFeedback* updates
-            if t >= 4.0 and notsickFeedback.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                notsickFeedback.tStart = t  # underestimates by a little under one frame
-                notsickFeedback.frameNStart = frameN  # exact frame index
-                notsickFeedback.setAutoDraw(True)
-            if notsickFeedback.status == STARTED and t >= (4.0 + (1.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-                notsickFeedback.setAutoDraw(False)
-            
             # *gotSickText* updates
             if t >= 4 and gotSickText.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -886,13 +852,9 @@ for thisRun in runs:
                         assert False, "responseKey.corr = 0 or 1"
             
                     if sick == 'Yes':
-                        sickFeedback.setOpacity(1)
-                        notsickFeedback.setOpacity(0)
                         gotSickText.setOpacity(1)
                         didntGetSickText.setOpacity(0)
                     elif sick == 'No':
-                        sickFeedback.setOpacity(0)
-                        notsickFeedback.setOpacity(1)
                         gotSickText.setOpacity(0)
                         didntGetSickText.setOpacity(1)
                     else:
