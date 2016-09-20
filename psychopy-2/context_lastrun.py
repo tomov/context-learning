@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 14:16:24 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 15:04:21 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -763,6 +763,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *fixationITIText* updates
             if t >= 0.0 and fixationITIText.status == NOT_STARTED:
@@ -1070,6 +1072,8 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
