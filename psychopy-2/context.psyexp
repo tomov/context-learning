@@ -25,7 +25,7 @@
     <Routine name="feedback"/>
     <Routine name="instr">
       <CodeComponent name="params">
-        <Param name="Begin Experiment" val="# some hardcoded experiment params&#10;#&#10;isBehavioral = True # are we doing a behavioral pilot?" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Experiment" val="# some hardcoded experiment params&#10;#&#10;isBehavioral = True # are we doing a behavioral pilot? changes button press instructions&#10;isPractice = True # only a practice run -- uses diff foods and restaurants" valType="extendedCode" updates="constant"/>
         <Param name="name" val="params" valType="code" updates="None"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
@@ -109,7 +109,7 @@
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="getRestaurants" valType="code" updates="None"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="# Parse the comma-separated list of restaurant names&#10;#&#10;restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))&#10;&#10;# Use a separate, hardcoded set of restaurants and foods if it's just a practice run&#10;#&#10;if isPractice:&#10;    restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']&#10;    foodFilesPrefix = 'practice_food'" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
@@ -296,7 +296,7 @@
         <Param name="name" val="responseKey" valType="code" updates="None"/>
         <Param name="stopVal" val="3" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="discard previous" val="True" valType="bool" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
@@ -607,7 +607,7 @@
         <Param name="name" val="responseKey_2" valType="code" updates="None"/>
         <Param name="stopVal" val="3" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="discard previous" val="True" valType="bool" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>

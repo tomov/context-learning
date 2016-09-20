@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 15:04:21 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 15:20:32 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -60,7 +60,8 @@ else:
 instrClock = core.Clock()
 # some hardcoded experiment params
 #
-isBehavioral = True # are we doing a behavioral pilot?
+isBehavioral = True # are we doing a behavioral pilot? changes button press instructions
+isPractice = True # only a practice run -- uses diff foods and restaurants
 instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
 + ''' Your job is to predict whether a customer will get sick from eating the food.''' \
@@ -475,8 +476,16 @@ for thisRun in runs:
         runInstr.setText(runInstructionsRound1)
     else: # other rounds
         runInstr.setText(runInstructionsOtherRounds)
+    # Parse the comma-separated list of restaurant names
+    #
     restaurants = [r.strip() for r in restaurantNames.split(',')]
     assert len(restaurants) == 3, "There should be 3 comma-separated restaurant names per run; found " + str(len(restaurants))
+    
+    # Use a separate, hardcoded set of restaurants and foods if it's just a practice run
+    #
+    if isPractice:
+        restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']
+        foodFilesPrefix = 'practice_food'
     # Random shuffle the context roles so they're independent from the
     # restaurants / foods.
     #
@@ -949,9 +958,9 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    test_trials = data.TrialHandler(nReps=1, method='sequential', 
+    test_trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
     thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
