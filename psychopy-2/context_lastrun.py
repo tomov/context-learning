@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 14:01:26 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 14:16:24 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -132,6 +132,7 @@ runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
 
 
 
+
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 
@@ -225,9 +226,9 @@ trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font='Arial Bold',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color='purple', colorSpace='rgb', opacity=1,
+    color=u'purple', colorSpace='rgb', opacity=1,
     depth=-2.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
@@ -479,6 +480,8 @@ for thisRun in runs:
     # Random shuffle the context roles so they're independent from the
     # restaurants / foods.
     #
+    # Notice that we ONLY DO THIS ONCE at the beginning
+    #
     try:
         assert contextRolesWereShuffled
     except NameError:
@@ -498,6 +501,17 @@ for thisRun in runs:
     # 2) it gets written out to the data file
     #
     thisRun.contextRole = contextRoles[runs.thisN]
+    # randomize foods & restaurants within each run
+    # note that we DO THIS BEFORE EVERY RUN
+    #
+    cuesReshuffled = range(0, 3)
+    contextsReshuffled = range(0, 3)
+    
+    shuffle(cuesReshuffled)
+    shuffle(contextsReshuffled)
+    
+    print 'Shuffled cues: ', cuesReshuffled
+    print 'Shuffled contexts: ', contextsReshuffled
     startRunResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
     startRunResp.status = NOT_STARTED
     # keep track of which components have finished
@@ -525,6 +539,7 @@ for thisRun in runs:
             runInstr.setAutoDraw(True)
         if runInstr.status == STARTED and t >= (0.0 + (60.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
+        
         
         
         
@@ -575,6 +590,7 @@ for thisRun in runs:
     
     
     
+    
     # check responses
     if startRunResp.keys in ['', [], None]:  # No response was made
        startRunResp.keys=None
@@ -608,8 +624,8 @@ for thisRun in runs:
         frameN = -1
         # update component parameters for each repeat
         assert contextRolesWereShuffled
-        restaurantText.setText(restaurants[contextId])
-        foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cueId) + '.png'))
+        restaurantText.setText(restaurants[contextsReshuffled[contextId]])
+        foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         responseKey = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey.status = NOT_STARTED
         # don't highlight anything initially
@@ -954,8 +970,8 @@ for thisRun in runs:
         test_2Clock.reset()  # clock 
         frameN = -1
         # update component parameters for each repeat
-        restaurantText_2.setText(restaurants[contextId])
-        foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cueId) + '.png'))
+        restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
+        foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         responseKey_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey_2.status = NOT_STARTED
         # don't highlight anything initially
@@ -1235,6 +1251,7 @@ logging.exp("Experiment Finished")
 
 # the Routine "waitForFinish" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
+
 
 
 
