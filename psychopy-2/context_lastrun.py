@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:10:24 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:44:16 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -180,26 +180,12 @@ def flushEntryToStreamingFile(entry):
     streamingFile.write('\n')
     streamingFile.flush()
 
-flushedFirstRun = False
+nextEntryToFlush = 0
 
 # write last entry
 #
 def flushToStreamingFile():
-    global flushedFirstRun
-
-    # End Routine is called before thisExp.nextEntry()...
-    # so we must do this manually
-    # copy-pasted from def nextEntry() in data.py from the psychopy repo
-    #
-    entry = thisExp.thisEntry
-    # fetch data from each (potentially-nested) loop
-    for thisLoop in thisExp.loopsUnfinished:
-        names, vals = thisExp._getLoopInfo(thisLoop)
-        for n, name in enumerate(names):
-            entry[name] = vals[n]
-    # add the extraInfo dict to the data
-    if type(thisExp.extraInfo) == dict:
-        entry.update(thisExp.extraInfo)
+    global nextEntryToFlush
 
     # don't write anything during the initial run
     # that's b/c the number of columns can change
@@ -207,18 +193,12 @@ def flushToStreamingFile():
     if runs.thisN == 0:
         return
 
-    # if we're after the initial run and haven't flushed it yet,
-    # do so.
+    # if we're after the initial run, flush everything
+    # that we haven't flushed yet
     #
-    if runs.thisN == 1 and not flushedFirstRun:
-        writeHeadersToStreamingFile()
-        for pastEntry in thisExp.entries:
-            flushEntryToStreamingFile(pastEntry)
-        flushedFirstRun = True
-
-    # actually write the last entry
-    #
-    flushEntryToStreamingFile(entry)
+    while nextEntryToFlush < len(thisExp.entries):
+        flushEntryToStreamingFile(thisExp.entries[nextEntryToFlush])
+        nextEntryToFlush += 1
 def addExtraData():
     thisExp.addData('fmriTime', fmriClock.getTime())
     thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
@@ -870,6 +850,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *fixationITIText* updates
             if t >= 0.0 and fixationITIText.status == NOT_STARTED:
@@ -1184,6 +1166,8 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
