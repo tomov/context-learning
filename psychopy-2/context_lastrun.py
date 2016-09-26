@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 20 15:20:32 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:10:24 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -20,8 +20,8 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'context'  # from the Builder filename that created this script
-expInfo = {'participant':'', 'session':'001'}
+expName = u'context'  # from the Builder filename that created this script
+expInfo = {u'participant': u'', u'session': u'001', u'mriMode': u'Off'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -46,7 +46,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(size=(1440, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     )
 # store frame rate of monitor if we can measure it successfully
@@ -61,7 +61,7 @@ instrClock = core.Clock()
 # some hardcoded experiment params
 #
 isBehavioral = True # are we doing a behavioral pilot? changes button press instructions
-isPractice = True # only a practice run -- uses diff foods and restaurants
+isPractice = False # only a practice run -- uses diff foods and restaurants
 instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
 + ''' Your job is to predict whether a customer will get sick from eating the food.''' \
@@ -82,8 +82,11 @@ instrText = visual.TextStim(win=win, ori=0, name='instrText',
 
 # Initialize components for Routine "waitForTrigger"
 waitForTriggerClock = core.Clock()
-trigger = 'parallel'
-# trigger = 'usb'
+fmriClock = core.Clock() # clock for syncing with fMRI scanner
+# definitely log it!
+
+#trigger = 'parallel'
+trigger = 'usb'
 if trigger == 'parallel':
     from psychopy import parallel 
 elif trigger == 'usb':
@@ -126,9 +129,9 @@ Press any button to begin the first trial.'''
 
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=u'this value is set in the code depending on the run number',    font=u'Arial',
+    text='this value is set in the code depending on the run number',    font='Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 
@@ -136,83 +139,171 @@ runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
+# psychopy only writes the data at the very end
+# we want data with intermediate results
+# so we have this
+#
+
+streamingFilename = thisExp.dataFileName + '.wtf'
+streamingFile = open(streamingFilename, 'a')
+streamingDelim = ','
+
+# get names of data columns
+#
+def getExpDataNames():
+    names = thisExp._getAllParamNames()
+    names.extend(thisExp.dataNames)
+    # names from the extraInfo dictionary
+    names.extend(thisExp._getExtraInfo()[0])
+    return names
+
+# write a header lines
+#
+def writeHeadersToStreamingFile():
+    for heading in getExpDataNames():
+        streamingFile.write(u'%s%s' % (heading, streamingDelim))
+    streamingFile.write('\n')
+    streamingFile.flush()
+
+def flushEntryToStreamingFile(entry):
+    for name in getExpDataNames():
+        entry.keys()
+        if name in entry.keys():
+            ename = unicode(entry[name])
+            if ',' in ename or '\n' in ename:
+                fmt = u'"%s"%s'
+            else:
+                fmt = u'%s%s'
+            streamingFile.write(fmt % (entry[name], streamingDelim))
+        else:
+            streamingFile.write(streamingDelim)
+    streamingFile.write('\n')
+    streamingFile.flush()
+
+flushedFirstRun = False
+
+# write last entry
+#
+def flushToStreamingFile():
+    global flushedFirstRun
+
+    # End Routine is called before thisExp.nextEntry()...
+    # so we must do this manually
+    # copy-pasted from def nextEntry() in data.py from the psychopy repo
+    #
+    entry = thisExp.thisEntry
+    # fetch data from each (potentially-nested) loop
+    for thisLoop in thisExp.loopsUnfinished:
+        names, vals = thisExp._getLoopInfo(thisLoop)
+        for n, name in enumerate(names):
+            entry[name] = vals[n]
+    # add the extraInfo dict to the data
+    if type(thisExp.extraInfo) == dict:
+        entry.update(thisExp.extraInfo)
+
+    # don't write anything during the initial run
+    # that's b/c the number of columns can change
+    #
+    if runs.thisN == 0:
+        return
+
+    # if we're after the initial run and haven't flushed it yet,
+    # do so.
+    #
+    if runs.thisN == 1 and not flushedFirstRun:
+        writeHeadersToStreamingFile()
+        for pastEntry in thisExp.entries:
+            flushEntryToStreamingFile(pastEntry)
+        flushedFirstRun = True
+
+    # actually write the last entry
+    #
+    flushEntryToStreamingFile(entry)
+def addExtraData():
+    thisExp.addData('fmriTime', fmriClock.getTime())
+    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
+    thisExp.addData('contextId', contextId)
+    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
+    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
+    thisExp.addData('cueId', cueId)
+    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-2.0)
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-4.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'purple', colorSpace='rgb', opacity=1,
-    depth=-3.0)
+    color='purple', colorSpace='rgb', opacity=1,
+    depth=-5.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-4.0)
+    texRes=128, interpolate=True, depth=-6.0)
 fixationJitterText = visual.TextStim(win=win, ori=0, name='fixationJitterText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-5.0)
+    depth=-7.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-6.0)
+    texRes=128, interpolate=True, depth=-8.0)
 notsickImg = visual.ImageStim(win=win, name='notsickImg',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-7.0)
+    texRes=128, interpolate=True, depth=-9.0)
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-9.0)
+    depth=-11.0)
 Jitter = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
-    depth=-11.0)
+    color='white', colorSpace='rgb', opacity=1,
+    depth=-13.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
-    depth=-12.0)
+    color='white', colorSpace='rgb', opacity=1,
+    depth=-14.0)
 
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text=u'CORRECT',    font=u'Arial Bold',
+    text='CORRECT',    font='Arial Bold',
     pos=[0, -0.4], height=0.1, wrapWidth=None,
-    color=u'blue', colorSpace='rgb', opacity=1,
-    depth=-14.0)
-wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text=u'WRONG',    font=u'Arial Bold',
-    pos=[0, -0.4], height=0.1, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
-    depth=-15.0)
-timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text=u'TIMEOUT',    font=u'Arial Bold',
-    pos=[0, -0.4], height=0.1, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-16.0)
-gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text=u'The customer got sick!',    font=u'Arial',
-    pos=[0, -0.6], height=0.075, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
+    text='WRONG',    font='Arial Bold',
+    pos=[0, -0.4], height=0.1, wrapWidth=None,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-17.0)
-didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text=u"The customer didn't get sick!",    font=u'Arial',
-    pos=[0, -0.6], height=0.075, wrapWidth=None,
-    color=u'black', colorSpace='rgb', opacity=1,
+timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
+    text='TIMEOUT',    font='Arial Bold',
+    pos=[0, -0.4], height=0.1, wrapWidth=None,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-18.0)
+gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
+    text='The customer got sick!',    font='Arial',
+    pos=[0, -0.6], height=0.075, wrapWidth=None,
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-19.0)
+didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
+    text="The customer didn't get sick!",    font='Arial',
+    pos=[0, -0.6], height=0.075, wrapWidth=None,
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-20.0)
 
 
 import time
@@ -220,56 +311,58 @@ expInfo['expStartWallTime'] = time.ctime()
 
 # Initialize components for Routine "test_2"
 test_2Clock = core.Clock()
+
+
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-1.0)
+    depth=-3.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'purple', colorSpace='rgb', opacity=1,
-    depth=-2.0)
+    color='purple', colorSpace='rgb', opacity=1,
+    depth=-4.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-3.0)
+    texRes=128, interpolate=True, depth=-5.0)
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-4.0)
+    depth=-6.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-6.0)
+    texRes=128, interpolate=True, depth=-8.0)
 notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-7.0)
+    texRes=128, interpolate=True, depth=-9.0)
 fixationITIText_2 = visual.TextStim(win=win, ori=0, name='fixationITIText_2',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-10.0)
 Jitter_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter_2')
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
     text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-10.0)
+    depth=-12.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-11.0)
+    depth=-13.0)
 
 
 
@@ -384,11 +477,11 @@ t = 0
 waitForTriggerClock.reset()  # clock 
 frameN = -1
 # update component parameters for each repeat
-if 'mriMode' in expInfo and expInfo['mriMode'] != 'Off':
+if expInfo['mriMode'] != 'Off': # of 'scan' !
     if trigger == 'usb':
         vol = launchScan(win, MR_settings, 
-              globalClock=logging.defaultClock, 
-              mode=expInfo['mriMode'])
+              globalClock=fmriClock, # <-- how you know the time! 
+              mode=expInfo['mriMode']) # <-- mode passed in
     elif trigger == 'parallel':
         parallel.setPortAddress(0x378)
         pin = 10; wait_msg = "Waiting for scanner..."
@@ -632,6 +725,9 @@ for thisRun in runs:
         trialClock.reset()  # clock 
         frameN = -1
         # update component parameters for each repeat
+        
+        thisExp.addData('trialOrTest', 'trial')
+        addExtraData()
         assert contextRolesWereShuffled
         restaurantText.setText(restaurants[contextsReshuffled[contextId]])
         foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
@@ -691,6 +787,8 @@ for thisRun in runs:
             t = trialClock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
+            
+            
             
             
             # *trialInstrText* updates
@@ -772,8 +870,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *fixationITIText* updates
             if t >= 0.0 and fixationITIText.status == NOT_STARTED:
@@ -934,6 +1030,8 @@ for thisRun in runs:
         for thisComponent in trialComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
+        flushToStreamingFile()
+        
         
         # check responses
         if responseKey.keys in ['', [], None]:  # No response was made
@@ -960,7 +1058,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     test_trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(6,10)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
     thisTest_trial = test_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -981,6 +1079,9 @@ for thisRun in runs:
         test_2Clock.reset()  # clock 
         frameN = -1
         # update component parameters for each repeat
+        
+        thisExp.addData('trialOrTest', 'test')
+        addExtraData()
         restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
         foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         responseKey_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
@@ -1019,6 +1120,8 @@ for thisRun in runs:
             t = test_2Clock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
+            
+            
             
             # *trialInstrText_2* updates
             if t >= 1 and trialInstrText_2.status == NOT_STARTED:
@@ -1081,8 +1184,6 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= 1 and sickImg_2.status == NOT_STARTED:
@@ -1182,6 +1283,8 @@ for thisRun in runs:
         for thisComponent in test_2Components:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
+        flushToStreamingFile()
+        
         # check responses
         if responseKey_2.keys in ['', [], None]:  # No response was made
            responseKey_2.keys=None
@@ -1268,6 +1371,10 @@ routineTimer.reset()
 
 
 
+
+
+
+streamingFile.close()
 
 
 
