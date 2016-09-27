@@ -159,7 +159,7 @@
         <Param name="Begin Experiment" val="# different jitter distributions depending on mode &#10;#&#10;if expInfo['mriMode'] != 'off': # we're scanning&#10;    itiMean = 3&#10;    itiLambda = 1.5&#10;    itiMin = 1&#10;    itiMax = 8&#10;&#10;    feedbackFixationMean = 3&#10;    feedbackFixationLambda = 1.5&#10;    feedbackFixationMin = 1&#10;    feedbackFixationMax = 8&#10;else: # behavioral&#10;    itiMean = 1&#10;    itiLambda = 0.5&#10;    itiMin = 0.5&#10;    itiMax = 3&#10;&#10;    feedbackFixationMean = 1&#10;    feedbackFixationLambda = 0.5&#10;    feedbackFixationMin = 0.5&#10;    feedbackFixationMax = 3&#10;" valType="extendedCode" updates="constant"/>
         <Param name="name" val="jitterCode" valType="code" updates="None"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="itiTime = np.random.laplace(itiMean, itiLambda)&#10;itiTime = max(itiTime, itiMin)&#10;itiTime = min(itiTime, itiMax)&#10;&#10;feedbackFixationTime = np.random.laplace(feedbackFixationMean, feedbackFixationLambda)&#10;feedbackFixationTime = max(feedbackFixationTime, feedbackFixationMin)&#10;feedbackFixationTime = min(feedbackFixationTime, feedbackFixationMax)&#10;&#10;print itiTime&#10;print feedbackFixationTime" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="itiTime = np.random.laplace(itiMean, itiLambda)&#10;itiTime = max(itiTime, itiMin)&#10;itiTime = min(itiTime, itiMax)&#10;&#10;feedbackFixationTime = np.random.laplace(feedbackFixationMean, feedbackFixationLambda)&#10;feedbackFixationTime = max(feedbackFixationTime, feedbackFixationMin)&#10;feedbackFixationTime = min(feedbackFixationTime, feedbackFixationMax)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
@@ -522,7 +522,7 @@
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="jitterCode_2" valType="code" updates="None"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="itiTime_2 = np.random.laplace(itiMean, itiLambda)&#10;itiTime_2 = max(itiTime_2, itiMin)&#10;itiTime_2 = min(itiTime_2, itiMax)&#10;&#10;print itiTime_2" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="itiTime_2 = np.random.laplace(itiMean, itiLambda)&#10;itiTime_2 = max(itiTime_2, itiMin)&#10;itiTime_2 = min(itiTime_2, itiMax)&#10;&#10;" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
@@ -586,7 +586,7 @@
         <Param name="name" val="trialInstrText_2" valType="code" updates="None"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
-        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0.8]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -606,7 +606,7 @@
         <Param name="name" val="restaurantText_2" valType="code" updates="None"/>
         <Param name="color" val="pink" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
-        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, +0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -626,7 +626,7 @@
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="foodImg_2" valType="code" updates="None"/>
         <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
-        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="mask" val="None" valType="str" updates="constant"/>
         <Param name="pos" val="[0, 0.0]" valType="code" updates="constant"/>
@@ -646,7 +646,7 @@
         <Param name="correctAns" val="$corrAns" valType="str" updates="constant"/>
         <Param name="storeCorrect" val="True" valType="bool" updates="constant"/>
         <Param name="name" val="responseKey_2" valType="code" updates="None"/>
-        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
@@ -663,7 +663,7 @@
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="sickImg_2" valType="code" updates="None"/>
         <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
-        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="mask" val="None" valType="str" updates="constant"/>
         <Param name="pos" val="[-0.5, -0.6]" valType="code" updates="constant"/>
@@ -685,7 +685,7 @@
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="notsickImg_2" valType="code" updates="None"/>
         <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
-        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="mask" val="None" valType="str" updates="constant"/>
         <Param name="pos" val="[+0.5, -0.6]" valType="code" updates="constant"/>
@@ -707,7 +707,7 @@
         <Param name="name" val="sickHighlight_2" valType="code" updates="None"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
-        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[-0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -727,7 +727,7 @@
         <Param name="name" val="notsickHighlight_2" valType="code" updates="None"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
-        <Param name="stopVal" val="3" valType="code" updates="constant"/>
+        <Param name="stopVal" val="6" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -805,7 +805,7 @@
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
       <Param name="loopType" val="fullRandom" valType="str" updates="None"/>
-      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="nReps" val="5" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
       <Param name="Selected rows" val="range(1,5)" valType="str" updates="None"/>

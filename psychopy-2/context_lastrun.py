@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 18:00:39 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 27 09:23:31 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -148,10 +148,10 @@ else: # behavioral
     itiMin = 0.5
     itiMax = 3
 
-    feedbackFixationMean = 0.5
+    feedbackFixationMean = 1
     feedbackFixationLambda = 0.5
-    feedbackFixationMin = 0.25
-    feedbackFixationMax = 1
+    feedbackFixationMin = 0.5
+    feedbackFixationMax = 3
 
 # psychopy only writes the data at the very end
 # we want data with intermediate results
@@ -651,9 +651,9 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='fullRandom', 
+    trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -702,9 +702,6 @@ for thisRun in runs:
         feedbackFixationTime = np.random.laplace(feedbackFixationMean, feedbackFixationLambda)
         feedbackFixationTime = max(feedbackFixationTime, feedbackFixationMin)
         feedbackFixationTime = min(feedbackFixationTime, feedbackFixationMax)
-        
-        print itiTime
-        print feedbackFixationTime
         
         thisExp.addData('trialOrTest', 'trial')
         addExtraData()
@@ -1008,7 +1005,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 1 repeats of 'trials'
+    # completed 5 repeats of 'trials'
     
     
     # set up handler to look after randomisation of conditions etc
@@ -1046,7 +1043,7 @@ for thisRun in runs:
         itiTime_2 = max(itiTime_2, itiMin)
         itiTime_2 = min(itiTime_2, itiMax)
         
-        print itiTime_2
+        
         trials.addData('trialStartWallTime', time.ctime())
         
         thisExp.addData('trialOrTest', 'test')
