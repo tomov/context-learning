@@ -33,7 +33,7 @@
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="instrCode">
-        <Param name="Begin Experiment" val="instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \&#10;+ ''' On each trial you will see the name of the restaurant and a particular food.''' \&#10;+ ''' Your job is to predict whether a customer will get sick from eating the food.''' \&#10;+ ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \&#10;+ ''' In some cases you will make predictions about the same food in different restaurants.&#10;&#10;The experiment consists of 9 rounds. In each round, you will be presented with a different set of restaurants and foods.''' \&#10;+ ''' There will be a short pause between rounds.&#10;&#10;Press any button to begin the first round.&#10;'''" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Experiment" val="if expInfo['mriMode'] != 'off': # we're scanning!&#10;    assert expInfo['mriMode'] == 'scan'&#10;    sickPressInstr = &quot;with your index finger&quot;&#10;    notsickPressInstr = &quot;with your middle finger&quot;&#10;else: # not scanning =&gt; behavioral&#10;    sickPressInstr = &quot;the left arrow key (&lt;-)&quot;&#10;    notsickPressInstr = &quot;the right arrow key (-&gt;)&quot;&#10;&#10;&#10;instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \&#10;+ ''' On each trial you will see the name of the restaurant and a particular food.''' \&#10;+ ''' Your job is to predict whether a customer will get sick from eating the food.''' \&#10;+ ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \&#10;+ ''' In some cases you will make predictions about the same food in different restaurants.&#10;&#10;The experiment consists of 9 rounds. In each round, you will make 24 predictions about a different set of restaurants and foods.''' \&#10;+ ''' After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.&#10;&#10;Press %s if you believe the customer will get sick from eating the food.&#10;&#10;Press %s if you believe the customer will NOT get sick.&#10;&#10;You will have 3 seconds to press on each trial.&#10;&#10;Press any button to begin the first round.''' % (sickPressInstr, notsickPressInstr)" valType="extendedCode" updates="constant"/>
         <Param name="name" val="instrCode" valType="code" updates="None"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
@@ -45,8 +45,8 @@
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="instrText" valType="code" updates="None"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
-        <Param name="stopVal" val="60" valType="code" updates="constant"/>
+        <Param name="wrapWidth" val="1.6" valType="code" updates="constant"/>
+        <Param name="stopVal" val="120" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -58,13 +58,13 @@
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
         <Param name="startVal" val="0.0" valType="code" updates="None"/>
         <Param name="font" val="Arial" valType="str" updates="constant"/>
-        <Param name="letterHeight" val="0.08" valType="code" updates="constant"/>
+        <Param name="letterHeight" val="0.07" valType="code" updates="constant"/>
       </TextComponent>
       <KeyboardComponent name="startExpResp">
         <Param name="correctAns" val="" valType="str" updates="constant"/>
         <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
         <Param name="name" val="startExpResp" valType="code" updates="None"/>
-        <Param name="stopVal" val="60" valType="code" updates="constant"/>
+        <Param name="stopVal" val="120" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
@@ -77,34 +77,14 @@
       </KeyboardComponent>
     </Routine>
     <Routine name="new_run">
-      <CodeComponent name="runInstrCode">
-        <Param name="Begin Experiment" val="# Put 'em here for good indentation&#10;#&#10;if expInfo['mriMode'] != 'off': # we're scanning!&#10;    assert expInfo['mriMode'] == 'scan'&#10;    sickPressInstr = &quot;with your index finger&quot;&#10;    notsickPressInstr = &quot;with your middle finger&quot;&#10;else: # not scanning =&gt; behavioral&#10;    sickPressInstr = &quot;the left arrow key (&lt;-)&quot;&#10;    notsickPressInstr = &quot;the right arrow key (-&gt;)&quot;&#10;&#10;runInstructionsRound1 = '''You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.&#10;&#10;Press %s if you believe the customer will get sick from eating the food.&#10;&#10;Press %s if you believe the customer will NOT get sick.&#10;&#10;You will have 3 seconds to press on each trial.&#10;&#10;Press any button to begin the first trial.''' % (sickPressInstr, notsickPressInstr)&#10;&#10;runInstructionsOtherRounds = '''You are about to begin a new round with a new set of restaurants and foods.&#10;&#10;Press any button to begin the first trial.'''&#10;&#10;&#10;" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="runInstrCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="if runs.thisN == 0: # first round&#10;    runInstr.setText(runInstructionsRound1)&#10;else: # other rounds&#10;    runInstr.setText(runInstructionsOtherRounds)" valType="extendedCode" updates="constant"/>
+      <CodeComponent name="setRunInstr">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="setRunInstr" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="runInstr.setText(&quot;Round #&quot; + str(runs.thisN + 1))" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
-      <TextComponent name="runInstr">
-        <Param name="opacity" val="1" valType="code" updates="constant"/>
-        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
-        <Param name="name" val="runInstr" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
-        <Param name="stopVal" val="60.0" valType="code" updates="constant"/>
-        <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
-        <Param name="flip" val="" valType="str" updates="constant"/>
-        <Param name="startEstim" val="" valType="code" updates="None"/>
-        <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="this value is set in the code depending on the run number" valType="str" updates="constant"/>
-        <Param name="startType" val="time (s)" valType="str" updates="None"/>
-        <Param name="ori" val="0" valType="code" updates="constant"/>
-        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="0.0" valType="code" updates="None"/>
-        <Param name="font" val="Arial" valType="str" updates="constant"/>
-        <Param name="letterHeight" val="0.08" valType="code" updates="constant"/>
-      </TextComponent>
       <CodeComponent name="getRestaurants">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="getRestaurants" valType="code" updates="None"/>
@@ -129,21 +109,26 @@
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
-      <KeyboardComponent name="startRunResp">
-        <Param name="correctAns" val="" valType="str" updates="constant"/>
-        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
-        <Param name="name" val="startRunResp" valType="code" updates="None"/>
-        <Param name="stopVal" val="60" valType="code" updates="constant"/>
+      <TextComponent name="runInstr">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="runInstr" valType="code" updates="None"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
+        <Param name="stopVal" val="2.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
-        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
-        <Param name="allowedKeys" val="'y','n','left','right','space'" valType="code" updates="constant"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="0" valType="code" updates="None"/>
-        <Param name="store" val="last key" valType="str" updates="constant"/>
-      </KeyboardComponent>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
     </Routine>
     <Routine name="trial">
       <CodeComponent name="timeLoggingCode">
@@ -801,7 +786,6 @@
   </Routines>
   <Flow>
     <Routine name="instr"/>
-    <Routine name="waitForTrigger"/>
     <LoopInitiator loopType="TrialHandler" name="runs">
       <Param name="conditionsFile" val="runs.xlsx" valType="str" updates="None"/>
       <Param name="name" val="runs" valType="code" updates="None"/>
@@ -813,6 +797,7 @@
       <Param name="conditions" val="[{u'restaurantNames': u'Okay here\'s how this works. Each row is a different run -- a list of restaurant names + the prefix of the filenames of its corresponding foods. The list of restaurant names should be comma-separated and should contain exactly 3 restaurants (no unicode characters please -- stick to ASCII). For each food prefix, there should be 3 corresponding files in the \'foods\' directory in the format &quot;[food prefix][cueId].png&quot;. For example, for the prefix &quot;mexican_food&quot;, there should be files &quot;mexican_food0.png&quot;, &quot;mexican_food1.png&quot; and &quot;mexican_food2.png&quot;.  The third column is randomly shuffled so different foods/restaurants can be used with different context roles across subjects. The context role also corresponds to the filename where the context/cue pairs are, in the format &quot;[contextRole].xlsx&quot;. In each of these files, the contextId and cueId are matched with the restaurants and foods, respectively. Sorry it\'s so complicated but there is no other way to make it work with psychopy', u'foodFilesPrefix': None, u'contextRole': None}, {u'restaurantNames': u&quot;Molina's Cantina,Restaurante Arroyo,El Coyote Cafe&quot;, u'foodFilesPrefix': u'mexican_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Le Parisien,Chez Toinette,Au Petit Sud Ouest', u'foodFilesPrefix': u'french_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;Lau's Dim Sum Bar,Shanghai Dumpling King,Happy Lamb Hot Pot&quot;, u'foodFilesPrefix': u'chinese_food', u'contextRole': u'additive'}, {u'restaurantNames': u&quot;Breakfast at Tiffany's,Sweet Maple,Mission Beach Cafe&quot;, u'foodFilesPrefix': u'brunch_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Myconos Restaurant,Mediterranean Grill,Gyro King', u'foodFilesPrefix': u'greek_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u'Izakaya Sozai,Onigilly Express,Sanraku Restaurant', u'foodFilesPrefix': u'japanese_food', u'contextRole': u'additive'}, {u'restaurantNames': u'Kusakabe,Sara Sushi Bar,Wako Sushi Place', u'foodFilesPrefix': u'sushi_food', u'contextRole': u'irrelevant'}, {u'restaurantNames': u'Restorante Milano,Trattoria Contadina,Fino Bar &amp; Restorante', u'foodFilesPrefix': u'italian_food', u'contextRole': u'modulatory'}, {u'restaurantNames': u&quot;McRonald's,Burger Queen,Metro Drive-In&quot;, u'foodFilesPrefix': u'fast_food', u'contextRole': u'additive'}]" valType="str" updates="None"/>
       <Param name="Selected rows" val="range(1,10)" valType="str" updates="None"/>
     </LoopInitiator>
+    <Routine name="waitForTrigger"/>
     <Routine name="new_run"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
       <Param name="conditionsFile" val="$contextRole + '.xlsx'" valType="str" updates="None"/>

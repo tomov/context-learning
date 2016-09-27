@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:43:19 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:57:42 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -59,21 +59,35 @@ else:
 # Initialize components for Routine "instr"
 instrClock = core.Clock()
 win.setColor('black')
+if expInfo['mriMode'] != 'off': # we're scanning!
+    assert expInfo['mriMode'] == 'scan'
+    sickPressInstr = "with your index finger"
+    notsickPressInstr = "with your middle finger"
+else: # not scanning => behavioral
+    sickPressInstr = "the left arrow key (<-)"
+    notsickPressInstr = "the right arrow key (->)"
+
+
 instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
 + ''' Your job is to predict whether a customer will get sick from eating the food.''' \
 + ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \
 + ''' In some cases you will make predictions about the same food in different restaurants.
 
-The experiment consists of 9 rounds. In each round, you will be presented with a different set of restaurants and foods.''' \
-+ ''' There will be a short pause between rounds.
+The experiment consists of 9 rounds. In each round, you will make 24 predictions about a different set of restaurants and foods.''' \
++ ''' After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
 
-Press any button to begin the first round.
-'''
+Press %s if you believe the customer will get sick from eating the food.
+
+Press %s if you believe the customer will NOT get sick.
+
+You will have 3 seconds to press on each trial.
+
+Press any button to begin the first round.''' % (sickPressInstr, notsickPressInstr)
 instrText = visual.TextStim(win=win, ori=0, name='instrText',
     text=instruction
 ,    font=u'Arial',
-    pos=[0, 0], height=0.08, wrapWidth=1.5,
+    pos=[0, 0], height=0.07, wrapWidth=1.6,
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-2.0)
 
@@ -100,40 +114,15 @@ elif trigger == 'usb':
 
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
-# Put 'em here for good indentation
-#
-if expInfo['mriMode'] != 'off': # we're scanning!
-    assert expInfo['mriMode'] == 'scan'
-    sickPressInstr = "with your index finger"
-    notsickPressInstr = "with your middle finger"
-else: # not scanning => behavioral
-    sickPressInstr = "the left arrow key (<-)"
-    notsickPressInstr = "the right arrow key (->)"
 
-runInstructionsRound1 = '''You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
-
-Press %s if you believe the customer will get sick from eating the food.
-
-Press %s if you believe the customer will NOT get sick.
-
-You will have 3 seconds to press on each trial.
-
-Press any button to begin the first trial.''' % (sickPressInstr, notsickPressInstr)
-
-runInstructionsOtherRounds = '''You are about to begin a new round with a new set of restaurants and foods.
-
-Press any button to begin the first trial.'''
 
 
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=u'this value is set in the code depending on the run number',    font=u'Arial',
-    pos=[0, 0], height=0.08, wrapWidth=1.5,
+    text=u'the text is set manually\n',    font=u'Arial',
+    pos=[0, 0], height=0.1, wrapWidth=1.5,
     color=u'white', colorSpace='rgb', opacity=1,
-    depth=-1.0)
-
-
-
+    depth=-4.0)
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -378,7 +367,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 t = 0
 instrClock.reset()  # clock 
 frameN = -1
-routineTimer.add(60.000000)
+routineTimer.add(120.000000)
 # update component parameters for each repeat
 
 
@@ -408,7 +397,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         instrText.tStart = t  # underestimates by a little under one frame
         instrText.frameNStart = frameN  # exact frame index
         instrText.setAutoDraw(True)
-    if instrText.status == STARTED and t >= (0.0 + (60-win.monitorFramePeriod*0.75)): #most of one frame period left
+    if instrText.status == STARTED and t >= (0.0 + (120-win.monitorFramePeriod*0.75)): #most of one frame period left
         instrText.setAutoDraw(False)
     
     # *startExpResp* updates
@@ -420,7 +409,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         # keyboard checking is just starting
         startExpResp.clock.reset()  # now t=0
         event.clearEvents(eventType='keyboard')
-    if startExpResp.status == STARTED and t >= (60-win.monitorFramePeriod*0.75): #most of one frame period left
+    if startExpResp.status == STARTED and t >= (120-win.monitorFramePeriod*0.75): #most of one frame period left
         startExpResp.status = STOPPED
     if startExpResp.status == STARTED:
         theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
@@ -466,76 +455,6 @@ if startExpResp.keys != None:  # we had a response
     thisExp.addData('startExpResp.rt', startExpResp.rt)
 thisExp.nextEntry()
 
-#------Prepare to start Routine "waitForTrigger"-------
-t = 0
-waitForTriggerClock.reset()  # clock 
-frameN = -1
-# update component parameters for each repeat
-if expInfo['mriMode'] != 'off': # or 'scan' !
-    assert expInfo['mriMode'] == 'scan'
-
-    if trigger == 'usb':
-        vol = launchScan(win, MR_settings, 
-              globalClock=fmriClock, # <-- how you know the time! 
-              mode=expInfo['mriMode']) # <-- mode passed in
-    elif trigger == 'parallel':
-        parallel.setPortAddress(0x378)
-        pin = 10; wait_msg = "Waiting for scanner..."
-        pinStatus = parallel.readPin(pin)
-        waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)
-        waitMsgStim.draw()
-        win.flip()
-        while True:
-            if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):
-               break
-               # start exp when pin values change
-        globalClock.reset()
-        logging.defaultClock.reset()
-        logging.exp('parallel trigger: start of scan')
-        win.flip()  # blank the screen on first sync pulse received
-
-expInfo['triggerWallTime'] = time.ctime()
-core.wait(1)
-# keep track of which components have finished
-waitForTriggerComponents = []
-for thisComponent in waitForTriggerComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-#-------Start Routine "waitForTrigger"-------
-continueRoutine = True
-while continueRoutine:
-    # get current time
-    t = waitForTriggerClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in waitForTriggerComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-#-------Ending Routine "waitForTrigger"-------
-for thisComponent in waitForTriggerComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-routineTimer.reset()
-# the Routine "waitForTrigger" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='fullRandom', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
@@ -555,16 +474,83 @@ for thisRun in runs:
         for paramName in thisRun.keys():
             exec(paramName + '= thisRun.' + paramName)
     
+    #------Prepare to start Routine "waitForTrigger"-------
+    t = 0
+    waitForTriggerClock.reset()  # clock 
+    frameN = -1
+    # update component parameters for each repeat
+    if expInfo['mriMode'] != 'off': # or 'scan' !
+        assert expInfo['mriMode'] == 'scan'
+    
+        if trigger == 'usb':
+            vol = launchScan(win, MR_settings, 
+                  globalClock=fmriClock, # <-- how you know the time! 
+                  mode=expInfo['mriMode']) # <-- mode passed in
+        elif trigger == 'parallel':
+            parallel.setPortAddress(0x378)
+            pin = 10; wait_msg = "Waiting for scanner..."
+            pinStatus = parallel.readPin(pin)
+            waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)
+            waitMsgStim.draw()
+            win.flip()
+            while True:
+                if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):
+                   break
+                   # start exp when pin values change
+            globalClock.reset()
+            logging.defaultClock.reset()
+            logging.exp('parallel trigger: start of scan')
+            win.flip()  # blank the screen on first sync pulse received
+    
+    expInfo['triggerWallTime'] = time.ctime()
+    core.wait(1)
+    # keep track of which components have finished
+    waitForTriggerComponents = []
+    for thisComponent in waitForTriggerComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    #-------Start Routine "waitForTrigger"-------
+    continueRoutine = True
+    while continueRoutine:
+        # get current time
+        t = waitForTriggerClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in waitForTriggerComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    #-------Ending Routine "waitForTrigger"-------
+    for thisComponent in waitForTriggerComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    routineTimer.reset()
+    # the Routine "waitForTrigger" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
     #------Prepare to start Routine "new_run"-------
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(60.000000)
+    routineTimer.add(5.000000)
     # update component parameters for each repeat
-    if runs.thisN == 0: # first round
-        runInstr.setText(runInstructionsRound1)
-    else: # other rounds
-        runInstr.setText(runInstructionsOtherRounds)
+    runInstr.setText("Round #" + str(runs.thisN + 1))
     # Parse the comma-separated list of restaurant names
     #
     restaurants = [r.strip() for r in restaurantNames.split(',')]
@@ -610,12 +596,9 @@ for thisRun in runs:
     
     print 'Shuffled cues: ', cuesReshuffled
     print 'Shuffled contexts: ', contextsReshuffled
-    startRunResp = event.BuilderKeyResponse()  # create an object of type KeyResponse
-    startRunResp.status = NOT_STARTED
     # keep track of which components have finished
     new_runComponents = []
     new_runComponents.append(runInstr)
-    new_runComponents.append(startRunResp)
     for thisComponent in new_runComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -629,40 +612,17 @@ for thisRun in runs:
         # update/draw components on each frame
         
         
+        
+        
+        
         # *runInstr* updates
         if t >= 0.0 and runInstr.status == NOT_STARTED:
             # keep track of start time/frame for later
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (60.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
-        
-        
-        
-        
-        # *startRunResp* updates
-        if t >= 0 and startRunResp.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            startRunResp.tStart = t  # underestimates by a little under one frame
-            startRunResp.frameNStart = frameN  # exact frame index
-            startRunResp.status = STARTED
-            # keyboard checking is just starting
-            startRunResp.clock.reset()  # now t=0
-            event.clearEvents(eventType='keyboard')
-        if startRunResp.status == STARTED and t >= (0 + (60-win.monitorFramePeriod*0.75)): #most of one frame period left
-            startRunResp.status = STOPPED
-        if startRunResp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
-            
-            # check for quit:
-            if "escape" in theseKeys:
-                endExpNow = True
-            if len(theseKeys) > 0:  # at least one key was pressed
-                startRunResp.keys = theseKeys[-1]  # just the last key pressed
-                startRunResp.rt = startRunResp.clock.getTime()
-                # a response ends the routine
-                continueRoutine = False
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -689,13 +649,6 @@ for thisRun in runs:
     
     
     
-    # check responses
-    if startRunResp.keys in ['', [], None]:  # No response was made
-       startRunResp.keys=None
-    # store data for runs (TrialHandler)
-    runs.addData('startRunResp.keys',startRunResp.keys)
-    if startRunResp.keys != None:  # we had a response
-        runs.addData('startRunResp.rt', startRunResp.rt)
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
