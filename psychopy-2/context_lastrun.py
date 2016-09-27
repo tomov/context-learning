@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:57:42 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 18:00:39 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -148,10 +148,10 @@ else: # behavioral
     itiMin = 0.5
     itiMax = 3
 
-    feedbackFixationMean = 1
+    feedbackFixationMean = 0.5
     feedbackFixationLambda = 0.5
-    feedbackFixationMin = 0.5
-    feedbackFixationMax = 3
+    feedbackFixationMin = 0.25
+    feedbackFixationMax = 1
 
 # psychopy only writes the data at the very end
 # we want data with intermediate results
@@ -456,9 +456,9 @@ if startExpResp.keys != None:  # we had a response
 thisExp.nextEntry()
 
 # set up handler to look after randomisation of conditions etc
-runs = data.TrialHandler(nReps=1, method='fullRandom', 
+runs = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
+    trialList=data.importConditions('runs.xlsx', selection=u'range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -548,7 +548,7 @@ for thisRun in runs:
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(5.000000)
+    routineTimer.add(2.000000)
     # update component parameters for each repeat
     runInstr.setText("Round #" + str(runs.thisN + 1))
     # Parse the comma-separated list of restaurant names
@@ -621,7 +621,7 @@ for thisRun in runs:
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (2.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
         
         # check if all components have finished
