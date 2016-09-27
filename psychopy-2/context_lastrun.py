@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:05:44 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:18:52 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -283,6 +283,18 @@ didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-20.0)
 
+# different jitter distributions depending on mode 
+#
+if expInfo['mriMode'] != 'off': # we're scanning
+    jitterMean = 3
+    jitterLambda = 1.5
+    jitterMin = 1
+    jitterMax = 8
+else: # behavioral
+    jitterMean = 30
+    jitterLambda = 1.5
+    jitterMin = 1
+    jitterMax = 8
 
 import time
 expInfo['expStartWallTime'] = time.ctime()
@@ -733,9 +745,11 @@ for thisRun in runs:
         timeoutText.setText(timeoutText.text)
         gotSickText.setText(gotSickText.text)
         didntGetSickText.setText(didntGetSickText.text)
-        # uniform 0-2 seconds for each trial
-        #
-        jitterTime = random() * 2
+        jitterTime = np.random.laplace(jitterMean, jitterLambda)
+        jitterTime = max(jitterTime, jitterMin)
+        jitterTime = min(jitterTime, jitterMax)
+        
+        print jitterTime
         trials.addData('trialStartWallTime', time.ctime())
         # keep track of which components have finished
         trialComponents = []
@@ -1075,7 +1089,9 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
-        jitterTime = random() * 2
+        jitterTime = np.random.laplace(jitterMean, jitterLambda)
+        jitterTime = max(jitterTime, jitterMin)
+        jitterTime = min(jitterTime, jitterMax)
         trials.addData('trialStartWallTime', time.ctime())
         # keep track of which components have finished
         test_2Components = []
