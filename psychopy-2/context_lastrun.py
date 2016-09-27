@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:59:53 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 17:05:44 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -21,7 +21,7 @@ os.chdir(_thisDir)
 
 # Store info about the experiment session
 expName = u'context'  # from the Builder filename that created this script
-expInfo = {u'participant': u'', u'session': u'001', u'mriMode': u'Off'}
+expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'', u'mriMode': u'off'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -58,11 +58,6 @@ else:
 
 # Initialize components for Routine "instr"
 instrClock = core.Clock()
-# some hardcoded experiment params
-#
-isBehavioral = True # are we doing a behavioral pilot? changes button press instructions
-isPractice = False # only a practice run -- uses diff foods and restaurants
-
 win.setColor('black')
 instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
@@ -107,12 +102,13 @@ elif trigger == 'usb':
 new_runClock = core.Clock()
 # Put 'em here for good indentation
 #
-if isBehavioral:
-    sickPressInstr = "the left arrow key (<-)"
-    notsickPressInstr = "the right arrow key (->)"
-else:
+if expInfo['mriMode'] != 'off': # we're scanning!
+    assert expInfo['mriMode'] == 'scan'
     sickPressInstr = "with your index finger"
     notsickPressInstr = "with your middle finger"
+else: # not scanning => behavioral
+    sickPressInstr = "the left arrow key (<-)"
+    notsickPressInstr = "the right arrow key (->)"
 
 runInstructionsRound1 = '''You will make 24 predictions. After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.
 
@@ -459,7 +455,9 @@ t = 0
 waitForTriggerClock.reset()  # clock 
 frameN = -1
 # update component parameters for each repeat
-if expInfo['mriMode'] != 'Off': # of 'scan' !
+if expInfo['mriMode'] != 'off': # or 'scan' !
+    assert expInfo['mriMode'] == 'scan'
+
     if trigger == 'usb':
         vol = launchScan(win, MR_settings, 
               globalClock=fmriClock, # <-- how you know the time! 
@@ -558,7 +556,7 @@ for thisRun in runs:
     
     # Use a separate, hardcoded set of restaurants and foods if it's just a practice run
     #
-    if isPractice:
+    if expInfo['isPractice'] == 'yes':
         restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']
         foodFilesPrefix = 'practice_food'
     # Random shuffle the context roles so they're independent from the
