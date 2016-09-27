@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:44:16 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Sep 26 16:59:53 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -62,6 +62,8 @@ instrClock = core.Clock()
 #
 isBehavioral = True # are we doing a behavioral pilot? changes button press instructions
 isPractice = False # only a practice run -- uses diff foods and restaurants
+
+win.setColor('black')
 instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \
 + ''' On each trial you will see the name of the restaurant and a particular food.''' \
 + ''' Your job is to predict whether a customer will get sick from eating the food.''' \
@@ -75,9 +77,9 @@ Press any button to begin the first round.
 '''
 instrText = visual.TextStim(win=win, ori=0, name='instrText',
     text=instruction
-,    font='Arial',
+,    font=u'Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-2.0)
 
 # Initialize components for Routine "waitForTrigger"
@@ -129,9 +131,9 @@ Press any button to begin the first trial.'''
 
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text='this value is set in the code depending on the run number',    font='Arial',
+    text=u'this value is set in the code depending on the run number',    font=u'Arial',
     pos=[0, 0], height=0.08, wrapWidth=1.5,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 
@@ -210,14 +212,14 @@ def addExtraData():
 
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text='Predict whether the customer will get sick from this food.',    font='Arial',
+    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-4.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font='Arial Bold',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color='purple', colorSpace='rgb', opacity=1,
+    color=u'pink', colorSpace='rgb', opacity=1,
     depth=-5.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -226,9 +228,9 @@ foodImg = visual.ImageStim(win=win, name='foodImg',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-6.0)
 fixationJitterText = visual.TextStim(win=win, ori=0, name='fixationJitterText',
-    text='+',    font='Arial',
+    text=u'+',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-7.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -243,15 +245,15 @@ notsickImg = visual.ImageStim(win=win, name='notsickImg',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-9.0)
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
-    text='+',    font='Arial',
+    text=u'+',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-11.0)
 Jitter = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-13.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
     text='_',    font='Arial',
@@ -260,9 +262,9 @@ notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
     depth=-14.0)
 
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text='CORRECT',    font='Arial Bold',
+    text=u'CORRECT',    font=u'Arial Bold',
     pos=[0, -0.4], height=0.1, wrapWidth=None,
-    color='blue', colorSpace='rgb', opacity=1,
+    color=u'blue', colorSpace='rgb', opacity=1,
     depth=-16.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
     text='WRONG',    font='Arial Bold',
@@ -270,19 +272,19 @@ wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
     color='red', colorSpace='rgb', opacity=1,
     depth=-17.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text='TIMEOUT',    font='Arial Bold',
+    text=u'TIMEOUT',    font=u'Arial Bold',
     pos=[0, -0.4], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text='The customer got sick!',    font='Arial',
+    text=u'The customer got sick!',    font=u'Arial',
     pos=[0, -0.6], height=0.075, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-19.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text="The customer didn't get sick!",    font='Arial',
+    text=u"The customer didn't get sick!",    font=u'Arial',
     pos=[0, -0.6], height=0.075, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-20.0)
 
 
@@ -295,14 +297,14 @@ test_2Clock = core.Clock()
 
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
-    text='Predict whether the customer will get sick from this food.',    font='Arial',
+    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
     pos=[0, 0.8], height=0.1, wrapWidth=20,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-3.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font='Arial Bold',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color='purple', colorSpace='rgb', opacity=1,
+    color=u'pink', colorSpace='rgb', opacity=1,
     depth=-4.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
@@ -311,9 +313,9 @@ foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-5.0)
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
-    text='+',    font='Arial',
+    text=u'+',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-6.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
@@ -328,15 +330,15 @@ notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-9.0)
 fixationITIText_2 = visual.TextStim(win=win, ori=0, name='fixationITIText_2',
-    text='+',    font='Arial',
+    text=u'+',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-10.0)
 Jitter_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='Jitter_2')
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-12.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     text='_',    font='Arial',
