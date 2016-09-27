@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 27 09:23:31 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Sep 27 11:34:35 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -20,7 +20,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'context'  # from the Builder filename that created this script
+expName = 'context'  # from the Builder filename that created this script
 expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'', u'mriMode': u'off'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
@@ -46,7 +46,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(size=(1440, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     )
 # store frame rate of monitor if we can measure it successfully
@@ -86,9 +86,9 @@ You will have 3 seconds to press on each trial.
 Press any button to begin the first round.''' % (sickPressInstr, notsickPressInstr)
 instrText = visual.TextStim(win=win, ori=0, name='instrText',
     text=instruction
-,    font=u'Arial',
+,    font='Arial',
     pos=[0, 0], height=0.07, wrapWidth=1.6,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-2.0)
 
 # Initialize components for Routine "waitForTrigger"
@@ -119,9 +119,9 @@ new_runClock = core.Clock()
 
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=u'the text is set manually\n',    font=u'Arial',
+    text='the text is set manually\n',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-4.0)
 
 # Initialize components for Routine "trial"
@@ -153,11 +153,61 @@ else: # behavioral
     feedbackFixationMin = 0.5
     feedbackFixationMax = 3
 
+# extra code to actually dump to mysql
+# followed by extra code to dump intermediate results while experiment is running
+#
+import mysql.connector
+
+mysql_cnx = mysql.connector.connect(user='root', database='context')
+mysql_cursor = mysql_cnx.cursor()
+
+mysql_cols = ["participant", "session", "mriMode", "isPractice", "expStart",
+    "restaurantNames", "foods", "contextRole", "contextId", "cueId", "sick", "corrAns", "responseKey", "reactionTime", "responseIsCorrect", "restaurant",
+    "food", "roundId", "trialId", "trainOrTest", "stimOnset", "responseTime", "feedbackOnset"]
+
+insert_query = ("INSERT INTO data (" + ','.join(mysql_cols) + ") VALUES (" + ','.join("%(" + s + ")s" for s in mysql_cols) + ")")
+
+def writeEntryToMySql(entry):
+    if 'trainOrTest' not in entry: # not a trial (e.g. instructions)
+        return
+    isTrain = entry['trainOrTest'] == 'train'
+    entryContextsReshuffled = [int(x) for x in entry['contextsReshuffled'].split(',')]
+    entryCuesReshuffled = [int(x) for x in entry['cuesReshuffled'].split(',')]
+    entryRestaurants = [r.strip() for r in restaurantNames.split(',')]
+    entry_data = {
+        "participant": expInfo['participant'],
+        "session": expInfo['session'],
+        "mriMode": expInfo['mriMode'],
+        "isPractice": expInfo['isPractice'] == 'yes',
+        "expStart": "1990-03-02 20:00:00", # TODO
+        "restaurantNames": ','.join([entryRestaurants[entryContextsReshuffled[x]] for x in range(0, 3)]),
+        "foods": ','.join([entry['foodFilesPrefix'] + str(entryCuesReshuffled[x]) for x in range(0, 3)]),
+        "contextRole": entry['contextRole'],
+        "contextId": entry['contextId'],
+        "cueId": entry['cueId'],
+        "sick": entry['sick'],
+        "corrAns": entry['corrAns'],
+        "responseKey": entry['responseKey.keys'] if isTrain else entry['responseKey_2.keys'],
+        "reactionTime": entry['responseKey.rt'] if isTrain else entry['responseKey_2.rt'],
+        "responseIsCorrect": entry['responseKey.corr'] if isTrain else entry['responseKey_2.corr'],
+        "restaurant": entry['restaurant'],
+        "food": entry['food'],
+        "roundId": entry['runs.thisN'] + 1,
+        "trialId": (entry['trials.thisN'] + 1) if isTrain else (entry['test_trials.thisN'] + 1),
+        "trainOrTest": entry['trainOrTest'],
+        "stimOnset": "2016-03-02 10:00:00.23234", # TODO fmri clock, convert
+        "responseTime": "2016-03-02 11:00:00.02423", # TODO
+        "feedbackOnset": "2016-03-02 11:11:11.234234" # TODO fmri clock, convert
+        }
+    mysql_cursor.execute(insert_query, entry_data)
+    mysql_cnx.commit()
+
+
 # psychopy only writes the data at the very end
 # we want data with intermediate results
-# so we have this
+# so we have this thing that dumps to a .wtf-tile
+# as the experiment is going on
 #
-
 streamingFilename = thisExp.dataFileName + '.wtf'
 streamingFile = open(streamingFilename, 'a')
 streamingDelim = ','
@@ -196,9 +246,10 @@ def flushEntryToStreamingFile(entry):
 
 nextEntryToFlush = 0
 
-# write last entry
+# write entries that we haven't flushed yet
+# this writes both to the .wtf file and to the mysql db
 #
-def flushToStreamingFile():
+def flushEntries():
     global nextEntryToFlush
 
     # don't write anything during the initial run
@@ -212,9 +263,10 @@ def flushToStreamingFile():
     #
     while nextEntryToFlush < len(thisExp.entries):
         flushEntryToStreamingFile(thisExp.entries[nextEntryToFlush])
+        writeEntryToMySql(thisExp.entries[nextEntryToFlush])
         nextEntryToFlush += 1
 def addExtraData():
-    thisExp.addData('fmriTime', fmriClock.getTime())
+    thisExp.addData('fmriTime', fmriClock.getTime()) # <-- wrong! should log the distint time events
     thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
     thisExp.addData('contextId', contextId)
     thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
@@ -223,19 +275,19 @@ def addExtraData():
     thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-7.0)
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-8.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'pink', colorSpace='rgb', opacity=1,
+    color='pink', colorSpace='rgb', opacity=1,
     depth=-9.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -257,44 +309,44 @@ notsickImg = visual.ImageStim(win=win, name='notsickImg',
     texRes=128, interpolate=True, depth=-12.0)
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-16.0)
 fixationFeedbackText = visual.TextStim(win=win, ori=0, name='fixationFeedbackText',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-17.0)
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text=u'CORRECT',    font=u'Arial Bold',
+    text='CORRECT',    font='Arial Bold',
     pos=[0, 0], height=0.2, wrapWidth=None,
-    color=u'blue', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-18.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text=u'WRONG',    font=u'Arial Bold',
+    text='WRONG',    font='Arial Bold',
     pos=[0, 0], height=0.2, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-19.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text=u'TIMEOUT',    font=u'Arial Bold',
+    text='TIMEOUT',    font='Arial Bold',
     pos=[0, 0], height=0.2, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-20.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text=u'The customer got sick!',    font=u'Arial',
+    text='The customer got sick!',    font='Arial',
     pos=[0, -0.3], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-21.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text=u"The customer didn't get sick!",    font=u'Arial',
+    text="The customer didn't get sick!",    font='Arial',
     pos=[0, -0.3], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-22.0)
 FeedbackJitter = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='FeedbackJitter')
 
@@ -307,19 +359,19 @@ test_2Clock = core.Clock()
 
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-6.0)
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-7.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'pink', colorSpace='rgb', opacity=1,
+    color='pink', colorSpace='rgb', opacity=1,
     depth=-8.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
@@ -340,14 +392,14 @@ notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-12.0)
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-13.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 
 # Initialize components for Routine "waitForFinish"
@@ -458,7 +510,7 @@ thisExp.nextEntry()
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions('runs.xlsx', selection=u'range(1,10)'),
+    trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -651,7 +703,7 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=5, method='fullRandom', 
+    trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
         trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
@@ -703,7 +755,7 @@ for thisRun in runs:
         feedbackFixationTime = max(feedbackFixationTime, feedbackFixationMin)
         feedbackFixationTime = min(feedbackFixationTime, feedbackFixationMax)
         
-        thisExp.addData('trialOrTest', 'trial')
+        thisExp.addData('trainOrTest', 'train')
         addExtraData()
         assert contextRolesWereShuffled
         restaurantText.setText(restaurants[contextsReshuffled[contextId]])
@@ -873,6 +925,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickHighlight* updates
             if t >= itiTime and sickHighlight.status == NOT_STARTED:
@@ -987,7 +1041,7 @@ for thisRun in runs:
         
         
         
-        flushToStreamingFile()
+        flushEntries()
         
         
         # check responses
@@ -1005,7 +1059,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 5 repeats of 'trials'
+    # completed 1 repeats of 'trials'
     
     
     # set up handler to look after randomisation of conditions etc
@@ -1046,7 +1100,7 @@ for thisRun in runs:
         
         trials.addData('trialStartWallTime', time.ctime())
         
-        thisExp.addData('trialOrTest', 'test')
+        thisExp.addData('trainOrTest', 'test')
         addExtraData()
         restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
         foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
@@ -1109,7 +1163,7 @@ for thisRun in runs:
                 trialInstrText_2.tStart = t  # underestimates by a little under one frame
                 trialInstrText_2.frameNStart = frameN  # exact frame index
                 trialInstrText_2.setAutoDraw(True)
-            if trialInstrText_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if trialInstrText_2.status == STARTED and t >= (itiTime_2 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 trialInstrText_2.setAutoDraw(False)
             
             # *restaurantText_2* updates
@@ -1118,7 +1172,7 @@ for thisRun in runs:
                 restaurantText_2.tStart = t  # underestimates by a little under one frame
                 restaurantText_2.frameNStart = frameN  # exact frame index
                 restaurantText_2.setAutoDraw(True)
-            if restaurantText_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if restaurantText_2.status == STARTED and t >= (itiTime_2 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 restaurantText_2.setAutoDraw(False)
             
             # *foodImg_2* updates
@@ -1127,7 +1181,7 @@ for thisRun in runs:
                 foodImg_2.tStart = t  # underestimates by a little under one frame
                 foodImg_2.frameNStart = frameN  # exact frame index
                 foodImg_2.setAutoDraw(True)
-            if foodImg_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if foodImg_2.status == STARTED and t >= (itiTime_2 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 foodImg_2.setAutoDraw(False)
             
             # *responseKey_2* updates
@@ -1139,7 +1193,7 @@ for thisRun in runs:
                 # keyboard checking is just starting
                 responseKey_2.clock.reset()  # now t=0
                 event.clearEvents(eventType='keyboard')
-            if responseKey_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if responseKey_2.status == STARTED and t >= (itiTime_2 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 responseKey_2.status = STOPPED
             if responseKey_2.status == STARTED:
                 theseKeys = event.getKeys(keyList=['left', 'right'])
@@ -1155,6 +1209,8 @@ for thisRun in runs:
                         responseKey_2.corr = 1
                     else:
                         responseKey_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickImg_2* updates
             if t >= itiTime_2 and sickImg_2.status == NOT_STARTED:
@@ -1162,7 +1218,7 @@ for thisRun in runs:
                 sickImg_2.tStart = t  # underestimates by a little under one frame
                 sickImg_2.frameNStart = frameN  # exact frame index
                 sickImg_2.setAutoDraw(True)
-            if sickImg_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickImg_2.status == STARTED and t >= (itiTime_2 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickImg_2.setAutoDraw(False)
             
             # *notsickImg_2* updates
@@ -1171,7 +1227,7 @@ for thisRun in runs:
                 notsickImg_2.tStart = t  # underestimates by a little under one frame
                 notsickImg_2.frameNStart = frameN  # exact frame index
                 notsickImg_2.setAutoDraw(True)
-            if notsickImg_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickImg_2.status == STARTED and t >= (itiTime_2 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickImg_2.setAutoDraw(False)
             
             # *sickHighlight_2* updates
@@ -1180,7 +1236,7 @@ for thisRun in runs:
                 sickHighlight_2.tStart = t  # underestimates by a little under one frame
                 sickHighlight_2.frameNStart = frameN  # exact frame index
                 sickHighlight_2.setAutoDraw(True)
-            if sickHighlight_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickHighlight_2.status == STARTED and t >= (itiTime_2 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickHighlight_2.setAutoDraw(False)
             
             # *notsickHighlight_2* updates
@@ -1189,7 +1245,7 @@ for thisRun in runs:
                 notsickHighlight_2.tStart = t  # underestimates by a little under one frame
                 notsickHighlight_2.frameNStart = frameN  # exact frame index
                 notsickHighlight_2.setAutoDraw(True)
-            if notsickHighlight_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickHighlight_2.status == STARTED and t >= (itiTime_2 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickHighlight_2.setAutoDraw(False)
             # *ITI_2* period
             if t >= 0 and ITI_2.status == NOT_STARTED:
@@ -1224,7 +1280,7 @@ for thisRun in runs:
         
         
         trials.addData('trialEndWallTime', time.ctime())
-        flushToStreamingFile()
+        flushEntries()
         
         # check responses
         if responseKey_2.keys in ['', [], None]:  # No response was made
@@ -1316,6 +1372,15 @@ routineTimer.reset()
 
 
 
+flushEntries() # to flush out the last one
+
+# finish mysql connections
+#
+mysql_cursor.close()
+mysql_cnx.close()
+
+# close the .wtf file
+#
 streamingFile.close()
 
 

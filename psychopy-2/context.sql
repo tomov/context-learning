@@ -4,8 +4,8 @@ use context;
 
 create table data (
     id bigint auto_increment primary key,
-    participant bigint,
-    session bigint,
+    participant varchar(50),
+    session varchar(50),
     mriMode varchar(50),
     isPractice int,
     expStart datetime,
@@ -19,6 +19,8 @@ create table data (
     sick varchar(50),
     corrAns varchar(50),
     responseKey varchar(50),
+    reactionTime double,
+    responseIsCorrect int,
      
     restaurant varchar(100),
     food varchar(100),

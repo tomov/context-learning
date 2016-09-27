@@ -1,10 +1,10 @@
 import mysql.connector
 
-cnx = mysql.connector.connect(user='root', database='context')
-cursor = cnx.cursor()
+mysql_cnx = mysql.connector.connect(user='root', database='context')
+mysql_cursor = mysql_cnx.cursor()
 
-cols = ["participant", "session", "mriMode", "isPractice", "expStart",
-    "restaurantNames", "foods", "contextRole", "contextId", "cueId", "sick", "corrAns", "responseKey", "restaurant",
+mysql_cols = ["participant", "session", "mriMode", "isPractice", "expStart",
+    "restaurantNames", "foods", "contextRole", "contextId", "cueId", "sick", "corrAns", "responseKey", "reactionTime", "responseIsCorrect", "restaurant",
     "food", "roundId", "trialId", "trainOrTest", "stimOnset", "responseTime", "feedbackOnset"]
 
 trial_data = {
@@ -21,6 +21,8 @@ trial_data = {
     "sick": "Yes",
     "corrAns": "left",
     "responseKey": "left",
+    "responseIsCorrect": 1,
+    "reactionTime": 0.123,
     "restaurant": "Sweet Maple",
     "food": "food0",
     "roundId": "1",
@@ -31,14 +33,14 @@ trial_data = {
     "feedbackOnset": "2016-03-02 11:11:11.234234" # fmri clock, convert
 }
 
-insert_query = ("INSERT INTO data (" + ','.join(cols) + ") VALUES (" + ','.join("%(" + s + ")s" for s in cols) + ")")
+insert_query = ("INSERT INTO data (" + ','.join(mysql_cols) + ") VALUES (" + ','.join("%(" + s + ")s" for s in mysql_cols) + ")")
 
 print insert_query
 
-cursor.execute(insert_query, trial_data)
-cnx.commit()
+mysql_cursor.execute(insert_query, trial_data)
+mysql_cnx.commit()
 
 
-cursor.close()
-cnx.close()
+mysql_cursor.close()
+mysql_cnx.close()
 
