@@ -27,32 +27,32 @@
       <CodeComponent name="initStuff">
         <Param name="Begin Experiment" val="win.setColor('black')" valType="extendedCode" updates="constant"/>
         <Param name="name" val="initStuff" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="instrCode">
         <Param name="Begin Experiment" val="if expInfo['mriMode'] != 'off': # we're scanning!&#10;    assert expInfo['mriMode'] == 'scan'&#10;    sickPressInstr = &quot;with your index finger&quot;&#10;    notsickPressInstr = &quot;with your middle finger&quot;&#10;else: # not scanning =&gt; behavioral&#10;    sickPressInstr = &quot;the left arrow key (&lt;-)&quot;&#10;    notsickPressInstr = &quot;the right arrow key (-&gt;)&quot;&#10;&#10;&#10;instruction ='''Imagine that you are a health inspector trying to determine the cause of illness in different restaurants.''' \&#10;+ ''' On each trial you will see the name of the restaurant and a particular food.''' \&#10;+ ''' Your job is to predict whether a customer will get sick from eating the food.''' \&#10;+ ''' The outcome may or may not depend on the particular restaurant the customer is in (you have to figure that out).''' \&#10;+ ''' In some cases you will make predictions about the same food in different restaurants.&#10;&#10;The experiment consists of 9 rounds. In each round, you will make 24 predictions about a different set of restaurants and foods.''' \&#10;+ ''' After each prediction (except the last 4), you will receive feedback about whether or not the customer got sick.&#10;&#10;Press %s if you believe the customer will get sick from eating the food.&#10;&#10;Press %s if you believe the customer will NOT get sick.&#10;&#10;You will have 3 seconds to press on each trial.&#10;&#10;Press any button to begin the first round.''' % (sickPressInstr, notsickPressInstr)" valType="extendedCode" updates="constant"/>
         <Param name="name" val="instrCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="instrText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="instrText" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="1.6" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="$instruction&#10;" valType="str" updates="constant"/>
         <Param name="stopVal" val="120" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="$instruction&#10;" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -80,48 +80,48 @@
       <CodeComponent name="setRunInstr">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="setRunInstr" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="runInstr.setText(&quot;Beginning round #&quot; + str(runs.thisN + 1))" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="getRestaurants">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="getRestaurants" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# Parse the comma-separated list of restaurant names&#10;#&#10;restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))&#10;&#10;# Use a separate, hardcoded set of restaurants and foods if it's just a practice run&#10;#&#10;if expInfo['isPractice'] == 'yes':&#10;    restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']&#10;    foodFilesPrefix = 'practice_food'" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="shuffleContextRoles">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="shuffleContextRoles" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;# Notice that we ONLY DO THIS ONCE at the beginning&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'original contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# very important to set it here so&#10;# 1) it gets used to initialize the trial loop, and&#10;# 2) it gets written out to the data file&#10;#&#10;thisRun.contextRole = contextRoles[runs.thisN]" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="shuffleFoodsAndRestaurants">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="shuffleFoodsAndRestaurants" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# randomize foods &amp; restaurants within each run&#10;# note that we DO THIS BEFORE EVERY RUN&#10;#&#10;cuesReshuffled = range(0, 3)&#10;contextsReshuffled = range(0, 3)&#10;&#10;shuffle(cuesReshuffled)&#10;shuffle(contextsReshuffled)&#10;&#10;print 'Shuffled cues: ', cuesReshuffled&#10;print 'Shuffled contexts: ', contextsReshuffled" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="runInstr">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="runInstr" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
-        <Param name="stopVal" val="2.0" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -134,64 +134,64 @@
       <CodeComponent name="timeLoggingCode">
         <Param name="Begin Experiment" val="import time&#10;expInfo['expStartWallTime'] = time.ctime()" valType="extendedCode" updates="constant"/>
         <Param name="name" val="timeLoggingCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="trials.addData('trialStartWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="trials.addData('trialEndWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="showFeedback">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="showFeedback" valType="code" updates="None"/>
-        <Param name="Each Frame" val="# show user some feedback&#10;#&#10;if t &gt;= 3 + itiTime and not isFeedbackShown: # TODO don't hardcode&#10;    isFeedbackShown = True&#10;    if not responseKey.keys: # no response was made&#10;        timeoutText.setOpacity(1)&#10;        timeoutText.setText(timeoutText.text)&#10;    else: # response was made&#10;        if responseKey.corr == 1:&#10;            correctText.setOpacity(1)&#10;            wrongText.setOpacity(0)&#10;        elif responseKey.corr == 0:&#10;            correctText.setOpacity(0)&#10;            wrongText.setOpacity(1)&#10;        else:&#10;            print responseKey.corr&#10;            assert False, &quot;responseKey.corr = 0 or 1&quot;&#10;&#10;        if sick == 'Yes':&#10;            gotSickText.setOpacity(1)&#10;            didntGetSickText.setOpacity(0)&#10;        elif sick == 'No':&#10;            gotSickText.setOpacity(0)&#10;            didntGetSickText.setOpacity(1)&#10;        else:&#10;            print sick&#10;            assert False, &quot;sick can only be Yes or No&quot;&#10;&#10;        # hack to redraw the texts with new opacity&#10;        correctText.setText(correctText.text)&#10;        wrongText.setText(wrongText.text)&#10;        gotSickText.setText(gotSickText.text)&#10;        didntGetSickText.setText(didntGetSickText.text)&#10;" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# clear the feedback&#10;isFeedbackShown = False&#10;correctText.setOpacity(0)&#10;wrongText.setOpacity(0)&#10;timeoutText.setOpacity(0)&#10;gotSickText.setOpacity(0)&#10;didntGetSickText.setOpacity(0)&#10;# hack to re-render the texts with new opacity&#10;correctText.setText(correctText.text)&#10;wrongText.setText(wrongText.text)&#10;timeoutText.setText(timeoutText.text)&#10;gotSickText.setText(gotSickText.text)&#10;didntGetSickText.setText(didntGetSickText.text)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="# show user some feedback&#10;#&#10;if t &gt;= 3 + itiTime and not isFeedbackShown: # TODO don't hardcode&#10;    isFeedbackShown = True&#10;    if not responseKey.keys: # no response was made&#10;        timeoutText.setOpacity(1)&#10;        timeoutText.setText(timeoutText.text)&#10;    else: # response was made&#10;        if responseKey.corr == 1:&#10;            correctText.setOpacity(1)&#10;            wrongText.setOpacity(0)&#10;        elif responseKey.corr == 0:&#10;            correctText.setOpacity(0)&#10;            wrongText.setOpacity(1)&#10;        else:&#10;            print responseKey.corr&#10;            assert False, &quot;responseKey.corr = 0 or 1&quot;&#10;&#10;        if sick == 'Yes':&#10;            gotSickText.setOpacity(1)&#10;            didntGetSickText.setOpacity(0)&#10;        elif sick == 'No':&#10;            gotSickText.setOpacity(0)&#10;            didntGetSickText.setOpacity(1)&#10;        else:&#10;            print sick&#10;            assert False, &quot;sick can only be Yes or No&quot;&#10;&#10;        # hack to redraw the texts with new opacity&#10;        correctText.setText(correctText.text)&#10;        wrongText.setText(wrongText.text)&#10;        gotSickText.setText(gotSickText.text)&#10;        didntGetSickText.setText(didntGetSickText.text)&#10;" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="highlightChoice">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="highlightChoice" valType="code" updates="None"/>
-        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey.keys:&#10;    if responseKey.keys == 'left': # sick&#10;        sickHighlight.opacity = 1&#10;        notsickHighlight.opacity = 0&#10;    elif responseKey.keys == 'right': # not sick&#10;        sickHighlight.opacity = 0&#10;        notsickHighlight.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# don't highlight anything initially&#10;#&#10;sickHighlight.setOpacity(0)&#10;notsickHighlight.setOpacity(0)&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey.keys:&#10;    if responseKey.keys == 'left': # sick&#10;        sickHighlight.opacity = 1&#10;        notsickHighlight.opacity = 0&#10;    elif responseKey.keys == 'right': # not sick&#10;        sickHighlight.opacity = 0&#10;        notsickHighlight.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight.setText(sickHighlight.text)&#10;notsickHighlight.setText(notsickHighlight.text)" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="jitterCode">
-        <Param name="Begin Experiment" val="# different jitter distributions depending on mode &#10;#&#10;if expInfo['mriMode'] != 'off': # we're scanning&#10;    itiMean = 3&#10;    itiLambda = 1.5&#10;    itiMin = 1&#10;    itiMax = 8&#10;else: # behavioral&#10;    itiMean = 1&#10;    itiLambda = 0.5&#10;    itiMin = 0.5&#10;    itiMax = 3" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Experiment" val="# different jitter distributions depending on mode &#10;#&#10;&#10;if expInfo['mriMode'] != 'off': # we're scanning&#10;    itiMean = 3&#10;    itiLambda = 1.5&#10;    itiMin = 2&#10;    itiMax = 8&#10;    maxAllowedRunTime = 4 * 60 # max 4 mins per run in scanner&#10;&#10;else: # behavioral&#10;    itiMean = 1.5&#10;    itiLambda = 0.5&#10;    itiMin = 1&#10;    itiMax = 4&#10;    maxAllowedRunTime = 3 * 60 # max 3 mins per run in behavioral&#10;&#10;&#10;# Generate the ITI's&#10;# TODO the times are duplicated with the ones in the builder&#10;#&#10;runOverheadTime = 10 # info screens&#10;trainTrialFixedTime = 4 # stim presentation + feedback&#10;testTrialFixedTime = 5 # stim presentation&#10;nRuns = 9;&#10;nTrainTrialsPerRun = 20;&#10;nTestTrialsPerRun = 4;&#10;&#10;nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;&#10;nTotalTrials = nRuns * nTrialsPerRun&#10;&#10;# For each run, generate the ITI's from a laplacian&#10;# and make sure that they fit in the max allowed run time &#10;# for each run, keep trying until we find a sequence of ITIs&#10;# that do fit; otherwise if we fail after a lot of attempts,&#10;# just take the shorted ITI sequence&#10;#&#10;allItis = []&#10;runItisSanity = [] # for sanity check&#10;for r in range(nRuns):&#10;    bestItis = None&#10;    print 'run = ', r&#10;    for attempt in range(1, 100):&#10;        itis = np.random.laplace(itiMean, itiLambda, nTrialsPerRun)&#10;        itis = np.clip(itis, itiMin, itiMax)&#10;        print '  attempt ', attempt, ' = ', sum(itis)&#10;        if not bestItis or sum(itis) &lt; sum(bestItis):&#10;            bestItis = itis&#10;        totalRunTime = sum(itis) + nTrainTrialsPerRun * trainTrialFixedTime + nTestTrialsPerRun * testTrialFixedTime + runOverheadTime&#10;        print '                total run time = ', totalRunTime, ' vs. ', maxAllowedRunTime&#10;        if totalRunTime &lt; maxAllowedRunTime:&#10;            break&#10;    bestItis = list(bestItis)&#10;    allItis.extend(bestItis) # add ITI's for this run to the list&#10;    runItisSanity.append(bestItis) # for sanity&#10;&#10;nextItiIdx = 0&#10;assert len(allItis) == nTotalTrials" valType="extendedCode" updates="constant"/>
         <Param name="name" val="jitterCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="itiTime = np.random.laplace(itiMean, itiLambda)&#10;itiTime = max(itiTime, itiMin)&#10;itiTime = min(itiTime, itiMax)&#10;&#10;print itiTime" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="print '(train) next iti idx = ', nextItiIdx&#10;&#10;assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN&#10;&#10;itiTime = allItis[nextItiIdx]&#10;nextItiIdx += 1&#10;&#10;print '(train) iti time = ', itiTime&#10;&#10;assert itiTime == runItisSanity[runs.thisN][trials.thisN]&#10;assert itiTime &gt;= itiMin&#10;assert itiTime &lt;= itiMax&#10;" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="logCueAndContext">
         <Param name="Begin Experiment" val="def addExtraData():&#10;    thisExp.addData('fmriTime', fmriClock.getTime())&#10;    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))&#10;    thisExp.addData('contextId', contextId)&#10;    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])&#10;    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))&#10;    thisExp.addData('cueId', cueId)&#10;    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))" valType="extendedCode" updates="constant"/>
         <Param name="name" val="logCueAndContext" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="thisExp.addData('trialOrTest', 'trial')&#10;addExtraData()" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="sanityChecks">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="sanityChecks" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="assert contextRolesWereShuffled" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="fixationITIText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="fixationITIText" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="stopVal" val="$itiTime" valType="code" updates="constant"/>
         <Param name="durationEstim" val="3" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -203,15 +203,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="trialInstrText" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
         <Param name="stopVal" val="4" valType="code" updates="constant"/>
         <Param name="durationEstim" val="4" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0.8]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -223,15 +223,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="restaurantText" valType="code" updates="None"/>
-        <Param name="color" val="pink" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="pink" valType="str" updates="constant"/>
+        <Param name="text" val="$restaurants[$contextsReshuffled[$contextId]]" valType="str" updates="set every repeat"/>
         <Param name="stopVal" val="4" valType="code" updates="constant"/>
         <Param name="durationEstim" val="4" valType="code" updates="None"/>
         <Param name="pos" val="[0, +0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="$restaurants[$contextsReshuffled[$contextId]]" valType="str" updates="set every repeat"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -334,15 +334,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="sickHighlight" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="stopVal" val="4" valType="code" updates="constant"/>
         <Param name="durationEstim" val="4" valType="code" updates="None"/>
         <Param name="pos" val="[-0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -354,15 +354,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="notsickHighlight" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="stopVal" val="4" valType="code" updates="constant"/>
         <Param name="durationEstim" val="4" valType="code" updates="None"/>
         <Param name="pos" val="[0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -374,15 +374,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="correctText" valType="code" updates="None"/>
-        <Param name="color" val="blue" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="blue" valType="str" updates="constant"/>
+        <Param name="text" val="CORRECT" valType="str" updates="constant"/>
         <Param name="stopVal" val="1" valType="code" updates="constant"/>
         <Param name="durationEstim" val="1" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.4]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="6" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="CORRECT" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -394,15 +394,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="wrongText" valType="code" updates="None"/>
-        <Param name="color" val="red" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="red" valType="str" updates="constant"/>
+        <Param name="text" val="WRONG" valType="str" updates="constant"/>
         <Param name="stopVal" val="1" valType="code" updates="constant"/>
         <Param name="durationEstim" val="1" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.4]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="6" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="WRONG" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -414,15 +414,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="timeoutText" valType="code" updates="None"/>
-        <Param name="color" val="red" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="red" valType="str" updates="constant"/>
+        <Param name="text" val="TIMEOUT" valType="str" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="1" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.4]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="6" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="TIMEOUT" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -434,15 +434,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="gotSickText" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="The customer got sick!" valType="str" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="1" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.55]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="6" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="The customer got sick!" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -454,15 +454,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="didntGetSickText" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="The customer didn't get sick!" valType="str" updates="constant"/>
         <Param name="stopVal" val="1.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="1" valType="code" updates="None"/>
         <Param name="pos" val="[0, -0.55]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="6" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="The customer didn't get sick!" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -471,38 +471,39 @@
         <Param name="letterHeight" val="0.075" valType="code" updates="constant"/>
       </TextComponent>
     </Routine>
+    <Routine name="thankyou"/>
     <Routine name="test_2">
       <CodeComponent name="timeLoggingCode_2">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="timeLoggingCode_2" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="trials.addData('trialStartWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="trials.addData('trialEndWallTime', time.ctime())" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="highlightChoice_2">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="highlightChoice_2" valType="code" updates="None"/>
-        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey_2.keys:&#10;    if responseKey_2.keys == 'left': # sick&#10;        sickHighlight_2.opacity = 1&#10;        notsickHighlight_2.opacity = 0&#10;    elif responseKey_2.keys == 'right': # not sick&#10;        sickHighlight_2.opacity = 0&#10;        notsickHighlight_2.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight_2.setText(sickHighlight_2.text)&#10;notsickHighlight_2.setText(notsickHighlight_2.text)" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="# don't highlight anything initially&#10;#&#10;sickHighlight_2.setOpacity(0)&#10;notsickHighlight_2.setOpacity(0)&#10;# hack to re-render the text with new opacity&#10;sickHighlight_2.setText(sickHighlight_2.text)&#10;notsickHighlight_2.setText(notsickHighlight_2.text)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="# highlight subject's response&#10;#&#10;if responseKey_2.keys:&#10;    if responseKey_2.keys == 'left': # sick&#10;        sickHighlight_2.opacity = 1&#10;        notsickHighlight_2.opacity = 0&#10;    elif responseKey_2.keys == 'right': # not sick&#10;        sickHighlight_2.opacity = 0&#10;        notsickHighlight_2.opacity = 1&#10;    else:&#10;        assert False, 'Can only have one response, left or right'&#10;# hack to re-render the text with new opacity&#10;sickHighlight_2.setText(sickHighlight_2.text)&#10;notsickHighlight_2.setText(notsickHighlight_2.text)" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="jitterCode_2">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="jitterCode_2" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Begin Routine" val="itiTime_2 = np.random.laplace(itiMean, itiLambda)&#10;itiTime_2 = max(itiTime_2, itiMin)&#10;itiTime_2 = min(itiTime_2, itiMax)&#10;&#10;print itiTime_2" valType="extendedCode" updates="constant"/>
+        <Param name="Begin Routine" val="print '(test) next iti idx = ', nextItiIdx&#10;&#10;assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN&#10;&#10;itiTime_2 = allItis[nextItiIdx]&#10;nextItiIdx += 1&#10;&#10;print '(test) iti time = ', itiTime_2&#10;&#10;assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]&#10;assert itiTime_2 &gt;= itiMin&#10;assert itiTime_2 &lt;= itiMax" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <CodeComponent name="logCueAndContext_2">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="logCueAndContext_2" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="thisExp.addData('trialOrTest', 'test')&#10;addExtraData()" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <StaticComponent name="ITI_2">
         <Param name="code" val="" valType="code" updates="None"/>
@@ -518,15 +519,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="fixationJitterText_2" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="stopVal" val="$itiTime_2" valType="code" updates="constant"/>
         <Param name="durationEstim" val="3" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="+" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -538,15 +539,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="trialInstrText_2" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="20" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
         <Param name="stopVal" val="5.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0.8]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="Predict whether the customer will get sick from this food." valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -558,15 +559,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="restaurantText_2" valType="code" updates="None"/>
-        <Param name="color" val="pink" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="pink" valType="str" updates="constant"/>
+        <Param name="text" val="$restaurants[$contextsReshuffled[$contextId]]" valType="str" updates="set every repeat"/>
         <Param name="stopVal" val="5.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, +0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="$restaurants[$contextsReshuffled[$contextId]]" valType="str" updates="set every repeat"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -659,15 +660,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="sickHighlight_2" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="stopVal" val="5" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[-0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -679,15 +680,15 @@
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="notsickHighlight_2" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="stopVal" val="5" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0.5, -0.35]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="3" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="_" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -700,10 +701,10 @@
       <CodeComponent name="waitForTriggerCode">
         <Param name="Begin Experiment" val="fmriClock = core.Clock() # clock for syncing with fMRI scanner&#10;# definitely log it!&#10;&#10;#trigger = 'parallel'&#10;trigger = 'usb'&#10;if trigger == 'parallel':&#10;    from psychopy import parallel &#10;elif trigger == 'usb':&#10;    from psychopy.hardware.emulator import launchScan    &#10;&#10;    # settings for launchScan:&#10;    MR_settings = { &#10;        'TR': 2.5, # duration (sec) per volume&#10;        'volumes': 141, # number of whole-brain 3D volumes / frames&#10;        'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume&#10;        'skip': 0, # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)&#10;        }&#10;" valType="extendedCode" updates="constant"/>
         <Param name="name" val="waitForTriggerCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="if expInfo['mriMode'] != 'off': # or 'scan' !&#10;    assert expInfo['mriMode'] == 'scan'&#10;&#10;    if trigger == 'usb':&#10;        vol = launchScan(win, MR_settings, &#10;              globalClock=fmriClock, # &lt;-- how you know the time! &#10;              mode=expInfo['mriMode']) # &lt;-- mode passed in&#10;    elif trigger == 'parallel':&#10;        parallel.setPortAddress(0x378)&#10;        pin = 10; wait_msg = &quot;Waiting for scanner...&quot;&#10;        pinStatus = parallel.readPin(pin)&#10;        waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)&#10;        waitMsgStim.draw()&#10;        win.flip()&#10;        while True:&#10;            if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):&#10;               break&#10;               # start exp when pin values change&#10;        globalClock.reset()&#10;        logging.defaultClock.reset()&#10;        logging.exp('parallel trigger: start of scan')&#10;        win.flip()  # blank the screen on first sync pulse received&#10;&#10;expInfo['triggerWallTime'] = time.ctime()&#10;core.wait(1)" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="routineTimer.reset()" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
     </Routine>
     <Routine name="test"/>
@@ -711,24 +712,24 @@
       <CodeComponent name="setEndRunInfo">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="name" val="setEndRunInfo" valType="code" updates="None"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="endRunInfo.setText(&quot;End of round #&quot; + str(runs.thisN + 1))" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="endRunInfo">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="endRunInfo" valType="code" updates="None"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
-        <Param name="stopVal" val="2.0" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -741,24 +742,24 @@
       <CodeComponent name="finishCode">
         <Param name="Begin Experiment" val="EXP_DURATION = 352.5" valType="extendedCode" updates="constant"/>
         <Param name="name" val="finishCode" valType="code" updates="None"/>
-        <Param name="Each Frame" val="if logging.defaultClock.getTime() &gt; EXP_DURATION:&#10;    continueRoutine = False&#10;    finishText.status = FINISHED&#10;    finishText.setAutoDraw(False)" valType="extendedCode" updates="constant"/>
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="logging.exp(&quot;Experiment Finished&quot;)&#10;" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="#win.saveMovieFrames('thumb.png')" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="if logging.defaultClock.getTime() &gt; EXP_DURATION:&#10;    continueRoutine = False&#10;    finishText.status = FINISHED&#10;    finishText.setAutoDraw(False)" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="finishText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
         <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
         <Param name="name" val="finishText" valType="code" updates="None"/>
-        <Param name="color" val="black" valType="str" updates="constant"/>
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="black" valType="str" updates="constant"/>
+        <Param name="text" val="Please wait for scanner to finish..." valType="str" updates="constant"/>
         <Param name="stopVal" val="" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
         <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="text" val="Please wait for scanner to finish..." valType="str" updates="constant"/>
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="ori" val="0" valType="code" updates="constant"/>
         <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
@@ -811,7 +812,7 @@
       <Param name="isTrials" val="True" valType="bool" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
       <Param name="loopType" val="fullRandom" valType="str" updates="None"/>
-      <Param name="nReps" val="1" valType="code" updates="None"/>
+      <Param name="nReps" val="5" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
       <Param name="Selected rows" val="range(1,5)" valType="str" updates="None"/>

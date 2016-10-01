@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Sat Oct  1 09:37:04 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Sat Oct  1 12:32:36 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -119,9 +119,9 @@ new_runClock = core.Clock()
 
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text='the text is set manually\n',    font='Arial',
+    text=u'the text is set manually\n',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-4.0)
 
 # Initialize components for Routine "trial"
@@ -132,16 +132,62 @@ expInfo['expStartWallTime'] = time.ctime()
 
 # different jitter distributions depending on mode 
 #
+
 if expInfo['mriMode'] != 'off': # we're scanning
     itiMean = 3
     itiLambda = 1.5
-    itiMin = 1
+    itiMin = 2
     itiMax = 8
+    maxAllowedRunTime = 4 * 60 # max 4 mins per run in scanner
+
 else: # behavioral
-    itiMean = 1
+    itiMean = 1.5
     itiLambda = 0.5
-    itiMin = 0.5
-    itiMax = 3
+    itiMin = 1
+    itiMax = 4
+    maxAllowedRunTime = 3 * 60 # max 3 mins per run in behavioral
+
+
+# Generate the ITI's
+# TODO the times are duplicated with the ones in the builder
+#
+runOverheadTime = 10 # info screens
+trainTrialFixedTime = 4 # stim presentation + feedback
+testTrialFixedTime = 5 # stim presentation
+nRuns = 9;
+nTrainTrialsPerRun = 20;
+nTestTrialsPerRun = 4;
+
+nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
+nTotalTrials = nRuns * nTrialsPerRun
+
+# For each run, generate the ITI's from a laplacian
+# and make sure that they fit in the max allowed run time 
+# for each run, keep trying until we find a sequence of ITIs
+# that do fit; otherwise if we fail after a lot of attempts,
+# just take the shorted ITI sequence
+#
+allItis = []
+runItisSanity = [] # for sanity check
+for r in range(nRuns):
+    bestItis = None
+    print 'run = ', r
+    for attempt in range(1, 100):
+        itis = np.random.laplace(itiMean, itiLambda, nTrialsPerRun)
+        itis = np.clip(itis, itiMin, itiMax)
+        print '  attempt ', attempt, ' = ', sum(itis)
+        if not bestItis or sum(itis) < sum(bestItis):
+            bestItis = itis
+        totalRunTime = sum(itis) + nTrainTrialsPerRun * trainTrialFixedTime + nTestTrialsPerRun * testTrialFixedTime + runOverheadTime
+        print '                total run time = ', totalRunTime, ' vs. ', maxAllowedRunTime
+        if totalRunTime < maxAllowedRunTime:
+            break
+    bestItis = list(bestItis)
+    allItis.extend(bestItis) # add ITI's for this run to the list
+    runItisSanity.append(bestItis) # for sanity
+
+nextItiIdx = 0
+assert len(allItis) == nTotalTrials
 def addExtraData():
     thisExp.addData('fmriTime', fmriClock.getTime())
     thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
@@ -157,14 +203,14 @@ fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     color='white', colorSpace='rgb', opacity=1,
     depth=-6.0)
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-7.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'pink', colorSpace='rgb', opacity=1,
+    color='pink', colorSpace='rgb', opacity=1,
     depth=-8.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -186,47 +232,47 @@ notsickImg = visual.ImageStim(win=win, name='notsickImg',
     texRes=128, interpolate=True, depth=-11.0)
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text=u'CORRECT',    font=u'Arial Bold',
+    text='CORRECT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'blue', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-16.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text=u'WRONG',    font=u'Arial Bold',
+    text='WRONG',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-17.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text=u'TIMEOUT',    font=u'Arial Bold',
+    text='TIMEOUT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text=u'The customer got sick!',    font=u'Arial',
+    text='The customer got sick!',    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-19.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text=u"The customer didn't get sick!",    font=u'Arial',
+    text="The customer didn't get sick!",    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-20.0)
 
 # Initialize components for Routine "test_warning"
 test_warningClock = core.Clock()
 testTrialsHeadsUp = visual.TextStim(win=win, ori=0, name='testTrialsHeadsUp',
-    text=u'Beginning test phase.\n\nYou will not receive feedback on the following 4 trials.',    font=u'Arial',
+    text='Beginning test phase.\n\nYou will not receive feedback on the following 4 trials.',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0)
 
 # Initialize components for Routine "test_2"
@@ -487,7 +533,7 @@ for thisRun in runs:
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(2.000000)
+    routineTimer.add(3.000000)
     # update component parameters for each repeat
     runInstr.setText("Beginning round #" + str(runs.thisN + 1))
     # Parse the comma-separated list of restaurant names
@@ -560,7 +606,7 @@ for thisRun in runs:
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (2.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
         
         # check if all components have finished
@@ -590,9 +636,9 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='fullRandom', 
+    trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -634,11 +680,19 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight.setText(sickHighlight.text)
         notsickHighlight.setText(notsickHighlight.text)
-        itiTime = np.random.laplace(itiMean, itiLambda)
-        itiTime = max(itiTime, itiMin)
-        itiTime = min(itiTime, itiMax)
+        print '(train) next iti idx = ', nextItiIdx
         
-        print itiTime
+        assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN
+        
+        itiTime = allItis[nextItiIdx]
+        nextItiIdx += 1
+        
+        print '(train) iti time = ', itiTime
+        
+        assert itiTime == runItisSanity[runs.thisN][trials.thisN]
+        assert itiTime >= itiMin
+        assert itiTime <= itiMax
+        
         thisExp.addData('trialOrTest', 'trial')
         addExtraData()
         assert contextRolesWereShuffled
@@ -920,7 +974,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 1 repeats of 'trials'
+    # completed 5 repeats of 'trials'
     
     
     #------Prepare to start Routine "test_warning"-------
@@ -1007,11 +1061,18 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
-        itiTime_2 = np.random.laplace(itiMean, itiLambda)
-        itiTime_2 = max(itiTime_2, itiMin)
-        itiTime_2 = min(itiTime_2, itiMax)
+        print '(test) next iti idx = ', nextItiIdx
         
-        print itiTime_2
+        assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN
+        
+        itiTime_2 = allItis[nextItiIdx]
+        nextItiIdx += 1
+        
+        print '(test) iti time = ', itiTime_2
+        
+        assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]
+        assert itiTime_2 >= itiMin
+        assert itiTime_2 <= itiMax
         thisExp.addData('trialOrTest', 'test')
         addExtraData()
         restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
@@ -1074,7 +1135,7 @@ for thisRun in runs:
                 trialInstrText_2.tStart = t  # underestimates by a little under one frame
                 trialInstrText_2.frameNStart = frameN  # exact frame index
                 trialInstrText_2.setAutoDraw(True)
-            if trialInstrText_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if trialInstrText_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 trialInstrText_2.setAutoDraw(False)
             
             # *restaurantText_2* updates
@@ -1083,7 +1144,7 @@ for thisRun in runs:
                 restaurantText_2.tStart = t  # underestimates by a little under one frame
                 restaurantText_2.frameNStart = frameN  # exact frame index
                 restaurantText_2.setAutoDraw(True)
-            if restaurantText_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if restaurantText_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 restaurantText_2.setAutoDraw(False)
             
             # *foodImg_2* updates
@@ -1092,7 +1153,7 @@ for thisRun in runs:
                 foodImg_2.tStart = t  # underestimates by a little under one frame
                 foodImg_2.frameNStart = frameN  # exact frame index
                 foodImg_2.setAutoDraw(True)
-            if foodImg_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if foodImg_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 foodImg_2.setAutoDraw(False)
             
             # *responseKey_2* updates
@@ -1104,7 +1165,7 @@ for thisRun in runs:
                 # keyboard checking is just starting
                 responseKey_2.clock.reset()  # now t=0
                 event.clearEvents(eventType='keyboard')
-            if responseKey_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if responseKey_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
                 responseKey_2.status = STOPPED
             if responseKey_2.status == STARTED:
                 theseKeys = event.getKeys(keyList=['left', 'right'])
@@ -1127,7 +1188,7 @@ for thisRun in runs:
                 sickImg_2.tStart = t  # underestimates by a little under one frame
                 sickImg_2.frameNStart = frameN  # exact frame index
                 sickImg_2.setAutoDraw(True)
-            if sickImg_2.status == STARTED and t >= (itiTime_2 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickImg_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickImg_2.setAutoDraw(False)
             
             # *notsickImg_2* updates
@@ -1136,7 +1197,7 @@ for thisRun in runs:
                 notsickImg_2.tStart = t  # underestimates by a little under one frame
                 notsickImg_2.frameNStart = frameN  # exact frame index
                 notsickImg_2.setAutoDraw(True)
-            if notsickImg_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickImg_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickImg_2.setAutoDraw(False)
             
             # *sickHighlight_2* updates
@@ -1145,7 +1206,7 @@ for thisRun in runs:
                 sickHighlight_2.tStart = t  # underestimates by a little under one frame
                 sickHighlight_2.frameNStart = frameN  # exact frame index
                 sickHighlight_2.setAutoDraw(True)
-            if sickHighlight_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickHighlight_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickHighlight_2.setAutoDraw(False)
             
             # *notsickHighlight_2* updates
@@ -1154,7 +1215,7 @@ for thisRun in runs:
                 notsickHighlight_2.tStart = t  # underestimates by a little under one frame
                 notsickHighlight_2.frameNStart = frameN  # exact frame index
                 notsickHighlight_2.setAutoDraw(True)
-            if notsickHighlight_2.status == STARTED and t >= (itiTime_2 + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickHighlight_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickHighlight_2.setAutoDraw(False)
             # *ITI_2* period
             if t >= 0 and ITI_2.status == NOT_STARTED:
@@ -1212,9 +1273,9 @@ for thisRun in runs:
     t = 0
     end_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(2.000000)
+    routineTimer.add(3.000000)
     # update component parameters for each repeat
-    endRunInfo.setText("Round #" + str(runs.thisN + 1) + " is over.")
+    endRunInfo.setText("End of round #" + str(runs.thisN + 1))
     # keep track of which components have finished
     end_runComponents = []
     end_runComponents.append(endRunInfo)
@@ -1237,7 +1298,7 @@ for thisRun in runs:
             endRunInfo.tStart = t  # underestimates by a little under one frame
             endRunInfo.frameNStart = frameN  # exact frame index
             endRunInfo.setAutoDraw(True)
-        if endRunInfo.status == STARTED and t >= (0.0 + (2.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if endRunInfo.status == STARTED and t >= (0.0 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             endRunInfo.setAutoDraw(False)
         
         # check if all components have finished
