@@ -7,13 +7,13 @@ import os
 import sys
 import csv
 
+colformat = "%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d"
+
 colnames = [
     'participant',
     'session',
     'mriMode',
     'isPractice',
-    #"expStart": "1990-03-02 20:00:00", # TODO
-    #'"' + 'restaurantNames' + '"',
     'restaurantsReshuffled',
     'foodsReshuffled',
     'contextRole',
@@ -30,6 +30,8 @@ colnames = [
     'roundId',
     'trialId'
 ]
+
+assert len(colnames) == len(colformat.split(' ')), "Make sure to update colformat here and in the MATLAB script that parses the file"
 
 # which columns to export from the csv
 #
@@ -48,8 +50,8 @@ def parseRow(entry):
         int(entry['isPractice'] == 'yes'),
         #"expStart": "1990-03-02 20:00:00", # TODO
         #'"' + entry['restaurantNames'] + '"',
-        '"' + ','.join([entryRestaurants[entryContextsReshuffled[x]] for x in range(0, 3)]) + '"', # restaurantNames
-        '"' + ','.join([entry['foodFilesPrefix'] + str(entryCuesReshuffled[x]) for x in range(0, 3)]) + '"', # foods
+        '"' + ';'.join([entryRestaurants[entryContextsReshuffled[x]] for x in range(0, 3)]) + '"', # restaurantNames
+        '"' + ';'.join([entry['foodFilesPrefix'] + str(entryCuesReshuffled[x]) for x in range(0, 3)]) + '"', # foods
         entry['contextRole'],
         entry['contextId'],
         entry['cueId'],
@@ -68,6 +70,11 @@ def parseRow(entry):
         #"feedbackOnset": "2016-03-02 11:11:11.234234" # TODO fmri clock, convert
     ]
     assert len(out) == len(colnames), "Make sure to update colnames"
+    # sanity check to make sure we didn't screw up the data gathering
+    #
+    assert entryRestaurants[entryContextsReshuffled[int(entry['contextId'])]] == entry['restaurant'], "You screwed up the data gathering -- these should be equal"
+    assert entry['foodFilesPrefix'] + str(entryCuesReshuffled[int(entry['cueId'])]) == entry['food'], "You screwed up the data gathering -- these should be equal"
+
     return ','.join([str(x) for x in out])
 
 if __name__  == "__main__":
