@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct  4 13:49:01 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct  4 13:59:58 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -327,19 +327,10 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 timeoutText_2 = visual.TextStim(win=win, ori=0, name='timeoutText_2',
-    text=u'TIMEOUT',    font=u'Arial',
+    text=u'TIMEOUT',    font=u'Arial Bold',
     pos=[0, 0], height=0.15, wrapWidth=None,
     color=u'red', colorSpace='rgb', opacity=1,
     depth=-15.0)
-
-# Initialize components for Routine "end_run"
-end_runClock = core.Clock()
-
-endRunInfo = visual.TextStim(win=win, ori=0, name='endRunInfo',
-    text='the text is set manually\n',    font='Arial',
-    pos=[0, 0], height=0.1, wrapWidth=1.5,
-    color='white', colorSpace='rgb', opacity=1,
-    depth=-1.0)
 
 # Initialize components for Routine "waitForFinish"
 waitForFinishClock = core.Clock()
@@ -348,6 +339,21 @@ finishText = visual.TextStim(win=win, ori=0, name='finishText',
     text='Please wait for scanner to finish...',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='black', colorSpace='rgb', opacity=1,
+    depth=-1.0)
+
+# Initialize components for Routine "thankyou"
+thankyouClock = core.Clock()
+if expInfo['mriMode'] != 'off': # we're scanning!
+    assert expInfo['mriMode'] == 'scan'
+    thankYouMsg = "You have completed the experiment. Please wait for the researcher."
+else: # not scanning => behavioral
+    thankYouMsg = "You have completed the experiment. Please open the door and wait for your researcher."
+
+
+thankYouText = visual.TextStim(win=win, ori=0, name='thankYouText',
+    text=thankYouMsg,    font=u'Arial',
+    pos=[0, 0], height=0.1, wrapWidth=None,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 # Create some handy timers
@@ -449,7 +455,7 @@ thisExp.nextEntry()
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
+    trialList=data.importConditions('runs.xlsx', selection=u'range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -873,8 +879,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickHighlight* updates
             if t >= itiTime and sickHighlight.status == NOT_STARTED:
@@ -1312,61 +1316,6 @@ for thisRun in runs:
         
     # completed 1 repeats of 'test_trials'
     
-    
-    #------Prepare to start Routine "end_run"-------
-    t = 0
-    end_runClock.reset()  # clock 
-    frameN = -1
-    routineTimer.add(3.000000)
-    # update component parameters for each repeat
-    endRunInfo.setText("End of round #" + str(runs.thisN + 1))
-    # keep track of which components have finished
-    end_runComponents = []
-    end_runComponents.append(endRunInfo)
-    for thisComponent in end_runComponents:
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
-    
-    #-------Start Routine "end_run"-------
-    continueRoutine = True
-    while continueRoutine and routineTimer.getTime() > 0:
-        # get current time
-        t = end_runClock.getTime()
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-        # update/draw components on each frame
-        
-        
-        # *endRunInfo* updates
-        if t >= 0.0 and endRunInfo.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            endRunInfo.tStart = t  # underestimates by a little under one frame
-            endRunInfo.frameNStart = frameN  # exact frame index
-            endRunInfo.setAutoDraw(True)
-        if endRunInfo.status == STARTED and t >= (0.0 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-            endRunInfo.setAutoDraw(False)
-        
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in end_runComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
-        
-        # check for quit (the Esc key)
-        if endExpNow or event.getKeys(keyList=["escape"]):
-            core.quit()
-        
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
-    
-    #-------Ending Routine "end_run"-------
-    for thisComponent in end_runComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    
     thisExp.nextEntry()
     
 # completed 1 repeats of 'runs'
@@ -1430,6 +1379,94 @@ logging.exp("Experiment Finished")
 # the Routine "waitForFinish" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
+#------Prepare to start Routine "thankyou"-------
+t = 0
+thankyouClock.reset()  # clock 
+frameN = -1
+routineTimer.add(1200.000000)
+# update component parameters for each repeat
+
+key_resp_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
+key_resp_2.status = NOT_STARTED
+# keep track of which components have finished
+thankyouComponents = []
+thankyouComponents.append(thankYouText)
+thankyouComponents.append(key_resp_2)
+for thisComponent in thankyouComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+#-------Start Routine "thankyou"-------
+continueRoutine = True
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = thankyouClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    
+    # *thankYouText* updates
+    if t >= 0.0 and thankYouText.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        thankYouText.tStart = t  # underestimates by a little under one frame
+        thankYouText.frameNStart = frameN  # exact frame index
+        thankYouText.setAutoDraw(True)
+    if thankYouText.status == STARTED and t >= (0.0 + (1200.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        thankYouText.setAutoDraw(False)
+    
+    # *key_resp_2* updates
+    if t >= 10.0 and key_resp_2.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        key_resp_2.tStart = t  # underestimates by a little under one frame
+        key_resp_2.frameNStart = frameN  # exact frame index
+        key_resp_2.status = STARTED
+        # keyboard checking is just starting
+        key_resp_2.clock.reset()  # now t=0
+        event.clearEvents(eventType='keyboard')
+    if key_resp_2.status == STARTED and t >= (120-win.monitorFramePeriod*0.75): #most of one frame period left
+        key_resp_2.status = STOPPED
+    if key_resp_2.status == STARTED:
+        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
+        
+        # check for quit:
+        if "escape" in theseKeys:
+            endExpNow = True
+        if len(theseKeys) > 0:  # at least one key was pressed
+            key_resp_2.keys = theseKeys[-1]  # just the last key pressed
+            key_resp_2.rt = key_resp_2.clock.getTime()
+            # a response ends the routine
+            continueRoutine = False
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in thankyouComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+#-------Ending Routine "thankyou"-------
+for thisComponent in thankyouComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+
+# check responses
+if key_resp_2.keys in ['', [], None]:  # No response was made
+   key_resp_2.keys=None
+# store data for thisExp (ExperimentHandler)
+thisExp.addData('key_resp_2.keys',key_resp_2.keys)
+if key_resp_2.keys != None:  # we had a response
+    thisExp.addData('key_resp_2.rt', key_resp_2.rt)
+thisExp.nextEntry()
 
 
 
@@ -1449,5 +1486,6 @@ routineTimer.reset()
 
 
 #win.saveMovieFrames('thumb.png')
+
 win.close()
 core.quit()
