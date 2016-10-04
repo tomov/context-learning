@@ -861,7 +861,6 @@
     </LoopInitiator>
     <Routine name="test_2"/>
     <LoopTerminator name="test_trials"/>
-    <Routine name="end_run"/>
     <LoopTerminator name="runs"/>
     <Routine name="waitForFinish"/>
   </Flow>
