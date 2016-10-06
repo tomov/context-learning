@@ -2,6 +2,7 @@
 % plot correct answers somehow, perhaps as f'n of time 
 %
 
+subjects = 2;
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = trials per run / 4
 
@@ -10,7 +11,7 @@ contexts = {'irrelevant', 'modulatory', 'additive'};
 format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-    textread('wtf1.csv', format, 'delimiter', ',', 'headerlines', 1);
+    textread('wtf.csv', format, 'delimiter', ',', 'headerlines', 1);
 
 sick = strcmp(response.keys, 'left');
 notsick = strcmp(response.keys, 'right');
@@ -37,10 +38,10 @@ for context = contexts
     x2c1 = sickCorr(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 0);
     x2c2 = sickCorr(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 1);
 
-    assert(length(x1c1) == roundsPerContext * trialsNReps);
-    assert(length(x1c2) == roundsPerContext * trialsNReps);
-    assert(length(x2c1) == roundsPerContext * trialsNReps);
-    assert(length(x2c2) == roundsPerContext * trialsNReps);
+    assert(length(x1c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x1c2) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c2) == roundsPerContext * trialsNReps * subjects);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -67,10 +68,10 @@ for context = contexts
     x2c1 = sick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 0);
     x2c2 = sick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 1);
 
-    assert(length(x1c1) == roundsPerContext * trialsNReps);
-    assert(length(x1c2) == roundsPerContext * trialsNReps);
-    assert(length(x2c1) == roundsPerContext * trialsNReps);
-    assert(length(x2c2) == roundsPerContext * trialsNReps);
+    assert(length(x1c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x1c2) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c2) == roundsPerContext * trialsNReps * subjects);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -97,10 +98,10 @@ for context = contexts
     x2c1 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 0);
     x2c2 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 1);
 
-    assert(length(x1c1) == roundsPerContext * trialsNReps);
-    assert(length(x1c2) == roundsPerContext * trialsNReps);
-    assert(length(x2c1) == roundsPerContext * trialsNReps);
-    assert(length(x2c2) == roundsPerContext * trialsNReps);
+    assert(length(x1c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x1c2) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c1) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x2c2) == roundsPerContext * trialsNReps * subjects);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -130,13 +131,15 @@ for context = contexts
     x2c1 = sick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 0);
     x2c2 = sick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 2);
 
-%    assert(length(x1c1) == roundsPerContext);
-%    assert(length(x1c2) == roundsPerContext);
-%    assert(length(x2c1) == roundsPerContext);
-%    assert(length(x2c2) == roundsPerContext);
+    assert(length(x1c1) == roundsPerContext * subjects);
+    assert(length(x1c2) == roundsPerContext * subjects);
+    assert(length(x2c1) == roundsPerContext * subjects);
+    assert(length(x2c2) == roundsPerContext * subjects);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
+%    M = [mean(x1c1) mean(x1c2) mean(x2c1) mean(x2c2)];
+%    SEM = [std(x1c1) / sqrt(length(x1c1)) std(x1c2) / sqrt(length(x1c2)) std(x2c1) / sqrt(length(x2c1)) std(x2c2) / sqrt(length(x2c2))];
     Ms = [Ms; M];
     SEMs = [SEMs; SEM];
 end
@@ -161,13 +164,15 @@ for context = contexts
     x2c1 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 0);
     x2c2 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 2);
 
-%    assert(length(x1c1) == roundsPerContext);
-%    assert(length(x1c2) == roundsPerContext);
-%    assert(length(x2c1) == roundsPerContext);
-%    assert(length(x2c2) == roundsPerContext);
+    assert(length(x1c1) == roundsPerContext * subjects);
+    assert(length(x1c2) == roundsPerContext * subjects);
+    assert(length(x2c1) == roundsPerContext * subjects);
+    assert(length(x2c2) == roundsPerContext * subjects);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
+%    M = [mean(x1c1) mean(x1c2) mean(x2c1) mean(x2c2)];
+%    SEM = [std(x1c1) / sqrt(length(x1c1)) std(x1c2) / sqrt(length(x1c2)) std(x2c1) / sqrt(length(x2c1)) std(x2c2) / sqrt(length(x2c2))];
     Ms = [Ms; M];
     SEMs = [SEMs; SEM];
 end

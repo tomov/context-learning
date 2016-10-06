@@ -80,11 +80,19 @@ def parseRow(entry):
 if __name__  == "__main__":
     infile = sys.argv[1]
     outfile = sys.argv[2]
+    append = False
+    if len(sys.argv) >= 4:
+        append = sys.argv[3] == '-a' or sys.argv[3] == '--append'
+    if append:
+        desc = 'a'
+    else:
+        desc = 'w'
     
     with open(infile, 'r') as fin:
         reader = csv.DictReader(fin)
-        with open(outfile, 'w') as fout:
-            fout.write(','.join(colnames) + "\n")
+        with open(outfile, desc) as fout: 
+            if not append: # write the headers optionally
+                fout.write(','.join(colnames) + "\n")
             for row in reader:
                 parsedRow = parseRow(row)
                 if parsedRow:
