@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 08:50:21 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 10:08:13 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -155,7 +155,7 @@ runOverheadTime = 10 # info screens
 trainTrialFixedTime = 4 # stim presentation + feedback
 testTrialFixedTime = 5 # stim presentation
 nRuns = 9;
-nTrainTrialsPerRun = 4;
+nTrainTrialsPerRun = 20;
 nTestTrialsPerRun = 4;
 
 nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
@@ -398,7 +398,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         instrText.setAutoDraw(False)
     
     # *startExpResp* updates
-    if t >= 0 and startExpResp.status == NOT_STARTED:
+    if t >= 10 and startExpResp.status == NOT_STARTED:
         # keep track of start time/frame for later
         startExpResp.tStart = t  # underestimates by a little under one frame
         startExpResp.frameNStart = frameN  # exact frame index
@@ -884,8 +884,6 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *sickHighlight* updates
             if t >= itiTime and sickHighlight.status == NOT_STARTED:
