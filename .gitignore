@@ -1,0 +1,9 @@
+*.swp
+*.pyc
+.*
+*.log
+*.psydat
+*.csv
+~*
+*.pickle
+ConLearn
