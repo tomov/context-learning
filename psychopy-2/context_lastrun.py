@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 10:08:13 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 13:49:45 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -188,6 +188,69 @@ for r in range(nRuns):
 
 nextItiIdx = 0
 assert len(allItis) == nTotalTrials
+# psychopy only writes the data at the very end
+# we want data with intermediate results
+# so we have this thing that dumps to a .wtf-tile
+# as the experiment is going on
+#
+streamingFilename = thisExp.dataFileName + '.wtf'
+streamingFile = open(streamingFilename, 'a')
+streamingDelim = ','
+
+# get names of data columns
+#
+def getExpDataNames():
+    names = thisExp._getAllParamNames()
+    names.extend(thisExp.dataNames)
+    # names from the extraInfo dictionary
+    names.extend(thisExp._getExtraInfo()[0])
+    return names
+
+# write a header lines
+#
+def writeHeadersToStreamingFile():
+    for heading in getExpDataNames():
+        streamingFile.write(u'%s%s' % (heading, streamingDelim))
+    streamingFile.write('\n')
+    streamingFile.flush()
+
+def flushEntryToStreamingFile(entry):
+    for name in getExpDataNames():
+        entry.keys()
+        if name in entry.keys():
+            ename = unicode(entry[name])
+            if ',' in ename or '\n' in ename:
+                fmt = u'"%s"%s'
+            else:
+                fmt = u'%s%s'
+            streamingFile.write(fmt % (entry[name], streamingDelim))
+        else:
+            streamingFile.write(streamingDelim)
+    streamingFile.write('\n')
+    streamingFile.flush()
+
+nextEntryToFlush = 0
+
+# write entries that we haven't flushed yet
+# this writes both to the .wtf file and to the mysql db
+#
+def flushEntries():
+    global nextEntryToFlush
+
+    # don't write anything during the initial run
+    # that's b/c the number of columns can change
+    #
+    if runs.thisN == 0:
+        return
+
+    # if we're after the initial run, flush everything
+    # that we haven't flushed yet
+    #
+    while nextEntryToFlush < len(thisExp.entries):
+        flushEntryToStreamingFile(thisExp.entries[nextEntryToFlush])
+        nextEntryToFlush += 1
+
+
 def addExtraData():
     thisExp.addData('fmriTime', fmriClock.getTime())
     thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
@@ -201,71 +264,71 @@ fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-6.0)
+    depth=-7.0)
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-7.0)
+    depth=-8.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
     text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color='pink', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-9.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-9.0)
+    texRes=128, interpolate=True, depth=-10.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-10.0)
+    texRes=128, interpolate=True, depth=-11.0)
 notsickImg = visual.ImageStim(win=win, name='notsickImg',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-11.0)
+    texRes=128, interpolate=True, depth=-12.0)
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
     text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-14.0)
+    depth=-15.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
     text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-15.0)
+    depth=-16.0)
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
     text='CORRECT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
     color='blue', colorSpace='rgb', opacity=1,
-    depth=-16.0)
+    depth=-17.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
     text='WRONG',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
     color='red', colorSpace='rgb', opacity=1,
-    depth=-17.0)
+    depth=-18.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
     text='TIMEOUT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
     color='red', colorSpace='rgb', opacity=1,
-    depth=-18.0)
+    depth=-19.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
     text='The customer got sick!',    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-19.0)
+    depth=-20.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
     text="The customer didn't get sick!",    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-20.0)
+    depth=-21.0)
 
 # Initialize components for Routine "test_warning"
 test_warningClock = core.Clock()
@@ -282,55 +345,56 @@ test_2Clock = core.Clock()
 
 
 
+
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
     text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-6.0)
+    depth=-7.0)
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-7.0)
+    depth=-8.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
     text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color='pink', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-9.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-9.0)
+    texRes=128, interpolate=True, depth=-10.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-11.0)
+    texRes=128, interpolate=True, depth=-12.0)
 notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-12.0)
+    texRes=128, interpolate=True, depth=-13.0)
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
     text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-13.0)
+    depth=-14.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-14.0)
+    depth=-15.0)
 timeoutText_2 = visual.TextStim(win=win, ori=0, name='timeoutText_2',
     text='TIMEOUT',    font='Arial Bold',
     pos=[0, 0], height=0.15, wrapWidth=None,
     color='red', colorSpace='rgb', opacity=1,
-    depth=-15.0)
+    depth=-16.0)
 
 # Initialize components for Routine "waitForFinish"
 waitForFinishClock = core.Clock()
@@ -717,6 +781,7 @@ for thisRun in runs:
         
         
         
+        
         thisExp.addData('trialOrTest', 'trial')
         addExtraData()
         assert contextRolesWereShuffled
@@ -801,6 +866,7 @@ for thisRun in runs:
             # hack to re-render the text with new opacity
             sickHighlight.setText(sickHighlight.text)
             notsickHighlight.setText(notsickHighlight.text)
+            
             
             
             
@@ -981,6 +1047,7 @@ for thisRun in runs:
         
         
         
+        flushEntries()
         
         
         # check responses
@@ -1105,6 +1172,7 @@ for thisRun in runs:
             str(itiTime_2) + " == runItisSanity[" + str(runs.thisN) + "][" + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN) + "] = " + runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]
         assert itiTime_2 >= itiMin
         assert itiTime_2 <= itiMax
+        
         thisExp.addData('trialOrTest', 'test')
         addExtraData()
         restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
@@ -1160,6 +1228,7 @@ for thisRun in runs:
             # hack to re-render the text with new opacity
             sickHighlight_2.setText(sickHighlight_2.text)
             notsickHighlight_2.setText(notsickHighlight_2.text)
+            
             
             
             
@@ -1303,6 +1372,7 @@ for thisRun in runs:
         
         
         
+        flushEntries()
         
         # check responses
         if responseKey_2.keys in ['', [], None]:  # No response was made
@@ -1472,6 +1542,8 @@ thisExp.addData('key_resp_2.keys',key_resp_2.keys)
 if key_resp_2.keys != None:  # we had a response
     thisExp.addData('key_resp_2.rt', key_resp_2.rt)
 thisExp.nextEntry()
+
+
 
 
 
