@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 16:55:31 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 17:10:54 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -154,9 +154,14 @@ else: # behavioral
 runOverheadTime = 10 # info screens
 trainTrialFixedTime = 4 # stim presentation + feedback
 testTrialFixedTime = 5 # stim presentation
-nRuns = 9;
-nTrainTrialsPerRun = 20;
-nTestTrialsPerRun = 4;
+nRuns = 9
+
+nTrainTrialsPerRun = 20
+# in practice mode, only run 1 rep (4 trials)
+# also see End Routine
+if expInfo['isPractice'] == 'yes':
+    nTrainTrialsPerRun = 4
+nTestTrialsPerRun = 4
 
 nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
 nTotalTrials = nRuns * nTrialsPerRun
@@ -462,7 +467,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         instrText.setAutoDraw(False)
     
     # *startExpResp* updates
-    if t >= 10 and startExpResp.status == NOT_STARTED:
+    if t >= 1 and startExpResp.status == NOT_STARTED:
         # keep track of start time/frame for later
         startExpResp.tStart = t  # underestimates by a little under one frame
         startExpResp.frameNStart = frameN  # exact frame index
@@ -714,7 +719,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1051,7 +1056,10 @@ for thisRun in runs:
         trials.addData('trialEndWallTime', time.ctime())
         
         
-        
+        # in practice mode, only run 1 rep (4 trials)
+        #
+        if expInfo['isPractice'] == 'yes' and trials.thisN >= 3:
+            trials.finished = True
         flushEntries()
         
         
