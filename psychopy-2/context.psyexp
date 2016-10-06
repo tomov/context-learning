@@ -76,6 +76,105 @@
       </KeyboardComponent>
     </Routine>
     <Routine name="feedback"/>
+    <Routine name="thankyou">
+      <CodeComponent name="code">
+        <Param name="Begin Experiment" val="if expInfo['mriMode'] != 'off': # we're scanning!&#10;    assert expInfo['mriMode'] == 'scan'&#10;    thankYouMsg = &quot;You have completed the experiment. Please wait for the researcher.&quot;&#10;else: # not scanning =&gt; behavioral&#10;    thankYouMsg = &quot;You have completed the experiment. Please open the door and wait for your researcher.&quot;&#10;&#10;" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="code" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <TextComponent name="thankYouText">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="thankYouText" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="$thankYouMsg" valType="str" updates="constant"/>
+        <Param name="stopVal" val="120.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="key_resp_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="120" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'y','n','left','right','space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="time (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="10.0" valType="code" updates="None"/>
+        <Param name="store" val="last key" valType="str" updates="constant"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="new_run">
+      <CodeComponent name="setRunInstr">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="setRunInstr" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="runInstr.setText(&quot;Beginning round #&quot; + str(runs.thisN + 1))" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="getRestaurants">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="getRestaurants" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="# Parse the comma-separated list of restaurant names&#10;#&#10;restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))&#10;&#10;# Use a separate, hardcoded set of restaurants and foods if it's just a practice run&#10;#&#10;if expInfo['isPractice'] == 'yes':&#10;    restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']&#10;    foodFilesPrefix = 'practice_food'" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="shuffleContextRoles">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="shuffleContextRoles" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;# Notice that we ONLY DO THIS ONCE at the beginning&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'original contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# very important to set it here so&#10;# 1) it gets used to initialize the trial loop, and&#10;# 2) it gets written out to the data file&#10;#&#10;thisRun.contextRole = contextRoles[runs.thisN]" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="shuffleFoodsAndRestaurants">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="shuffleFoodsAndRestaurants" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="# randomize foods &amp; restaurants within each run&#10;# note that we DO THIS BEFORE EVERY RUN&#10;#&#10;cuesReshuffled = range(0, 3)&#10;contextsReshuffled = range(0, 3)&#10;&#10;shuffle(cuesReshuffled)&#10;shuffle(contextsReshuffled)&#10;&#10;print 'Shuffled cues: ', cuesReshuffled&#10;print 'Shuffled contexts: ', contextsReshuffled" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <TextComponent name="runInstr">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="runInstr" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
+        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
+      </TextComponent>
+    </Routine>
     <Routine name="trial">
       <CodeComponent name="timeLoggingCode">
         <Param name="Begin Experiment" val="import time&#10;expInfo['expStartWallTime'] = time.ctime()" valType="extendedCode" updates="constant"/>
@@ -106,6 +205,14 @@
         <Param name="name" val="jitterCode" valType="code" updates="None"/>
         <Param name="Begin Routine" val="print '(train) next iti idx = ', nextItiIdx&#10;&#10;assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \&#10;    str(nextItiIdx) + &quot; == &quot; + str(runs.thisN) + &quot; * &quot; + str(nTrialsPerRun) + &quot; + &quot; + str(trials.thisN)&#10;&#10;itiTime = allItis[nextItiIdx]&#10;nextItiIdx += 1&#10;&#10;print '(train) iti time = ', itiTime&#10;&#10;print runs.thisN&#10;print trials.thisN&#10;print len(runItisSanity)&#10;print len(runItisSanity[runs.thisN])&#10;&#10;assert itiTime == runItisSanity[runs.thisN][trials.thisN], \&#10;    str(itiTime) + &quot; == runItisSanity[&quot; + str(runs.thisN) + &quot;][&quot; + str(trials.thisN) + &quot;] = &quot; + runItisSanity[runs.thisN][trials.thisN]&#10;assert itiTime &gt;= itiMin&#10;assert itiTime &lt;= itiMax&#10;&#10;&#10;&#10;&#10;&#10;" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="streamingData">
+        <Param name="Begin Experiment" val="# psychopy only writes the data at the very end&#10;# we want data with intermediate results&#10;# so we have this thing that dumps to a .wtf-tile&#10;# as the experiment is going on&#10;#&#10;streamingFilename = thisExp.dataFileName + '.wtf'&#10;streamingFile = open(streamingFilename, 'a')&#10;streamingDelim = ','&#10;&#10;# get names of data columns&#10;#&#10;def getExpDataNames():&#10;    names = thisExp._getAllParamNames()&#10;    names.extend(thisExp.dataNames)&#10;    # names from the extraInfo dictionary&#10;    names.extend(thisExp._getExtraInfo()[0])&#10;    return names&#10;&#10;# write a header lines&#10;#&#10;def writeHeadersToStreamingFile():&#10;    for heading in getExpDataNames():&#10;        streamingFile.write(u'%s%s' % (heading, streamingDelim))&#10;    streamingFile.write('\n')&#10;    streamingFile.flush()&#10;&#10;def flushEntryToStreamingFile(entry):&#10;    for name in getExpDataNames():&#10;        entry.keys()&#10;        if name in entry.keys():&#10;            ename = unicode(entry[name])&#10;            if ',' in ename or '\n' in ename:&#10;                fmt = u'&quot;%s&quot;%s'&#10;            else:&#10;                fmt = u'%s%s'&#10;            streamingFile.write(fmt % (entry[name], streamingDelim))&#10;        else:&#10;            streamingFile.write(streamingDelim)&#10;    streamingFile.write('\n')&#10;    streamingFile.flush()&#10;&#10;nextEntryToFlush = 0&#10;&#10;# write entries that we haven't flushed yet&#10;# this writes both to the .wtf file and to the mysql db&#10;#&#10;def flushEntries():&#10;    global nextEntryToFlush&#10;&#10;    # don't write anything during the initial run&#10;    # that's b/c the number of columns can change&#10;    #&#10;    if runs.thisN == 0:&#10;        return&#10;&#10;    # if we're after the initial run, flush everything&#10;    # that we haven't flushed yet&#10;    #&#10;    while nextEntryToFlush &lt; len(thisExp.entries):&#10;        flushEntryToStreamingFile(thisExp.entries[nextEntryToFlush])&#10;        nextEntryToFlush += 1&#10;&#10;" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="streamingData" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="flushEntries()" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
@@ -417,105 +524,6 @@
         <Param name="letterHeight" val="0.075" valType="code" updates="constant"/>
       </TextComponent>
     </Routine>
-    <Routine name="new_run">
-      <CodeComponent name="setRunInstr">
-        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="setRunInstr" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="runInstr.setText(&quot;Beginning round #&quot; + str(runs.thisN + 1))" valType="extendedCode" updates="constant"/>
-        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-      </CodeComponent>
-      <CodeComponent name="getRestaurants">
-        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="getRestaurants" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="# Parse the comma-separated list of restaurant names&#10;#&#10;restaurants = [r.strip() for r in restaurantNames.split(',')]&#10;assert len(restaurants) == 3, &quot;There should be 3 comma-separated restaurant names per run; found &quot; + str(len(restaurants))&#10;&#10;# Use a separate, hardcoded set of restaurants and foods if it's just a practice run&#10;#&#10;if expInfo['isPractice'] == 'yes':&#10;    restaurants = ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko']&#10;    foodFilesPrefix = 'practice_food'" valType="extendedCode" updates="constant"/>
-        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-      </CodeComponent>
-      <CodeComponent name="shuffleContextRoles">
-        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="shuffleContextRoles" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="# Random shuffle the context roles so they're independent from the&#10;# restaurants / foods.&#10;#&#10;# Notice that we ONLY DO THIS ONCE at the beginning&#10;#&#10;try:&#10;    assert contextRolesWereShuffled&#10;except NameError:&#10;    # hack to make sure this happens only once&#10;    # we can't put in Begin Experiment b/c runs is not initialized there&#10;    #&#10;    contextRoles = [run['contextRole'] for run in runs.trialList]&#10;    print 'original contextRoles = ', contextRoles&#10;    shuffle(contextRoles)&#10;    print 'Shuffled context roles = ', contextRoles&#10;    # set the flag so we don't run this code again&#10;    #&#10;    contextRolesWereShuffled = True&#10;&#10;# very important to set it here so&#10;# 1) it gets used to initialize the trial loop, and&#10;# 2) it gets written out to the data file&#10;#&#10;thisRun.contextRole = contextRoles[runs.thisN]" valType="extendedCode" updates="constant"/>
-        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-      </CodeComponent>
-      <CodeComponent name="shuffleFoodsAndRestaurants">
-        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="shuffleFoodsAndRestaurants" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="# randomize foods &amp; restaurants within each run&#10;# note that we DO THIS BEFORE EVERY RUN&#10;#&#10;cuesReshuffled = range(0, 3)&#10;contextsReshuffled = range(0, 3)&#10;&#10;shuffle(cuesReshuffled)&#10;shuffle(contextsReshuffled)&#10;&#10;print 'Shuffled cues: ', cuesReshuffled&#10;print 'Shuffled contexts: ', contextsReshuffled" valType="extendedCode" updates="constant"/>
-        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-      </CodeComponent>
-      <TextComponent name="runInstr">
-        <Param name="opacity" val="1" valType="code" updates="constant"/>
-        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
-        <Param name="name" val="runInstr" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="1.5" valType="code" updates="constant"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="the text is set manually&#10;" valType="str" updates="constant"/>
-        <Param name="stopVal" val="3.0" valType="code" updates="constant"/>
-        <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
-        <Param name="flip" val="" valType="str" updates="constant"/>
-        <Param name="startEstim" val="" valType="code" updates="None"/>
-        <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="startType" val="time (s)" valType="str" updates="None"/>
-        <Param name="ori" val="0" valType="code" updates="constant"/>
-        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="0.0" valType="code" updates="None"/>
-        <Param name="font" val="Arial" valType="str" updates="constant"/>
-        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
-      </TextComponent>
-    </Routine>
-    <Routine name="thankyou">
-      <CodeComponent name="code">
-        <Param name="Begin Experiment" val="if expInfo['mriMode'] != 'off': # we're scanning!&#10;    assert expInfo['mriMode'] == 'scan'&#10;    thankYouMsg = &quot;You have completed the experiment. Please wait for the researcher.&quot;&#10;else: # not scanning =&gt; behavioral&#10;    thankYouMsg = &quot;You have completed the experiment. Please open the door and wait for your researcher.&quot;&#10;&#10;" valType="extendedCode" updates="constant"/>
-        <Param name="name" val="code" valType="code" updates="None"/>
-        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
-        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
-      </CodeComponent>
-      <TextComponent name="thankYouText">
-        <Param name="opacity" val="1" valType="code" updates="constant"/>
-        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
-        <Param name="name" val="thankYouText" valType="code" updates="None"/>
-        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
-        <Param name="color" val="white" valType="str" updates="constant"/>
-        <Param name="text" val="$thankYouMsg" valType="str" updates="constant"/>
-        <Param name="stopVal" val="120.0" valType="code" updates="constant"/>
-        <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
-        <Param name="flip" val="" valType="str" updates="constant"/>
-        <Param name="startEstim" val="" valType="code" updates="None"/>
-        <Param name="units" val="from exp settings" valType="str" updates="None"/>
-        <Param name="startType" val="time (s)" valType="str" updates="None"/>
-        <Param name="ori" val="0" valType="code" updates="constant"/>
-        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="0.0" valType="code" updates="None"/>
-        <Param name="font" val="Arial" valType="str" updates="constant"/>
-        <Param name="letterHeight" val="0.1" valType="code" updates="constant"/>
-      </TextComponent>
-      <KeyboardComponent name="key_resp_2">
-        <Param name="correctAns" val="" valType="str" updates="constant"/>
-        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
-        <Param name="name" val="key_resp_2" valType="code" updates="None"/>
-        <Param name="stopVal" val="120" valType="code" updates="constant"/>
-        <Param name="durationEstim" val="" valType="code" updates="None"/>
-        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
-        <Param name="startEstim" val="" valType="code" updates="None"/>
-        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
-        <Param name="startType" val="time (s)" valType="str" updates="None"/>
-        <Param name="allowedKeys" val="'y','n','left','right','space'" valType="code" updates="constant"/>
-        <Param name="stopType" val="time (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="10.0" valType="code" updates="None"/>
-        <Param name="store" val="last key" valType="str" updates="constant"/>
-      </KeyboardComponent>
-    </Routine>
     <Routine name="test_2">
       <CodeComponent name="timeLoggingCode_2">
         <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
@@ -546,6 +554,14 @@
         <Param name="name" val="jitterCode_2" valType="code" updates="None"/>
         <Param name="Begin Routine" val="print '(test) next iti idx = ', nextItiIdx&#10;&#10;assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \&#10;    str(nextItiIdx) + &quot; == &quot; + str(runs.thisN) + &quot; * &quot; + str(nTrialsPerRun) + &quot; + &quot; + str(nTrainTrialsPerRun) + &quot; + &quot; + str(test_trials.thisN)&#10;&#10;itiTime_2 = allItis[nextItiIdx]&#10;nextItiIdx += 1&#10;&#10;print '(test) iti time = ', itiTime_2&#10;&#10;assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN], \&#10;    str(itiTime_2) + &quot; == runItisSanity[&quot; + str(runs.thisN) + &quot;][&quot; + str(nTrainTrialsPerRun) + &quot; + &quot; + str(test_trials.thisN) + &quot;] = &quot; + runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]&#10;assert itiTime_2 &gt;= itiMin&#10;assert itiTime_2 &lt;= itiMax" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
+      </CodeComponent>
+      <CodeComponent name="streamingData_2">
+        <Param name="Begin Experiment" val="" valType="extendedCode" updates="constant"/>
+        <Param name="name" val="streamingData_2" valType="code" updates="None"/>
+        <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
+        <Param name="End Routine" val="flushEntries()" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="" valType="extendedCode" updates="constant"/>
         <Param name="Each Frame" val="" valType="extendedCode" updates="constant"/>
       </CodeComponent>
