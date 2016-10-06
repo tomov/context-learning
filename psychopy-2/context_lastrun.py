@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct  4 13:59:58 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 08:50:21 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -327,9 +327,9 @@ notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
     color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 timeoutText_2 = visual.TextStim(win=win, ori=0, name='timeoutText_2',
-    text=u'TIMEOUT',    font=u'Arial Bold',
+    text='TIMEOUT',    font='Arial Bold',
     pos=[0, 0], height=0.15, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-15.0)
 
 # Initialize components for Routine "waitForFinish"
@@ -351,9 +351,9 @@ else: # not scanning => behavioral
 
 
 thankYouText = visual.TextStim(win=win, ori=0, name='thankYouText',
-    text=thankYouMsg,    font=u'Arial',
+    text=thankYouMsg,    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-1.0)
 
 # Create some handy timers
@@ -455,7 +455,7 @@ thisExp.nextEntry()
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-    trialList=data.importConditions('runs.xlsx', selection=u'range(1,10)'),
+    trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
 thisRun = runs.trialList[0]  # so we can initialise stimuli with some values
@@ -648,9 +648,9 @@ for thisRun in runs:
     
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='fullRandom', 
+    trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -701,6 +701,11 @@ for thisRun in runs:
         nextItiIdx += 1
         
         print '(train) iti time = ', itiTime
+        
+        print runs.thisN
+        print trials.thisN
+        print len(runItisSanity)
+        print len(runItisSanity[runs.thisN])
         
         assert itiTime == runItisSanity[runs.thisN][trials.thisN], \
             str(itiTime) + " == runItisSanity[" + str(runs.thisN) + "][" + str(trials.thisN) + "] = " + runItisSanity[runs.thisN][trials.thisN]
@@ -879,6 +884,8 @@ for thisRun in runs:
                         responseKey.corr = 1
                     else:
                         responseKey.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
             
             # *sickHighlight* updates
             if t >= itiTime and sickHighlight.status == NOT_STARTED:
@@ -993,7 +1000,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 1 repeats of 'trials'
+    # completed 5 repeats of 'trials'
     
     
     #------Prepare to start Routine "test_warning"-------
@@ -1383,7 +1390,7 @@ routineTimer.reset()
 t = 0
 thankyouClock.reset()  # clock 
 frameN = -1
-routineTimer.add(1200.000000)
+routineTimer.add(120.000000)
 # update component parameters for each repeat
 
 key_resp_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
@@ -1411,7 +1418,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         thankYouText.tStart = t  # underestimates by a little under one frame
         thankYouText.frameNStart = frameN  # exact frame index
         thankYouText.setAutoDraw(True)
-    if thankYouText.status == STARTED and t >= (0.0 + (1200.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+    if thankYouText.status == STARTED and t >= (0.0 + (120.0-win.monitorFramePeriod*0.75)): #most of one frame period left
         thankYouText.setAutoDraw(False)
     
     # *key_resp_2* updates
