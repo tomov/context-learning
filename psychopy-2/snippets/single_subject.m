@@ -10,7 +10,7 @@ contexts = {'irrelevant', 'modulatory', 'additive'};
 format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-    textread('wtf.csv', format, 'delimiter', ',', 'headerlines', 1);
+    textread('wtf1.csv', format, 'delimiter', ',', 'headerlines', 1);
 
 sick = strcmp(response.keys, 'left');
 notsick = strcmp(response.keys, 'right');
@@ -21,7 +21,7 @@ sickCorr = strcmp(corrAns, 'left');
 notsickCorr = strcmp(corrAns, 'right');
 noCorr = strcmp(corrAns, 'None');
 assert(sum(sickCorr) + sum(noCorr) + sum(notsickCorr) == length(sick));
-assert(sum(noCorr) == 4 * roundsPerContext * length(contexts));
+%assert(sum(noCorr) == 4 * roundsPerContext * length(contexts));
 assert(sum(noCorr(isTrain == 1)) == 0);
 
 
@@ -48,16 +48,16 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
 
-subplot(2, 2, 1);
+subplot(2, 3, 1);
 
 barweb(Ms, SEMs, 1, contexts, 'Outcome probabilities in training phase');
-ylabel('Choice probability');
+ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
 
 
 
-%% Choice probabilities in training phase
+%% Sick probabilities in training phase
 
 Ms = [];
 SEMs = [];
@@ -78,10 +78,40 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
 
-subplot(2, 2, 2);
+subplot(2, 3, 2);
 
-barweb(Ms, SEMs, 1, contexts, 'Empirical choice probabilities in training phase');
-ylabel('Choice probability');
+barweb(Ms, SEMs, 1, contexts, 'Choice probabilities in training phase');
+ylabel('Sick probability');
+legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
+
+
+
+
+%% Not sick probabilities in training phase
+
+Ms = [];
+SEMs = [];
+for context = contexts
+    x1c1 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 0 & contextId == 0);
+    x1c2 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 0 & contextId == 1);
+    x2c1 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 0);
+    x2c2 = notsick(isTrain == 1 & strcmp(contextRole, context) & cueId == 1 & contextId == 1);
+
+    assert(length(x1c1) == roundsPerContext * trialsNReps);
+    assert(length(x1c2) == roundsPerContext * trialsNReps);
+    assert(length(x2c1) == roundsPerContext * trialsNReps);
+    assert(length(x2c2) == roundsPerContext * trialsNReps);
+
+    M = mean([x1c1 x1c2 x2c1 x2c2]);
+    SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
+    Ms = [Ms; M];
+    SEMs = [SEMs; SEM];
+end
+
+subplot(2, 3, 3);
+
+barweb(Ms, SEMs, 1, contexts, 'Choice probabilities in training phase');
+ylabel('Not sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
 
@@ -89,9 +119,7 @@ legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
 
 
-
-
-%% Choice probabilities in test phase
+%% Sick probabilities in test phase
 % This is the final figure we care about
 
 Ms = [];
@@ -102,10 +130,10 @@ for context = contexts
     x2c1 = sick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 0);
     x2c2 = sick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 2);
 
-    assert(length(x1c1) == roundsPerContext);
-    assert(length(x1c2) == roundsPerContext);
-    assert(length(x2c1) == roundsPerContext);
-    assert(length(x2c2) == roundsPerContext);
+%    assert(length(x1c1) == roundsPerContext);
+%    assert(length(x1c2) == roundsPerContext);
+%    assert(length(x2c1) == roundsPerContext);
+%    assert(length(x2c2) == roundsPerContext);
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -113,8 +141,39 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 2, 4);
+subplot(2, 3, 4);
 
-barweb(Ms, SEMs, 1, contexts, 'Empirical choice probabilities in test phase');
-ylabel('Choice probability');
+barweb(Ms, SEMs, 1, contexts, 'Choice probabilities in test phase');
+ylabel('Sick probability');
+legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
+
+
+
+
+
+%% Not sick in test phase
+
+Ms = [];
+SEMs = [];
+for context = contexts
+    x1c1 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 0 & contextId == 0);
+    x1c2 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 0 & contextId == 2);
+    x2c1 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 0);
+    x2c2 = notsick(isTrain == 0 & strcmp(contextRole, context) & cueId == 2 & contextId == 2);
+
+%    assert(length(x1c1) == roundsPerContext);
+%    assert(length(x1c2) == roundsPerContext);
+%    assert(length(x2c1) == roundsPerContext);
+%    assert(length(x2c2) == roundsPerContext);
+
+    M = mean([x1c1 x1c2 x2c1 x2c2]);
+    SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
+    Ms = [Ms; M];
+    SEMs = [SEMs; SEM];
+end
+    
+subplot(2, 3, 5);
+
+barweb(Ms, SEMs, 1, contexts, 'Choice probabilities in test phase');
+ylabel('Not sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});

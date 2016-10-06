@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 13:49:45 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct  6 15:44:16 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -756,6 +756,9 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight.setText(sickHighlight.text)
         notsickHighlight.setText(notsickHighlight.text)
+        # save the last response key so we don't re-render the _
+        #
+        lastReponseKey = None
         print '(train) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \
@@ -854,7 +857,7 @@ for thisRun in runs:
             
             # highlight subject's response
             #
-            if responseKey.keys:
+            if responseKey.keys and responseKey.keys != lastReponseKey:
                 if responseKey.keys == 'left': # sick
                     sickHighlight.opacity = 1
                     notsickHighlight.opacity = 0
@@ -863,9 +866,11 @@ for thisRun in runs:
                     notsickHighlight.opacity = 1
                 else:
                     assert False, 'Can only have one response, left or right'
-            # hack to re-render the text with new opacity
-            sickHighlight.setText(sickHighlight.text)
-            notsickHighlight.setText(notsickHighlight.text)
+                # save last response so we don't re-render
+                lastReponseKey = responseKey.keys 
+                # hack to re-render the text with new opacity
+                sickHighlight.setText(sickHighlight.text)
+                notsickHighlight.setText(notsickHighlight.text)
             
             
             
@@ -1158,6 +1163,8 @@ for thisRun in runs:
         # hack to re-render the text with new opacity
         sickHighlight_2.setText(sickHighlight_2.text)
         notsickHighlight_2.setText(notsickHighlight_2.text)
+        # save the last response so we don't re-render the _
+        lastReponseKey_2 = None
         print '(test) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
@@ -1216,7 +1223,7 @@ for thisRun in runs:
                     continueRoutine = False
             # highlight subject's response
             #
-            if responseKey_2.keys:
+            if responseKey_2.keys and responseKey_2.keys != lastReponseKey:
                 if responseKey_2.keys == 'left': # sick
                     sickHighlight_2.opacity = 1
                     notsickHighlight_2.opacity = 0
@@ -1225,9 +1232,11 @@ for thisRun in runs:
                     notsickHighlight_2.opacity = 1
                 else:
                     assert False, 'Can only have one response, left or right'
-            # hack to re-render the text with new opacity
-            sickHighlight_2.setText(sickHighlight_2.text)
-            notsickHighlight_2.setText(notsickHighlight_2.text)
+                # save the last response so we don't re-render the _
+                lastReponseKey_2 = responseKey_2.keys
+                # hack to re-render the text with new opacity
+                sickHighlight_2.setText(sickHighlight_2.text)
+                notsickHighlight_2.setText(notsickHighlight_2.text)
             
             
             
