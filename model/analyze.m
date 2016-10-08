@@ -13,57 +13,80 @@ format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
     textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
 
-
 %% Simulate
 
 human_correct = [];
 model_correct = [];
 
+model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
+
 for who = unique(participant)'
     for condition = unique(contextRole)'
-    %for condition = {'modulatory'}
         which_runs = strcmp(participant, who) & strcmp(contextRole, condition);
-        for run = unique(roundId(which_runs))'
-            which = isTrain & roundId == run & which_runs;
+        runs = unique(roundId(which_runs))';
+        for run = runs
+            which_train = isTrain & roundId == run & which_runs;
+            which_test = ~isTrain & roundId == run & which_runs;
             
             % For a given run of a given subject, run the model on the same
             % sequence of stimuli and see what it does.
             %
-            cues = cueId(which);
+            cues = cueId(which_train);
             N = length(cues); % # of trials
             D = 3; % # of stimuli
             x = zeros(N, D);
             x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
-            c = contextId(which) + 1;
-            r = strcmp(sick(which), 'Yes');
+            c = contextId(which_train) + 1;
+            r = strcmp(sick(which_train), 'Yes');
             [choices, P_n, ww_n, P, ww] = train(x, c, r, false);
             model_choices = choices > 0.5;
+            model_response_keys = {};
+            model_response_keys(model_choices) = {'left'};
+            model_response_keys(~model_choices) = {'right'};
+            model.keys(which_train) = model_response_keys;
             
             % Get the subject's responses too.
             %
-            resp = response.keys(which);
+            resp = response.keys(which_train);
             human_choices = strcmp(resp, 'left'); % sick == 1
             
             % Keep track of correct responses
             %
             human_correct = [human_correct; (human_choices == r)'];
             model_correct = [model_correct; (model_choices == r)'];
-            
-            
         end
     end
 end
 
+model.keys = model.keys';
+
+% Slice and dice the data
+%
+
+human_correct = [];
+model_correct = [];
+
+for n = 1:N
+    which = isTrain & trialId == n;
+    
+    human_corr_n = strcmp(response.keys(which), corrAns(which));
+    model_corr_n = strcmp(model.keys(which), corrAns(which));
+    human_correct = [human_correct mean(human_corr_n)];
+    model_correct = [model_correct mean(model_corr_n)];
+end
+
+
 figure;
-plot(mean(model_correct), 'o-', 'LineWidth', 2);
+plot(model_correct, 'o-', 'LineWidth', 2);
 hold on;
-plot(mean(human_correct), 'o-', 'LineWidth', 2);
+plot(human_correct, 'o-', 'LineWidth', 2);
 hold off;
 legend({'model', 'subject'});
 
 title('Per-trial accuracy');
 xlabel('trial #');
 ylabel('accuracy');
+
 
 %{
 
