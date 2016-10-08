@@ -10,7 +10,7 @@ subjects = length(unique(participant));
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = trials per run / 4
 
-contextRoles = {'irrelevant', 'modulatory', 'additive'};
+contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 
 
 %% Simulate
@@ -19,7 +19,10 @@ human_correct_all_runs = [];
 model_correct_all_runs = [];
 
 model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
-model.pred = [];
+model.pred = []; % the choice probability (not the actual choice) for each trial
+model.P1 = []; % posterior P(M1 | ...) at each trial
+model.P2 = []; % posterior P(M2 | ...) at each trial
+model.P3 = []; % posterior P(M3 | ...) at each trial
 
 for who = unique(participant)'
     for condition = unique(contextRole)'
@@ -47,6 +50,9 @@ for who = unique(participant)'
             model_response_keys(~model_choices) = {'right'};
             model.keys(which_train) = model_response_keys;
             model.pred(which_train) = choices;
+            model.P1(which_train) = P(:,1);
+            model.P2(which_train) = P(:,2);
+            model.P3(which_train) = P(:,3);
             
             % See what the model predicts for the test trials of that run
             %
@@ -75,6 +81,9 @@ end
 
 model.keys = model.keys';
 model.pred = model.pred';
+model.P1 = model.P1';
+model.P2 = model.P2';
+model.P3 = model.P3';
 
 %% Do some plotting
 %
@@ -82,7 +91,7 @@ model.pred = model.pred';
 figure;
 
 %
-% Per-subject accuracy & timeouts for sanity check
+% Per-subject accuracy & timeouts for sanity check (training only)
 %
 
 subjects_perf = [];
@@ -96,7 +105,7 @@ for who = unique(participant)'
     subjects_perf = [subjects_perf; mean([corr wrong timeout])];
 end
 
-subplot(2, 3, 2);
+subplot(2, 4, 2);
 
 barweb(subjects_perf, zeros(size(subjects_perf)), 1, unique(participant)', 'Individual subject performance');
 ylabel('Fraction of trials');
@@ -104,7 +113,7 @@ legend({'Correct', 'Wrong', 'Timeout'});
 
 
 %
-% Per-trial accuracy across all subjects & runs
+% Per-trial accuracy across all subjects & runs (training only)
 % compared against the model
 %
 
@@ -120,7 +129,7 @@ for n = 1:N
     model_correct = [model_correct mean(model_corr_n)];
 end
 
-subplot(2, 3, 3);
+subplot(2, 4, 3);
 
 plot(model_correct, 'o-', 'LineWidth', 2); % == mean(human_correct_all_runs)
 hold on;
@@ -131,6 +140,35 @@ legend({'model', 'subject'});
 title('Per-trial accuracy');
 xlabel('trial #');
 ylabel('accuracy');
+
+
+%
+% Model per-trial posterior probability P(M | ...)
+%
+
+model_correct = [];
+
+%for condition = unique(contextRole)' % TODO all conditions
+for condition = {'additive'}
+    P = [];
+    for n = 1:N
+        which = isTrain & strcmp(contextRole, condition) & trialId == n;
+
+        P1_n = model.P1(which);
+        P2_n = model.P2(which);
+        P3_n = model.P3(which);
+        P = [P; mean([P1_n P2_n P3_n])];
+    end
+end
+
+subplot(2, 4, 4);
+
+plot(P, 'o-', 'LineWidth', 2);
+xlabel('n (trial #)');
+ylabel('P(M | h_{1:n})');
+title('Posterior probability after each trial');
+legend({'M1', 'M2', 'M3'});
+
 
 
 %
@@ -159,7 +197,7 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
 
-subplot(2, 3, 1);
+subplot(2, 4, 1);
 barweb(Ms, SEMs, 1, contexts, 'P(sick outcome) in training phase (for sanity)');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
@@ -193,7 +231,7 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 3, 4);
+subplot(2, 4, 5);
 
 barweb(Ms, SEMs, 1, contexts, 'Subject P(choose sick) in test phase (main figure)');
 ylabel('Sick probability');
@@ -230,7 +268,7 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 3, 5);
+subplot(2, 4, 6);
 
 barweb(Ms, SEMs, 1, contexts, 'Model P(choose sick) in test phase (main figure)');
 ylabel('Sick probability');
@@ -264,7 +302,7 @@ for context = contexts
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 3, 6);
+subplot(2, 4, 7);
 
 barweb(Ms, SEMs, 1, contexts, 'Model P(choose sick) in test phase (true probs)');
 ylabel('Sick probability');
