@@ -1,5 +1,7 @@
 clear all;
 
+DO_PLOT = false;
+
 %
 % Set up the experiment
 %
@@ -40,10 +42,12 @@ end
 test_x = [1 0 0; 1 0 0; 0 0 1; 0 0 1]; % test stimuli: x1 x1 x3 x3
 test_c = [1; 3; 1; 3]; % test contexts: c1 c3 c1 c3
 
+Ms = [];
+
 for g=1:3 % for each group
     fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
-    [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g});
+    [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g}, false);
 
     [test_choices] = test(test_x, test_c, P_n, ww_n);
     for n = 1:size(test_x, 1)
@@ -52,43 +56,53 @@ for g=1:3 % for each group
         out = test_choices(n);
         fprintf('TEST predction for x = %d, c = %d is %f\n', find(x_n), c_n, out);
     end
+    Ms = [Ms; test_choices'];
     
     % Plot posterior probability P(M | h_1:n)
     %
-    figure;
-    
-    subplot(3, 2, 1);
-    plot(P, 'o-', 'LineWidth', 2);
-    xlabel('n (trial #)');
-    ylabel('P(M | h_{1:n})');
-    title('Posterior probability after each trial');
-    legend({'M1', 'M2', 'M3'});
+    if DO_PLOT
+        figure;
 
-    % Plot weight matrix ww for M1
-    %
-    subplot(3, 2, 2);
-    plot(ww{1}, 'o-', 'LineWidth', 2);
-    xlabel('n (trial #)');
-    ylabel('ww_n');
-    title('Weight matrix on each trial for M1');
-    legend({'x1', 'x2'});
+        subplot(3, 2, 1);
+        plot(P, 'o-', 'LineWidth', 2);
+        xlabel('n (trial #)');
+        ylabel('P(M | h_{1:n})');
+        title('Posterior probability after each trial');
+        legend({'M1', 'M2', 'M3'});
 
-    % Plot weight matrix ww for M2
-    %
-    subplot(3, 2, 3);
-    plot(ww{2}, 'o-', 'LineWidth', 2);
-    xlabel('n (trial #)');
-    ylabel('ww_n');
-    title('Weight matrix on each trial for M2');
-    legend({'x1c1', 'x2c1', 'x1c2', 'x2c2'});
-    
-    % Plot weight matrix ww for M3
-    %
-    subplot(3, 2, 4);
-    plot(ww{3}, 'o-', 'LineWidth', 2);
-    xlabel('n (trial #)');
-    ylabel('ww_n');
-    title('Weight matrix on each trial for M3');
-    legend({'x1', 'x2', 'c1', 'c2'});
+        % Plot weight matrix ww for M1
+        %
+        subplot(3, 2, 2);
+        plot(ww{1}, 'o-', 'LineWidth', 2);
+        xlabel('n (trial #)');
+        ylabel('ww_n');
+        title('Weight matrix on each trial for M1');
+        legend({'x1', 'x2'});
+
+        % Plot weight matrix ww for M2
+        %
+        subplot(3, 2, 3);
+        plot(ww{2}, 'o-', 'LineWidth', 2);
+        xlabel('n (trial #)');
+        ylabel('ww_n');
+        title('Weight matrix on each trial for M2');
+        legend({'x1c1', 'x2c1', 'x1c2', 'x2c2'});
+
+        % Plot weight matrix ww for M3
+        %
+        subplot(3, 2, 4);
+        plot(ww{3}, 'o-', 'LineWidth', 2);
+        xlabel('n (trial #)');
+        ylabel('ww_n');
+        title('Weight matrix on each trial for M3');
+        legend({'x1', 'x2', 'c1', 'c2'});    
+    end
 end
 
+contexts = {'irrelevant', 'modulatory', 'additive'};
+
+figure;
+
+barweb(Ms, zeros(size(Ms)), 1, contexts, 'Choice probabilities in test phase');
+ylabel('Sick probability');
+legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
