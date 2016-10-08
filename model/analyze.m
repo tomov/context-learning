@@ -15,8 +15,8 @@ format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 
 %% Simulate
 
-human_correct = [];
-model_correct = [];
+human_correct_all_runs = [];
+model_correct_all_runs = [];
 
 model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
 
@@ -52,8 +52,8 @@ for who = unique(participant)'
             
             % Keep track of correct responses
             %
-            human_correct = [human_correct; (human_choices == r)'];
-            model_correct = [model_correct; (model_choices == r)'];
+            human_correct_all_runs = [human_correct_all_runs; (human_choices == r)'];
+            model_correct_all_runs = [model_correct_all_runs; (model_choices == r)'];
         end
     end
 end
@@ -77,9 +77,9 @@ end
 
 
 figure;
-plot(model_correct, 'o-', 'LineWidth', 2);
+plot(model_correct, 'o-', 'LineWidth', 2); % == mean(human_correct_all_runs)
 hold on;
-plot(human_correct, 'o-', 'LineWidth', 2);
+plot(human_correct, 'o-', 'LineWidth', 2); % == mean(model_correct_all_runs)
 hold off;
 legend({'model', 'subject'});
 
