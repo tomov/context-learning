@@ -55,9 +55,9 @@ for n = 1:N % for each trial
 
     % get reward and update state
     %
-    SSigma_n{1} = Sigma_n{1} + tau^2 * eye(D);
-    SSigma_n{2} = Sigma_n{2}(:,:,k) + tau^2 * eye(D);
-    SSigma_n{3} = Sigma_n{3} + tau^2 * eye(D + K);
+    SSigma_n{1} = Sigma_n{1} + tau^2 * eye(D); % 1 / certainty for prediction x * w in M1
+    SSigma_n{2} = Sigma_n{2}(:,:,k) + tau^2 * eye(D); % 1 / certainty for prediction x * w in M2
+    SSigma_n{3} = Sigma_n{3} + tau^2 * eye(D + K); % 1 / certainty for prediction x * w in M3
 
     gain = @(x_n, SSigma_n) SSigma_n * x_n / (x_n' * SSigma_n * x_n + sigma_r^2);
     g_n{1} = gain(x_n, SSigma_n{1});    

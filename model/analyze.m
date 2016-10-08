@@ -1,3 +1,11 @@
+% TODO show posterior in all conditions (see todo below)
+% TODO plot prediction certainty Sigma
+% TODO plot learning rates g
+% TODO checkboxes for subject (+ all), condition (+ all), run (+ all)
+%         -- radio button -- either runs 1,2,3,4,5... OR conditions + 1st,
+%         2nd, 3rd run of each condition
+%
+
 % load data from file with all subjects
 % generated using parse.py (see snippets/parse.py)
 
@@ -12,8 +20,9 @@ trialsNReps = 5; % = trials per run / 4
 
 contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 
-
-%% Simulate
+%
+% Simulate
+%
 
 human_correct_all_runs = [];
 model_correct_all_runs = [];
