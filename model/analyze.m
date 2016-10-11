@@ -38,6 +38,9 @@ model.pred = []; % the choice probability (not the actual choice) for each trial
 model.P1 = []; % posterior P(M1 | ...) at each trial
 model.P2 = []; % posterior P(M2 | ...) at each trial
 model.P3 = []; % posterior P(M3 | ...) at each trial
+model.ww1 = []; % weights for M1 
+model.ww2 = []; % weights for M2
+model.ww3 = []; % weights for M3
 
 for who = subjects
     for condition = unique(contextRole)'
@@ -72,6 +75,9 @@ for who = subjects
             model.P1(which_train) = P(:,1);
             model.P2(which_train) = P(:,2);
             model.P3(which_train) = P(:,3);
+            model.ww1(which_train, :) = ww{1};
+            model.ww2(which_train, :) = ww{2};
+            model.ww3(which_train, :) = ww{3};
             
             % See what the model predicts for the test trials of that run
             %
@@ -153,7 +159,7 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
 
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training');
 ylabel('Sick probability');
@@ -176,7 +182,7 @@ for who = subjects
     subjects_perf = [subjects_perf; mean([corr wrong timeout])];
 end
 
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(subjects_perf, zeros(size(subjects_perf)), 1, subjects, 'Individual subject performance');
 ylabel('Fraction of trials');
@@ -213,7 +219,7 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test');
 ylabel('Sick probability');
@@ -252,7 +258,7 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test');
 ylabel('Sick probability');
@@ -288,7 +294,7 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase');
 ylabel('Sick probability');
@@ -314,7 +320,7 @@ for n = 1:N
     model_correct = [model_correct mean(model_corr_n)];
 end
 
-subplot(2, 5, next_subplot_idx);
+subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 plot(model_correct, 'o-', 'LineWidth', 2); % == mean(human_correct_all_runs)
 hold on;
@@ -342,12 +348,39 @@ for condition = contextRoles
         P = [P; mean(P1_n) mean(P2_n) mean(P3_n)];
     end
 
-    subplot(2, 5, next_subplot_idx);
+    subplot(3, 5, next_subplot_idx);
     next_subplot_idx = next_subplot_idx + 1;
     plot(P, 'o-', 'LineWidth', 2);
     xlabel('n (trial #)');
     ylabel('P(M | h_{1:n})');
     title(strcat('Posterior after each trial for ', {' '}, condition));
     legend({'M1', 'M2', 'M3'});
+
+end
+
+
+%
+% Model per-trial weight matrix ww for each condition
+%
+
+for condition = contextRoles
+
+    ww = [];
+    for n = 1:N
+        which = which_rows & isTrain & strcmp(contextRole, condition) & trialId == n;
+
+        ww1_n = model.ww1(which, :);
+        ww2_n = model.ww2(which, :);
+        ww3_n = model.ww3(which, :);
+        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n)];
+    end
+
+    subplot(3, 5, next_subplot_idx);
+    next_subplot_idx = next_subplot_idx + 1;
+    plot(ww, 'o-', 'LineWidth', 1);
+    xlabel('n (trial #)');
+    ylabel('ww_n');
+    title(strcat('Weights after each trial for ', {' '}, condition));
+    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2'});
 
 end

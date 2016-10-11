@@ -7,7 +7,7 @@ D = size(x, 2); % # of stimuli
 K = 3;          % # of contexts
 
 % predict
-predict = @(V_n) 1 / (1 + exp(-2 * V_n + 1)); % predicts by mapping the expectation to an outcome
+predict = @(V_n) 1 ./ (1 + exp(-2 * V_n + 1)); % predicts by mapping the expectation to an outcome
 
 value = @(x_n, xx_n, k) (x_n' * ww_n{1}) * P_n(1) + ... % M1 
                         (x_n' * ww_n{2}(:, k)) * P_n(2) + ... % M2
