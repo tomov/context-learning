@@ -12,13 +12,18 @@
 format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-    textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
+    textread('pilot-with-hayley.csv', format, 'delimiter', ',', 'headerlines', 1);
 
-subjects = length(unique(participant));
+which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
+which_rows = which_rows & ~strcmp(participant, 'hmd'); % exclude hayley
+
+subjects = unique(participant(which_rows))'; % the unique id's of all subjects
+
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = trials per run / 4
 
 contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
+
 
 %
 % Simulate
@@ -33,13 +38,13 @@ model.P1 = []; % posterior P(M1 | ...) at each trial
 model.P2 = []; % posterior P(M2 | ...) at each trial
 model.P3 = []; % posterior P(M3 | ...) at each trial
 
-for who = unique(participant)'
+for who = subjects
     for condition = unique(contextRole)'
-        which_runs = strcmp(participant, who) & strcmp(contextRole, condition);
+        which_runs = which_rows & strcmp(participant, who) & strcmp(contextRole, condition);
         runs = unique(roundId(which_runs))';
         for run = runs
-            which_train = isTrain & roundId == run & which_runs;
-            which_test = ~isTrain & roundId == run & which_runs;
+            which_train = which_runs & isTrain & roundId == run;
+            which_test = which_runs & ~isTrain & roundId == run;
             
             % For a given run of a given subject, run the model on the same
             % sequence of stimuli and see what it does.
@@ -96,7 +101,7 @@ model.P3 = model.P3';
 
 %% Do some plotting
 %
-
+          
 figure;
 
 %
@@ -105,8 +110,8 @@ figure;
 
 subjects_perf = [];
 
-for who = unique(participant)'
-    which = isTrain & strcmp(participant, who);
+for who = subjects
+    which = which_rows & isTrain & strcmp(participant, who);
     
     corr = strcmp(response.keys(which), corrAns(which));
     timeout = strcmp(response.keys(which), 'None');
@@ -116,7 +121,7 @@ end
 
 subplot(2, 4, 2);
 
-barweb(subjects_perf, zeros(size(subjects_perf)), 1, unique(participant)', 'Individual subject performance');
+barweb(subjects_perf, zeros(size(subjects_perf)), 1, subjects, 'Individual subject performance');
 ylabel('Fraction of trials');
 legend({'Correct', 'Wrong', 'Timeout'});
 
@@ -130,7 +135,7 @@ human_correct = [];
 model_correct = [];
 
 for n = 1:N
-    which = isTrain & trialId == n;
+    which = which_rows & isTrain & trialId == n;
     
     human_corr_n = strcmp(response.keys(which), corrAns(which));
     model_corr_n = strcmp(model.keys(which), corrAns(which));
@@ -161,7 +166,7 @@ model_correct = [];
 for condition = {'additive'}
     P = [];
     for n = 1:N
-        which = isTrain & strcmp(contextRole, condition) & trialId == n;
+        which = which_rows & isTrain & strcmp(contextRole, condition) & trialId == n;
 
         P1_n = model.P1(which);
         P2_n = model.P2(which);
@@ -188,17 +193,17 @@ legend({'M1', 'M2', 'M3'});
 Ms = [];
 SEMs = [];
 for context = contextRoles
-    which = isTrain == 1 & strcmp(contextRole, context);
+    which = which_rows & isTrain == 1 & strcmp(contextRole, context);
     
     x1c1 = strcmp(corrAns(which & cueId == 0 & contextId == 0), 'left');
     x1c2 = strcmp(corrAns(which & cueId == 0 & contextId == 1), 'left');
     x2c1 = strcmp(corrAns(which & cueId == 1 & contextId == 0), 'left');
     x2c2 = strcmp(corrAns(which & cueId == 1 & contextId == 1), 'left');
 
-    assert(length(x1c1) == roundsPerContext * trialsNReps * subjects);
-    assert(length(x1c2) == roundsPerContext * trialsNReps * subjects);
-    assert(length(x2c1) == roundsPerContext * trialsNReps * subjects);
-    assert(length(x2c2) == roundsPerContext * trialsNReps * subjects);
+    assert(length(x1c1) == roundsPerContext * trialsNReps * length(subjects));
+    assert(length(x1c2) == roundsPerContext * trialsNReps * length(subjects));
+    assert(length(x2c1) == roundsPerContext * trialsNReps * length(subjects));
+    assert(length(x2c2) == roundsPerContext * trialsNReps * length(subjects));
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -207,7 +212,7 @@ for context = contextRoles
 end
 
 subplot(2, 4, 1);
-barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training phase (for sanity)');
+barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training phase');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
@@ -220,17 +225,17 @@ legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 Ms = [];
 SEMs = [];
 for context = contextRoles
-    which = isTrain == 0 & strcmp(contextRole, context);
+    which = which_rows & isTrain == 0 & strcmp(contextRole, context);
     
     x1c1 = strcmp(response.keys(which & cueId == 0 & contextId == 0), 'left');
     x1c2 = strcmp(response.keys(which & cueId == 0 & contextId == 2), 'left');
     x2c1 = strcmp(response.keys(which & cueId == 2 & contextId == 0), 'left');
     x2c2 = strcmp(response.keys(which & cueId == 2 & contextId == 2), 'left');
 
-    assert(length(x1c1) == roundsPerContext * subjects);
-    assert(length(x1c2) == roundsPerContext * subjects);
-    assert(length(x2c1) == roundsPerContext * subjects);
-    assert(length(x2c2) == roundsPerContext * subjects);
+    assert(length(x1c1) == roundsPerContext * length(subjects));
+    assert(length(x1c2) == roundsPerContext * length(subjects));
+    assert(length(x2c1) == roundsPerContext * length(subjects));
+    assert(length(x2c2) == roundsPerContext * length(subjects));
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -242,7 +247,7 @@ end
     
 subplot(2, 4, 5);
 
-barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test phase (main figure)');
+barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test phase');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -256,7 +261,7 @@ legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 Ms = [];
 SEMs = [];
 for context = contextRoles
-    which = isTrain == 0 & strcmp(contextRole, context);
+    which = which_rows & isTrain == 0 & strcmp(contextRole, context);
     
     
     x1c1 = strcmp(model.keys(which & cueId == 0 & contextId == 0), 'left');
@@ -264,10 +269,10 @@ for context = contextRoles
     x2c1 = strcmp(model.keys(which & cueId == 2 & contextId == 0), 'left');
     x2c2 = strcmp(model.keys(which & cueId == 2 & contextId == 2), 'left');
     
-    assert(length(x1c1) == roundsPerContext * subjects);
-    assert(length(x1c2) == roundsPerContext * subjects);
-    assert(length(x2c1) == roundsPerContext * subjects);
-    assert(length(x2c2) == roundsPerContext * subjects);
+    assert(length(x1c1) == roundsPerContext * length(subjects));
+    assert(length(x1c2) == roundsPerContext * length(subjects));
+    assert(length(x2c1) == roundsPerContext * length(subjects));
+    assert(length(x2c2) == roundsPerContext * length(subjects));
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -279,7 +284,7 @@ end
     
 subplot(2, 4, 6);
 
-barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase (main figure)');
+barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -291,17 +296,17 @@ legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 Ms = [];
 SEMs = [];
 for context = contextRoles
-    which = isTrain == 0 & strcmp(contextRole, context);
+    which = which_rows & isTrain == 0 & strcmp(contextRole, context);
     
     x1c1 = model.pred(which & cueId == 0 & contextId == 0);
     x1c2 = model.pred(which & cueId == 0 & contextId == 2);
     x2c1 = model.pred(which & cueId == 2 & contextId == 0);
     x2c2 = model.pred(which & cueId == 2 & contextId == 2);
     
-    assert(length(x1c1) == roundsPerContext * subjects);
-    assert(length(x1c2) == roundsPerContext * subjects);
-    assert(length(x2c1) == roundsPerContext * subjects);
-    assert(length(x2c2) == roundsPerContext * subjects);
+    assert(length(x1c1) == roundsPerContext * length(subjects));
+    assert(length(x1c2) == roundsPerContext * length(subjects));
+    assert(length(x2c1) == roundsPerContext * length(subjects));
+    assert(length(x2c2) == roundsPerContext * length(subjects));
 
     M = mean([x1c1 x1c2 x2c1 x2c2]);
     SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -313,7 +318,7 @@ end
     
 subplot(2, 4, 7);
 
-barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase (true probs)');
+barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
