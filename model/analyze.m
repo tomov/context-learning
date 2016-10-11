@@ -106,86 +106,7 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
     figure;
 end
 
-%
-% Per-subject accuracy & timeouts for sanity check (training only)
-%
-
-subjects_perf = [];
-
-for who = subjects
-    which = which_rows & isTrain & strcmp(participant, who);
-    
-    corr = strcmp(response.keys(which), corrAns(which));
-    timeout = strcmp(response.keys(which), 'None');
-    wrong = ~strcmp(response.keys(which), corrAns(which)) & ~timeout;
-    subjects_perf = [subjects_perf; mean([corr wrong timeout])];
-end
-
-subplot(2, 4, 2);
-
-barweb(subjects_perf, zeros(size(subjects_perf)), 1, subjects, 'Individual subject performance');
-ylabel('Fraction of trials');
-legend({'Correct', 'Wrong', 'Timeout'});
-
-
-%
-% Per-trial accuracy across all subjects & runs (training only)
-% compared against the model
-%
-
-human_correct = [];
-model_correct = [];
-
-for n = 1:N
-    which = which_rows & isTrain & trialId == n;
-    
-    human_corr_n = strcmp(response.keys(which), corrAns(which));
-    model_corr_n = strcmp(model.keys(which), corrAns(which));
-    human_correct = [human_correct mean(human_corr_n)];
-    model_correct = [model_correct mean(model_corr_n)];
-end
-
-subplot(2, 4, 3);
-
-plot(model_correct, 'o-', 'LineWidth', 2); % == mean(human_correct_all_runs)
-hold on;
-plot(human_correct, 'o-', 'LineWidth', 2); % == mean(model_correct_all_runs)
-hold off;
-legend({'model', 'subject'});
-
-title('Per-trial accuracy');
-xlabel('trial #');
-ylabel('accuracy');
-
-
-%
-% Model per-trial posterior probability P(M | ...)
-%
-
-model_correct = [];
-
-%for condition = unique(contextRole)' % TODO all conditions
-for condition = {'additive'}
-    P = [];
-    for n = 1:N
-        which = which_rows & isTrain & strcmp(contextRole, condition) & trialId == n;
-
-        P1_n = model.P1(which);
-        P2_n = model.P2(which);
-        P3_n = model.P3(which);
-        P = [P; mean([P1_n P2_n P3_n])];
-    end
-end
-
-subplot(2, 4, 4);
-
-plot(P, 'o-', 'LineWidth', 2);
-xlabel('n (trial #)');
-ylabel('P(M | h_{1:n})');
-title('Posterior probability after each trial');
-legend({'M1', 'M2', 'M3'});
-
-
+next_subplot_idx = 1; % so you can reorder them by simply rearranging the code
 
 %
 % Outcome probabilities training phase (sanity check to make sure we didn't
@@ -194,6 +115,8 @@ legend({'M1', 'M2', 'M3'});
 
 Ms = [];
 SEMs = [];
+
+
 for context = contextRoles
     which = which_rows & isTrain == 1 & strcmp(contextRole, context);
     
@@ -213,10 +136,34 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
 
-subplot(2, 4, 1);
-barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training phase');
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
+
+
+
+%
+% Per-subject accuracy & timeouts for sanity check (training only)
+%
+
+subjects_perf = [];
+
+for who = subjects
+    which = which_rows & isTrain & strcmp(participant, who);
+    
+    corr = strcmp(response.keys(which), corrAns(which));
+    timeout = strcmp(response.keys(which), 'None');
+    wrong = ~strcmp(response.keys(which), corrAns(which)) & ~timeout;
+    subjects_perf = [subjects_perf; mean([corr wrong timeout])];
+end
+
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(subjects_perf, zeros(size(subjects_perf)), 1, subjects, 'Individual subject performance');
+ylabel('Fraction of trials');
+legend({'Correct', 'Wrong', 'Timeout'});
 
 
 %
@@ -247,9 +194,9 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 4, 5);
-
-barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test phase');
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -284,9 +231,9 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 4, 6);
-
-barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase');
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -318,10 +265,66 @@ for context = contextRoles
     SEMs = [SEMs; SEM];
 end
     
-subplot(2, 4, 7);
-
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
 barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
 
+
+
+%
+% Per-trial accuracy across all subjects & runs (training only)
+% compared against the model
+%
+
+human_correct = [];
+model_correct = [];
+
+for n = 1:N
+    which = which_rows & isTrain & trialId == n;
+    
+    human_corr_n = strcmp(response.keys(which), corrAns(which));
+    model_corr_n = strcmp(model.keys(which), corrAns(which));
+    human_correct = [human_correct mean(human_corr_n)];
+    model_correct = [model_correct mean(model_corr_n)];
+end
+
+subplot(2, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+plot(model_correct, 'o-', 'LineWidth', 2); % == mean(human_correct_all_runs)
+hold on;
+plot(human_correct, 'o-', 'LineWidth', 2); % == mean(model_correct_all_runs)
+hold off;
+legend({'model', 'subject'});
+title('Per-trial accuracy');
+xlabel('trial #');
+ylabel('accuracy');
+
+
+%
+% Model per-trial posterior probability P(M | ...) for each condition
+%
+
+for condition = contextRoles
+
+    P = [];
+    for n = 1:N
+        which = which_rows & isTrain & strcmp(contextRole, condition) & trialId == n;
+
+        P1_n = model.P1(which);
+        P2_n = model.P2(which);
+        P3_n = model.P3(which);
+        P = [P; mean([P1_n P2_n P3_n])];
+    end
+
+    subplot(2, 5, next_subplot_idx);
+    next_subplot_idx = next_subplot_idx + 1;
+    plot(P, 'o-', 'LineWidth', 2);
+    xlabel('n (trial #)');
+    ylabel('P(M | h_{1:n})');
+    title(strcat('Posterior after each trial for ', {' '}, condition));
+    legend({'M1', 'M2', 'M3'});
+
+end

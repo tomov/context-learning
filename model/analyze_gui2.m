@@ -21,7 +21,8 @@ function analyze_gui2
     analyze_with_gui = true;
 
     all_subjects = unique(participant)';    
-    which_subjects = logical(true(size(participant)));
+    which_subjects = logical(true(size(participant))); % all subjects initially
+    update_invariant;
 
     f = figure;
 
