@@ -4,6 +4,7 @@ function analyze_gui2
     %
     global all_subjects; % the unique id's of all subjects
     global participant; % the participant column from the data (for all rows)
+    global make_optimal_choices;
     
     global analyze_with_gui; % so analyze.m knows not to do certain things
 
@@ -19,6 +20,7 @@ function analyze_gui2
     [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
         textread('pilot-with-hayley.csv', format, 'delimiter', ',', 'headerlines', 1);
     analyze_with_gui = true;
+    make_optimal_choices = true;
 
     all_subjects = unique(participant)';    
     which_subjects = logical(true(size(participant))); % all subjects initially
@@ -26,6 +28,8 @@ function analyze_gui2
 
     f = figure;
 
+    % Check boxes for picking which subjects we're showing
+    %
     checkboxes = {};
     idx = 1;
     for who = all_subjects
@@ -34,6 +38,20 @@ function analyze_gui2
                           'Callback', @participant_checkbox_callback);
         idx = idx + 1;
     end
+    
+    % Whether to make optimal choices
+    %
+    optimal_radiobutton_group = uibuttongroup(f,'Title','Optimal Choices',...
+            'Units','pixels', 'Position',[10 10 + 20 * idx 100 60]);
+    optimal_radiobutton_yes = uicontrol(optimal_radiobutton_group,'Style','radiobutton','String','Yes',...
+            'Units','pixels', 'Position',[10 30 50 10], ...
+            'Callback', @optimal_callback);
+    optimal_radiobutton_no = uicontrol(optimal_radiobutton_group,'Style','radiobutton','String','No',...
+            'Units','pixels', 'Position',[10 10 50 10], ...
+            'Callback', @optimal_callback);
+
+    % The Run button
+    %
     run_button = uicontrol('Style', 'pushbutton', 'String', 'Run', ...
                            'Position', [100 10 70 20], ...
                            'Callback', @run_button_callback);
@@ -49,16 +67,32 @@ function update_invariant
     which_rows = which_subjects;
     subjects = unique(participant(which_rows))';
     disp(subjects);
-
+    
+% Pick whether to make optimal choices
+%
+function optimal_callback(hObject, eventdata, handles)
+    global make_optimal_choices
+    
+    choice = get(hObject, 'String');
+    if strcmp(choice, 'Yes')
+        make_optimal_choices = true;
+    else
+        assert(strcmp(choice, 'No'));
+        make_optimal_choices = false;
+    end
+    disp(make_optimal_choices);
+    
 % Re-render the analysis with the selected options
 %
 function run_button_callback(hObject, eventdata, handles)
     global analyze_with_gui;
     global subjects;
     global which_rows;
+    global make_optimal_choices;
     
     % Only what is "global" here will be declared for the stuff in analyze
-    % it's like you're copy-pasting the code here
+    % it's like you're copy-pasting the code here/
+    % So you need to declare all the stuff you need as global here
     %
     analyze;
 

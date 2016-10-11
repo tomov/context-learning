@@ -22,6 +22,8 @@ contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(c
 if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always reload the data
     which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
     subjects = unique(participant(which_rows))'; % the unique id's of all subjects
+    
+    make_optimal_choices = true;
 end
 
 
@@ -58,7 +60,11 @@ for who = subjects
             r = strcmp(sick(which_train), 'Yes');
             [choices, P_n, ww_n, P, ww] = train(x, c, r, false);
             
-            model_choices = choices > rand;
+            if make_optimal_choices
+                model_choices = choices > 0.5;
+            else
+                model_choices = choices > rand;
+            end
             model_response_keys = {};
             model_response_keys(model_choices) = {'left'};
             model_response_keys(~model_choices) = {'right'};
@@ -78,7 +84,11 @@ for who = subjects
             test_c = contextId(which_test) + 1;
             [test_choices] = test(test_x, test_c, P_n, ww_n);
 
-            model_test_choices = test_choices > rand;
+            if make_optimal_choices
+                model_test_choices = test_choices > 0.5;
+            else
+                model_test_choices = test_choices > rand;
+            end
             model_test_response_keys = {};
             model_test_response_keys(model_test_choices) = {'left'};
             model_test_response_keys(~model_test_choices) = {'right'};
