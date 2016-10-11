@@ -14,15 +14,15 @@ format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
     textread('pilot-with-hayley.csv', format, 'delimiter', ',', 'headerlines', 1);
 
-which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
-which_rows = which_rows & ~strcmp(participant, 'hmd'); % exclude hayley
-
-subjects = unique(participant(which_rows))'; % the unique id's of all subjects
-
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = trials per run / 4
 
 contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
+
+if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always reload the data
+    which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
+    subjects = unique(participant(which_rows))'; % the unique id's of all subjects
+end
 
 
 %
@@ -102,7 +102,9 @@ model.P3 = model.P3';
 %% Do some plotting
 %
           
-figure;
+if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always create a new figure
+    figure;
+end
 
 %
 % Per-subject accuracy & timeouts for sanity check (training only)
