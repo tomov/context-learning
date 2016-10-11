@@ -187,7 +187,7 @@ legend({'M1', 'M2', 'M3'});
 
 Ms = [];
 SEMs = [];
-for context = contexts
+for context = contextRoles
     which = isTrain == 1 & strcmp(contextRole, context);
     
     x1c1 = strcmp(corrAns(which & cueId == 0 & contextId == 0), 'left');
@@ -207,7 +207,7 @@ for context = contexts
 end
 
 subplot(2, 4, 1);
-barweb(Ms, SEMs, 1, contexts, 'P(sick outcome) in training phase (for sanity)');
+barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training phase (for sanity)');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
@@ -219,7 +219,7 @@ legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 
 Ms = [];
 SEMs = [];
-for context = contexts
+for context = contextRoles
     which = isTrain == 0 & strcmp(contextRole, context);
     
     x1c1 = strcmp(response.keys(which & cueId == 0 & contextId == 0), 'left');
@@ -242,7 +242,7 @@ end
     
 subplot(2, 4, 5);
 
-barweb(Ms, SEMs, 1, contexts, 'Subject P(choose sick) in test phase (main figure)');
+barweb(Ms, SEMs, 1, contextRoles, 'Subject P(choose sick) in test phase (main figure)');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -255,7 +255,7 @@ legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
 Ms = [];
 SEMs = [];
-for context = contexts
+for context = contextRoles
     which = isTrain == 0 & strcmp(contextRole, context);
     
     
@@ -279,7 +279,7 @@ end
     
 subplot(2, 4, 6);
 
-barweb(Ms, SEMs, 1, contexts, 'Model P(choose sick) in test phase (main figure)');
+barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase (main figure)');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
@@ -290,7 +290,7 @@ legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
 Ms = [];
 SEMs = [];
-for context = contexts
+for context = contextRoles
     which = isTrain == 0 & strcmp(contextRole, context);
     
     x1c1 = model.pred(which & cueId == 0 & contextId == 0);
@@ -313,7 +313,7 @@ end
     
 subplot(2, 4, 7);
 
-barweb(Ms, SEMs, 1, contexts, 'Model P(choose sick) in test phase (true probs)');
+barweb(Ms, SEMs, 1, contextRoles, 'Model P(choose sick) in test phase (true probs)');
 ylabel('Sick probability');
 legend({'x_1c_1', 'x_1c_3', 'x_3c_1', 'x_3c_3'});
 
