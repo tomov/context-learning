@@ -431,3 +431,867 @@ conP006,001,off,0,"Mission Beach Cafe;Sweet Maple;Breakfast at Tiffany's","brunc
 conP006,001,off,0,"Mission Beach Cafe;Sweet Maple;Breakfast at Tiffany's","brunch_food1;brunch_food2;brunch_food0",irrelevant,0,0,None,None,left,1.35225987434,0,Mission Beach Cafe,brunch_food1,0,9,2
 conP006,001,off,0,"Mission Beach Cafe;Sweet Maple;Breakfast at Tiffany's","brunch_food1;brunch_food2;brunch_food0",irrelevant,0,2,None,None,right,1.65337300301,0,Mission Beach Cafe,brunch_food0,0,9,3
 conP006,001,off,0,"Mission Beach Cafe;Sweet Maple;Breakfast at Tiffany's","brunch_food1;brunch_food2;brunch_food0",irrelevant,2,2,None,None,right,0.903084993362,0,Breakfast at Tiffany's,brunch_food0,0,9,4
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,0,Yes,left,left,2.59057617188,1,Curry Leaf Restaurant,indian_food0,1,1,1
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,0,Yes,left,left,1.63699913025,1,Curry Leaf Restaurant,indian_food0,1,1,2
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,Yes,left,left,2.22179293633,1,Tandoori Kitchen,indian_food0,1,1,3
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,1,No,right,right,0.936100959778,1,Curry Leaf Restaurant,indian_food2,1,1,4
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,1,No,right,right,0.735178947449,1,Tandoori Kitchen,indian_food2,1,1,5
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,1,No,right,right,1.01983809471,1,Tandoori Kitchen,indian_food2,1,1,6
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,Yes,left,left,1.43711280823,1,Tandoori Kitchen,indian_food0,1,1,7
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,0,Yes,left,left,1.1199760437,1,Curry Leaf Restaurant,indian_food0,1,1,8
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,Yes,left,left,1.32020282745,1,Tandoori Kitchen,indian_food0,1,1,9
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,0,Yes,left,left,1.25440001488,1,Curry Leaf Restaurant,indian_food0,1,1,10
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,0,Yes,left,left,0.851832866669,1,Curry Leaf Restaurant,indian_food0,1,1,11
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,1,No,right,right,1.03726506233,1,Tandoori Kitchen,indian_food2,1,1,12
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,1,No,right,right,1.10327887535,1,Curry Leaf Restaurant,indian_food2,1,1,13
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,Yes,left,left,0.986284971237,1,Tandoori Kitchen,indian_food0,1,1,14
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,Yes,left,left,1.20312905312,1,Tandoori Kitchen,indian_food0,1,1,15
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,1,No,right,right,0.834949970245,1,Tandoori Kitchen,indian_food2,1,1,16
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,1,No,right,right,0.684901952744,1,Curry Leaf Restaurant,indian_food2,1,1,17
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,1,No,right,right,1.85549497604,1,Curry Leaf Restaurant,indian_food2,1,1,18
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,1,1,No,right,right,1.31903886795,1,Curry Leaf Restaurant,indian_food2,1,1,19
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,1,No,right,right,2.00497317314,1,Tandoori Kitchen,indian_food2,1,1,20
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,0,None,None,left,1.4208509922,0,Tandoori Kitchen,indian_food0,0,1,1
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,2,2,None,None,right,2.53972601891,0,Little Delhi House,indian_food1,0,1,2
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,0,2,None,None,right,1.23546981812,0,Tandoori Kitchen,indian_food1,0,1,3
+conP007,001,off,0,"Tandoori Kitchen;Curry Leaf Restaurant;Little Delhi House","indian_food0;indian_food2;indian_food1",irrelevant,2,0,None,None,left,0.884037017822,0,Little Delhi House,indian_food0,0,1,4
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,0,No,right,right,2.08975410461,1,Au Petit Sud Ouest,french_food2,1,2,1
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,Yes,left,right,1.92215490341,0,Le Parisien,french_food2,1,2,2
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,1,No,right,left,1.55429601669,0,Le Parisien,french_food1,1,2,3
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,0,No,right,right,2.0389289856,1,Au Petit Sud Ouest,french_food2,1,2,4
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,1,Yes,left,right,2.82396578789,0,Au Petit Sud Ouest,french_food1,1,2,5
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,Yes,left,left,1.20438122749,1,Le Parisien,french_food2,1,2,6
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,1,No,right,right,1.15181088448,1,Le Parisien,french_food1,1,2,7
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,1,Yes,left,left,1.72259998322,1,Au Petit Sud Ouest,french_food1,1,2,8
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,1,No,right,right,2.33837199211,1,Le Parisien,french_food1,1,2,9
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,1,Yes,left,left,1.58764386177,1,Au Petit Sud Ouest,french_food1,1,2,10
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,Yes,left,left,1.23827815056,1,Le Parisien,french_food2,1,2,11
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,0,No,right,right,1.60309791565,1,Au Petit Sud Ouest,french_food2,1,2,12
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,0,No,right,right,2.08998584747,1,Au Petit Sud Ouest,french_food2,1,2,13
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,1,No,right,left,1.63724088669,0,Le Parisien,french_food1,1,2,14
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,Yes,left,left,2.93210983276,1,Le Parisien,french_food2,1,2,15
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,1,Yes,left,left,1.78679013252,1,Au Petit Sud Ouest,french_food1,1,2,16
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,Yes,left,left,1.68645405769,1,Le Parisien,french_food2,1,2,17
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,1,No,right,right,1.36721897125,1,Le Parisien,french_food1,1,2,18
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,1,Yes,left,right,1.25337386131,0,Au Petit Sud Ouest,french_food1,1,2,19
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,1,0,No,right,right,2.08803105354,1,Au Petit Sud Ouest,french_food2,1,2,20
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,0,None,None,left,2.18924379349,0,Le Parisien,french_food2,0,2,1
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,2,0,None,None,right,2.97585892677,0,Chez Toinette,french_food2,0,2,2
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,0,2,None,None,right,1.73904800415,0,Le Parisien,french_food0,0,2,3
+conP007,001,off,0,"Le Parisien;Au Petit Sud Ouest;Chez Toinette","french_food2;french_food1;french_food0",modulatory,2,2,None,None,right,0.735970020294,0,Chez Toinette,french_food0,0,2,4
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,right,2.70755600929,0,Lau's Dim Sum Bar,chinese_food0,1,3,1
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,2.32288193703,1,Shanghai Dumpling King,chinese_food2,1,3,2
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,2.67559695244,1,Shanghai Dumpling King,chinese_food0,1,3,3
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,right,2.8922150135,0,Lau's Dim Sum Bar,chinese_food2,1,3,4
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.26915597916,1,Shanghai Dumpling King,chinese_food0,1,3,5
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.73744797707,1,Shanghai Dumpling King,chinese_food2,1,3,6
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.667509794235,1,Lau's Dim Sum Bar,chinese_food0,1,3,7
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.951742887497,1,Lau's Dim Sum Bar,chinese_food0,1,3,8
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.902829170227,1,Lau's Dim Sum Bar,chinese_food2,1,3,9
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.53804898262,1,Shanghai Dumpling King,chinese_food2,1,3,10
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,3.19241404533,1,Shanghai Dumpling King,chinese_food0,1,3,11
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.02006316185,1,Shanghai Dumpling King,chinese_food2,1,3,12
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.820564031601,1,Lau's Dim Sum Bar,chinese_food2,1,3,13
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.0857770443,1,Shanghai Dumpling King,chinese_food0,1,3,14
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.08668208122,1,Shanghai Dumpling King,chinese_food2,1,3,15
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.30279302597,1,Lau's Dim Sum Bar,chinese_food0,1,3,16
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.936565876007,1,Lau's Dim Sum Bar,chinese_food2,1,3,17
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.70443797112,1,Shanghai Dumpling King,chinese_food0,1,3,18
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.53856897354,1,Lau's Dim Sum Bar,chinese_food0,1,3,19
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,2.28875112534,1,Lau's Dim Sum Bar,chinese_food2,1,3,20
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,2,0,None,None,right,1.87036108971,0,Happy Lamb Hot Pot,chinese_food0,0,3,1
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,0,None,None,left,1.35417604446,0,Lau's Dim Sum Bar,chinese_food0,0,3,2
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,2,2,None,None,right,1.47047877312,0,Happy Lamb Hot Pot,chinese_food1,0,3,3
+conP007,001,off,0,"Lau's Dim Sum Bar;Shanghai Dumpling King;Happy Lamb Hot Pot","chinese_food0;chinese_food2;chinese_food1",additive,0,2,None,None,left,1.1700720787,0,Lau's Dim Sum Bar,chinese_food1,0,3,4
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,Yes,left,right,2.02352905273,0,Gyro King,greek_food2,1,4,1
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,0,No,right,right,1.63775897026,1,Mediterranean Grill,greek_food2,1,4,2
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,Yes,left,left,1.10276913643,1,Gyro King,greek_food2,1,4,3
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,1,Yes,left,right,1.48753619194,0,Mediterranean Grill,greek_food0,1,4,4
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,Yes,left,left,1.82269501686,1,Gyro King,greek_food2,1,4,5
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,1,No,right,right,1.38715600967,1,Gyro King,greek_food0,1,4,6
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,Yes,left,left,1.95364499092,1,Gyro King,greek_food2,1,4,7
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,0,No,right,right,1.60304903984,1,Mediterranean Grill,greek_food2,1,4,8
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,1,No,right,right,1.2704410553,1,Gyro King,greek_food0,1,4,9
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,0,No,right,right,1.45486497879,1,Mediterranean Grill,greek_food2,1,4,10
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,0,No,right,right,1.60553121567,1,Mediterranean Grill,greek_food2,1,4,11
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,1,Yes,left,left,1.42032694817,1,Mediterranean Grill,greek_food0,1,4,12
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,1,Yes,left,left,1.33756518364,1,Mediterranean Grill,greek_food0,1,4,13
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,1,No,right,right,1.82176399231,1,Gyro King,greek_food0,1,4,14
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,1,No,right,right,2.00646901131,1,Gyro King,greek_food0,1,4,15
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,1,Yes,left,left,1.97044801712,1,Mediterranean Grill,greek_food0,1,4,16
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,0,No,right,right,2.2568128109,1,Mediterranean Grill,greek_food2,1,4,17
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,1,No,right,right,1.40415596962,1,Gyro King,greek_food0,1,4,18
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,1,1,Yes,left,right,2.70636987686,0,Mediterranean Grill,greek_food0,1,4,19
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,Yes,left,left,2.47197985649,1,Gyro King,greek_food2,1,4,20
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,2,None,None,right,1.83791804314,0,Gyro King,greek_food1,0,4,1
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,2,2,None,None,right,2.20680093765,0,Myconos Restaurant,greek_food1,0,4,2
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,0,0,None,None,left,2.30637907982,0,Gyro King,greek_food2,0,4,3
+conP007,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food2;greek_food0;greek_food1",modulatory,2,0,None,None,right,2.25715303421,0,Myconos Restaurant,greek_food2,0,4,4
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,right,1.95557594299,0,Burger Masters,fast_food0,1,5,1
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.28686499596,1,Burger Masters,fast_food0,1,5,2
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.26981306076,1,Burger Masters,fast_food0,1,5,3
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.01941609383,1,Burger Masters,fast_food0,1,5,4
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.80485010147,1,Metro Drive-In,fast_food1,1,5,5
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,right,1.90443110466,0,Burger Masters,fast_food1,1,5,6
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.12009596825,1,Metro Drive-In,fast_food1,1,5,7
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.20308804512,1,Metro Drive-In,fast_food1,1,5,8
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,0.968606948853,1,Metro Drive-In,fast_food0,1,5,9
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.18570804596,1,Metro Drive-In,fast_food1,1,5,10
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,1.02067613602,1,Metro Drive-In,fast_food0,1,5,11
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,1.06959700584,1,Metro Drive-In,fast_food0,1,5,12
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.50384020805,1,Burger Masters,fast_food0,1,5,13
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.47144007683,1,Burger Masters,fast_food1,1,5,14
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,2.8743159771,1,Metro Drive-In,fast_food0,1,5,15
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,0.886911153793,1,Burger Masters,fast_food1,1,5,16
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.00381588936,1,Burger Masters,fast_food1,1,5,17
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.2691180706,1,Metro Drive-In,fast_food1,1,5,18
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.45250606537,1,Burger Masters,fast_food1,1,5,19
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,1.05323600769,1,Metro Drive-In,fast_food0,1,5,20
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,2,2,None,None,right,1.37048101425,0,Dave's Sandwiches,fast_food2,0,5,1
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,2,None,None,left,1.23617315292,0,Burger Masters,fast_food2,0,5,2
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,2,0,None,None,right,1.28729391098,0,Dave's Sandwiches,fast_food0,0,5,3
+conP007,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,None,None,left,1.33778095245,0,Burger Masters,fast_food0,0,5,4
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,0,Yes,left,right,1.55370593071,0,Sweet Maple,brunch_food1,1,6,1
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,1,No,right,right,1.33592796326,1,Sweet Maple,brunch_food0,1,6,2
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,Yes,left,right,2.15466499329,0,Breakfast at Tiffany's,brunch_food1,1,6,3
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,Yes,left,left,1.30285000801,1,Breakfast at Tiffany's,brunch_food1,1,6,4
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,0,Yes,left,left,1.18617987633,1,Sweet Maple,brunch_food1,1,6,5
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,0,Yes,left,left,1.17079496384,1,Sweet Maple,brunch_food1,1,6,6
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,1,No,right,right,0.817226886749,1,Sweet Maple,brunch_food0,1,6,7
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,Yes,left,left,1.33730101585,1,Breakfast at Tiffany's,brunch_food1,1,6,8
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,1,No,right,right,1.3021800518,1,Breakfast at Tiffany's,brunch_food0,1,6,9
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,1,No,right,right,2.03896999359,1,Breakfast at Tiffany's,brunch_food0,1,6,10
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,1,No,right,right,1.25299501419,1,Breakfast at Tiffany's,brunch_food0,1,6,11
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,1,No,right,right,1.38723492622,1,Breakfast at Tiffany's,brunch_food0,1,6,12
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,1,No,right,right,1.33509993553,1,Breakfast at Tiffany's,brunch_food0,1,6,13
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,0,Yes,left,left,1.42072606087,1,Sweet Maple,brunch_food1,1,6,14
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,1,No,right,right,1.45306611061,1,Sweet Maple,brunch_food0,1,6,15
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,1,No,right,right,1.4542529583,1,Sweet Maple,brunch_food0,1,6,16
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,1,No,right,right,2.07149505615,1,Sweet Maple,brunch_food0,1,6,17
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,Yes,left,left,2.03846597672,1,Breakfast at Tiffany's,brunch_food1,1,6,18
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,1,0,Yes,left,left,2.37443399429,1,Sweet Maple,brunch_food1,1,6,19
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,Yes,left,left,1.8718650341,1,Breakfast at Tiffany's,brunch_food1,1,6,20
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,2,0,None,None,left,1.12003779411,0,Mission Beach Cafe,brunch_food1,0,6,1
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,2,None,None,right,1.52088809013,0,Breakfast at Tiffany's,brunch_food2,0,6,2
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,0,0,None,None,left,1.50315690041,0,Breakfast at Tiffany's,brunch_food1,0,6,3
+conP007,001,off,0,"Breakfast at Tiffany's;Sweet Maple;Mission Beach Cafe","brunch_food1;brunch_food0;brunch_food2",irrelevant,2,2,None,None,right,1.38767814636,0,Mission Beach Cafe,brunch_food2,0,6,4
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,1,No,right,right,2.35599303246,1,Molina's Cantina,mexican_food1,1,7,1
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,0,Yes,left,left,1.43699216843,1,Molina's Cantina,mexican_food0,1,7,2
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,1,No,right,right,1.38821601868,1,Molina's Cantina,mexican_food1,1,7,3
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,0,Yes,left,left,1.08674287796,1,Molina's Cantina,mexican_food0,1,7,4
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,1,No,right,right,1.00297904015,1,Molina's Cantina,mexican_food1,1,7,5
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,1,No,right,right,1.08693909645,1,Molina's Cantina,mexican_food1,1,7,6
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,Yes,left,right,2.23927879333,0,El Coyote Cafe,mexican_food0,1,7,7
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,1,No,right,right,2.05556201935,1,Molina's Cantina,mexican_food1,1,7,8
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,Yes,left,left,1.15241312981,1,El Coyote Cafe,mexican_food0,1,7,9
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,Yes,left,left,1.40309405327,1,El Coyote Cafe,mexican_food0,1,7,10
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,1,No,right,right,1.15327811241,1,El Coyote Cafe,mexican_food1,1,7,11
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,1,No,right,right,1.30420899391,1,El Coyote Cafe,mexican_food1,1,7,12
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,Yes,left,left,1.16905808449,1,El Coyote Cafe,mexican_food0,1,7,13
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,1,No,right,right,1.13631796837,1,El Coyote Cafe,mexican_food1,1,7,14
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,1,No,right,right,2.22260904312,1,El Coyote Cafe,mexican_food1,1,7,15
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,0,Yes,left,left,1.15449786186,1,Molina's Cantina,mexican_food0,1,7,16
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,1,No,right,right,1.70487904549,1,El Coyote Cafe,mexican_food1,1,7,17
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,Yes,left,left,1.18593502045,1,El Coyote Cafe,mexican_food0,1,7,18
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,0,Yes,left,left,1.53866791725,1,Molina's Cantina,mexican_food0,1,7,19
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,1,0,Yes,left,left,1.05289006233,1,Molina's Cantina,mexican_food0,1,7,20
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,0,None,None,left,1.13548398018,0,El Coyote Cafe,mexican_food0,0,7,1
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,2,2,None,None,right,1.78794693947,0,Restaurante Arroyo,mexican_food2,0,7,2
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,0,2,None,None,right,1.21991300583,0,El Coyote Cafe,mexican_food2,0,7,3
+conP007,001,off,0,"El Coyote Cafe;Molina's Cantina;Restaurante Arroyo","mexican_food0;mexican_food1;mexican_food2",irrelevant,2,0,None,None,left,0.986824989319,0,Restaurante Arroyo,mexican_food0,0,7,4
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,0,No,right,right,2.13744902611,1,Fino Bar & Restorante,italian_food0,1,8,1
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,1,No,right,right,1.77136087418,1,Restorante Milano,italian_food1,1,8,2
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,Yes,left,right,3.1752679348,0,Restorante Milano,italian_food0,1,8,3
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,1,No,right,right,1.68777799606,1,Restorante Milano,italian_food1,1,8,4
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,0,No,right,right,1.23720598221,1,Fino Bar & Restorante,italian_food0,1,8,5
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,1,Yes,left,left,1.80496883392,1,Fino Bar & Restorante,italian_food1,1,8,6
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,Yes,left,left,2.45606398582,1,Restorante Milano,italian_food0,1,8,7
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,0,No,right,right,1.62082695961,1,Fino Bar & Restorante,italian_food0,1,8,8
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,1,No,right,right,0.802788972855,1,Restorante Milano,italian_food1,1,8,9
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,1,Yes,left,left,1.90478014946,1,Fino Bar & Restorante,italian_food1,1,8,10
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,0,No,right,right,1.87567806244,1,Fino Bar & Restorante,italian_food0,1,8,11
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,1,Yes,left,left,1.80513501167,1,Fino Bar & Restorante,italian_food1,1,8,12
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,Yes,left,left,1.82160282135,1,Restorante Milano,italian_food0,1,8,13
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,Yes,left,left,2.4569709301,1,Restorante Milano,italian_food0,1,8,14
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,1,No,right,right,2.25780200958,1,Restorante Milano,italian_food1,1,8,15
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,0,No,right,right,1.27027010918,1,Fino Bar & Restorante,italian_food0,1,8,16
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,Yes,left,left,2.08997797966,1,Restorante Milano,italian_food0,1,8,17
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,1,Yes,left,left,1.6548371315,1,Fino Bar & Restorante,italian_food1,1,8,18
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,1,No,right,right,1.45445299149,1,Restorante Milano,italian_food1,1,8,19
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,1,1,Yes,left,left,2.45679116249,1,Fino Bar & Restorante,italian_food1,1,8,20
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,2,0,None,None,right,1.92248892784,0,Trattoria Contadina,italian_food0,0,8,1
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,2,None,None,right,2.20541787148,0,Restorante Milano,italian_food2,0,8,2
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,0,0,None,None,left,2.97571706772,0,Restorante Milano,italian_food0,0,8,3
+conP007,001,off,0,"Restorante Milano;Fino Bar & Restorante;Trattoria Contadina","italian_food0;italian_food1;italian_food2",modulatory,2,2,None,None,right,1.26943302155,0,Trattoria Contadina,italian_food2,0,8,4
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.87105321884,1,Izakaya Sozai,japanese_food2,1,9,1
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,right,2.65774393082,0,Sanraku Restaurant,japanese_food1,1,9,2
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,2.25744318962,1,Izakaya Sozai,japanese_food1,1,9,3
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.4548330307,1,Sanraku Restaurant,japanese_food2,1,9,4
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,0.884926080704,1,Sanraku Restaurant,japanese_food1,1,9,5
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.0350959301,1,Sanraku Restaurant,japanese_food1,1,9,6
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.33809709549,1,Izakaya Sozai,japanese_food1,1,9,7
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.21909499168,1,Izakaya Sozai,japanese_food2,1,9,8
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.73772406578,1,Sanraku Restaurant,japanese_food2,1,9,9
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.28750300407,1,Sanraku Restaurant,japanese_food2,1,9,10
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.56971383095,1,Sanraku Restaurant,japanese_food1,1,9,11
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.80694198608,1,Izakaya Sozai,japanese_food1,1,9,12
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.32115101814,1,Izakaya Sozai,japanese_food2,1,9,13
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,2.59192705154,1,Izakaya Sozai,japanese_food1,1,9,14
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,2.13946390152,1,Izakaya Sozai,japanese_food2,1,9,15
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.45504498482,1,Sanraku Restaurant,japanese_food1,1,9,16
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,2.10590910912,1,Izakaya Sozai,japanese_food2,1,9,17
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.16886520386,1,Izakaya Sozai,japanese_food1,1,9,18
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,0.8517370224,1,Sanraku Restaurant,japanese_food2,1,9,19
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,0.952586174011,1,Sanraku Restaurant,japanese_food2,1,9,20
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,2,2,None,None,right,2.00570106506,0,Onigilly Express,japanese_food0,0,9,1
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,2,0,None,None,right,1.13647484779,0,Onigilly Express,japanese_food2,0,9,2
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,2,None,None,left,1.43652915955,0,Sanraku Restaurant,japanese_food0,0,9,3
+conP007,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,None,None,left,0.768538951874,0,Sanraku Restaurant,japanese_food2,0,9,4
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,left,1.13567090034,0,Sweet Maple,brunch_food1,1,1,1
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,left,1.82299304008,0,Breakfast at Tiffany's,brunch_food1,1,1,2
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,right,1.11838912964,0,Sweet Maple,brunch_food0,1,1,3
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,2.45775794983,1,Sweet Maple,brunch_food0,1,1,4
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.6376349926,1,Sweet Maple,brunch_food1,1,1,5
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,1.22028398514,1,Breakfast at Tiffany's,brunch_food1,1,1,6
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,right,1.65294313431,0,Sweet Maple,brunch_food0,1,1,7
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,0.785434007645,1,Sweet Maple,brunch_food0,1,1,8
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,right,1.57070493698,0,Breakfast at Tiffany's,brunch_food0,1,1,9
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,1.00475502014,1,Breakfast at Tiffany's,brunch_food0,1,1,10
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,1.00402903557,1,Breakfast at Tiffany's,brunch_food0,1,1,11
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.55319404602,1,Sweet Maple,brunch_food1,1,1,12
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,left,2.87461185455,0,Breakfast at Tiffany's,brunch_food1,1,1,13
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.8370680809,1,Sweet Maple,brunch_food1,1,1,14
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,left,2.72383117676,0,Breakfast at Tiffany's,brunch_food1,1,1,15
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,0.668043136597,1,Breakfast at Tiffany's,brunch_food1,1,1,16
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,1.36927986145,1,Breakfast at Tiffany's,brunch_food0,1,1,17
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,left,2.60698890686,0,Sweet Maple,brunch_food1,1,1,18
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,1.88626217842,1,Breakfast at Tiffany's,brunch_food0,1,1,19
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,2.1725127697,1,Sweet Maple,brunch_food0,1,1,20
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,None,None,left,2.60633897781,0,Sweet Maple,brunch_food0,0,1,1
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,2,2,None,None,right,1.65458798409,0,Mission Beach Cafe,brunch_food2,0,1,2
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,2,None,None,right,1.53712701797,0,Sweet Maple,brunch_food2,0,1,3
+conP008,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,2,0,None,None,right,1.58843803406,0,Mission Beach Cafe,brunch_food0,0,1,4
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,left,1.95442414284,0,Metro Drive-In,fast_food1,1,2,1
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.75503587723,1,Burger Masters,fast_food1,1,2,2
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,right,2.33930802345,0,Burger Masters,fast_food0,1,2,3
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,1.35387897491,1,Metro Drive-In,fast_food0,1,2,4
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,left,1.35394906998,0,Metro Drive-In,fast_food1,1,2,5
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,left,2.57230901718,0,Metro Drive-In,fast_food0,1,2,6
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,right,1.7026181221,0,Burger Masters,fast_food1,1,2,7
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.21954298019,1,Burger Masters,fast_food1,1,2,8
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,left,1.05239319801,1,Burger Masters,fast_food1,1,2,9
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,0.869159936905,1,Burger Masters,fast_food0,1,2,10
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.25399184227,1,Metro Drive-In,fast_food1,1,2,11
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,left,1.95526885986,0,Metro Drive-In,fast_food0,1,2,12
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.38613200188,1,Burger Masters,fast_food0,1,2,13
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,2.05489301682,1,Metro Drive-In,fast_food1,1,2,14
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,3.02378106117,1,Metro Drive-In,fast_food0,1,2,15
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.43590402603,1,Burger Masters,fast_food0,1,2,16
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,1,No,right,right,1.36898899078,1,Metro Drive-In,fast_food1,1,2,17
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,Yes,left,left,1.2367811203,1,Burger Masters,fast_food0,1,2,18
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,1,Yes,left,right,1.28646993637,0,Burger Masters,fast_food1,1,2,19
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,1,0,No,right,right,2.32276296616,1,Metro Drive-In,fast_food0,1,2,20
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,0,None,None,left,1.28653502464,0,Burger Masters,fast_food0,0,2,1
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,0,2,None,None,left,2.07253479958,0,Burger Masters,fast_food2,0,2,2
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,2,0,None,None,right,1.25317883492,0,Dave's Sandwiches,fast_food0,0,2,3
+conP008,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food0;fast_food1;fast_food2",additive,2,2,None,None,right,1.60526204109,0,Dave's Sandwiches,fast_food2,0,2,4
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,0,No,right,right,1.53701591492,1,Happy Lamb Hot Pot,chinese_food2,1,3,1
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,1,No,right,right,1.97102808952,1,Happy Lamb Hot Pot,chinese_food1,1,3,2
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,Yes,left,left,1.94008898735,1,Shanghai Dumpling King,chinese_food2,1,3,3
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,1,No,right,right,1.1524939537,1,Happy Lamb Hot Pot,chinese_food1,1,3,4
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,1,Yes,left,left,1.60406398773,1,Shanghai Dumpling King,chinese_food1,1,3,5
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,1,No,right,right,1.77132487297,1,Happy Lamb Hot Pot,chinese_food1,1,3,6
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,0,No,right,right,1.50484204292,1,Happy Lamb Hot Pot,chinese_food2,1,3,7
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,0,No,right,right,0.668385028839,1,Happy Lamb Hot Pot,chinese_food2,1,3,8
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,Yes,left,left,1.36963009834,1,Shanghai Dumpling King,chinese_food2,1,3,9
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,0,No,right,right,1.25373196602,1,Happy Lamb Hot Pot,chinese_food2,1,3,10
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,1,Yes,left,left,1.25266695023,1,Shanghai Dumpling King,chinese_food1,1,3,11
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,1,Yes,left,left,1.57148814201,1,Shanghai Dumpling King,chinese_food1,1,3,12
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,1,No,right,right,1.05312299728,1,Happy Lamb Hot Pot,chinese_food1,1,3,13
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,1,Yes,left,left,1.38705921173,1,Shanghai Dumpling King,chinese_food1,1,3,14
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,Yes,left,left,2.97391200066,1,Shanghai Dumpling King,chinese_food2,1,3,15
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,0,No,right,right,0.986349105835,1,Happy Lamb Hot Pot,chinese_food2,1,3,16
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,Yes,left,left,0.835943937302,1,Shanghai Dumpling King,chinese_food2,1,3,17
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,Yes,left,left,0.752441167831,1,Shanghai Dumpling King,chinese_food2,1,3,18
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,1,1,No,right,right,1.16950297356,1,Happy Lamb Hot Pot,chinese_food1,1,3,19
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,1,Yes,left,left,1.05224108696,1,Shanghai Dumpling King,chinese_food1,1,3,20
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,0,None,None,left,1.48796987534,0,Shanghai Dumpling King,chinese_food2,0,3,1
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,2,2,None,None,right,2.22309207916,0,Lau's Dim Sum Bar,chinese_food0,0,3,2
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,0,2,None,None,left,1.58835792542,0,Shanghai Dumpling King,chinese_food0,0,3,3
+conP008,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food2;chinese_food1;chinese_food0",additive,2,0,None,None,left,1.80599498749,0,Lau's Dim Sum Bar,chinese_food2,0,3,4
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,1,No,right,right,1.27017498016,1,Onigilly Express,japanese_food2,1,4,1
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,1,No,right,right,1.01896190643,1,Onigilly Express,japanese_food2,1,4,2
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,1,No,right,right,0.969069957733,1,Onigilly Express,japanese_food2,1,4,3
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,1,No,right,right,1.30308508873,1,Onigilly Express,japanese_food2,1,4,4
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,Yes,left,left,1.10304999352,1,Sanraku Restaurant,japanese_food1,1,4,5
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,1,Yes,left,left,1.17045879364,1,Sanraku Restaurant,japanese_food2,1,4,6
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,Yes,left,left,1.62064695358,1,Sanraku Restaurant,japanese_food1,1,4,7
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,1,Yes,left,left,1.42065811157,1,Sanraku Restaurant,japanese_food2,1,4,8
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,0,No,right,right,1.35377383232,1,Onigilly Express,japanese_food1,1,4,9
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,0,No,right,right,0.63334107399,1,Onigilly Express,japanese_food1,1,4,10
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,1,Yes,left,left,1.62267994881,1,Sanraku Restaurant,japanese_food2,1,4,11
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,0,No,right,right,1.15174889565,1,Onigilly Express,japanese_food1,1,4,12
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,1,No,right,right,1.30536007881,1,Onigilly Express,japanese_food2,1,4,13
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,1,Yes,left,left,0.952655076981,1,Sanraku Restaurant,japanese_food2,1,4,14
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,0,No,right,right,1.33672404289,1,Onigilly Express,japanese_food1,1,4,15
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,Yes,left,left,1.88756608963,1,Sanraku Restaurant,japanese_food1,1,4,16
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,Yes,left,left,1.20254993439,1,Sanraku Restaurant,japanese_food1,1,4,17
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,1,0,No,right,right,1.18681097031,1,Onigilly Express,japanese_food1,1,4,18
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,Yes,left,left,1.06908392906,1,Sanraku Restaurant,japanese_food1,1,4,19
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,1,Yes,left,left,1.11969017982,1,Sanraku Restaurant,japanese_food2,1,4,20
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,0,None,None,right,1.05229592323,0,Sanraku Restaurant,japanese_food1,0,4,1
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,2,2,None,None,right,1.62122988701,0,Izakaya Sozai,japanese_food0,0,4,2
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,2,0,None,None,left,1.42101287842,0,Izakaya Sozai,japanese_food1,0,4,3
+conP008,001,off,0,"Sanraku Restaurant;Onigilly Express;Izakaya Sozai","japanese_food1;japanese_food2;japanese_food0",additive,0,2,None,None,right,1.38795280457,0,Sanraku Restaurant,japanese_food0,0,4,4
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,1,No,right,left,1.53865504265,0,Mediterranean Grill,greek_food1,1,5,1
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,1,Yes,left,left,1.6888320446,1,Myconos Restaurant,greek_food1,1,5,2
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,Yes,left,right,1.23789906502,0,Mediterranean Grill,greek_food2,1,5,3
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,0,No,right,left,1.77162098885,0,Myconos Restaurant,greek_food2,1,5,4
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,1,No,right,right,1.92193698883,1,Mediterranean Grill,greek_food1,1,5,5
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,1,No,right,right,1.3864710331,1,Mediterranean Grill,greek_food1,1,5,6
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,0,No,right,left,1.42047405243,0,Myconos Restaurant,greek_food2,1,5,7
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,1,Yes,left,left,1.58834695816,1,Myconos Restaurant,greek_food1,1,5,8
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,Yes,left,left,1.62148308754,1,Mediterranean Grill,greek_food2,1,5,9
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,0,No,right,right,1.8379380703,1,Myconos Restaurant,greek_food2,1,5,10
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,Yes,left,left,1.42112612724,1,Mediterranean Grill,greek_food2,1,5,11
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,Yes,left,left,1.97235393524,1,Mediterranean Grill,greek_food2,1,5,12
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,1,Yes,left,right,1.72033190727,0,Myconos Restaurant,greek_food1,1,5,13
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,Yes,left,left,1.38511896133,1,Mediterranean Grill,greek_food2,1,5,14
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,0,No,right,right,1.72294187546,1,Myconos Restaurant,greek_food2,1,5,15
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,1,No,right,right,2.80827188492,1,Mediterranean Grill,greek_food1,1,5,16
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,0,No,right,right,1.60518813133,1,Myconos Restaurant,greek_food2,1,5,17
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,1,Yes,left,left,2.03766298294,1,Myconos Restaurant,greek_food1,1,5,18
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,1,1,Yes,left,left,1.38745117188,1,Myconos Restaurant,greek_food1,1,5,19
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,1,No,right,right,1.43709588051,1,Mediterranean Grill,greek_food1,1,5,20
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,2,None,None,left,1.90632796288,0,Mediterranean Grill,greek_food0,0,5,1
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,2,2,None,None,right,1.35385704041,0,Gyro King,greek_food0,0,5,2
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,2,0,None,None,right,1.92124319077,0,Gyro King,greek_food2,0,5,3
+conP008,001,off,0,"Mediterranean Grill;Myconos Restaurant;Gyro King","greek_food2;greek_food1;greek_food0",modulatory,0,0,None,None,right,1.83844518661,0,Mediterranean Grill,greek_food2,0,5,4
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,1,No,right,left,1.20363497734,0,El Coyote Cafe,mexican_food0,1,6,1
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,0,Yes,left,left,2.02391910553,1,El Coyote Cafe,mexican_food1,1,6,2
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,Yes,left,right,1.20288896561,0,Restaurante Arroyo,mexican_food1,1,6,3
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,1,No,right,right,1.32033014297,1,El Coyote Cafe,mexican_food0,1,6,4
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,0,Yes,left,left,1.03537201881,1,El Coyote Cafe,mexican_food1,1,6,5
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,1,No,right,right,1.50426602364,1,Restaurante Arroyo,mexican_food0,1,6,6
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,0,Yes,left,left,1.35267400742,1,El Coyote Cafe,mexican_food1,1,6,7
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,1,No,right,right,1.00274896622,1,Restaurante Arroyo,mexican_food0,1,6,8
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,1,No,right,right,1.16972613335,1,Restaurante Arroyo,mexican_food0,1,6,9
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,Yes,left,left,1.30267000198,1,Restaurante Arroyo,mexican_food1,1,6,10
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,1,No,right,right,1.23695802689,1,Restaurante Arroyo,mexican_food0,1,6,11
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,0,Yes,left,left,1.16974592209,1,El Coyote Cafe,mexican_food1,1,6,12
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,Yes,left,left,1.52051091194,1,Restaurante Arroyo,mexican_food1,1,6,13
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,1,No,right,right,2.08963489532,1,El Coyote Cafe,mexican_food0,1,6,14
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,Yes,left,left,1.42090296745,1,Restaurante Arroyo,mexican_food1,1,6,15
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,0,Yes,left,left,1.23650503159,1,El Coyote Cafe,mexican_food1,1,6,16
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,1,No,right,right,1.63697981834,1,Restaurante Arroyo,mexican_food0,1,6,17
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,1,No,right,right,1.10145807266,1,El Coyote Cafe,mexican_food0,1,6,18
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,Yes,left,left,1.4038028717,1,Restaurante Arroyo,mexican_food1,1,6,19
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,1,1,No,right,right,0.787106990814,1,El Coyote Cafe,mexican_food0,1,6,20
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,0,None,None,left,1.01858687401,0,Restaurante Arroyo,mexican_food1,0,6,1
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,2,0,None,None,left,1.15349197388,0,Molina's Cantina,mexican_food1,0,6,2
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,2,2,None,None,right,1.76779389381,0,Molina's Cantina,mexican_food2,0,6,3
+conP008,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food0;mexican_food2",irrelevant,0,2,None,None,left,1.47093296051,0,Restaurante Arroyo,mexican_food2,0,6,4
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.55435991287,1,Trattoria Contadina,italian_food2,1,7,1
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,2.55664300919,1,Trattoria Contadina,italian_food2,1,7,2
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,right,1.85327601433,0,Restorante Milano,italian_food2,1,7,3
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,1.5045208931,0,Trattoria Contadina,italian_food1,1,7,4
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,0.969798088074,1,Trattoria Contadina,italian_food2,1,7,5
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,1.60447788239,1,Restorante Milano,italian_food2,1,7,6
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.05312800407,1,Trattoria Contadina,italian_food2,1,7,7
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.22030210495,1,Trattoria Contadina,italian_food1,1,7,8
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,left,1.33626794815,0,Restorante Milano,italian_food1,1,7,9
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.00233983994,1,Trattoria Contadina,italian_food1,1,7,10
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.01872706413,1,Restorante Milano,italian_food1,1,7,11
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,2.07153010368,1,Trattoria Contadina,italian_food2,1,7,12
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,2.07245898247,1,Restorante Milano,italian_food1,1,7,13
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,left,1.77171492577,0,Restorante Milano,italian_food1,1,7,14
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.36961889267,1,Trattoria Contadina,italian_food1,1,7,15
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,right,1.67087197304,0,Restorante Milano,italian_food2,1,7,16
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.55530595779,1,Trattoria Contadina,italian_food1,1,7,17
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,2.62359786034,1,Restorante Milano,italian_food2,1,7,18
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,1.23687410355,1,Restorante Milano,italian_food2,1,7,19
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.20250892639,1,Restorante Milano,italian_food1,1,7,20
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,2,2,None,None,right,1.72224497795,0,Fino Bar & Restorante,italian_food0,0,7,1
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,2,None,None,left,2.17229390144,0,Trattoria Contadina,italian_food0,0,7,2
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,2,0,None,None,right,1.5708501339,0,Fino Bar & Restorante,italian_food1,0,7,3
+conP008,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,None,None,left,1.90493416786,0,Trattoria Contadina,italian_food1,0,7,4
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,right,1.83806085587,0,Au Petit Sud Ouest,french_food0,1,8,1
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,1.53877806664,1,Au Petit Sud Ouest,french_food2,1,8,2
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,1.48678207397,1,Chez Toinette,french_food0,1,8,3
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,1.3371629715,1,Chez Toinette,french_food2,1,8,4
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,1.26996684074,1,Au Petit Sud Ouest,french_food0,1,8,5
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,2.42438602448,1,Au Petit Sud Ouest,french_food0,1,8,6
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,1.6377081871,1,Au Petit Sud Ouest,french_food0,1,8,7
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,2.50940203667,1,Au Petit Sud Ouest,french_food2,1,8,8
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,left,1.88825416565,0,Chez Toinette,french_food0,1,8,9
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,left,2.3384809494,0,Au Petit Sud Ouest,french_food2,1,8,10
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,1.10253405571,1,Au Petit Sud Ouest,french_food2,1,8,11
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,right,1.92017698288,0,Chez Toinette,french_food2,1,8,12
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,1.88844180107,1,Au Petit Sud Ouest,french_food2,1,8,13
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,left,1.65303397179,0,Chez Toinette,french_food0,1,8,14
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,right,3.14260792732,0,Chez Toinette,french_food2,1,8,15
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,left,1.48693203926,0,Chez Toinette,french_food0,1,8,16
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,1.7549571991,1,Au Petit Sud Ouest,french_food0,1,8,17
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,2.0044939518,1,Chez Toinette,french_food2,1,8,18
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,1.50330901146,1,Chez Toinette,french_food2,1,8,19
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,0.969638109207,1,Chez Toinette,french_food0,1,8,20
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,2,0,None,None,right,1.70457196236,0,Le Parisien,french_food2,0,8,1
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,2,2,None,None,right,1.68831801414,0,Le Parisien,french_food1,0,8,2
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,None,None,left,2.07162690163,0,Chez Toinette,french_food2,0,8,3
+conP008,001,off,0,"Chez Toinette;Au Petit Sud Ouest;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,2,None,None,left,1.95414209366,0,Chez Toinette,french_food1,0,8,4
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,right,1.13599705696,0,Little Delhi House,indian_food0,1,9,1
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.42073202133,1,Little Delhi House,indian_food1,1,9,2
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,right,1.83799099922,0,Tandoori Kitchen,indian_food0,1,9,3
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.952939987183,1,Tandoori Kitchen,indian_food0,1,9,4
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,0.901949167252,1,Little Delhi House,indian_food0,1,9,5
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.42148900032,1,Tandoori Kitchen,indian_food1,1,9,6
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.37013506889,1,Little Delhi House,indian_food1,1,9,7
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,0.753083944321,1,Little Delhi House,indian_food1,1,9,8
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,0.85195684433,1,Tandoori Kitchen,indian_food1,1,9,9
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.80064201355,1,Tandoori Kitchen,indian_food0,1,9,10
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,1.37038707733,1,Little Delhi House,indian_food0,1,9,11
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,1.25378894806,1,Little Delhi House,indian_food0,1,9,12
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.30337095261,1,Little Delhi House,indian_food1,1,9,13
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,1.00307202339,1,Tandoori Kitchen,indian_food0,1,9,14
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,0.935389995575,1,Tandoori Kitchen,indian_food1,1,9,15
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.10391497612,1,Little Delhi House,indian_food1,1,9,16
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.801707983017,1,Tandoori Kitchen,indian_food0,1,9,17
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,0.901716947556,1,Tandoori Kitchen,indian_food1,1,9,18
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.58721804619,1,Tandoori Kitchen,indian_food1,1,9,19
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,0.819341897964,1,Little Delhi House,indian_food0,1,9,20
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,2,None,None,right,1.68891501427,0,Little Delhi House,indian_food2,0,9,1
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,0,0,None,None,left,0.935101985931,0,Little Delhi House,indian_food0,0,9,2
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,2,0,None,None,left,1.9712729454,0,Curry Leaf Restaurant,indian_food0,0,9,3
+conP008,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food0;indian_food1;indian_food2",irrelevant,2,2,None,None,right,1.72194004059,0,Curry Leaf Restaurant,indian_food2,0,9,4
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,right,1.97170495987,0,Chez Toinette,french_food0,1,1,1
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,1.53725504875,1,Chez Toinette,french_food2,1,1,2
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,0.986906051636,1,Chez Toinette,french_food2,1,1,3
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,2.0042181015,1,Au Petit Sud Ouest,french_food2,1,1,4
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,1.32074379921,1,Chez Toinette,french_food0,1,1,5
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,right,2.52261996269,0,Au Petit Sud Ouest,french_food2,1,1,6
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,1.73848986626,1,Au Petit Sud Ouest,french_food0,1,1,7
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,1.17048287392,1,Au Petit Sud Ouest,french_food2,1,1,8
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,2.58987593651,1,Chez Toinette,french_food2,1,1,9
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,0.834656953812,1,Chez Toinette,french_food0,1,1,10
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,3.05708098412,1,Chez Toinette,french_food2,1,1,11
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,0.852988958359,1,Chez Toinette,french_food0,1,1,12
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,right,2.07182598114,0,Au Petit Sud Ouest,french_food2,1,1,13
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,1.70403885841,1,Au Petit Sud Ouest,french_food0,1,1,14
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,1,Yes,left,left,1.10279107094,1,Chez Toinette,french_food0,1,1,15
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,1.70428395271,1,Au Petit Sud Ouest,french_food0,1,1,16
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,Yes,left,left,0.652332782745,1,Au Petit Sud Ouest,french_food2,1,1,17
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,1,0,No,right,right,1.28722000122,1,Chez Toinette,french_food2,1,1,18
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,right,1.02000594139,1,Au Petit Sud Ouest,french_food0,1,1,19
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,1,No,right,left,0.885056972504,0,Au Petit Sud Ouest,french_food0,1,1,20
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,0,None,None,right,2.32321596146,0,Au Petit Sud Ouest,french_food2,0,1,1
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,2,0,None,None,right,1.77103304863,0,Le Parisien,french_food2,0,1,2
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,0,2,None,None,left,2.18915104866,0,Au Petit Sud Ouest,french_food1,0,1,3
+conP009,001,off,0,"Au Petit Sud Ouest;Chez Toinette;Le Parisien","french_food2;french_food0;french_food1",modulatory,2,2,None,None,right,1.82070493698,0,Le Parisien,french_food1,0,1,4
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,1,Yes,left,left,2.08931493759,1,Onigilly Express,japanese_food2,1,2,1
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,1,No,right,right,1.27030396461,1,Sanraku Restaurant,japanese_food2,1,2,2
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,Yes,left,left,1.77176594734,1,Onigilly Express,japanese_food0,1,2,3
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,0,No,right,right,1.25453281403,1,Sanraku Restaurant,japanese_food0,1,2,4
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,1,No,right,left,2.57289195061,0,Sanraku Restaurant,japanese_food2,1,2,5
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,0,No,right,right,1.21879482269,1,Sanraku Restaurant,japanese_food0,1,2,6
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,Yes,left,left,1.46999788284,1,Onigilly Express,japanese_food0,1,2,7
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,1,No,right,right,1.58716702461,1,Sanraku Restaurant,japanese_food2,1,2,8
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,1,Yes,left,left,0.668120145798,1,Onigilly Express,japanese_food2,1,2,9
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,0,No,right,right,1.77068996429,1,Sanraku Restaurant,japanese_food0,1,2,10
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,1,No,right,left,0.852197885513,0,Sanraku Restaurant,japanese_food2,1,2,11
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,1,Yes,left,left,0.867660045624,1,Onigilly Express,japanese_food2,1,2,12
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,0,No,right,right,0.701334953308,1,Sanraku Restaurant,japanese_food0,1,2,13
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,1,Yes,left,left,0.751029014587,1,Onigilly Express,japanese_food2,1,2,14
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,0,No,right,right,3.89400601387,1,Sanraku Restaurant,japanese_food0,1,2,15
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,Yes,left,left,0.785644054413,1,Onigilly Express,japanese_food0,1,2,16
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,Yes,left,left,0.584881067276,1,Onigilly Express,japanese_food0,1,2,17
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,1,Yes,left,left,0.785061120987,1,Onigilly Express,japanese_food2,1,2,18
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,1,1,No,right,right,0.885417938232,1,Sanraku Restaurant,japanese_food2,1,2,19
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,Yes,left,left,0.683656930923,1,Onigilly Express,japanese_food0,1,2,20
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,2,0,None,None,right,1.52152013779,0,Izakaya Sozai,japanese_food0,0,2,1
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,0,None,None,left,0.81756401062,0,Onigilly Express,japanese_food0,0,2,2
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,0,2,None,None,left,0.818403959274,0,Onigilly Express,japanese_food1,0,2,3
+conP009,001,off,0,"Onigilly Express;Sanraku Restaurant;Izakaya Sozai","japanese_food0;japanese_food2;japanese_food1",additive,2,2,None,None,right,1.1700091362,0,Izakaya Sozai,japanese_food1,0,2,4
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.78820204735,1,Lau's Dim Sum Bar,chinese_food0,1,3,1
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.31990098953,1,Happy Lamb Hot Pot,chinese_food0,1,3,2
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.70319890976,1,Lau's Dim Sum Bar,chinese_food0,1,3,3
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,left,1.20185184479,0,Happy Lamb Hot Pot,chinese_food2,1,3,4
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,0.852481126785,1,Happy Lamb Hot Pot,chinese_food0,1,3,5
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,1.48729896545,1,Lau's Dim Sum Bar,chinese_food2,1,3,6
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,0.618014097214,1,Happy Lamb Hot Pot,chinese_food0,1,3,7
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,0.76765704155,1,Happy Lamb Hot Pot,chinese_food0,1,3,8
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,left,0.802240848541,0,Happy Lamb Hot Pot,chinese_food2,1,3,9
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.61875295639,1,Lau's Dim Sum Bar,chinese_food2,1,3,10
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,0.885616064072,1,Happy Lamb Hot Pot,chinese_food2,1,3,11
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.819183111191,1,Lau's Dim Sum Bar,chinese_food0,1,3,12
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.970417022705,1,Lau's Dim Sum Bar,chinese_food2,1,3,13
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.836323022842,1,Lau's Dim Sum Bar,chinese_food2,1,3,14
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.599066972733,1,Lau's Dim Sum Bar,chinese_food0,1,3,15
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,2.42258691788,1,Happy Lamb Hot Pot,chinese_food2,1,3,16
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.917570114136,1,Lau's Dim Sum Bar,chinese_food2,1,3,17
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,0.719528913498,1,Happy Lamb Hot Pot,chinese_food0,1,3,18
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,0.919646978378,1,Lau's Dim Sum Bar,chinese_food0,1,3,19
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,0.750950098038,1,Happy Lamb Hot Pot,chinese_food2,1,3,20
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,2,0,None,None,left,2.15546894073,0,Shanghai Dumpling King,chinese_food0,0,3,1
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,0,None,None,left,1.03540897369,0,Lau's Dim Sum Bar,chinese_food0,0,3,2
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,2,2,None,None,left,3.07459807396,0,Shanghai Dumpling King,chinese_food1,0,3,3
+conP009,001,off,0,"Lau's Dim Sum Bar;Happy Lamb Hot Pot;Shanghai Dumpling King","chinese_food0;chinese_food2;chinese_food1",additive,0,2,None,None,left,1.06896400452,0,Lau's Dim Sum Bar,chinese_food1,0,3,4
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,Yes,left,right,1.23632788658,0,Sweet Maple,brunch_food2,1,4,1
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,1,No,right,right,1.05343604088,1,Sweet Maple,brunch_food0,1,4,2
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,0,Yes,left,right,1.62021398544,0,Breakfast at Tiffany's,brunch_food2,1,4,3
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,0,Yes,left,left,1.12072300911,1,Breakfast at Tiffany's,brunch_food2,1,4,4
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,1,No,right,right,0.902843952179,1,Breakfast at Tiffany's,brunch_food0,1,4,5
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,Yes,left,left,1.18591117859,1,Sweet Maple,brunch_food2,1,4,6
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,1,No,right,right,1.63735485077,1,Sweet Maple,brunch_food0,1,4,7
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,0,Yes,left,left,1.20344519615,1,Breakfast at Tiffany's,brunch_food2,1,4,8
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,Yes,left,left,0.851566791534,1,Sweet Maple,brunch_food2,1,4,9
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,1,No,right,right,0.768560171127,1,Sweet Maple,brunch_food0,1,4,10
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,Yes,left,left,0.968587875366,1,Sweet Maple,brunch_food2,1,4,11
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,1,No,right,right,0.667881965637,1,Breakfast at Tiffany's,brunch_food0,1,4,12
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,Yes,left,left,1.02108097076,1,Sweet Maple,brunch_food2,1,4,13
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,0,Yes,left,left,0.785316944122,1,Breakfast at Tiffany's,brunch_food2,1,4,14
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,1,No,right,right,1.53671479225,1,Breakfast at Tiffany's,brunch_food0,1,4,15
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,1,No,right,right,0.785719156265,1,Sweet Maple,brunch_food0,1,4,16
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,1,No,right,right,1.53617787361,1,Breakfast at Tiffany's,brunch_food0,1,4,17
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,1,No,right,right,0.751489877701,1,Breakfast at Tiffany's,brunch_food0,1,4,18
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,1,No,right,right,0.785251140594,1,Sweet Maple,brunch_food0,1,4,19
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,1,0,Yes,left,left,1.08546590805,1,Breakfast at Tiffany's,brunch_food2,1,4,20
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,2,0,None,None,left,1.62172007561,0,Mission Beach Cafe,brunch_food2,0,4,1
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,2,None,None,right,1.6209499836,0,Sweet Maple,brunch_food1,0,4,2
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,0,0,None,None,right,3.27503299713,0,Sweet Maple,brunch_food2,0,4,3
+conP009,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food2;brunch_food0;brunch_food1",irrelevant,2,2,None,None,right,2.03922891617,0,Mission Beach Cafe,brunch_food1,0,4,4
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,Yes,left,left,1.35418200493,1,Little Delhi House,indian_food1,1,5,1
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,0,Yes,left,right,2.20635795593,0,Tandoori Kitchen,indian_food1,1,5,2
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,1,No,right,right,2.17223215103,1,Tandoori Kitchen,indian_food0,1,5,3
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,1,No,right,right,1.06929302216,1,Little Delhi House,indian_food0,1,5,4
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,1,No,right,right,1.02038192749,1,Little Delhi House,indian_food0,1,5,5
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,1,No,right,right,0.868135929108,1,Little Delhi House,indian_food0,1,5,6
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,0,Yes,left,left,0.667913913727,1,Tandoori Kitchen,indian_food1,1,5,7
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,1,No,right,right,0.751595020294,1,Tandoori Kitchen,indian_food0,1,5,8
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,1,No,right,right,0.902534008026,1,Tandoori Kitchen,indian_food0,1,5,9
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,Yes,left,left,0.80276799202,1,Little Delhi House,indian_food1,1,5,10
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,0,Yes,left,left,0.969273090363,1,Tandoori Kitchen,indian_food1,1,5,11
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,Yes,left,left,0.918771982193,1,Little Delhi House,indian_food1,1,5,12
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,1,No,right,right,2.47310209274,1,Little Delhi House,indian_food0,1,5,13
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,1,No,right,right,1.35219192505,1,Tandoori Kitchen,indian_food0,1,5,14
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,Yes,left,left,0.649543046951,1,Little Delhi House,indian_food1,1,5,15
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,1,No,right,right,1.16924595833,1,Little Delhi House,indian_food0,1,5,16
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,0,Yes,left,None,,0,Tandoori Kitchen,indian_food1,1,5,17
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,Yes,left,None,,0,Little Delhi House,indian_food1,1,5,18
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,0,Yes,left,None,,0,Tandoori Kitchen,indian_food1,1,5,19
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,1,1,No,right,right,1.13530492783,1,Tandoori Kitchen,indian_food0,1,5,20
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,2,0,None,None,left,1.60348987579,0,Curry Leaf Restaurant,indian_food1,0,5,1
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,0,None,None,left,0.684662103653,0,Little Delhi House,indian_food1,0,5,2
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,0,2,None,None,right,2.6730799675,0,Little Delhi House,indian_food2,0,5,3
+conP009,001,off,0,"Little Delhi House;Tandoori Kitchen;Curry Leaf Restaurant","indian_food1;indian_food0;indian_food2",irrelevant,2,2,None,None,right,0.817612886429,0,Curry Leaf Restaurant,indian_food2,0,5,4
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,left,1.15287804604,0,El Coyote Cafe,mexican_food2,1,6,1
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.886148929596,1,Molina's Cantina,mexican_food2,1,6,2
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,1.62157797813,1,El Coyote Cafe,mexican_food1,1,6,3
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,1.38653612137,1,Molina's Cantina,mexican_food2,1,6,4
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,0.684818983078,1,El Coyote Cafe,mexican_food2,1,6,5
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,0.585340023041,1,Molina's Cantina,mexican_food1,1,6,6
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,0.71950507164,1,El Coyote Cafe,mexican_food1,1,6,7
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,0.736220836639,1,Molina's Cantina,mexican_food1,1,6,8
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,0.736007213593,1,El Coyote Cafe,mexican_food1,1,6,9
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,0.70140504837,1,Molina's Cantina,mexican_food1,1,6,10
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,0.752781152725,1,El Coyote Cafe,mexican_food1,1,6,11
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,0.702244997025,1,Molina's Cantina,mexican_food1,1,6,12
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.952360153198,1,Molina's Cantina,mexican_food2,1,6,13
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,0.601525068283,1,El Coyote Cafe,mexican_food2,1,6,14
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.567112922668,1,Molina's Cantina,mexican_food2,1,6,15
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,0.685738801956,1,El Coyote Cafe,mexican_food2,1,6,16
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.634212970734,1,Molina's Cantina,mexican_food2,1,6,17
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,0.784821987152,1,Molina's Cantina,mexican_food1,1,6,18
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,0.734848022461,1,El Coyote Cafe,mexican_food2,1,6,19
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,1.63869690895,1,El Coyote Cafe,mexican_food1,1,6,20
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,2,0,None,None,left,0.701723814011,0,Restaurante Arroyo,mexican_food1,0,6,1
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,2,None,None,right,1.53769016266,0,Molina's Cantina,mexican_food0,0,6,2
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,None,None,left,1.32082390785,0,Molina's Cantina,mexican_food1,0,6,3
+conP009,001,off,0,"Molina's Cantina;El Coyote Cafe;Restaurante Arroyo","mexican_food1;mexican_food2;mexican_food0",irrelevant,2,2,None,None,right,0.818273067474,0,Restaurante Arroyo,mexican_food0,0,6,4
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,Yes,left,left,3.02428293228,1,Burger Masters,fast_food1,1,7,1
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,1,Yes,left,left,0.684648036957,1,Burger Masters,fast_food0,1,7,2
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,1,Yes,left,left,0.753304958344,1,Burger Masters,fast_food0,1,7,3
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,0,No,right,right,0.918762922287,1,Dave's Sandwiches,fast_food1,1,7,4
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,1,No,right,left,1.37002086639,0,Dave's Sandwiches,fast_food0,1,7,5
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,1,No,right,right,0.65090918541,1,Dave's Sandwiches,fast_food0,1,7,6
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,0,No,right,left,1.30149292946,0,Dave's Sandwiches,fast_food1,1,7,7
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,Yes,left,left,1.26992821693,1,Burger Masters,fast_food1,1,7,8
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,1,Yes,left,left,0.818296909332,1,Burger Masters,fast_food0,1,7,9
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,0,No,right,right,0.767511129379,1,Dave's Sandwiches,fast_food1,1,7,10
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,0,No,right,right,0.717485904694,1,Dave's Sandwiches,fast_food1,1,7,11
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,1,No,right,left,1.21920394897,0,Dave's Sandwiches,fast_food0,1,7,12
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,0,No,right,right,0.61753988266,1,Dave's Sandwiches,fast_food1,1,7,13
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,1,Yes,left,left,1.43714404106,1,Burger Masters,fast_food0,1,7,14
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,1,Yes,left,left,0.818253993988,1,Burger Masters,fast_food0,1,7,15
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,Yes,left,left,0.884826898575,1,Burger Masters,fast_food1,1,7,16
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,1,No,right,right,1.33743309975,1,Dave's Sandwiches,fast_food0,1,7,17
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,Yes,left,left,1.08704590797,1,Burger Masters,fast_food1,1,7,18
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,Yes,left,left,0.767296075821,1,Burger Masters,fast_food1,1,7,19
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,1,1,No,right,right,0.835838079453,1,Dave's Sandwiches,fast_food0,1,7,20
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,2,None,None,left,1.3708190918,0,Burger Masters,fast_food2,0,7,1
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,2,0,None,None,right,1.83900403976,0,Metro Drive-In,fast_food1,0,7,2
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,0,0,None,None,left,0.78543305397,0,Burger Masters,fast_food1,0,7,3
+conP009,001,off,0,"Burger Masters;Dave's Sandwiches;Metro Drive-In","fast_food1;fast_food0;fast_food2",additive,2,2,None,None,left,1.88797402382,0,Metro Drive-In,fast_food2,0,7,4
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,1,Yes,left,right,1.20363998413,0,Gyro King,greek_food2,1,8,1
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,0,No,right,right,1.05236196518,1,Gyro King,greek_food0,1,8,2
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,Yes,left,left,1.30318284035,1,Myconos Restaurant,greek_food0,1,8,3
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,1,No,right,right,1.28675794601,1,Myconos Restaurant,greek_food2,1,8,4
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,1,No,right,right,0.886203050613,1,Myconos Restaurant,greek_food2,1,8,5
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,Yes,left,right,1.10303282738,0,Myconos Restaurant,greek_food0,1,8,6
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,Yes,left,right,1.10412502289,0,Myconos Restaurant,greek_food0,1,8,7
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,Yes,left,right,0.953244924545,0,Myconos Restaurant,greek_food0,1,8,8
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,1,Yes,left,left,0.733726024628,1,Gyro King,greek_food2,1,8,9
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,0,No,right,right,0.970161914825,1,Gyro King,greek_food0,1,8,10
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,0,No,right,right,0.935945987701,1,Gyro King,greek_food0,1,8,11
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,1,No,right,left,2.72366285324,0,Myconos Restaurant,greek_food2,1,8,12
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,1,No,right,right,0.667750120163,1,Myconos Restaurant,greek_food2,1,8,13
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,1,Yes,left,left,1.83770489693,1,Gyro King,greek_food2,1,8,14
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,0,No,right,right,0.918669939041,1,Gyro King,greek_food0,1,8,15
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,1,Yes,left,left,1.47084403038,1,Gyro King,greek_food2,1,8,16
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,1,No,right,right,1.41996479034,1,Myconos Restaurant,greek_food2,1,8,17
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,0,No,right,right,1.2704179287,1,Gyro King,greek_food0,1,8,18
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,1,1,Yes,left,left,0.835510969162,1,Gyro King,greek_food2,1,8,19
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,Yes,left,right,2.15596103668,0,Myconos Restaurant,greek_food0,1,8,20
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,2,0,None,None,right,1.65509009361,0,Mediterranean Grill,greek_food0,0,8,1
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,2,None,None,right,1.62151408195,0,Myconos Restaurant,greek_food1,0,8,2
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,0,0,None,None,left,2.12340497971,0,Myconos Restaurant,greek_food0,0,8,3
+conP009,001,off,0,"Myconos Restaurant;Gyro King;Mediterranean Grill","greek_food0;greek_food2;greek_food1",modulatory,2,2,None,None,right,4.39554095268,0,Mediterranean Grill,greek_food1,0,8,4
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.08567500114,1,Trattoria Contadina,italian_food2,1,9,1
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.73811388016,1,Restorante Milano,italian_food1,1,9,2
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,2.15578603745,1,Restorante Milano,italian_food2,1,9,3
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.33739805222,1,Restorante Milano,italian_food1,1,9,4
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,right,1.6538169384,0,Restorante Milano,italian_food2,1,9,5
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,1.67219400406,0,Trattoria Contadina,italian_food1,1,9,6
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.10265207291,1,Trattoria Contadina,italian_food2,1,9,7
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.4031059742,1,Restorante Milano,italian_food1,1,9,8
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,0.76828289032,1,Trattoria Contadina,italian_food2,1,9,9
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.01837396622,1,Trattoria Contadina,italian_food2,1,9,10
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,2.35636305809,0,Trattoria Contadina,italian_food1,1,9,11
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.36890506744,1,Trattoria Contadina,italian_food1,1,9,12
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,1.5861389637,1,Restorante Milano,italian_food2,1,9,13
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,2.77360701561,1,Restorante Milano,italian_food2,1,9,14
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,None,,0,Restorante Milano,italian_food1,1,9,15
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.48778295517,1,Restorante Milano,italian_food1,1,9,16
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,1.06831002235,0,Trattoria Contadina,italian_food1,1,9,17
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.06931900978,1,Trattoria Contadina,italian_food2,1,9,18
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,1.28488779068,0,Trattoria Contadina,italian_food1,1,9,19
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,0.98659992218,1,Restorante Milano,italian_food2,1,9,20
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,2,2,None,None,right,4.74613308907,0,Fino Bar & Restorante,italian_food0,0,9,1
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,2,None,None,right,1.55283498764,0,Trattoria Contadina,italian_food0,0,9,2
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,0,0,None,None,left,2.32281398773,0,Trattoria Contadina,italian_food1,0,9,3
+conP009,001,off,0,"Trattoria Contadina;Restorante Milano;Fino Bar & Restorante","italian_food1;italian_food2;italian_food0",modulatory,2,0,None,None,right,1.93781995773,0,Fino Bar & Restorante,italian_food1,0,9,4
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,0,No,right,right,1.11843895912,1,Mediterranean Grill,greek_food0,1,1,1
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,1,No,right,right,1.15280413628,1,Gyro King,greek_food1,1,1,2
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,0,No,right,right,1.20454216003,1,Mediterranean Grill,greek_food0,1,1,3
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,1,No,right,right,1.25366091728,1,Gyro King,greek_food1,1,1,4
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,1,Yes,left,left,1.83847093582,1,Mediterranean Grill,greek_food1,1,1,5
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,Yes,left,right,1.52012419701,0,Gyro King,greek_food0,1,1,6
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,Yes,left,left,0.953294038773,1,Gyro King,greek_food0,1,1,7
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,1,Yes,left,right,1.01809096336,0,Mediterranean Grill,greek_food1,1,1,8
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,1,No,right,right,1.18684482574,1,Gyro King,greek_food1,1,1,9
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,1,Yes,left,left,1.23772120476,1,Mediterranean Grill,greek_food1,1,1,10
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,Yes,left,left,0.886011838913,1,Gyro King,greek_food0,1,1,11
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,0,No,right,right,1.45424604416,1,Mediterranean Grill,greek_food0,1,1,12
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,0,No,right,right,1.10418105125,1,Mediterranean Grill,greek_food0,1,1,13
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,Yes,left,left,1.23689985275,1,Gyro King,greek_food0,1,1,14
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,1,Yes,left,left,1.23705601692,1,Mediterranean Grill,greek_food1,1,1,15
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,1,Yes,left,right,1.68702793121,0,Mediterranean Grill,greek_food1,1,1,16
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,1,0,No,right,right,1.10264706612,1,Mediterranean Grill,greek_food0,1,1,17
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,1,No,right,right,1.15259289742,1,Gyro King,greek_food1,1,1,18
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,1,No,right,right,1.5206952095,1,Gyro King,greek_food1,1,1,19
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,Yes,left,left,1.13740491867,1,Gyro King,greek_food0,1,1,20
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,2,2,None,None,right,1.57147407532,0,Myconos Restaurant,greek_food2,0,1,1
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,2,None,None,right,1.13504004478,0,Gyro King,greek_food2,0,1,2
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,0,0,None,None,left,1.35340595245,0,Gyro King,greek_food0,0,1,3
+conP010,001,off,0,"Gyro King;Mediterranean Grill;Myconos Restaurant","greek_food0;greek_food1;greek_food2",modulatory,2,0,None,None,right,1.56989002228,0,Myconos Restaurant,greek_food0,0,1,4
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,right,1.12003302574,0,Curry Leaf Restaurant,indian_food0,1,2,1
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.11917185783,1,Curry Leaf Restaurant,indian_food1,1,2,2
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,1.10229492188,1,Curry Leaf Restaurant,indian_food0,1,2,3
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,right,1.20405101776,0,Little Delhi House,indian_food0,1,2,4
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,1.01846909523,1,Little Delhi House,indian_food0,1,2,5
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.25225901604,1,Curry Leaf Restaurant,indian_food1,1,2,6
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.952441930771,1,Curry Leaf Restaurant,indian_food0,1,2,7
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.20257496834,1,Little Delhi House,indian_food1,1,2,8
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.38527393341,1,Curry Leaf Restaurant,indian_food1,1,2,9
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.92127203941,1,Little Delhi House,indian_food1,1,2,10
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.01926112175,1,Little Delhi House,indian_food1,1,2,11
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.818158864975,1,Curry Leaf Restaurant,indian_food0,1,2,12
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,1.33719992638,1,Curry Leaf Restaurant,indian_food1,1,2,13
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,0,Yes,left,left,0.701678991318,1,Curry Leaf Restaurant,indian_food0,1,2,14
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,1,1,No,right,right,0.884538888931,1,Curry Leaf Restaurant,indian_food1,1,2,15
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,0.802464962006,1,Little Delhi House,indian_food0,1,2,16
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,1.00202298164,1,Little Delhi House,indian_food0,1,2,17
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,Yes,left,left,0.933965921402,1,Little Delhi House,indian_food0,1,2,18
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.18642807007,1,Little Delhi House,indian_food1,1,2,19
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,1,No,right,right,1.35357999802,1,Little Delhi House,indian_food1,1,2,20
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,0,None,None,left,0.968837976456,0,Little Delhi House,indian_food0,0,2,1
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,0,2,None,None,right,1.3711001873,0,Little Delhi House,indian_food2,0,2,2
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,2,2,None,None,right,1.26948595047,0,Tandoori Kitchen,indian_food2,0,2,3
+conP010,001,off,0,"Little Delhi House;Curry Leaf Restaurant;Tandoori Kitchen","indian_food0;indian_food1;indian_food2",irrelevant,2,0,None,None,left,1.78963804245,0,Tandoori Kitchen,indian_food0,0,2,4
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.13463497162,1,Happy Lamb Hot Pot,chinese_food0,1,3,1
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.45303797722,1,Happy Lamb Hot Pot,chinese_food2,1,3,2
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.1198990345,1,Happy Lamb Hot Pot,chinese_food0,1,3,3
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.30496382713,1,Happy Lamb Hot Pot,chinese_food2,1,3,4
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.37100291252,1,Happy Lamb Hot Pot,chinese_food0,1,3,5
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,right,1.45545315742,0,Shanghai Dumpling King,chinese_food0,1,3,6
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.00379800797,1,Shanghai Dumpling King,chinese_food0,1,3,7
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,right,1.43560910225,0,Shanghai Dumpling King,chinese_food2,1,3,8
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,0.935753107071,1,Shanghai Dumpling King,chinese_food2,1,3,9
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,1.33624410629,1,Happy Lamb Hot Pot,chinese_food2,1,3,10
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.36839604378,1,Shanghai Dumpling King,chinese_food0,1,3,11
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,1.18592500687,1,Shanghai Dumpling King,chinese_food2,1,3,12
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.23607993126,1,Shanghai Dumpling King,chinese_food0,1,3,13
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,Yes,left,left,1.15246200562,1,Shanghai Dumpling King,chinese_food0,1,3,14
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,0.752799987793,1,Happy Lamb Hot Pot,chinese_food2,1,3,15
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.27059721947,1,Happy Lamb Hot Pot,chinese_food0,1,3,16
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,left,1.21963691711,1,Shanghai Dumpling King,chinese_food2,1,3,17
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,1,Yes,left,right,1.02010393143,0,Shanghai Dumpling King,chinese_food2,1,3,18
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,1,No,right,right,0.901790857315,1,Happy Lamb Hot Pot,chinese_food2,1,3,19
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,1,0,No,right,right,1.16908311844,1,Happy Lamb Hot Pot,chinese_food0,1,3,20
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,0,None,None,left,0.969686031342,0,Shanghai Dumpling King,chinese_food0,0,3,1
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,0,2,None,None,left,1.16975688934,0,Shanghai Dumpling King,chinese_food1,0,3,2
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,2,2,None,None,right,1.20304393768,0,Lau's Dim Sum Bar,chinese_food1,0,3,3
+conP010,001,off,0,"Shanghai Dumpling King;Happy Lamb Hot Pot;Lau's Dim Sum Bar","chinese_food0;chinese_food2;chinese_food1",additive,2,0,None,None,right,1.40456414223,0,Lau's Dim Sum Bar,chinese_food0,0,3,4
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,1,No,right,right,1.2528860569,1,Chez Toinette,french_food0,1,4,1
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,Yes,left,right,1.10318088531,0,Chez Toinette,french_food1,1,4,2
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,1,No,right,right,0.953098058701,1,Chez Toinette,french_food0,1,4,3
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,Yes,left,left,0.952477931976,1,Chez Toinette,french_food1,1,4,4
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,1,No,right,right,0.918390035629,1,Chez Toinette,french_food0,1,4,5
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,1,No,right,right,1.07009100914,1,Chez Toinette,french_food0,1,4,6
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,0,No,right,right,1.33754181862,1,Le Parisien,french_food1,1,4,7
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,Yes,left,left,1.05276584625,1,Chez Toinette,french_food1,1,4,8
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,1,Yes,left,right,1.26988697052,0,Le Parisien,french_food0,1,4,9
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,0,No,right,right,1.32010698318,1,Le Parisien,french_food1,1,4,10
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,0,No,right,right,1.35407495499,1,Le Parisien,french_food1,1,4,11
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,1,Yes,left,right,1.18600106239,0,Le Parisien,french_food0,1,4,12
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,1,No,right,right,1.08718085289,1,Chez Toinette,french_food0,1,4,13
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,1,Yes,left,left,1.41953802109,1,Le Parisien,french_food0,1,4,14
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,0,No,right,right,1.18636822701,1,Le Parisien,french_food1,1,4,15
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,Yes,left,left,2.0557320118,1,Chez Toinette,french_food1,1,4,16
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,Yes,left,left,1.0196120739,1,Chez Toinette,french_food1,1,4,17
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,0,No,right,right,1.26949691772,1,Le Parisien,french_food1,1,4,18
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,1,Yes,left,left,0.88559794426,1,Le Parisien,french_food0,1,4,19
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,1,1,Yes,left,left,1.58885884285,1,Le Parisien,french_food0,1,4,20
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,2,None,None,right,1.45368719101,0,Chez Toinette,french_food2,0,4,1
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,2,0,None,None,right,1.77170205116,0,Au Petit Sud Ouest,french_food1,0,4,2
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,0,0,None,None,right,1.77238202095,0,Chez Toinette,french_food1,0,4,3
+conP010,001,off,0,"Chez Toinette;Le Parisien;Au Petit Sud Ouest","french_food1;french_food0;french_food2",modulatory,2,2,None,None,right,1.670981884,0,Au Petit Sud Ouest,french_food2,0,4,4
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,Yes,left,right,1.18560504913,0,Burger Masters,fast_food2,1,5,1
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,1,Yes,left,right,1.03672981262,0,Burger Masters,fast_food0,1,5,2
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,1,Yes,left,left,0.885973930359,1,Burger Masters,fast_food0,1,5,3
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,0,No,right,right,0.90141415596,1,Metro Drive-In,fast_food2,1,5,4
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,0,No,right,right,0.90185713768,1,Metro Drive-In,fast_food2,1,5,5
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,0,No,right,right,1.0196928978,1,Metro Drive-In,fast_food2,1,5,6
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,Yes,left,left,1.10168504715,1,Burger Masters,fast_food2,1,5,7
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,1,No,right,right,1.7376730442,1,Metro Drive-In,fast_food0,1,5,8
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,1,Yes,left,left,1.08629989624,1,Burger Masters,fast_food0,1,5,9
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,Yes,left,left,0.801452875137,1,Burger Masters,fast_food2,1,5,10
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,0,No,right,right,1.13619709015,1,Metro Drive-In,fast_food2,1,5,11
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,Yes,left,left,1.31905293465,1,Burger Masters,fast_food2,1,5,12
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,1,No,right,right,1.13628792763,1,Metro Drive-In,fast_food0,1,5,13
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,0,No,right,right,2.07132196426,1,Metro Drive-In,fast_food2,1,5,14
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,1,No,right,right,1.72150683403,1,Metro Drive-In,fast_food0,1,5,15
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,1,Yes,left,left,1.05324912071,1,Burger Masters,fast_food0,1,5,16
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,1,No,right,right,1.42015504837,1,Metro Drive-In,fast_food0,1,5,17
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,1,Yes,left,left,0.835982084274,1,Burger Masters,fast_food0,1,5,18
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,Yes,left,left,1.28617691994,1,Burger Masters,fast_food2,1,5,19
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,1,1,No,right,right,1.66914606094,1,Metro Drive-In,fast_food0,1,5,20
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,2,None,None,left,1.32062602043,0,Burger Masters,fast_food1,0,5,1
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,2,2,None,None,right,1.10368609428,0,Dave's Sandwiches,fast_food1,0,5,2
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,0,0,None,None,left,1.00430488586,0,Burger Masters,fast_food2,0,5,3
+conP010,001,off,0,"Burger Masters;Metro Drive-In;Dave's Sandwiches","fast_food2;fast_food0;fast_food1",additive,2,0,None,None,right,1.31995296478,0,Dave's Sandwiches,fast_food2,0,5,4
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,right,1.05211806297,0,Restaurante Arroyo,mexican_food1,1,6,1
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,right,0.98574590683,0,El Coyote Cafe,mexican_food1,1,6,2
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,0.902653932571,1,El Coyote Cafe,mexican_food1,1,6,3
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,1.00281620026,1,El Coyote Cafe,mexican_food1,1,6,4
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,1.11872410774,1,Restaurante Arroyo,mexican_food1,1,6,5
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,1.1533100605,1,Restaurante Arroyo,mexican_food1,1,6,6
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,1.10330605507,1,El Coyote Cafe,mexican_food2,1,6,7
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,1.12026715279,1,Restaurante Arroyo,mexican_food1,1,6,8
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,Yes,left,left,1.18592882156,1,Restaurante Arroyo,mexican_food1,1,6,9
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,1.06895494461,1,El Coyote Cafe,mexican_food2,1,6,10
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,2.10475683212,1,El Coyote Cafe,mexican_food1,1,6,11
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,1.13704991341,1,Restaurante Arroyo,mexican_food2,1,6,12
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.819015026093,1,Restaurante Arroyo,mexican_food2,1,6,13
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,1.11880922318,1,El Coyote Cafe,mexican_food2,1,6,14
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,1.48713207245,1,El Coyote Cafe,mexican_food2,1,6,15
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,1.13592720032,1,Restaurante Arroyo,mexican_food2,1,6,16
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,0.836441040039,1,Restaurante Arroyo,mexican_food2,1,6,17
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,0,Yes,left,left,0.951863050461,1,El Coyote Cafe,mexican_food1,1,6,18
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,1,No,right,right,1.01930499077,1,Restaurante Arroyo,mexican_food2,1,6,19
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,1,1,No,right,right,1.20246219635,1,El Coyote Cafe,mexican_food2,1,6,20
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,0,None,None,left,1.30434179306,0,Restaurante Arroyo,mexican_food1,0,6,1
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,0,2,None,None,right,1.06907296181,0,Restaurante Arroyo,mexican_food0,0,6,2
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,2,0,None,None,left,1.05271100998,0,Molina's Cantina,mexican_food1,0,6,3
+conP010,001,off,0,"Restaurante Arroyo;El Coyote Cafe;Molina's Cantina","mexican_food1;mexican_food2;mexican_food0",irrelevant,2,2,None,None,right,0.93590092659,0,Molina's Cantina,mexican_food0,0,6,4
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,right,1.40398406982,0,Sweet Maple,brunch_food0,1,7,1
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,right,0.936027050018,0,Breakfast at Tiffany's,brunch_food0,1,7,2
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,0.886244058609,1,Breakfast at Tiffany's,brunch_food0,1,7,3
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,0.918692827225,1,Sweet Maple,brunch_food0,1,7,4
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.28793406487,1,Sweet Maple,brunch_food1,1,7,5
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.15324997902,1,Sweet Maple,brunch_food1,1,7,6
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,1.15415000916,1,Sweet Maple,brunch_food0,1,7,7
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,1.018419981,1,Sweet Maple,brunch_food0,1,7,8
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,1.38721108437,1,Breakfast at Tiffany's,brunch_food0,1,7,9
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,1.05274295807,1,Breakfast at Tiffany's,brunch_food1,1,7,10
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.01965594292,1,Sweet Maple,brunch_food1,1,7,11
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,1.25402998924,1,Breakfast at Tiffany's,brunch_food1,1,7,12
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,1.05253601074,1,Sweet Maple,brunch_food1,1,7,13
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,1,No,right,right,0.918810844421,1,Sweet Maple,brunch_food1,1,7,14
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,Yes,left,left,0.968971014023,1,Sweet Maple,brunch_food0,1,7,15
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,1.22011995316,1,Breakfast at Tiffany's,brunch_food1,1,7,16
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,1.05250597,1,Breakfast at Tiffany's,brunch_food1,1,7,17
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,0.836271047592,1,Breakfast at Tiffany's,brunch_food0,1,7,18
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,1,No,right,right,0.735183000565,1,Breakfast at Tiffany's,brunch_food1,1,7,19
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,1,0,Yes,left,left,0.883733987808,1,Breakfast at Tiffany's,brunch_food0,1,7,20
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,2,None,None,right,0.935616970062,0,Sweet Maple,brunch_food2,0,7,1
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,0,0,None,None,left,0.935868024826,0,Sweet Maple,brunch_food0,0,7,2
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,2,2,None,None,right,1.15304112434,0,Mission Beach Cafe,brunch_food2,0,7,3
+conP010,001,off,0,"Sweet Maple;Breakfast at Tiffany's;Mission Beach Cafe","brunch_food0;brunch_food1;brunch_food2",irrelevant,2,0,None,None,left,1.38594198227,0,Mission Beach Cafe,brunch_food0,0,7,4
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,right,1.18694114685,0,Sanraku Restaurant,japanese_food2,1,8,1
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,right,0.986080884933,0,Sanraku Restaurant,japanese_food1,1,8,2
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.01929116249,1,Izakaya Sozai,japanese_food2,1,8,3
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.15321087837,1,Izakaya Sozai,japanese_food2,1,8,4
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,0.952164888382,1,Sanraku Restaurant,japanese_food2,1,8,5
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.13577008247,1,Sanraku Restaurant,japanese_food1,1,8,6
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.13584518433,1,Sanraku Restaurant,japanese_food1,1,8,7
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.05063009262,1,Izakaya Sozai,japanese_food1,1,8,8
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.5044939518,1,Izakaya Sozai,japanese_food1,1,8,9
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,0.953037023544,1,Izakaya Sozai,japanese_food2,1,8,10
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.18558502197,1,Sanraku Restaurant,japanese_food2,1,8,11
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,0.884757041931,1,Izakaya Sozai,japanese_food1,1,8,12
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.18672704697,1,Izakaya Sozai,japanese_food1,1,8,13
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,0.819171905518,1,Sanraku Restaurant,japanese_food1,1,8,14
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.50376200676,1,Izakaya Sozai,japanese_food2,1,8,15
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,1,Yes,left,left,1.052932024,1,Sanraku Restaurant,japanese_food1,1,8,16
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,0,No,right,right,1.21989202499,1,Izakaya Sozai,japanese_food2,1,8,17
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.10339784622,1,Sanraku Restaurant,japanese_food2,1,8,18
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,Yes,left,left,1.23768377304,1,Sanraku Restaurant,japanese_food2,1,8,19
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,1,1,No,right,right,1.45325398445,1,Izakaya Sozai,japanese_food1,1,8,20
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,0,None,None,left,1.30271196365,0,Sanraku Restaurant,japanese_food2,0,8,1
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,2,0,None,None,right,0.850643873215,0,Onigilly Express,japanese_food2,0,8,2
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,0,2,None,None,left,1.01996397972,0,Sanraku Restaurant,japanese_food0,0,8,3
+conP010,001,off,0,"Sanraku Restaurant;Izakaya Sozai;Onigilly Express","japanese_food2;japanese_food1;japanese_food0",additive,2,2,None,None,right,0.969431877136,0,Onigilly Express,japanese_food0,0,8,4
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,right,0.936614990234,0,Fino Bar & Restorante,italian_food2,1,9,1
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,0.852315187454,1,Fino Bar & Restorante,italian_food2,1,9,2
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,0.953295946121,1,Fino Bar & Restorante,italian_food2,1,9,3
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,0.920186042786,1,Trattoria Contadina,italian_food2,1,9,4
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,right,1.11984491348,0,Trattoria Contadina,italian_food1,1,9,5
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,0.802235841751,1,Trattoria Contadina,italian_food1,1,9,6
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.13605499268,1,Trattoria Contadina,italian_food1,1,9,7
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,right,1.55422902107,0,Fino Bar & Restorante,italian_food2,1,9,8
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.12007021904,1,Fino Bar & Restorante,italian_food1,1,9,9
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,left,1.6022400856,0,Fino Bar & Restorante,italian_food1,1,9,10
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.05280280113,1,Fino Bar & Restorante,italian_food1,1,9,11
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,left,1.62017011642,0,Trattoria Contadina,italian_food2,1,9,12
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,right,1.82241892815,1,Fino Bar & Restorante,italian_food1,1,9,13
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.62009501457,1,Trattoria Contadina,italian_food2,1,9,14
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,1.11917710304,1,Trattoria Contadina,italian_food2,1,9,15
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,0,No,right,left,2.18793606758,0,Fino Bar & Restorante,italian_food1,1,9,16
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.18679189682,1,Trattoria Contadina,italian_food1,1,9,17
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,1,1,Yes,left,left,1.62124896049,1,Fino Bar & Restorante,italian_food2,1,9,18
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,1,No,right,right,2.05410003662,1,Trattoria Contadina,italian_food2,1,9,19
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,Yes,left,left,1.18723011017,1,Trattoria Contadina,italian_food1,1,9,20
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,0,None,None,left,1.37070584297,0,Trattoria Contadina,italian_food1,0,9,1
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,0,2,None,None,right,1.16880989075,0,Trattoria Contadina,italian_food0,0,9,2
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,2,2,None,None,right,1.20308589935,0,Restorante Milano,italian_food0,0,9,3
+conP010,001,off,0,"Trattoria Contadina;Fino Bar & Restorante;Restorante Milano","italian_food1;italian_food2;italian_food0",modulatory,2,0,None,None,right,1.56988406181,0,Restorante Milano,italian_food1,0,9,4

@@ -27,7 +27,7 @@ function analyze_gui2
     %
     format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
     [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-        textread('pilot-with-hayley.csv', format, 'delimiter', ',', 'headerlines', 1);
+        textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
     roundsPerContext = 3;
     trialsPerRound = 24;
     

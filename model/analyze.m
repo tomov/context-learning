@@ -12,7 +12,7 @@
 format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
 
 [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-    textread('pilot-with-hayley.csv', format, 'delimiter', ',', 'headerlines', 1);
+    textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
 
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = trials per run / 4
@@ -23,7 +23,7 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
     
     contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 
-    make_optimal_choices = true;
+    make_optimal_choices = false;
 end
 
 %
@@ -49,7 +49,7 @@ for who = subjects
         for run = runs
             which_train = which_runs & isTrain & roundId == run;
             which_test = which_runs & ~isTrain & roundId == run;
-            
+
             % For a given run of a given subject, run the model on the same
             % sequence of stimuli and see what it does.
             %
@@ -61,7 +61,7 @@ for who = subjects
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
             [choices, P_n, ww_n, P, ww] = train(x, c, r, false);
-            
+
             if make_optimal_choices
                 model_choices = choices > 0.5;
             else
@@ -78,7 +78,7 @@ for who = subjects
             model.ww1(which_train, :) = ww{1};
             model.ww2(which_train, :) = ww{2};
             model.ww3(which_train, :) = ww{3};
-            
+
             % See what the model predicts for the test trials of that run
             %
             test_cues = cueId(which_test);
@@ -99,7 +99,7 @@ for who = subjects
             model_test_response_keys(~model_test_choices) = {'right'};
             model.keys(which_test) = model_test_response_keys;
             model.pred(which_test) = test_choices;
-            
+
             % Get the subject's responses too.
             %
             resp = response.keys(which_train);

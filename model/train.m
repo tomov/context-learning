@@ -1,6 +1,6 @@
 function [choices, P_n, ww_n, P, ww] = train(x, c, r, DO_PRINT)
 
-predict = @(V_n) 1 / (1 + exp(-2 * V_n + 1)); % predicts by mapping the expectation to an outcome
+predict = @(V_n) 1 / (1 + exp(-6 * V_n + 3)); % predicts by mapping the expectation to an outcome
 
 % constants
 %
@@ -9,7 +9,7 @@ D = size(x, 2); % # of stimuli
 K = 3;          % # of contexts
 
 sigma_r = sqrt(0.01);
-sigma_w = sqrt(1);
+sigma_w = sqrt(0.1); % std for gaussian prior over weights, uncertainty; decreasing the learning rate
 tau = sqrt(0.001);
 
 % initialize Kalman filter

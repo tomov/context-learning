@@ -18,7 +18,6 @@ r{1} = [1; 0; 1; 0]; % rewards
 x{2} = x{1};
 c{2} = c{1};
 r{2} = [1; 0; 0; 1];
-
 % additive context group = group 3
 %
 x{3} = x{1};
