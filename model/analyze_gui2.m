@@ -31,7 +31,7 @@ function analyze_gui2
 
     % Load the data and some constants
     %
-    load;
+    load_data;
     
     all_subjects = unique(participant)';  
     all_contextRoles = unique(contextRole)';

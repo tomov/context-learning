@@ -2,6 +2,9 @@ clear all;
 
 DO_PLOT = false;
 
+learning_rate = 0.1; % 1 in paper; 0.1 is better
+softmax_temp = 2; % 1 in paper; 2 is better
+
 %
 % Set up the experiment
 %
@@ -46,9 +49,9 @@ Ms = [];
 for g=1:3 % for each group
     fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
-    [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g}, false);
+    [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g}, learning_rate, softmax_temp, false);
 
-    [test_choices] = test(test_x, test_c, P_n, ww_n);
+    [test_choices] = test(test_x, test_c, P_n, ww_n, softmax_temp);
     for n = 1:size(test_x, 1)
         x_n = test_x(n, :)';
         c_n = test_c(n, :);
