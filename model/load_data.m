@@ -19,6 +19,9 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
     contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 
     make_optimal_choices = false;
+    
+    learning_rate = 0.1;
+    softmax_temp = 3;
 end
 
 % b/c sometimes they're vectors of size 1 == scalars, so can't do mean([a b c d e]) 
