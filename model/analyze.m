@@ -1,30 +1,9 @@
-% TODO show posterior in all conditions (see todo below)
 % TODO plot prediction certainty Sigma
-% TODO plot learning rates g
-% TODO checkboxes for subject (+ all), condition (+ all), run (+ all)
-%         -- radio button -- either runs 1,2,3,4,5... OR conditions + 1st,
-%         2nd, 3rd run of each condition
 %
 
-% load data from file with all subjects
-% generated using parse.py (see snippets/parse.py)
-
-format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
-
-[participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-    textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
-
-roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
-trialsNReps = 5; % = trials per run / 4
-
-if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always reload the data
-    which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
-    subjects = unique(participant(which_rows))'; % the unique id's of all subjects
-    
-    contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
-
-    make_optimal_choices = false;
-end
+% Load data from file with all subjects, as well as some constants.
+%
+load;
 
 %
 % Simulate
@@ -121,11 +100,6 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
     figure;
 end
 
-% b/c sometimes they're vectors of size 1 == scalars, so can't do mean([a b c d e]) 
-%
-get_means = @(x1c1, x1c2, x2c1, x2c2) [mean(x1c1) mean(x1c2) mean(x2c1) mean(x2c2)];
-get_sems = @(x1c1, x1c2, x2c1, x2c2) [std(x1c1) / sqrt(length(x1c1)) std(x1c2) / sqrt(length(x1c2)) std(x2c1) / sqrt(length(x2c1)) std(x2c2) / sqrt(length(x2c2))];
-
 next_subplot_idx = 1; % so you can reorder them by simply rearranging the code
 
 %
@@ -172,7 +146,10 @@ legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
 %
 
 subjects_perf = [];
+subjects_perf_sem = [];
+subjects_captions = {};
 
+i = 0;
 for who = subjects
     which = which_rows & isTrain & strcmp(participant, who);
     
@@ -180,13 +157,43 @@ for who = subjects
     timeout = strcmp(response.keys(which), 'None');
     wrong = ~strcmp(response.keys(which), corrAns(which)) & ~timeout;
     subjects_perf = [subjects_perf; mean([corr wrong timeout])];
+    subjects_perf_sem = [subjects_perf_sem; mean([corr wrong timeout]) / sqrt(length(corr))];
+    i = i + 1;
+    subjects_captions{i} = who{1}(5:end);
 end
 
 subplot(3, 5, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
-barweb(subjects_perf, zeros(size(subjects_perf)), 1, subjects, 'Individual subject performance');
+barweb(subjects_perf, subjects_perf_sem, 1, subjects_captions, 'Subject performance (train)');
 ylabel('Fraction of trials');
 legend({'Correct', 'Wrong', 'Timeout'});
+
+
+%
+% Per-run accuracy & timeouts (across all subjects) for sanity check (training only)
+%
+
+runs_perf = [];
+runs_perf_sem = [];
+runs_captions = {};
+
+for run = unique(roundId)';
+    which = which_rows & isTrain & roundId == run;
+    
+    corr = strcmp(response.keys(which), corrAns(which));
+    timeout = strcmp(response.keys(which), 'None');
+    wrong = ~strcmp(response.keys(which), corrAns(which)) & ~timeout;
+    runs_perf = [runs_perf; mean([corr wrong timeout])];
+    runs_perf_sem = [runs_perf_sem; std([corr wrong timeout]) / sqrt(length(corr))];
+    runs_captions{run} = strcat('#', int2str(run));
+end
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(runs_perf, runs_perf_sem, 1, runs_captions, 'Per-run performance');
+ylabel('Fraction of trials');
+legend({'Correct', 'Wrong', 'Timeout'});
+
 
 
 %

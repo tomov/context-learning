@@ -22,18 +22,17 @@ function analyze_gui2
     
     global subjects; % the unique id's of subjects we've selected for analysis (computed)
     global contextRoles; % the unique contextRoles we've selected for analysis (computed)
-
-    % TODO dedupe with analyze.m; also we only use a few of the columns
-    %
-    format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
-    [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
-        textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
-    roundsPerContext = 3;
-    trialsPerRound = 24;
     
+    % Initialize the state
+    % IMPORTANT -- run this before load.m so it knows we're using the GUI
+    %
     analyze_with_gui = true;
     make_optimal_choices = true;
 
+    % Load the data and some constants
+    %
+    load;
+    
     all_subjects = unique(participant)';  
     all_contextRoles = unique(contextRole)';
     which_subjects = logical(true(size(participant))); % all subjects initially
