@@ -7,9 +7,13 @@ function analyze_gui2
     global participant; % the participant column from the data (for all rows)
     global contextRole; % the contextRole column from the data (for all rows)
     global roundId; % the roundId column from the data (for all rows)
+    
     global make_optimal_choices;
     global roundsPerContext;
     global trialsPerRound;
+    global softmax_temp;
+    global learning_rate;
+    global what_to_plot;
     
     global analyze_with_gui; % so analyze.m knows not to do certain things
 
@@ -27,14 +31,17 @@ function analyze_gui2
     % IMPORTANT -- run this before load.m so it knows we're using the GUI
     %
     analyze_with_gui = true;
-    make_optimal_choices = true;
+    make_optimal_choices = false;
+    learning_rate = 0.1;
+    softmax_temp = 3;
+    what_to_plot = 'analyze';
 
     % Load the data and some constants
     %
     load_data;
     
     all_subjects = unique(participant)';  
-    all_contextRoles = unique(contextRole)';
+    all_contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'; listing explicitly here to preserve the order
     which_subjects = logical(true(size(participant))); % all subjects initially
     which_conditions = logical(true(size(contextRole))); % all conditions initially
     which_runs = logical(true(size(roundId))); % all runs initially
@@ -54,15 +61,15 @@ function analyze_gui2
         idx = idx + 1;
     end
     
-    % Whether to make optimal choices
+    % Whether to make optimal choices. First one is picked by default
     %
     optimal_radiobutton_group = uibuttongroup(f,'Title','Optimal',...
             'Units','pixels', 'Position',[10 10 + 20 * idx 60 60]);
-    optimal_radiobutton_yes = uicontrol(optimal_radiobutton_group,'Style','radiobutton','String','Yes',...
-            'Units','pixels', 'Position',[10 30 50 10], ...
-            'Callback', @optimal_callback);
     optimal_radiobutton_no = uicontrol(optimal_radiobutton_group,'Style','radiobutton','String','No',...
             'Units','pixels', 'Position',[10 10 50 10], ...
+            'Callback', @optimal_callback);
+    optimal_radiobutton_yes = uicontrol(optimal_radiobutton_group,'Style','radiobutton','String','Yes',...
+            'Units','pixels', 'Position',[10 30 50 10], ...
             'Callback', @optimal_callback);
 
     % Check boxes for picking which conditions
@@ -84,8 +91,35 @@ function analyze_gui2
                           'UserData', run, ...
                           'Callback', @run_checkbox_callback);
         idx = idx + 1;
-    end        
-            
+    end
+    
+    % Numeric parameter constants
+    %
+    learning_rate_caption = uicontrol(f, 'Style', 'text', 'String', 'Learning rate', ...
+                         'Position', [10 100 + 20 * (idx - 1) 80 20]);
+    learning_rate_editbox = uicontrol(f, 'Style', 'edit', 'String', '0.1', ...
+                         'Tag', 'learning_rate_editbox', 'Position', [90 100 + 20 * (idx - 1) 30 20]);
+    idx = idx + 1;
+
+    softmax_temp_caption = uicontrol(f, 'Style', 'text', 'String', 'Softmax temp', ...
+                         'Position', [10 100 + 20 * (idx - 1) 80 20]);
+    softmax_temp_editbox = uicontrol(f, 'Style', 'edit', 'String', '3', ...
+                         'Tag', 'softmax_temp_editbox', 'Position', [90 100 + 20 * (idx - 1) 30 20]);
+    idx = idx + 1;
+
+    % What to plot
+    %
+    plot_radiobutton_group = uibuttongroup(f,'Title','Plot',...
+            'Units','pixels', 'Position',[10 90 + 20 * idx 100 60]);
+    plot_radiobutton_analyze = uicontrol(plot_radiobutton_group,'Style','radiobutton','String','Analysis',...
+            'Units','pixels', 'Position',[10 10 80 10], ...
+            'Callback', @plot_callback);
+    plot_radiobutton_sanity = uicontrol(plot_radiobutton_group,'Style','radiobutton','String','Sanity',...
+            'Units','pixels', 'Position',[10 30 80 10], ...
+            'Callback', @plot_callback);
+
+    
+    
     % The Run button
     %
     rerun_button = uicontrol('Style', 'pushbutton', 'String', 'Run', ...
@@ -98,6 +132,7 @@ function analyze_gui2
 function update_invariant
     global participant;
     global contextRole;
+    global all_contextRoles;
     
     global which_subjects;
     global which_conditions;
@@ -110,6 +145,9 @@ function update_invariant
     which_rows = which_subjects & which_conditions & which_runs;
     subjects = unique(participant(which_rows))';
     contextRoles = unique(contextRole(which_conditions))';
+    if length(contextRoles) == length(all_contextRoles)
+        contextRoles = all_contextRoles; % so they're in the right order
+    end
     disp(subjects);
     disp(contextRoles);
     
@@ -128,7 +166,21 @@ function optimal_callback(hObject, eventdata, handles)
     end
     disp(make_optimal_choices);
     
+% Pick what to plot
+%
+function plot_callback(hObject, eventdata, handles)
+    global what_to_plot
     
+    choice = get(hObject, 'String');
+    if strcmp(choice, 'Analysis')
+        what_to_plot = 'analyze';
+    else
+        assert(strcmp(choice, 'Sanity'));
+        what_to_plot = 'sanity'
+    end
+    disp(what_to_plot);
+    
+        
 % Re-render the analysis with the selected options
 %
 function run_button_callback(hObject, eventdata, handles)
@@ -137,12 +189,23 @@ function run_button_callback(hObject, eventdata, handles)
     global which_rows;
     global make_optimal_choices;
     global contextRoles;    
+    global softmax_temp;
+    global learning_rate;
+    global what_to_plot;
+    
+    softmax_temp = str2double(get(findobj('Tag', 'softmax_temp_editbox'), 'String'))
+    learning_rate = str2double(get(findobj('Tag', 'learning_rate_editbox'), 'String'))
     
     % Only what is "global" here will be declared for the stuff in analyze
     % it's like you're copy-pasting the code here/
     % So you need to declare all the stuff you need as global here
     %
-    analyze;
+    if strcmp(what_to_plot, 'analyze')
+        analyze;
+    else
+        assert(strcmp(what_to_plot, 'sanity'));
+        sanity;
+    end
 
     
 % Select or remove a condition (context role) for the analysis   
