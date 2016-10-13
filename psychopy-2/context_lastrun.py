@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 11 14:26:50 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 12 21:08:21 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -118,11 +118,12 @@ new_runClock = core.Clock()
 
 
 
+
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
     text='the text is set manually\n',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-4.0)
+    depth=-5.0)
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -274,30 +275,30 @@ trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-9.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
     text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color='pink', colorSpace='rgb', opacity=1,
-    depth=-9.0)
+    depth=-10.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-10.0)
+    texRes=128, interpolate=True, depth=-11.0)
 sickImg = visual.ImageStim(win=win, name='sickImg',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-11.0)
+    texRes=128, interpolate=True, depth=-12.0)
 notsickImg = visual.ImageStim(win=win, name='notsickImg',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-12.0)
+    texRes=128, interpolate=True, depth=-13.0)
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
     text='_',    font='Arial',
@@ -662,6 +663,7 @@ for thisRun in runs:
     
     print 'Shuffled cues: ', cuesReshuffled
     print 'Shuffled contexts: ', contextsReshuffled
+    
     # keep track of which components have finished
     new_runComponents = []
     new_runComponents.append(runInstr)
@@ -676,6 +678,7 @@ for thisRun in runs:
         t = new_runClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        
         
         
         
@@ -715,6 +718,10 @@ for thisRun in runs:
     
     
     
+    # in practice mode, only run 1 round
+    #
+    if expInfo['isPractice'] == 'yes':
+        runs.finished = True
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=5, method='fullRandom', 
@@ -793,19 +800,19 @@ for thisRun in runs:
         thisExp.addData('trialOrTest', 'trial')
         addExtraData()
         assert contextRolesWereShuffled
-        restaurantText.setText(restaurants[contextsReshuffled[contextId]])
-        foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         responseKey = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey.status = NOT_STARTED
+        restaurantText.setText(restaurants[contextsReshuffled[contextId]])
+        foodImg.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         # keep track of which components have finished
         trialComponents = []
         trialComponents.append(fixationITIText)
+        trialComponents.append(responseKey)
         trialComponents.append(trialInstrText)
         trialComponents.append(restaurantText)
         trialComponents.append(foodImg)
         trialComponents.append(sickImg)
         trialComponents.append(notsickImg)
-        trialComponents.append(responseKey)
         trialComponents.append(ITI)
         trialComponents.append(sickHighlight)
         trialComponents.append(notsickHighlight)
@@ -890,6 +897,32 @@ for thisRun in runs:
             if fixationITIText.status == STARTED and t >= (0 + (itiTime-win.monitorFramePeriod*0.75)): #most of one frame period left
                 fixationITIText.setAutoDraw(False)
             
+            # *responseKey* updates
+            if t >= itiTime and responseKey.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                responseKey.tStart = t  # underestimates by a little under one frame
+                responseKey.frameNStart = frameN  # exact frame index
+                responseKey.status = STARTED
+                # keyboard checking is just starting
+                responseKey.clock.reset()  # now t=0
+                event.clearEvents(eventType='keyboard')
+            if responseKey.status == STARTED and t >= (itiTime + (3-win.monitorFramePeriod*0.75)): #most of one frame period left
+                responseKey.status = STOPPED
+            if responseKey.status == STARTED:
+                theseKeys = event.getKeys(keyList=['left', 'right'])
+                
+                # check for quit:
+                if "escape" in theseKeys:
+                    endExpNow = True
+                if len(theseKeys) > 0:  # at least one key was pressed
+                    responseKey.keys = theseKeys[-1]  # just the last key pressed
+                    responseKey.rt = responseKey.clock.getTime()
+                    # was this 'correct'?
+                    if (responseKey.keys == str(corrAns)) or (responseKey.keys == corrAns):
+                        responseKey.corr = 1
+                    else:
+                        responseKey.corr = 0
+            
             # *trialInstrText* updates
             if t >= itiTime and trialInstrText.status == NOT_STARTED:
                 # keep track of start time/frame for later
@@ -934,32 +967,6 @@ for thisRun in runs:
                 notsickImg.setAutoDraw(True)
             if notsickImg.status == STARTED and t >= (itiTime + (4-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickImg.setAutoDraw(False)
-            
-            # *responseKey* updates
-            if t >= itiTime and responseKey.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                responseKey.tStart = t  # underestimates by a little under one frame
-                responseKey.frameNStart = frameN  # exact frame index
-                responseKey.status = STARTED
-                # keyboard checking is just starting
-                responseKey.clock.reset()  # now t=0
-                event.clearEvents(eventType='keyboard')
-            if responseKey.status == STARTED and t >= (itiTime + (4-win.monitorFramePeriod*0.75)): #most of one frame period left
-                responseKey.status = STOPPED
-            if responseKey.status == STARTED:
-                theseKeys = event.getKeys(keyList=['left', 'right'])
-                
-                # check for quit:
-                if "escape" in theseKeys:
-                    endExpNow = True
-                if len(theseKeys) > 0:  # at least one key was pressed
-                    responseKey.keys = theseKeys[-1]  # just the last key pressed
-                    responseKey.rt = responseKey.clock.getTime()
-                    # was this 'correct'?
-                    if (responseKey.keys == str(corrAns)) or (responseKey.keys == corrAns):
-                        responseKey.corr = 1
-                    else:
-                        responseKey.corr = 0
             
             # *sickHighlight* updates
             if t >= itiTime and sickHighlight.status == NOT_STARTED:
@@ -1559,6 +1566,7 @@ thisExp.addData('key_resp_2.keys',key_resp_2.keys)
 if key_resp_2.keys != None:  # we had a response
     thisExp.addData('key_resp_2.rt', key_resp_2.rt)
 thisExp.nextEntry()
+
 
 
 
