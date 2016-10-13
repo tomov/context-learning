@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 12 21:08:21 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct 13 14:44:25 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -33,7 +33,7 @@ filename = _thisDir + os.sep + 'data/%s_%s_%s' %(expInfo['participant'], expName
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+    originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 #save a log file for detail verbose info
@@ -524,7 +524,7 @@ thisExp.nextEntry()
 
 # set up handler to look after randomisation of conditions etc
 runs = data.TrialHandler(nReps=1, method='random', 
-    extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+    extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
     trialList=data.importConditions('runs.xlsx', selection='range(1,10)'),
     seed=None, name='runs')
 thisExp.addLoop(runs)  # add the loop to the experiment
@@ -641,7 +641,20 @@ for thisRun in runs:
         #
         contextRoles = [run['contextRole'] for run in runs.trialList]
         print 'original contextRoles = ', contextRoles
-        shuffle(contextRoles)
+        # do a psychopy random (NOT fullRandom) shuffle --
+        # put contexts in 3 groups (each with all 3 context roles)
+        # and shuffle each group separately,
+        # e.g. b c a  b a c  a c b
+        #
+        assert len(contextRoles) % 3 == 0
+        shuffledContextRoles = []
+        for i in range(3):
+            bunch = contextRoles[i * 3 : (i + 1) * 3]
+            assert len(bunch) == 3
+            assert len(set(bunch)) == 3
+            shuffle(bunch)
+            shuffledContextRoles.extend(bunch)
+        contextRoles = shuffledContextRoles
         print 'Shuffled context roles = ', contextRoles
         # set the flag so we don't run this code again
         #
@@ -725,7 +738,7 @@ for thisRun in runs:
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=5, method='fullRandom', 
-        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
         trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
@@ -1142,7 +1155,7 @@ for thisRun in runs:
     
     # set up handler to look after randomisation of conditions etc
     test_trials = data.TrialHandler(nReps=1, method='fullRandom', 
-        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/research/context/psychopy-2/context.psyexp',
+        extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
         trialList=data.importConditions(contextRole + '.xlsx', selection='range(6,10)'),
         seed=None, name='test_trials')
     thisExp.addLoop(test_trials)  # add the loop to the experiment
