@@ -22,7 +22,8 @@ Sigma_n{1} = sigma_w^2 * eye(D);
 Sigma_n{2} = repmat(sigma_w^2 * eye(D), 1, 1, K); % note the third dimension is the context
 Sigma_n{3} = sigma_w^2 * eye(D + K);
 
-P_n = [1 1 1] / 3; % posterior P(M | h_1:n)
+P_n = [1 1 1]; % posterior P(M | h_1:n)
+P_n = P_n / sum(P_n);
 
 % Store history for plotting and analysis
 %
