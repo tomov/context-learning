@@ -46,7 +46,7 @@ test_c = [1; 3; 1; 3]; % test contexts: c1 c3 c1 c3
 
 Ms = [];
 
-for g=1:1 % for each group
+for g=3:3 % for each group
     fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
     [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g}, learning_rate, softmax_temp, false);
@@ -88,7 +88,7 @@ for g=1:1 % for each group
         xlabel('n (trial #)');
         ylabel('ww_n');
         title('Weight matrix on each trial for M2');
-        legend({'x1c1', 'x2c1', 'x1c2', 'x2c2'});
+        legend({'x1c1', 'x2c1', 'c1', 'x1c2', 'x2c2', 'c2'});
 
         % Plot weight matrix ww for M3
         %
