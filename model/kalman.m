@@ -1,6 +1,6 @@
 clear all;
 
-DO_PLOT = false;
+DO_PLOT = true;
 
 learning_rate = 0.1; % 1 in paper; 0.1 is better
 softmax_temp = 2; % 1 in paper; 2 is better
@@ -46,7 +46,7 @@ test_c = [1; 3; 1; 3]; % test contexts: c1 c3 c1 c3
 
 Ms = [];
 
-for g=1:3 % for each group
+for g=1:1 % for each group
     fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
     [choices, P_n, ww_n, P, ww] = train(x{g}, c{g}, r{g}, learning_rate, softmax_temp, false);
@@ -70,7 +70,7 @@ for g=1:3 % for each group
         xlabel('n (trial #)');
         ylabel('P(M | h_{1:n})');
         title('Posterior probability after each trial');
-        legend({'M1', 'M2', 'M3'});
+        legend({'M1', 'M2', 'M3', 'M4'});
 
         % Plot weight matrix ww for M1
         %
@@ -98,6 +98,15 @@ for g=1:3 % for each group
         ylabel('ww_n');
         title('Weight matrix on each trial for M3');
         legend({'x1', 'x2', 'c1', 'c2'});    
+
+        % Plot weight matrix ww for M4
+        %
+        subplot(3, 2, 5);
+        plot(ww{4}, 'o-', 'LineWidth', 2);
+        xlabel('n (trial #)');
+        ylabel('ww_n');
+        title('Weight matrix on each trial for M4');
+        legend({'c1', 'c2'});    
     end
 end
 

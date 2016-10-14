@@ -17,9 +17,11 @@ model.pred = []; % the choice probability (not the actual choice) for each trial
 model.P1 = []; % posterior P(M1 | ...) at each trial
 model.P2 = []; % posterior P(M2 | ...) at each trial
 model.P3 = []; % posterior P(M3 | ...) at each trial
+model.P4 = []; % posterior P(M4 | ...) at each trial
 model.ww1 = []; % weights for M1 
 model.ww2 = []; % weights for M2
 model.ww3 = []; % weights for M3
+model.ww4 = []; % weights for M4
 
 for who = subjects
     for condition = unique(contextRole)'
@@ -54,9 +56,11 @@ for who = subjects
             model.P1(which_train) = P(:,1);
             model.P2(which_train) = P(:,2);
             model.P3(which_train) = P(:,3);
+            model.P4(which_train) = P(:,4);
             model.ww1(which_train, :) = ww{1};
             model.ww2(which_train, :) = ww{2};
             model.ww3(which_train, :) = ww{3};
+            model.ww4(which_train, :) = ww{4};
 
             % See what the model predicts for the test trials of that run
             %
@@ -92,8 +96,14 @@ model.pred = model.pred';
 model.P1 = model.P1';
 model.P2 = model.P2';
 model.P3 = model.P3';
+model.P4 = model.P4';
 
-%% Do some plotting
+
+
+
+
+%
+% Do some plotting
 %
           
 if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always create a new figure
@@ -101,6 +111,43 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
 end
 
 next_subplot_idx = 1; % so you can reorder them by simply rearranging the code
+
+%
+% Outcome probabilities in training phase
+%
+
+Ms = [];
+SEMs = [];
+
+for context = contextRoles
+    which = which_rows & isTrain == 1 & strcmp(contextRole, context);
+    
+    x1c1 = strcmp(corrAns(which & cueId == 0 & contextId == 0), 'left');
+    x1c2 = strcmp(corrAns(which & cueId == 0 & contextId == 1), 'left');
+    x2c1 = strcmp(corrAns(which & cueId == 1 & contextId == 0), 'left');
+    x2c2 = strcmp(corrAns(which & cueId == 1 & contextId == 1), 'left');
+
+    if ~exist('analyze_with_gui') || ~analyze_with_gui
+        assert(length(x1c1) == roundsPerContext * trialsNReps * length(subjects));
+        assert(length(x1c2) == roundsPerContext * trialsNReps * length(subjects));
+        assert(length(x2c1) == roundsPerContext * trialsNReps * length(subjects));
+        assert(length(x2c2) == roundsPerContext * trialsNReps * length(subjects));
+    end
+
+    M = get_means(x1c1, x1c2, x2c1, x2c2);
+    SEM = get_sems(x1c1, x1c2, x2c1, x2c2);
+    %M = mean([x1c1 x1c2 x2c1 x2c2]);
+    %SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
+    Ms = [Ms; M];
+    SEMs = [SEMs; SEM];
+end
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(Ms, SEMs, 1, contextRoles, 'P(sick outcome) in training');
+ylabel('Sick probability');
+legend({'x_1c_1', 'x_1c_2', 'x_2c_1', 'x_2c_2'});
+
 
 %
 % Choice probabilities in test phase for SUBJECTS
@@ -258,7 +305,8 @@ for condition = contextRoles
         P1_n = model.P1(which);
         P2_n = model.P2(which);
         P3_n = model.P3(which);
-        P = [P; mean(P1_n) mean(P2_n) mean(P3_n)];
+        P4_n = model.P4(which);
+        P = [P; mean(P1_n) mean(P2_n) mean(P3_n) mean(P4_n)];
     end
 
     subplot(3, 5, next_subplot_idx);
@@ -267,7 +315,7 @@ for condition = contextRoles
     xlabel('n (trial #)');
     ylabel('P(M | h_{1:n})');
     title(strcat('Posterior after each trial for ', {' '}, condition));
-    legend({'M1', 'M2', 'M3'});
+    legend({'M1', 'M2', 'M3', 'M4'});
 
 end
 
@@ -285,7 +333,8 @@ for condition = contextRoles
         ww1_n = model.ww1(which, :);
         ww2_n = model.ww2(which, :);
         ww3_n = model.ww3(which, :);
-        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n)];
+        ww4_n = model.ww4(which, :);
+        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n) mean(ww4_n)];
     end
 
     subplot(3, 5, next_subplot_idx);
@@ -294,6 +343,6 @@ for condition = contextRoles
     xlabel('n (trial #)');
     ylabel('ww_n');
     title(strcat('Weights after each trial for ', {' '}, condition));
-    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2'});
+    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2', 'M4, c1', 'M4, c2'});
 
 end
