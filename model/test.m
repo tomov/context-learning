@@ -1,4 +1,4 @@
-function [choices] = test(x, c, P_n, ww_n, softmax_temp)
+function [choices] = test(x, k, P_n, ww_n, softmax_temp)
 
 % constants
 %
@@ -16,13 +16,14 @@ value = @(x_n, xx_n, k) (x_n' * ww_n{1}) * P_n(1) + ... % M1
 choices = [];
                     
 for n = 1:N
-    x_n = x(n, :)';
-    c_n = c(n, :);
-    k = c_n;
-    xx_n = [x_n; zeros(K, 1)];
-    xx_n(D + k) = 1;
-
-    V_n = value(x_n, xx_n, k);
+    x_n = x(n, :)'; % stimulus at trial n
+    k_n = k(n); % context idx at trial n
+    c_n = zeros(K, 1);
+    c_n(k_n) = 1; % context vector like x_n
+    xx_n = [x_n; c_n]; % augmented stimulus + context vector
+    
+    
+    V_n = value(x_n, xx_n, k_n);
     out = predict(V_n);
     choices = [choices; out];
 end
