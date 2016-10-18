@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 18 19:23:00 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 18 19:32:39 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -157,7 +157,7 @@ trainTrialFixedTime = 4 # stim presentation + feedback
 testTrialFixedTime = 5 # stim presentation
 nRuns = 9
 
-nTrainTrialsPerRun = 20
+nTrainTrialsPerRun = 4
 # in practice mode, only run 1 rep (4 trials)
 # also see End Routine
 if expInfo['isPractice'] == 'yes':
@@ -354,54 +354,49 @@ test_2Clock = core.Clock()
 
 
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
-fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
-    text='+',    font='Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
-    depth=-7.0)
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
-    text='Predict whether the customer will get sick from this food.',    font='Arial',
+    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color='white', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-7.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font='Arial Bold',
+    text='default text',    font=u'Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color='pink', colorSpace='rgb', opacity=1,
-    depth=-9.0)
+    color=u'pink', colorSpace='rgb', opacity=1,
+    depth=-8.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-10.0)
+    texRes=128, interpolate=True, depth=-9.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-12.0)
+    texRes=128, interpolate=True, depth=-11.0)
 notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     image=os.path.join('images', 'smiley.png'), mask=None,
     ori=0, pos=[+0.5, -0.6], size=[0.3, 0.45],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-13.0)
+    texRes=128, interpolate=True, depth=-12.0)
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
-    depth=-14.0)
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-13.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
-    text='_',    font='Arial',
+    text=u'_',    font=u'Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-14.0)
+fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
+    text=u'+',    font=u'Arial',
+    pos=[0, 0], height=0.1, wrapWidth=None,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-15.0)
-timeoutText_2 = visual.TextStim(win=win, ori=0, name='timeoutText_2',
-    text='TIMEOUT',    font='Arial Bold',
-    pos=[0, 0], height=0.15, wrapWidth=None,
-    color='red', colorSpace='rgb', opacity=1,
-    depth=-16.0)
 
 # Initialize components for Routine "waitForFinish"
 waitForFinishClock = core.Clock()
@@ -738,9 +733,9 @@ for thisRun in runs:
         runs.finished = True
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=5, method='fullRandom', 
+    trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1127,7 +1122,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 5 repeats of 'trials'
+    # completed 1 repeats of 'trials'
     
     
     #------Prepare to start Routine "test_warning"-------
@@ -1207,12 +1202,14 @@ for thisRun in runs:
         frameN = -1
         # update component parameters for each repeat
         trials.addData('trialStartWallTime', time.ctime())
+        # invalid
+        """
         # clear the feedback
         isFeedbackShown_2 = False
         timeoutText_2.setOpacity(0)
         # hack to re-render the texts with new opacity
         timeoutText_2.setText(timeoutText_2.text)
-        
+        """
         # don't highlight anything initially
         #
         sickHighlight_2.setOpacity(0)
@@ -1222,6 +1219,8 @@ for thisRun in runs:
         notsickHighlight_2.setText(notsickHighlight_2.text)
         # save the last response so we don't re-render the _
         lastReponseKey_2 = None
+        
+        hasResponded_2 = False
         print '(test) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
@@ -1246,7 +1245,6 @@ for thisRun in runs:
         # keep track of which components have finished
         test_2Components = []
         test_2Components.append(ITI_2)
-        test_2Components.append(fixationJitterText_2)
         test_2Components.append(trialInstrText_2)
         test_2Components.append(restaurantText_2)
         test_2Components.append(foodImg_2)
@@ -1255,7 +1253,7 @@ for thisRun in runs:
         test_2Components.append(notsickImg_2)
         test_2Components.append(sickHighlight_2)
         test_2Components.append(notsickHighlight_2)
-        test_2Components.append(timeoutText_2)
+        test_2Components.append(fixationJitterText_2)
         for thisComponent in test_2Components:
             if hasattr(thisComponent, 'status'):
                 thisComponent.status = NOT_STARTED
@@ -1268,6 +1266,8 @@ for thisRun in runs:
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
+            #invalid
+            """
             # show user some feedback ONLY if timeout
             # otherwise we don't show feedback on test trials
             #
@@ -1278,9 +1278,12 @@ for thisRun in runs:
                     timeoutText_2.setText(timeoutText_2.text)
                 else: # response was made
                     continueRoutine = False
+            """
             # highlight subject's response
             #
-            if responseKey_2.keys and responseKey_2.keys != lastReponseKey_2:
+            if responseKey_2.keys and not hasResponded_2:
+                hasResponded_2 = True
+            
                 if responseKey_2.keys == 'left': # sick
                     sickHighlight_2.opacity = 1
                     notsickHighlight_2.opacity = 0
@@ -1298,44 +1301,35 @@ for thisRun in runs:
             
             
             
-            # *fixationJitterText_2* updates
-            if t >= 0 and fixationJitterText_2.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                fixationJitterText_2.tStart = t  # underestimates by a little under one frame
-                fixationJitterText_2.frameNStart = frameN  # exact frame index
-                fixationJitterText_2.setAutoDraw(True)
-            if fixationJitterText_2.status == STARTED and t >= (0 + (itiTime_2-win.monitorFramePeriod*0.75)): #most of one frame period left
-                fixationJitterText_2.setAutoDraw(False)
-            
             # *trialInstrText_2* updates
-            if t >= itiTime_2 and trialInstrText_2.status == NOT_STARTED:
+            if t >= 0 and trialInstrText_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 trialInstrText_2.tStart = t  # underestimates by a little under one frame
                 trialInstrText_2.frameNStart = frameN  # exact frame index
                 trialInstrText_2.setAutoDraw(True)
-            if trialInstrText_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if trialInstrText_2.status == STARTED and t >= (0 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 trialInstrText_2.setAutoDraw(False)
             
             # *restaurantText_2* updates
-            if t >= itiTime_2 and restaurantText_2.status == NOT_STARTED:
+            if t >= 0 and restaurantText_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 restaurantText_2.tStart = t  # underestimates by a little under one frame
                 restaurantText_2.frameNStart = frameN  # exact frame index
                 restaurantText_2.setAutoDraw(True)
-            if restaurantText_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if restaurantText_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 restaurantText_2.setAutoDraw(False)
             
             # *foodImg_2* updates
-            if t >= itiTime_2 and foodImg_2.status == NOT_STARTED:
+            if t >= 0 and foodImg_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 foodImg_2.tStart = t  # underestimates by a little under one frame
                 foodImg_2.frameNStart = frameN  # exact frame index
                 foodImg_2.setAutoDraw(True)
-            if foodImg_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if foodImg_2.status == STARTED and t >= (0 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 foodImg_2.setAutoDraw(False)
             
             # *responseKey_2* updates
-            if t >= itiTime_2 and responseKey_2.status == NOT_STARTED:
+            if t >= 0 and responseKey_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 responseKey_2.tStart = t  # underestimates by a little under one frame
                 responseKey_2.frameNStart = frameN  # exact frame index
@@ -1343,7 +1337,7 @@ for thisRun in runs:
                 # keyboard checking is just starting
                 responseKey_2.clock.reset()  # now t=0
                 event.clearEvents(eventType='keyboard')
-            if responseKey_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if responseKey_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 responseKey_2.status = STOPPED
             if responseKey_2.status == STARTED:
                 theseKeys = event.getKeys(keyList=['left', 'right'])
@@ -1352,60 +1346,61 @@ for thisRun in runs:
                 if "escape" in theseKeys:
                     endExpNow = True
                 if len(theseKeys) > 0:  # at least one key was pressed
-                    responseKey_2.keys = theseKeys[-1]  # just the last key pressed
-                    responseKey_2.rt = responseKey_2.clock.getTime()
-                    # was this 'correct'?
-                    if (responseKey_2.keys == str(corrAns)) or (responseKey_2.keys == corrAns):
-                        responseKey_2.corr = 1
-                    else:
-                        responseKey_2.corr = 0
+                    if responseKey_2.keys == []:  # then this was the first keypress
+                        responseKey_2.keys = theseKeys[0]  # just the first key pressed
+                        responseKey_2.rt = responseKey_2.clock.getTime()
+                        # was this 'correct'?
+                        if (responseKey_2.keys == str(corrAns)) or (responseKey_2.keys == corrAns):
+                            responseKey_2.corr = 1
+                        else:
+                            responseKey_2.corr = 0
             
             # *sickImg_2* updates
-            if t >= itiTime_2 and sickImg_2.status == NOT_STARTED:
+            if t >= 0 and sickImg_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 sickImg_2.tStart = t  # underestimates by a little under one frame
                 sickImg_2.frameNStart = frameN  # exact frame index
                 sickImg_2.setAutoDraw(True)
-            if sickImg_2.status == STARTED and t >= (itiTime_2 + (5.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickImg_2.status == STARTED and t >= (0 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickImg_2.setAutoDraw(False)
             
             # *notsickImg_2* updates
-            if t >= itiTime_2 and notsickImg_2.status == NOT_STARTED:
+            if t >= 0 and notsickImg_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 notsickImg_2.tStart = t  # underestimates by a little under one frame
                 notsickImg_2.frameNStart = frameN  # exact frame index
                 notsickImg_2.setAutoDraw(True)
-            if notsickImg_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickImg_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickImg_2.setAutoDraw(False)
             
             # *sickHighlight_2* updates
-            if t >= itiTime_2 and sickHighlight_2.status == NOT_STARTED:
+            if t >= 0 and sickHighlight_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 sickHighlight_2.tStart = t  # underestimates by a little under one frame
                 sickHighlight_2.frameNStart = frameN  # exact frame index
                 sickHighlight_2.setAutoDraw(True)
-            if sickHighlight_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if sickHighlight_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 sickHighlight_2.setAutoDraw(False)
             
             # *notsickHighlight_2* updates
-            if t >= itiTime_2 and notsickHighlight_2.status == NOT_STARTED:
+            if t >= 0 and notsickHighlight_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 notsickHighlight_2.tStart = t  # underestimates by a little under one frame
                 notsickHighlight_2.frameNStart = frameN  # exact frame index
                 notsickHighlight_2.setAutoDraw(True)
-            if notsickHighlight_2.status == STARTED and t >= (itiTime_2 + (5-win.monitorFramePeriod*0.75)): #most of one frame period left
+            if notsickHighlight_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
                 notsickHighlight_2.setAutoDraw(False)
             
-            # *timeoutText_2* updates
-            if t >= itiTime_2 + 5 and timeoutText_2.status == NOT_STARTED:
+            # *fixationJitterText_2* updates
+            if t >= 6 and fixationJitterText_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
-                timeoutText_2.tStart = t  # underestimates by a little under one frame
-                timeoutText_2.frameNStart = frameN  # exact frame index
-                timeoutText_2.setAutoDraw(True)
-            if timeoutText_2.status == STARTED and t >= (itiTime_2 + 5 + (1.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-                timeoutText_2.setAutoDraw(False)
+                fixationJitterText_2.tStart = t  # underestimates by a little under one frame
+                fixationJitterText_2.frameNStart = frameN  # exact frame index
+                fixationJitterText_2.setAutoDraw(True)
+            if fixationJitterText_2.status == STARTED and t >= (6 + (itiTime_2-win.monitorFramePeriod*0.75)): #most of one frame period left
+                fixationJitterText_2.setAutoDraw(False)
             # *ITI_2* period
-            if t >= 0 and ITI_2.status == NOT_STARTED:
+            if t >= 6 and ITI_2.status == NOT_STARTED:
                 # keep track of start time/frame for later
                 ITI_2.tStart = t  # underestimates by a little under one frame
                 ITI_2.frameNStart = frameN  # exact frame index
