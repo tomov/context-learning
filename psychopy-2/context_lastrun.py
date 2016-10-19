@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 18 19:32:39 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 19 13:28:50 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -130,6 +130,16 @@ trialClock = core.Clock()
 import time
 expInfo['expStartWallTime'] = time.ctime()
 
+def addFmriClockData(column = 'fmriTime', add = 0): # for tracking different events
+    thisExp.addData(column, fmriClock.getTime() + add)
+
+def addExtraData(): # extra info we want to record on every train/test trial
+    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
+    thisExp.addData('contextId', contextId)
+    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
+    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
+    thisExp.addData('cueId', cueId)
+    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 
 # different jitter distributions depending on mode 
 #
@@ -257,24 +267,16 @@ def flushEntries():
         nextEntryToFlush += 1
 
 
-def addExtraData():
-    thisExp.addData('fmriTime', fmriClock.getTime())
-    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
-    thisExp.addData('contextId', contextId)
-    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
-    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
-    thisExp.addData('cueId', cueId)
-    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-8.0)
 restaurantText = visual.TextStim(win=win, ori=0, name='restaurantText',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'pink', colorSpace='rgb', opacity=1,
+    color='pink', colorSpace='rgb', opacity=1,
     depth=-9.0)
 foodImg = visual.ImageStim(win=win, name='foodImg',
     image='sin', mask=None,
@@ -296,45 +298,45 @@ notsickImg = visual.ImageStim(win=win, name='notsickImg',
     texRes=128, interpolate=True, depth=-12.0)
 ITI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI')
 sickHighlight = visual.TextStim(win=win, ori=0, name='sickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 notsickHighlight = visual.TextStim(win=win, ori=0, name='notsickHighlight',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
 correctText = visual.TextStim(win=win, ori=0, name='correctText',
-    text=u'CORRECT',    font=u'Arial Bold',
+    text='CORRECT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'blue', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-16.0)
 wrongText = visual.TextStim(win=win, ori=0, name='wrongText',
-    text=u'WRONG',    font=u'Arial Bold',
+    text='WRONG',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-17.0)
 timeoutText = visual.TextStim(win=win, ori=0, name='timeoutText',
-    text=u'TIMEOUT',    font=u'Arial Bold',
+    text='TIMEOUT',    font='Arial Bold',
     pos=[0, -0.4], height=0.15, wrapWidth=None,
-    color=u'red', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-18.0)
 gotSickText = visual.TextStim(win=win, ori=0, name='gotSickText',
-    text=u'The customer got sick!',    font=u'Arial',
+    text='The customer got sick!',    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-19.0)
 didntGetSickText = visual.TextStim(win=win, ori=0, name='didntGetSickText',
-    text=u"The customer didn't get sick!",    font=u'Arial',
+    text="The customer didn't get sick!",    font='Arial',
     pos=[0, -0.55], height=0.075, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-20.0)
 ISI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ISI')
 fixationITIText = visual.TextStim(win=win, ori=0, name='fixationITIText',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-22.0)
 
 # Initialize components for Routine "test_warning"
@@ -355,14 +357,14 @@ test_2Clock = core.Clock()
 
 ITI_2 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='ITI_2')
 trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
-    text=u'Predict whether the customer will get sick from this food.',    font=u'Arial',
+    text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-7.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
-    text='default text',    font=u'Arial Bold',
+    text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
-    color=u'pink', colorSpace='rgb', opacity=1,
+    color='pink', colorSpace='rgb', opacity=1,
     depth=-8.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
@@ -383,19 +385,19 @@ notsickImg_2 = visual.ImageStim(win=win, name='notsickImg_2',
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-12.0)
 sickHighlight_2 = visual.TextStim(win=win, ori=0, name='sickHighlight_2',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[-0.5, -0.35], height=1.0, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-13.0)
 notsickHighlight_2 = visual.TextStim(win=win, ori=0, name='notsickHighlight_2',
-    text=u'_',    font=u'Arial',
+    text='_',    font='Arial',
     pos=[0.5, -0.35], height=1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-14.0)
 fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_2',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
 
 # Initialize components for Routine "waitForFinish"
@@ -735,7 +737,7 @@ for thisRun in runs:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -770,6 +772,8 @@ for thisRun in runs:
         timeoutText.setText(timeoutText.text)
         gotSickText.setText(gotSickText.text)
         didntGetSickText.setText(didntGetSickText.text)
+        thisExp.addData('trialOrTest', 'trial')
+        addExtraData()
         # don't highlight anything initially
         #
         sickHighlight.setOpacity(0)
@@ -788,6 +792,7 @@ for thisRun in runs:
         respTime = maxRespTime # by default it's timeout
         hasResponded = False
         
+        addFmriClockData('choiceOnset')
         print '(train) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \
@@ -797,6 +802,7 @@ for thisRun in runs:
         nextItiIdx += 1
         
         print '(train) iti time = ', itiTime
+        thisExp.addData('itiTime', itiTime)
         
         #print runs.thisN
         #print trials.thisN
@@ -815,8 +821,6 @@ for thisRun in runs:
         
         
         
-        thisExp.addData('trialOrTest', 'trial')
-        addExtraData()
         assert contextRolesWereShuffled
         responseKey = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey.status = NOT_STARTED
@@ -852,11 +856,17 @@ for thisRun in runs:
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
-            # show user some feedback
+            # show user some feedback, and log the ISI / feedback times
+            # TODO FIXME stuff is hardcoded here
             #
-            if t >= respTime + 1 and not isFeedbackShown: # TODO don't hardcode
+            if t >= respTime + 1 and not isFeedbackShown: # TODO ISI time (1) is hardcoded
                 isFeedbackShown = True
                 print '      Feedback time: ', t
+                addFmriClockData('isiOffset')
+                addFmriClockData('feedbackOnset')
+                addFmriClockData('feedbackOffset', 1) # TODO feedback time (1) is hardcoded
+                addFmriClockData('itiOnset', 1) # TODO same
+            
                 if not responseKey.keys: # no response was made
                     timeoutText.setOpacity(1)
                     timeoutText.setText(timeoutText.text)
@@ -887,7 +897,8 @@ for thisRun in runs:
                     gotSickText.setText(gotSickText.text)
                     didntGetSickText.setText(didntGetSickText.text)
             
-            # highlight subject's response
+            
+            # highlight subject's response and log the response time
             #
             if responseKey.keys and not hasResponded:
                 hasResponded = True
@@ -905,12 +916,19 @@ for thisRun in runs:
                 sickHighlight.setText(sickHighlight.text)
                 notsickHighlight.setText(notsickHighlight.text)
             
-                print '        Response time: ', t
                 respTime = t
                 residual = maxRespTime - respTime
                 itiTime += residual
+            
+                print '        Response time: ', respTime
                 print '           residual = ', residual
                 print '           new ITI = ', itiTime
+            
+                addFmriClockData('choiceOffset')
+                addFmriClockData('isiOnset')
+                thisExp.addData('responseTime', respTime)
+                thisExp.addData('residualTime', residual)
+                thisExp.addData('newItiTime', itiTime)
             
             
             
@@ -1100,12 +1118,12 @@ for thisRun in runs:
         trials.addData('trialEndWallTime', time.ctime())
         
         
+        addFmriClockData('itiOffset')
         # in practice mode, only run 1 rep (4 trials)
         #
         if expInfo['isPractice'] == 'yes' and trials.thisN >= 3:
             trials.finished = True
         flushEntries()
-        
         
         # check responses
         if responseKey.keys in ['', [], None]:  # No response was made
@@ -1221,6 +1239,10 @@ for thisRun in runs:
         lastReponseKey_2 = None
         
         hasResponded_2 = False
+        
+        addFmriClockData('choiceOnset')
+        addFmriClockData('isiOffset', 6) # TODO FIXME hardcoded trial duration
+        addFmriClockData('itiOnset', 6) # TODO FIXME hardcoded trial duration
         print '(test) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
@@ -1297,6 +1319,15 @@ for thisRun in runs:
                 # hack to re-render the text with new opacity
                 sickHighlight_2.setText(sickHighlight_2.text)
                 notsickHighlight_2.setText(notsickHighlight_2.text)
+            
+                respTime_2 = t
+            
+                print '        TEST Response time: ', respTime_2
+            
+                addFmriClockData('choiceOffset')
+                addFmriClockData('isiOnset')
+                thisExp.addData('responseTime', respTime_2)
+            
             
             
             
@@ -1431,7 +1462,7 @@ for thisRun in runs:
                 thisComponent.setAutoDraw(False)
         trials.addData('trialEndWallTime', time.ctime())
         
-        
+        addFmriClockData('itiOffset')
         
         flushEntries()
         
