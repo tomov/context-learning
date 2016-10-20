@@ -4,6 +4,8 @@
 # Usage: python parse.py [input csv file] [output csv file] -a
 # The former creates a new file (or overwrites it) and adds headers for column names
 # The latter appends to an existing file without adding headers
+#
+# Optionally -f to parse the extra fMRI-synced event onsets/offsets
 
 import os
 import sys
@@ -52,6 +54,16 @@ fmri_colnames = [
 
 assert len(colnames) == len(colformat.split(' ')), "Make sure to update colformat here and in the MATLAB script that parses the file"
 
+# To convert from fMRI responses to behavioral responses
+#
+corrAnsMapping = {
+    'left': 'left',
+    'right': 'right',
+    '1': 'left',
+    '2': 'right',
+    'None': 'None'
+}
+
 # which columns to export from the csv
 #
 def parseRow(entry, isFmri=False):
@@ -75,7 +87,7 @@ def parseRow(entry, isFmri=False):
         entry['contextId'],
         entry['cueId'],
         entry['sick'],
-        entry['corrAns'],
+        corrAnsMapping[entry['corrAns']],
         entry['responseKey.keys'] if isTrain else entry['responseKey_2.keys'],
         entry['responseKey.rt'] if isTrain else entry['responseKey_2.rt'],
         entry['responseKey.corr'] if isTrain else entry['responseKey_2.corr'],

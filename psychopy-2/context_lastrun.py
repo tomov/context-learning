@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 19 13:28:50 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 19 22:20:06 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -140,6 +140,13 @@ def addExtraData(): # extra info we want to record on every train/test trial
     thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
     thisExp.addData('cueId', cueId)
     thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
+if expInfo['mriMode'] != 'off': # we're scanning!
+    assert expInfo['mriMode'] == 'scan'
+    sickButton = '1' # index finger
+    notsickButton = '2' # middle finger
+else: # not scanning => behavioral
+    sickButton = 'left'
+    notsickButton = 'right'
 
 # different jitter distributions depending on mode 
 #
@@ -360,18 +367,18 @@ trialInstrText_2 = visual.TextStim(win=win, ori=0, name='trialInstrText_2',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
     color='white', colorSpace='rgb', opacity=1,
-    depth=-7.0)
+    depth=-8.0)
 restaurantText_2 = visual.TextStim(win=win, ori=0, name='restaurantText_2',
     text='default text',    font='Arial Bold',
     pos=[0, +0.35], height=0.1, wrapWidth=None,
     color='pink', colorSpace='rgb', opacity=1,
-    depth=-8.0)
+    depth=-9.0)
 foodImg_2 = visual.ImageStim(win=win, name='foodImg_2',
     image='sin', mask=None,
     ori=0, pos=[0, 0.0], size=[0.5, 0.5],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-9.0)
+    texRes=128, interpolate=True, depth=-10.0)
 sickImg_2 = visual.ImageStim(win=win, name='sickImg_2',
     image=os.path.join('images', 'sick.png'), mask=None,
     ori=0, pos=[-0.5, -0.6], size=[0.3, 0.45],
@@ -477,7 +484,7 @@ while continueRoutine and routineTimer.getTime() > 0:
     if startExpResp.status == STARTED and t >= (120-win.monitorFramePeriod*0.75): #most of one frame period left
         startExpResp.status = STOPPED
     if startExpResp.status == STARTED:
-        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
+        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space', '1', '2'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -774,6 +781,19 @@ for thisRun in runs:
         didntGetSickText.setText(didntGetSickText.text)
         thisExp.addData('trialOrTest', 'trial')
         addExtraData()
+        addFmriClockData('choiceOnset')
+        
+        # in fMRI mode, remap the correct ans 'left' => 1, 'right' => 2 
+        # this is crucial to give correct feedback!
+        #
+        if expInfo['mriMode'] != 'off': # we're scanning!
+            assert expInfo['mriMode'] == 'scan'
+            if corrAns == 'left':
+                corrAns = '1'
+            elif corrAns == 'right':
+                corrAns = '2'
+            
+        
         # don't highlight anything initially
         #
         sickHighlight.setOpacity(0)
@@ -791,8 +811,6 @@ for thisRun in runs:
         maxRespTime = 3
         respTime = maxRespTime # by default it's timeout
         hasResponded = False
-        
-        addFmriClockData('choiceOnset')
         print '(train) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \
@@ -902,25 +920,14 @@ for thisRun in runs:
             #
             if responseKey.keys and not hasResponded:
                 hasResponded = True
-                if responseKey.keys == 'left': # sick
-                    sickHighlight.opacity = 1
-                    notsickHighlight.opacity = 0
-                elif responseKey.keys == 'right': # not sick
-                    sickHighlight.opacity = 0
-                    notsickHighlight.opacity = 1
-                else:
-                    assert False, 'Can only have one response, left or right'
-                # save last response so we don't re-render
-                lastReponseKey = responseKey.keys 
-                # hack to re-render the text with new opacity
-                sickHighlight.setText(sickHighlight.text)
-                notsickHighlight.setText(notsickHighlight.text)
             
-                respTime = t
+                # do the timing first
+                #
+                respTime = responseKey.rt
                 residual = maxRespTime - respTime
                 itiTime += residual
             
-                print '        Response time: ', respTime
+                print '        train response highlight: ', t
                 print '           residual = ', residual
                 print '           new ITI = ', itiTime
             
@@ -929,6 +936,22 @@ for thisRun in runs:
                 thisExp.addData('responseTime', respTime)
                 thisExp.addData('residualTime', residual)
                 thisExp.addData('newItiTime', itiTime)
+            
+                # then highlight choice
+                #
+                if responseKey.keys == sickButton: # sick
+                    sickHighlight.opacity = 1
+                    notsickHighlight.opacity = 0
+                elif responseKey.keys == notsickButton: # not sick
+                    sickHighlight.opacity = 0
+                    notsickHighlight.opacity = 1
+                else:
+                    assert False, 'Can only have one response, sick or not sick'
+                # save last response so we don't re-render
+                lastReponseKey = responseKey.keys 
+                # hack to re-render the text with new opacity
+                sickHighlight.setText(sickHighlight.text)
+                notsickHighlight.setText(notsickHighlight.text)
             
             
             
@@ -946,7 +969,7 @@ for thisRun in runs:
             if responseKey.status == STARTED and t >= (0 + (respTime-win.monitorFramePeriod*0.75)): #most of one frame period left
                 responseKey.status = STOPPED
             if responseKey.status == STARTED:
-                theseKeys = event.getKeys(keyList=['left', 'right'])
+                theseKeys = event.getKeys(keyList=['left', 'right', '1', '2'])
                 
                 # check for quit:
                 if "escape" in theseKeys:
@@ -1228,6 +1251,10 @@ for thisRun in runs:
         # hack to re-render the texts with new opacity
         timeoutText_2.setText(timeoutText_2.text)
         """
+        addFmriClockData('choiceOnset')
+        addFmriClockData('isiOffset', 6) # TODO FIXME hardcoded trial duration
+        addFmriClockData('itiOnset', 6) # TODO FIXME hardcoded trial duration
+        
         # don't highlight anything initially
         #
         sickHighlight_2.setOpacity(0)
@@ -1240,9 +1267,6 @@ for thisRun in runs:
         
         hasResponded_2 = False
         
-        addFmriClockData('choiceOnset')
-        addFmriClockData('isiOffset', 6) # TODO FIXME hardcoded trial duration
-        addFmriClockData('itiOnset', 6) # TODO FIXME hardcoded trial duration
         print '(test) next iti idx = ', nextItiIdx
         
         assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
@@ -1252,6 +1276,7 @@ for thisRun in runs:
         nextItiIdx += 1
         
         print '(test) iti time = ', itiTime_2
+        thisExp.addData('itiTime', itiTime)
         
         assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN], \
             str(itiTime_2) + " == runItisSanity[" + str(runs.thisN) + "][" + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN) + "] = " + runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]
@@ -1260,17 +1285,17 @@ for thisRun in runs:
         
         thisExp.addData('trialOrTest', 'test')
         addExtraData()
-        restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
-        foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         responseKey_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey_2.status = NOT_STARTED
+        restaurantText_2.setText(restaurants[contextsReshuffled[contextId]])
+        foodImg_2.setImage(os.path.join('foods', foodFilesPrefix + str(cuesReshuffled[cueId]) + '.png'))
         # keep track of which components have finished
         test_2Components = []
         test_2Components.append(ITI_2)
+        test_2Components.append(responseKey_2)
         test_2Components.append(trialInstrText_2)
         test_2Components.append(restaurantText_2)
         test_2Components.append(foodImg_2)
-        test_2Components.append(responseKey_2)
         test_2Components.append(sickImg_2)
         test_2Components.append(notsickImg_2)
         test_2Components.append(sickHighlight_2)
@@ -1306,31 +1331,59 @@ for thisRun in runs:
             if responseKey_2.keys and not hasResponded_2:
                 hasResponded_2 = True
             
-                if responseKey_2.keys == 'left': # sick
+                # do the timing first
+                #
+                respTime_2 = responseKey_2.rt
+            
+                print '        TEST Response highlight at ', t # t is a little slower than responseKey.rt
+                addFmriClockData('choiceOffset')
+                addFmriClockData('isiOnset')
+            
+                # highlight choice
+                #
+                if responseKey_2.keys == sickButton: # sick
                     sickHighlight_2.opacity = 1
                     notsickHighlight_2.opacity = 0
-                elif responseKey_2.keys == 'right': # not sick
+                elif responseKey_2.keys == notsickButton: # not sick
                     sickHighlight_2.opacity = 0
                     notsickHighlight_2.opacity = 1
                 else:
-                    assert False, 'Can only have one response, left or right'
+                    assert False, 'Can only have one response, sick or not sick'
                 # save the last response so we don't re-render the _
                 lastReponseKey_2 = responseKey_2.keys
                 # hack to re-render the text with new opacity
                 sickHighlight_2.setText(sickHighlight_2.text)
                 notsickHighlight_2.setText(notsickHighlight_2.text)
             
-                respTime_2 = t
-            
-                print '        TEST Response time: ', respTime_2
-            
-                addFmriClockData('choiceOffset')
-                addFmriClockData('isiOnset')
-                thisExp.addData('responseTime', respTime_2)
             
             
             
-            
+            # *responseKey_2* updates
+            if t >= 0 and responseKey_2.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                responseKey_2.tStart = t  # underestimates by a little under one frame
+                responseKey_2.frameNStart = frameN  # exact frame index
+                responseKey_2.status = STARTED
+                # keyboard checking is just starting
+                responseKey_2.clock.reset()  # now t=0
+                event.clearEvents(eventType='keyboard')
+            if responseKey_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
+                responseKey_2.status = STOPPED
+            if responseKey_2.status == STARTED:
+                theseKeys = event.getKeys(keyList=['left', 'right', '1', '2'])
+                
+                # check for quit:
+                if "escape" in theseKeys:
+                    endExpNow = True
+                if len(theseKeys) > 0:  # at least one key was pressed
+                    if responseKey_2.keys == []:  # then this was the first keypress
+                        responseKey_2.keys = theseKeys[0]  # just the first key pressed
+                        responseKey_2.rt = responseKey_2.clock.getTime()
+                        # was this 'correct'?
+                        if (responseKey_2.keys == str(corrAns)) or (responseKey_2.keys == corrAns):
+                            responseKey_2.corr = 1
+                        else:
+                            responseKey_2.corr = 0
             
             # *trialInstrText_2* updates
             if t >= 0 and trialInstrText_2.status == NOT_STARTED:
@@ -1358,33 +1411,6 @@ for thisRun in runs:
                 foodImg_2.setAutoDraw(True)
             if foodImg_2.status == STARTED and t >= (0 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
                 foodImg_2.setAutoDraw(False)
-            
-            # *responseKey_2* updates
-            if t >= 0 and responseKey_2.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                responseKey_2.tStart = t  # underestimates by a little under one frame
-                responseKey_2.frameNStart = frameN  # exact frame index
-                responseKey_2.status = STARTED
-                # keyboard checking is just starting
-                responseKey_2.clock.reset()  # now t=0
-                event.clearEvents(eventType='keyboard')
-            if responseKey_2.status == STARTED and t >= (0 + (6-win.monitorFramePeriod*0.75)): #most of one frame period left
-                responseKey_2.status = STOPPED
-            if responseKey_2.status == STARTED:
-                theseKeys = event.getKeys(keyList=['left', 'right'])
-                
-                # check for quit:
-                if "escape" in theseKeys:
-                    endExpNow = True
-                if len(theseKeys) > 0:  # at least one key was pressed
-                    if responseKey_2.keys == []:  # then this was the first keypress
-                        responseKey_2.keys = theseKeys[0]  # just the first key pressed
-                        responseKey_2.rt = responseKey_2.clock.getTime()
-                        # was this 'correct'?
-                        if (responseKey_2.keys == str(corrAns)) or (responseKey_2.keys == corrAns):
-                            responseKey_2.corr = 1
-                        else:
-                            responseKey_2.corr = 0
             
             # *sickImg_2* updates
             if t >= 0 and sickImg_2.status == NOT_STARTED:
@@ -1593,7 +1619,7 @@ while continueRoutine and routineTimer.getTime() > 0:
     if key_resp_2.status == STARTED and t >= (120-win.monitorFramePeriod*0.75): #most of one frame period left
         key_resp_2.status = STOPPED
     if key_resp_2.status == STARTED:
-        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space'])
+        theseKeys = event.getKeys(keyList=['y', 'n', 'left', 'right', 'space', '1', '2'])
         
         # check for quit:
         if "escape" in theseKeys:
