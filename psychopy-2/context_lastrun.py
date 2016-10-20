@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Wed Oct 19 22:20:06 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct 20 18:51:06 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -20,8 +20,8 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'context'  # from the Builder filename that created this script
-expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'', u'mriMode': u'off'}
+expName = u'context'  # from the Builder filename that created this script
+expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'conP000', u'mriMode': u'scan'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -46,7 +46,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(size=(1440, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     )
 # store frame rate of monitor if we can measure it successfully
@@ -117,7 +117,70 @@ new_runClock = core.Clock()
 
 
 
+import os
+import csv
 
+# TODO FIXME this is hardcoded & duplicated with the trials, test_trials & runs loop
+#
+nRuns = 9
+nTrainTrialsPerRun = 20
+# in practice mode, only run 1 rep (4 trials)
+# also see End Routine
+# ... BUT NOT REALLY any more => gotta get the real deal in the fMRI practice
+#if expInfo['isPractice'] == 'yes':
+#    nTrainTrialsPerRun = 4
+nTestTrialsPerRun = 4
+
+nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
+nTotalTrials = nRuns * nTrialsPerRun
+
+
+# OKAY some serious hacksauce follows.
+#
+# In fMRI mode, we pre-generate the ITI's and the stim sequences (x1c2, x2c1, x1c1, x2c1, etc)
+# for each run for each subject. We do this with optseq2 which ensures the
+# spacing of ITI's makes sense. So in fMRI mode, instead of using the
+# randomly generated stim sequence by psychopy (see "trials" and "test_trials" loops),
+# we take the pre-generated one from optseq2.
+#
+# The reason I didn't just put the .csv file as the conditions file of the trials/test_trials loops
+# is that I wanted to have it be backwards-compatible, and so that
+# if we want to mess around or do a behavioral run, we don't have to
+# go back and pre-generate all that crap with optseq.
+#
+# NOTE that this assumes the file format is pre-determined and that the partipant ID
+# has the form conPXXX, and that the corresponding file exists.
+#
+# Also note that as an extra precaution to not accidentally use the same set of ITI's twice
+# (which would cost us $2000, give or take), we rename each file after using it. 
+
+if expInfo['mriMode'] != 'off':
+    assert expInfo['mriMode'] == 'scan'
+
+    fMRI_run_itis = [[]] * nRuns
+    fMRI_run_cueIds = [[]] * nRuns
+    fMRI_run_contextIds = [[]] * nRuns
+
+    # pre-load all the runs, so if something's fucked we know before we start scanning
+    #
+    for run_idx in range(nRuns):
+        itis_file = os.path.join('itis', 'csv', '%s_run%d_itis.csv' % (expInfo['participant'], run_idx))
+        print 'Using ITIs file ', itis_file
+        with open(itis_file, 'r') as f:
+            reader = csv.reader(f, delimiter=',')
+            next(reader) # skip the headers
+            sanity_trial_n = 0
+            for row in reader:
+                print row
+                assert row[0] == str(sanity_trial_n), "Wrong entry on line " + str(sanity_trial_n) + "; got " + row[0]
+                fMRI_run_itis[run_idx].append(float(row[1]))
+                fMRI_run_cueIds[run_idx].append(int(row[2]))
+                fMRI_run_contextIds[run_idx].append(int(row[3]))
+                sanity_trial_n += 1
+            assert sanity_trial_n == nTrialsPerRun, "Should have exactly 24 trials in the ITIs file"
+
+        # TODO reenable before start!
+       # os.rename(itis_file, itis_file + '_USED') # so we don't accidentally use them twice. That would be a disaster
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
     text='the text is set manually\n',    font='Arial',
@@ -130,16 +193,6 @@ trialClock = core.Clock()
 import time
 expInfo['expStartWallTime'] = time.ctime()
 
-def addFmriClockData(column = 'fmriTime', add = 0): # for tracking different events
-    thisExp.addData(column, fmriClock.getTime() + add)
-
-def addExtraData(): # extra info we want to record on every train/test trial
-    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
-    thisExp.addData('contextId', contextId)
-    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
-    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
-    thisExp.addData('cueId', cueId)
-    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 if expInfo['mriMode'] != 'off': # we're scanning!
     assert expInfo['mriMode'] == 'scan'
     sickButton = '1' # index finger
@@ -152,65 +205,59 @@ else: # not scanning => behavioral
 #
 
 if expInfo['mriMode'] != 'off': # we're scanning
-    itiMean = 3
-    itiLambda = 1.5
-    itiMin = 2
-    itiMax = 8
-    maxAllowedRunTime = 4 * 60 # max 4 mins per run in scanner
+    assert expInfo['mriMode'] == 'scan'
+    
+    #
+    # .... here we have pre-generated the ITI's using optseq2 and pulled them
+    # from a separate file for the current run.
+    # So no need to pre-generate anything here.
+    #
 
 else: # behavioral
+    #
+    #  ..... here we pre-generate the ITI's in the code
+    #
+
     itiMean = 1.5
     itiLambda = 0.5
     itiMin = 1
     itiMax = 4
     maxAllowedRunTime = 3 * 60 # max 3 mins per run in behavioral
 
+    # Generate the ITI's
+    # TODO the times are hardcoded & duplicated with the ones in the builder
+    #
+    runOverheadTime = 10 # info screens
+    trainTrialFixedTime = 4 # stim presentation + feedback
+    testTrialFixedTime = 6 # stim presentation
 
-# Generate the ITI's
-# TODO the times are duplicated with the ones in the builder
-#
-runOverheadTime = 10 # info screens
-trainTrialFixedTime = 4 # stim presentation + feedback
-testTrialFixedTime = 5 # stim presentation
-nRuns = 9
+    # For each run, generate the ITI's from a laplacian
+    # and make sure that they fit in the max allowed run time 
+    # for each run, keep trying until we find a sequence of ITIs
+    # that do fit; otherwise if we fail after a lot of attempts,
+    # just take the shorted ITI sequence
+    #
+    allItis = []
+    runItisSanity = [] # for sanity check
+    for r in range(nRuns):
+        bestItis = None
+        print 'run = ', r
+        for attempt in range(1, 100):
+            itis = np.random.laplace(itiMean, itiLambda, nTrialsPerRun)
+            itis = np.clip(itis, itiMin, itiMax)
+            print '  attempt ', attempt, ' = ', sum(itis)
+            if not bestItis or sum(itis) < sum(bestItis):
+                bestItis = itis
+            totalRunTime = sum(itis) + nTrainTrialsPerRun * trainTrialFixedTime + nTestTrialsPerRun * testTrialFixedTime + runOverheadTime
+            print '                total run time = ', totalRunTime, ' vs. ', maxAllowedRunTime
+            if totalRunTime < maxAllowedRunTime:
+                break
+        bestItis = list(bestItis)
+        allItis.extend(bestItis) # add ITI's for this run to the list
+        runItisSanity.append(bestItis) # for sanity
 
-nTrainTrialsPerRun = 4
-# in practice mode, only run 1 rep (4 trials)
-# also see End Routine
-if expInfo['isPractice'] == 'yes':
-    nTrainTrialsPerRun = 4
-nTestTrialsPerRun = 4
-
-nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
-nTotalTrials = nRuns * nTrialsPerRun
-
-# For each run, generate the ITI's from a laplacian
-# and make sure that they fit in the max allowed run time 
-# for each run, keep trying until we find a sequence of ITIs
-# that do fit; otherwise if we fail after a lot of attempts,
-# just take the shorted ITI sequence
-#
-allItis = []
-runItisSanity = [] # for sanity check
-for r in range(nRuns):
-    bestItis = None
-    print 'run = ', r
-    for attempt in range(1, 100):
-        itis = np.random.laplace(itiMean, itiLambda, nTrialsPerRun)
-        itis = np.clip(itis, itiMin, itiMax)
-        print '  attempt ', attempt, ' = ', sum(itis)
-        if not bestItis or sum(itis) < sum(bestItis):
-            bestItis = itis
-        totalRunTime = sum(itis) + nTrainTrialsPerRun * trainTrialFixedTime + nTestTrialsPerRun * testTrialFixedTime + runOverheadTime
-        print '                total run time = ', totalRunTime, ' vs. ', maxAllowedRunTime
-        if totalRunTime < maxAllowedRunTime:
-            break
-    bestItis = list(bestItis)
-    allItis.extend(bestItis) # add ITI's for this run to the list
-    runItisSanity.append(bestItis) # for sanity
-
-nextItiIdx = 0
-assert len(allItis) == nTotalTrials
+    nextItiIdx = 0
+    assert len(allItis) == nTotalTrials
 # psychopy only writes the data at the very end
 # we want data with intermediate results
 # so we have this thing that dumps to a .wtf-tile
@@ -275,6 +322,16 @@ def flushEntries():
 
 
 
+def addFmriClockData(column = 'fmriTime', add = 0): # for tracking different events
+    thisExp.addData(column, fmriClock.getTime() + add)
+
+def addExtraData(): # extra info we want to record on every train/test trial
+    thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
+    thisExp.addData('contextId', contextId)
+    thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
+    thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
+    thisExp.addData('cueId', cueId)
+    thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
@@ -670,8 +727,11 @@ for thisRun in runs:
     # 2) it gets written out to the data file
     #
     thisRun.contextRole = contextRoles[runs.thisN]
-    # randomize foods & restaurants within each run
+    # randomize mapping between cues & contexts <--> foods & restaurants
+    # within each run
     # note that we DO THIS BEFORE EVERY RUN
+    # also note that this is separate from randomizing the order of the 
+    # cue-context pairs. This is just the x_i -> image , c_i -> restaurant mapping
     #
     cuesReshuffled = range(0, 3)
     contextsReshuffled = range(0, 3)
@@ -681,6 +741,7 @@ for thisRun in runs:
     
     print 'Shuffled cues: ', cuesReshuffled
     print 'Shuffled contexts: ', contextsReshuffled
+    
     
     # keep track of which components have finished
     new_runComponents = []
@@ -742,9 +803,9 @@ for thisRun in runs:
         runs.finished = True
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='fullRandom', 
+    trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -779,8 +840,6 @@ for thisRun in runs:
         timeoutText.setText(timeoutText.text)
         gotSickText.setText(gotSickText.text)
         didntGetSickText.setText(didntGetSickText.text)
-        thisExp.addData('trialOrTest', 'trial')
-        addExtraData()
         addFmriClockData('choiceOnset')
         
         # in fMRI mode, remap the correct ans 'left' => 1, 'right' => 2 
@@ -811,35 +870,48 @@ for thisRun in runs:
         maxRespTime = 3
         respTime = maxRespTime # by default it's timeout
         hasResponded = False
-        print '(train) next iti idx = ', nextItiIdx
+        respTime = 3 # TODO FIXME hardcoded -- this is the default
         
-        assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \
-            str(nextItiIdx) + " == " + str(runs.thisN) + " * " + str(nTrialsPerRun) + " + " + str(trials.thisN)
+        if expInfo['mriMode'] != 'off': # we're scanning
+            assert expInfo['mriMode'] == 'scan'
         
-        itiTime = allItis[nextItiIdx]
-        nextItiIdx += 1
+            # Note that here we override the cueId and the contextId
+            #
+            itiTime = fMRI_run_itis[runs.thisN][trials.thisN]
+            cueId = fMRI_run_cueIds[runs.thisN][trials.thisN]
+            contextId = fMRI_run_contextIds[runs.thisN][trials.thisN]
         
-        print '(train) iti time = ', itiTime
-        thisExp.addData('itiTime', itiTime)
+            print '(fMRI train) iti time = ', itiTime, ' cueId = ', cueId, ' contextId = ', contextId
+            thisExp.addData('itiTime', itiTime)
         
-        #print runs.thisN
-        #print trials.thisN
-        #print len(runItisSanity)
-        #print len(runItisSanity[runs.thisN])
+        else: # behavioral => different codepath
         
-        assert itiTime == runItisSanity[runs.thisN][trials.thisN], \
-            str(itiTime) + " == runItisSanity[" + str(runs.thisN) + "][" + str(trials.thisN) + "] = " + runItisSanity[runs.thisN][trials.thisN]
-        assert itiTime >= itiMin
-        assert itiTime <= itiMax
+            print '(train) next iti idx = ', nextItiIdx
         
-        respTime = 3
+            assert nextItiIdx == runs.thisN * nTrialsPerRun + trials.thisN, \
+                str(nextItiIdx) + " == " + str(runs.thisN) + " * " + str(nTrialsPerRun) + " + " + str(trials.thisN)
         
+            itiTime = allItis[nextItiIdx]
+            nextItiIdx += 1
         
+            print '(train) iti time = ', itiTime
+            thisExp.addData('itiTime', itiTime)
         
+            #print runs.thisN
+            #print trials.thisN
+            #print len(runItisSanity)
+            #print len(runItisSanity[runs.thisN])
         
-        
+            assert itiTime == runItisSanity[runs.thisN][trials.thisN], \
+                str(itiTime) + " == runItisSanity[" + str(runs.thisN) + "][" + str(trials.thisN) + "] = " + runItisSanity[runs.thisN][trials.thisN]
+            assert itiTime >= itiMin
+            assert itiTime <= itiMax
         
         assert contextRolesWereShuffled
+        thisExp.addData('trialOrTest', 'trial')
+        
+        # MUST BE LAST! b/c we change the cueId and contextId above
+        addExtraData()
         responseKey = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey.status = NOT_STARTED
         restaurantText.setText(restaurants[contextsReshuffled[contextId]])
@@ -915,7 +987,6 @@ for thisRun in runs:
                     gotSickText.setText(gotSickText.text)
                     didntGetSickText.setText(didntGetSickText.text)
             
-            
             # highlight subject's response and log the response time
             #
             if responseKey.keys and not hasResponded:
@@ -952,6 +1023,7 @@ for thisRun in runs:
                 # hack to re-render the text with new opacity
                 sickHighlight.setText(sickHighlight.text)
                 notsickHighlight.setText(notsickHighlight.text)
+            
             
             
             
@@ -1140,13 +1212,14 @@ for thisRun in runs:
                 thisComponent.setAutoDraw(False)
         trials.addData('trialEndWallTime', time.ctime())
         
-        
         addFmriClockData('itiOffset')
         # in practice mode, only run 1 rep (4 trials)
+        # ... NOT in the fMRI practice rounds => make sure they get it with a full run
         #
-        if expInfo['isPractice'] == 'yes' and trials.thisN >= 3:
-            trials.finished = True
+        #if expInfo['isPractice'] == 'yes' and trials.thisN >= 3:
+        #    trials.finished = True
         flushEntries()
+        
         
         # check responses
         if responseKey.keys in ['', [], None]:  # No response was made
@@ -1163,7 +1236,7 @@ for thisRun in runs:
         routineTimer.reset()
         thisExp.nextEntry()
         
-    # completed 1 repeats of 'trials'
+    # completed 5 repeats of 'trials'
     
     
     #------Prepare to start Routine "test_warning"-------
@@ -1267,23 +1340,39 @@ for thisRun in runs:
         
         hasResponded_2 = False
         
-        print '(test) next iti idx = ', nextItiIdx
+        if expInfo['mriMode'] != 'off': # we're scanning
+            assert expInfo['mriMode'] == 'scan'
         
-        assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
-            str(nextItiIdx) + " == " + str(runs.thisN) + " * " + str(nTrialsPerRun) + " + " + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN)
+            # Note that here we override the cueId and the contextId
+            #
+            itiTime_2 = fMRI_run_itis[runs.thisN][test_trials.thisN + nTrainTrialsPerRun]
+            cueId = fMRI_run_cueIds[runs.thisN][test_trials.thisN + nTrainTrialsPerRun]
+            contextId = fMRI_run_contextIds[runs.thisN][test_trials.thisN + nTrainTrialsPerRun]
         
-        itiTime_2 = allItis[nextItiIdx]
-        nextItiIdx += 1
+            print '(fMRI test) iti time = ', itiTime_2, ' cueId = ', cueId, ' contextId = ', contextId
+            thisExp.addData('itiTime', itiTime_2)
         
-        print '(test) iti time = ', itiTime_2
-        thisExp.addData('itiTime', itiTime)
+        else:  # behavioral
+            print '(test) next iti idx = ', nextItiIdx
         
-        assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN], \
-            str(itiTime_2) + " == runItisSanity[" + str(runs.thisN) + "][" + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN) + "] = " + runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]
-        assert itiTime_2 >= itiMin
-        assert itiTime_2 <= itiMax
+            assert nextItiIdx == runs.thisN * nTrialsPerRun + nTrainTrialsPerRun + test_trials.thisN, \
+                str(nextItiIdx) + " == " + str(runs.thisN) + " * " + str(nTrialsPerRun) + " + " + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN)
+        
+            itiTime_2 = allItis[nextItiIdx]
+            nextItiIdx += 1
+        
+            print '(test) iti time = ', itiTime_2
+            thisExp.addData('itiTime', itiTime_2)
+        
+            assert itiTime_2 == runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN], \
+                str(itiTime_2) + " == runItisSanity[" + str(runs.thisN) + "][" + str(nTrainTrialsPerRun) + " + " + str(test_trials.thisN) + "] = " + runItisSanity[runs.thisN][nTrainTrialsPerRun + test_trials.thisN]
+            assert itiTime_2 >= itiMin
+            assert itiTime_2 <= itiMax
         
         thisExp.addData('trialOrTest', 'test')
+        
+        # MUST BE LAST -> b/c we change e.g. the cueId above
+        #
         addExtraData()
         responseKey_2 = event.BuilderKeyResponse()  # create an object of type KeyResponse
         responseKey_2.status = NOT_STARTED
