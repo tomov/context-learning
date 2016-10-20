@@ -11,6 +11,9 @@ import csv
 
 colformat = "%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d"
 
+# colnames used for the behavioral pilot
+# may want to be careful adding stuff here -- will have to change things in the analyze.m script too (in ../../model)
+#
 colnames = [
     'participant',
     'session',
@@ -33,11 +36,25 @@ colnames = [
     'trialId'
 ]
 
+fmri_colnames = [ 
+    'choiceOnset',
+    'choiceOffset',
+    'isiOnset',
+    'isiOffset',
+    'feedbackOnset',
+    'feedbackOffset',
+    'itiOnset',
+    'itiOffset',
+    'itiTime',
+    'newItiTime',
+    'residualTime'
+]
+
 assert len(colnames) == len(colformat.split(' ')), "Make sure to update colformat here and in the MATLAB script that parses the file"
 
 # which columns to export from the csv
 #
-def parseRow(entry):
+def parseRow(entry, isFmri=False):
     if entry['contextId'] == '': # not a trial (e.g. instructions)
         return None
     isTrain = entry['trials.thisN'] != ''
@@ -67,11 +84,22 @@ def parseRow(entry):
         int(isTrain),
         int(entry['runs.thisN']) + 1,
         (int(entry['trials.thisN']) + 1) if isTrain else (int(entry['test_trials.thisN']) + 1)
-        #"stimOnset": "2016-03-02 10:00:00.23234", # TODO fmri clock, convert
-        #"responseTime": "2016-03-02 11:00:00.02423", # TODO
-        #"feedbackOnset": "2016-03-02 11:11:11.234234" # TODO fmri clock, convert
     ]
-    assert len(out) == len(colnames), "Make sure to update colnames"
+    if isFmri:
+        out.extend([
+            entry['choiceOnset'],
+            entry['choiceOffset'],
+            entry['isiOnset'],
+            entry['isiOffset'],
+            entry['feedbackOnset'],
+            entry['feedbackOffset'],
+            entry['itiOnset'],
+            entry['itiOffset'],
+            entry['itiTime'],
+            entry['newItiTime'],
+            entry['residualTime']
+        ])
+    assert len(out) == len(colnames) + (len(fmri_colnames) if isFmri else 0), "Make sure to update colnames"
     # sanity check to make sure we didn't screw up the data gathering
     #
     assert entryRestaurants[entryContextsReshuffled[int(entry['contextId'])]] == entry['restaurant'], "You screwed up the data gathering -- these should be equal"
@@ -83,8 +111,12 @@ if __name__  == "__main__":
     infile = sys.argv[1]
     outfile = sys.argv[2]
     append = False
+    isFmri = False
     if len(sys.argv) >= 4:
-        append = sys.argv[3] == '-a' or sys.argv[3] == '--append'
+        args = sys.argv[3:]
+        append = '-a' in args or '--append' in args
+        isFmri = '-f' in args or '--fmri' in args
+
     if append:
         desc = 'a'
     else:
@@ -94,8 +126,11 @@ if __name__  == "__main__":
         reader = csv.DictReader(fin)
         with open(outfile, desc) as fout: 
             if not append: # write the headers optionally
-                fout.write(','.join(colnames) + "\n")
+                if isFmri:
+                    fout.write(','.join(colnames + fmri_colnames) + "\n")
+                else:
+                    fout.write(','.join(colnames) + "\n")
             for row in reader:
-                parsedRow = parseRow(row)
+                parsedRow = parseRow(row, isFmri)
                 if parsedRow:
                     fout.write(parsedRow + "\n")

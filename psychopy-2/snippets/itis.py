@@ -1,3 +1,6 @@
+# script for generating whole number ITI's that sum to a given run length
+# a bit useless b/c we now use optseq2
+#
 # -*- coding: utf-8 -*-
 """
 Created on Tue Dec  3 12:05:57 2013
