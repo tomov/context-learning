@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Thu Oct 20 21:45:24 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Oct 24 16:45:50 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -21,7 +21,7 @@ os.chdir(_thisDir)
 
 # Store info about the experiment session
 expName = u'context'  # from the Builder filename that created this script
-expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'conP000', u'mriMode': u'scan'}
+expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'con000', u'mriMode': u'scan'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -180,13 +180,21 @@ if expInfo['mriMode'] != 'off':
             assert sanity_trial_n == nTrialsPerRun, "Should have exactly 24 trials in the ITIs file"
 
         # TODO reenable before start!
-       # os.rename(itis_file, itis_file + '_USED') # so we don't accidentally use them twice. That would be a disaster
+        #os.rename(itis_file, itis_file + '_USED') # so we don't accidentally use them twice. That would be a disaster
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
     text='the text is set manually\n',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
     color='white', colorSpace='rgb', opacity=1,
     depth=-5.0)
+
+# Initialize components for Routine "Fixation"
+FixationClock = core.Clock()
+fixationCross = visual.TextStim(win=win, ori=0, name='fixationCross',
+    text=u'+',    font=u'Arial',
+    pos=[0, 0], height=0.1, wrapWidth=None,
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0)
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -463,6 +471,14 @@ fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_
     pos=[0, 0], height=0.1, wrapWidth=None,
     color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
+
+# Initialize components for Routine "Fixation"
+FixationClock = core.Clock()
+fixationCross = visual.TextStim(win=win, ori=0, name='fixationCross',
+    text=u'+',    font=u'Arial',
+    pos=[0, 0], height=0.1, wrapWidth=None,
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0)
 
 # Initialize components for Routine "waitForFinish"
 waitForFinishClock = core.Clock()
@@ -802,10 +818,62 @@ for thisRun in runs:
     if expInfo['isPractice'] == 'yes':
         runs.finished = True
     
+    #------Prepare to start Routine "Fixation"-------
+    t = 0
+    FixationClock.reset()  # clock 
+    frameN = -1
+    routineTimer.add(10.000000)
+    # update component parameters for each repeat
+    # keep track of which components have finished
+    FixationComponents = []
+    FixationComponents.append(fixationCross)
+    for thisComponent in FixationComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    #-------Start Routine "Fixation"-------
+    continueRoutine = True
+    while continueRoutine and routineTimer.getTime() > 0:
+        # get current time
+        t = FixationClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *fixationCross* updates
+        if t >= 0.0 and fixationCross.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            fixationCross.tStart = t  # underestimates by a little under one frame
+            fixationCross.frameNStart = frameN  # exact frame index
+            fixationCross.setAutoDraw(True)
+        if fixationCross.status == STARTED and t >= (0.0 + (10.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            fixationCross.setAutoDraw(False)
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in FixationComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    #-------Ending Routine "Fixation"-------
+    for thisComponent in FixationComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=5, method='fullRandom', 
         extraInfo=expInfo, originPath=u'/Users/memsql/Dropbox/Research/context/psychopy-2/context.psyexp',
-        trialList=data.importConditions(contextRole + '.xlsx', selection=u'range(1,5)'),
+        trialList=data.importConditions(contextRole + '.xlsx', selection='range(1,5)'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1598,6 +1666,58 @@ for thisRun in runs:
         
     # completed 1 repeats of 'test_trials'
     
+    
+    #------Prepare to start Routine "Fixation"-------
+    t = 0
+    FixationClock.reset()  # clock 
+    frameN = -1
+    routineTimer.add(10.000000)
+    # update component parameters for each repeat
+    # keep track of which components have finished
+    FixationComponents = []
+    FixationComponents.append(fixationCross)
+    for thisComponent in FixationComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    #-------Start Routine "Fixation"-------
+    continueRoutine = True
+    while continueRoutine and routineTimer.getTime() > 0:
+        # get current time
+        t = FixationClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *fixationCross* updates
+        if t >= 0.0 and fixationCross.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            fixationCross.tStart = t  # underestimates by a little under one frame
+            fixationCross.frameNStart = frameN  # exact frame index
+            fixationCross.setAutoDraw(True)
+        if fixationCross.status == STARTED and t >= (0.0 + (10.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            fixationCross.setAutoDraw(False)
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in FixationComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    #-------Ending Routine "Fixation"-------
+    for thisComponent in FixationComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
     
 # completed 1 repeats of 'runs'
