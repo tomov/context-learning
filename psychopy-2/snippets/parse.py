@@ -84,8 +84,8 @@ def parseRow(entry, isFmri=False):
         '"' + ';'.join([entryRestaurants[entryContextsReshuffled[x]] for x in range(0, 3)]) + '"', # restaurantNames
         '"' + ';'.join([entry['foodFilesPrefix'] + str(entryCuesReshuffled[x]) for x in range(0, 3)]) + '"', # foods
         entry['contextRole'],
-        entry['contextId'],
-        entry['cueId'],
+        entry['contextIdReal'],
+        entry['cueIdReal'],
         entry['sick'],
         corrAnsMapping[entry['corrAns']],
         entry['responseKey.keys'] if isTrain else entry['responseKey_2.keys'],
@@ -114,8 +114,8 @@ def parseRow(entry, isFmri=False):
     assert len(out) == len(colnames) + (len(fmri_colnames) if isFmri else 0), "Make sure to update colnames"
     # sanity check to make sure we didn't screw up the data gathering
     #
-    assert entryRestaurants[entryContextsReshuffled[int(entry['contextId'])]] == entry['restaurant'], "You screwed up the data gathering -- these should be equal"
-    assert entry['foodFilesPrefix'] + str(entryCuesReshuffled[int(entry['cueId'])]) == entry['food'], "You screwed up the data gathering -- these should be equal"
+    assert entryRestaurants[entryContextsReshuffled[int(entry['contextIdReal'])]] == entry['restaurant'], "You screwed up the data gathering -- these should be equal"
+    assert entry['foodFilesPrefix'] + str(entryCuesReshuffled[int(entry['cueIdReal'])]) == entry['food'], "You screwed up the data gathering -- these should be equal"
 
     return ','.join([str(x) for x in out])
 

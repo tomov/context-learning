@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Oct 24 16:45:50 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Oct 24 17:39:09 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -183,9 +183,9 @@ if expInfo['mriMode'] != 'off':
         #os.rename(itis_file, itis_file + '_USED') # so we don't accidentally use them twice. That would be a disaster
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text='the text is set manually\n',    font='Arial',
+    text=u'the text is set manually\n',    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=-5.0)
 
 # Initialize components for Routine "Fixation"
@@ -335,10 +335,10 @@ def addFmriClockData(column = 'fmriTime', add = 0): # for tracking different eve
 
 def addExtraData(): # extra info we want to record on every train/test trial
     thisExp.addData('contextsReshuffled', ','.join([str(x) for x in contextsReshuffled]))
-    thisExp.addData('contextId', contextId)
+    thisExp.addData('contextIdReal', contextId)
     thisExp.addData('restaurant', restaurants[contextsReshuffled[contextId]])
     thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
-    thisExp.addData('cueId', cueId)
+    thisExp.addData('cueIdReal', cueId)
     thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
@@ -693,7 +693,7 @@ for thisRun in runs:
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(3.000000)
+    routineTimer.add(4.000000)
     # update component parameters for each repeat
     runInstr.setText("Beginning round #" + str(runs.thisN + 1))
     # Parse the comma-separated list of restaurant names
@@ -785,7 +785,7 @@ for thisRun in runs:
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (3.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
         
         # check if all components have finished
