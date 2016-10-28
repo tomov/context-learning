@@ -86,8 +86,8 @@ def parseRow(entry, isFmri=False):
         entry['contextRole'],
         entry['contextIdReal'],
         entry['cueIdReal'],
-        entry['sick'],
-        corrAnsMapping[entry['corrAns']],
+        entry['sickReal'],
+        corrAnsMapping[entry['corrAnsReal']],
         entry['responseKey.keys'] if isTrain else entry['responseKey_2.keys'],
         entry['responseKey.rt'] if isTrain else entry['responseKey_2.rt'],
         entry['responseKey.corr'] if isTrain else entry['responseKey_2.corr'],
@@ -116,6 +116,7 @@ def parseRow(entry, isFmri=False):
     #
     assert entryRestaurants[entryContextsReshuffled[int(entry['contextIdReal'])]] == entry['restaurant'], "You screwed up the data gathering -- these should be equal"
     assert entry['foodFilesPrefix'] + str(entryCuesReshuffled[int(entry['cueIdReal'])]) == entry['food'], "You screwed up the data gathering -- these should be equal"
+    # TODO add an assert for corrAns and sick based on context role
 
     return ','.join([str(x) for x in out])
 

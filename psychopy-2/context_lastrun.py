@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 25 15:04:16 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Fri Oct 28 15:02:13 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -20,7 +20,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'context'  # from the Builder filename that created this script
+expName = 'context'  # from the Builder filename that created this script
 expInfo = {u'isPractice': u'no', u'session': u'001', u'participant': u'con000', u'mriMode': u'scan'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
@@ -46,7 +46,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(size=(1440, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     )
 # store frame rate of monitor if we can measure it successfully
@@ -113,6 +113,10 @@ nTestTrialsPerRun = 4
 nTrialsPerRun = nTrainTrialsPerRun + nTestTrialsPerRun;
 nTotalTrials = nRuns * nTrialsPerRun
 
+# TODO these are hardcoded!
+trainTrialFixedTime = 5 # stim presentation + ISI + feedback
+testTrialFixedTime = 6 # stim presentation
+
 
 # OKAY some serious hacksauce follows.
 #
@@ -130,13 +134,19 @@ nTotalTrials = nRuns * nTrialsPerRun
 # NOTE that this assumes the file format is pre-determined and that the partipant ID
 # has the form conPXXX, and that the corresponding file exists.
 #
+# Also note that the whole trial / run sequence is hardcoded in here
+# particularly the duration of the different times -- sorry that's just
+# the way things are.
+#
 # Also note that as an extra precaution to not accidentally use the same set of ITI's twice
 # (which would cost us $2000, give or take), we rename each file after using it. 
+# 
 
 if expInfo['mriMode'] != 'off':
     assert expInfo['mriMode'] == 'scan'
 
     fMRI_run_itis = [[]] * nRuns
+    fMRI_run_itiOffsets = [[]] * nRuns
     fMRI_run_cueIds = [[]] * nRuns
     fMRI_run_contextIds = [[]] * nRuns
 
@@ -145,6 +155,7 @@ if expInfo['mriMode'] != 'off':
     for run_idx in range(nRuns):
         itis_file = os.path.join('itis', 'csv', '%s_run%d_itis.csv' % (expInfo['participant'], run_idx))
         print 'Using ITIs file ', itis_file
+        t = 10 # TODO hardcoded initial fixation time
         with open(itis_file, 'r') as f:
             reader = csv.reader(f, delimiter=',')
             next(reader) # skip the headers
@@ -153,18 +164,27 @@ if expInfo['mriMode'] != 'off':
                 print row
                 assert row[0] == str(sanity_trial_n), "Wrong entry on line " + str(sanity_trial_n) + "; got " + row[0]
                 fMRI_run_itis[run_idx].append(float(row[1]))
+                if sanity_trial_n < 20: # TODO hardcoded last train trial id (0-based)
+                    t += 5 # TODO hardcoded train trial time
+                else:
+                    t += 6 # TODO hardcoded test trial time
+                t += float(row[1]) # the ITI
+                if sanity_trial_n == 19: # TODO hardcoded after last training trial
+                    t += 4 # TODO hardcoded "test_warning" duration
+                fMRI_run_itiOffsets[run_idx].append(t)
                 fMRI_run_cueIds[run_idx].append(int(row[2]))
                 fMRI_run_contextIds[run_idx].append(int(row[3]))
                 sanity_trial_n += 1
             assert sanity_trial_n == nTrialsPerRun, "Should have exactly 24 trials in the ITIs file"
+            assert fMRI_run_itiOffsets[run_idx][-1] == 214, "Last ITI offset should be 214; instead it's " + str(fMRI_run_itiOffsets[run_idx][-1])
 
         # TODO reenable before start!
         #os.rename(itis_file, itis_file + '_USED') # so we don't accidentally use them twice. That would be a disaster
 
 runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
-    text=u'the text is set manually\n',    font=u'Arial',
+    text='the text is set manually\n',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-5.0)
 
 # Initialize components for Routine "waitForTrigger"
@@ -191,9 +211,9 @@ elif trigger == 'usb':
 # Initialize components for Routine "Fixation"
 FixationClock = core.Clock()
 fixationCross = visual.TextStim(win=win, ori=0, name='fixationCross',
-    text=u'+',    font=u'Arial',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0)
 
 # Initialize components for Routine "trial"
@@ -208,7 +228,6 @@ if expInfo['mriMode'] != 'off': # we're scanning!
 else: # not scanning => behavioral
     sickButton = 'left'
     notsickButton = 'right'
-
 # different jitter distributions depending on mode 
 #
 
@@ -236,8 +255,6 @@ else: # behavioral
     # TODO the times are hardcoded & duplicated with the ones in the builder
     #
     runOverheadTime = 10 # info screens
-    trainTrialFixedTime = 4 # stim presentation + feedback
-    testTrialFixedTime = 6 # stim presentation
 
     # For each run, generate the ITI's from a laplacian
     # and make sure that they fit in the max allowed run time 
@@ -340,6 +357,9 @@ def addExtraData(): # extra info we want to record on every train/test trial
     thisExp.addData('cuesReshuffled', ','.join([str(x) for x in cuesReshuffled]))
     thisExp.addData('cueIdReal', cueId)
     thisExp.addData('food', foodFilesPrefix + str(cuesReshuffled[cueId]))
+    thisExp.addData('contextRoleReal', contextRole)
+    thisExp.addData('corrAnsReal', corrAns)
+    thisExp.addData('sickReal', sick)
 trialInstrText = visual.TextStim(win=win, ori=0, name='trialInstrText',
     text='Predict whether the customer will get sick from this food.',    font='Arial',
     pos=[0, 0.8], height=0.075, wrapWidth=20,
@@ -472,12 +492,12 @@ fixationJitterText_2 = visual.TextStim(win=win, ori=0, name='fixationJitterText_
     color='white', colorSpace='rgb', opacity=1,
     depth=-15.0)
 
-# Initialize components for Routine "Fixation"
-FixationClock = core.Clock()
-fixationCross = visual.TextStim(win=win, ori=0, name='fixationCross',
-    text=u'+',    font=u'Arial',
+# Initialize components for Routine "Fixation_2"
+Fixation_2Clock = core.Clock()
+fixationCross_2 = visual.TextStim(win=win, ori=0, name='fixationCross_2',
+    text='+',    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None,
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0)
 
 # Initialize components for Routine "waitForFinish"
@@ -672,6 +692,9 @@ for thisRun in runs:
     # 2) it gets written out to the data file
     #
     thisRun.contextRole = contextRoles[runs.thisN]
+    contextRole = contextRoles[runs.thisN] # .................. 
+    
+    
     # randomize mapping between cues & contexts <--> foods & restaurants
     # within each run
     # note that we DO THIS BEFORE EVERY RUN
@@ -953,7 +976,6 @@ for thisRun in runs:
                 corrAns = '1'
             elif corrAns == 'right':
                 corrAns = '2'
-            
         
         # don't highlight anything initially
         #
@@ -980,10 +1002,40 @@ for thisRun in runs:
             # Note that here we override the cueId and the contextId
             #
             itiTime = fMRI_run_itis[runs.thisN][trials.thisN]
+            itiOffset = fMRI_run_itiOffsets[runs.thisN][trials.thisN]
             cueId = fMRI_run_cueIds[runs.thisN][trials.thisN]
             contextId = fMRI_run_contextIds[runs.thisN][trials.thisN]
         
-            print '(fMRI train) iti time = ', itiTime, ' cueId = ', cueId, ' contextId = ', contextId
+            # .......................
+            #
+            if contextRole == 'irrelevant':
+                if cueId == 0:
+                    sick = 'Yes'
+                    corrAns = sickButton
+                else:
+                    sick = 'No'
+                    corrAns = notsickButton
+        
+            elif contextRole == 'modulatory':
+                if cueId == contextId:
+                    sick = 'Yes'
+                    corrAns = sickButton
+                else:
+                    sick = 'No'
+                    corrAns = notsickButton
+            else:
+                assert contextRole == 'additive'
+                if contextId == 0:
+                    sick = 'Yes'
+                    corrAns = sickButton
+                else:
+                    sick = 'No'
+                    corrAns = notsickButton
+        
+            print 'WHAT THE FUCK ', thisRun.contextRole
+            print 'laksdjfhk;asdfjaksdjfh ', contextRole
+        
+            print '(fMRI train) iti time = ', itiTime, ' itiOffset = ', itiOffset, ' cueId = ', cueId, ' contextId = ', contextId
             thisExp.addData('itiTime', itiTime)
         
         else: # behavioral => different codepath
@@ -1095,20 +1147,37 @@ for thisRun in runs:
                 hasResponded = True
             
                 # do the timing first
+                # at this point, we are starting the ISI
+                # => we have 1 second of ISI and 1 second of feedback before the ITI
                 #
+                # TODO more hardcoded crap...
+                #
+            
+                # this code is deprecated; included for sanity check
                 respTime = responseKey.rt
                 residual = maxRespTime - respTime
                 itiTime += residual
-            
                 print '        train response highlight: ', t
                 print '           residual = ', residual
                 print '           new ITI = ', itiTime
+            
+                # this is the real deal
+                timeLeftUntilItiOffset = itiOffset - fmriClock.getTime()
+                finalItiTime = timeLeftUntilItiOffset - 2 # less the ISI and the feedback TODO hardcoded
+                print '           final ITI = ', finalItiTime
+                itiDriftAdjustment = finalItiTime - itiTime
+                print '           adjustment = ', itiDriftAdjustment 
+                if finalItiTime < 0:
+                    finalItiTime = 0 # worst case scenario... if we've drifted too far
+                itiTime = finalItiTime # very important to set itiTime -- this is the one that's used in the GUI for the duration of the ITI segment
             
                 addFmriClockData('choiceOffset')
                 addFmriClockData('isiOnset')
                 thisExp.addData('responseTime', respTime)
                 thisExp.addData('residualTime', residual)
                 thisExp.addData('newItiTime', itiTime)
+                thisExp.addData('estimatedItiOffset', itiOffset)
+                thisExp.addData('itiDriftAdjustment', itiDriftAdjustment)
             
                 # then highlight choice
                 #
@@ -1701,41 +1770,41 @@ for thisRun in runs:
     # completed 1 repeats of 'test_trials'
     
     
-    #------Prepare to start Routine "Fixation"-------
+    #------Prepare to start Routine "Fixation_2"-------
     t = 0
-    FixationClock.reset()  # clock 
+    Fixation_2Clock.reset()  # clock 
     frameN = -1
-    routineTimer.add(10.000000)
+    routineTimer.add(6.000000)
     # update component parameters for each repeat
     # keep track of which components have finished
-    FixationComponents = []
-    FixationComponents.append(fixationCross)
-    for thisComponent in FixationComponents:
+    Fixation_2Components = []
+    Fixation_2Components.append(fixationCross_2)
+    for thisComponent in Fixation_2Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
     
-    #-------Start Routine "Fixation"-------
+    #-------Start Routine "Fixation_2"-------
     continueRoutine = True
     while continueRoutine and routineTimer.getTime() > 0:
         # get current time
-        t = FixationClock.getTime()
+        t = Fixation_2Clock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *fixationCross* updates
-        if t >= 0.0 and fixationCross.status == NOT_STARTED:
+        # *fixationCross_2* updates
+        if t >= 0.0 and fixationCross_2.status == NOT_STARTED:
             # keep track of start time/frame for later
-            fixationCross.tStart = t  # underestimates by a little under one frame
-            fixationCross.frameNStart = frameN  # exact frame index
-            fixationCross.setAutoDraw(True)
-        if fixationCross.status == STARTED and t >= (0.0 + (10.0-win.monitorFramePeriod*0.75)): #most of one frame period left
-            fixationCross.setAutoDraw(False)
+            fixationCross_2.tStart = t  # underestimates by a little under one frame
+            fixationCross_2.frameNStart = frameN  # exact frame index
+            fixationCross_2.setAutoDraw(True)
+        if fixationCross_2.status == STARTED and t >= (0.0 + (6.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+            fixationCross_2.setAutoDraw(False)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in FixationComponents:
+        for thisComponent in Fixation_2Components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -1748,8 +1817,8 @@ for thisRun in runs:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    #-------Ending Routine "Fixation"-------
-    for thisComponent in FixationComponents:
+    #-------Ending Routine "Fixation_2"-------
+    for thisComponent in Fixation_2Components:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
