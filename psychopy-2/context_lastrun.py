@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Mon Oct 24 17:39:09 2016
+This experiment was created using PsychoPy2 Experiment Builder (v1.82.01), Tue Oct 25 15:04:16 2016
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -91,27 +91,6 @@ instrText = visual.TextStim(win=win, ori=0, name='instrText',
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0)
 
-# Initialize components for Routine "waitForTrigger"
-waitForTriggerClock = core.Clock()
-fmriClock = core.Clock() # clock for syncing with fMRI scanner
-# definitely log it!
-
-#trigger = 'parallel'
-trigger = 'usb'
-if trigger == 'parallel':
-    from psychopy import parallel 
-elif trigger == 'usb':
-    from psychopy.hardware.emulator import launchScan    
-
-    # settings for launchScan:
-    MR_settings = { 
-        'TR': 2.5, # duration (sec) per volume
-        'volumes': 141, # number of whole-brain 3D volumes / frames
-        'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume
-        'skip': 0, # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
-        }
-
-
 # Initialize components for Routine "new_run"
 new_runClock = core.Clock()
 
@@ -187,6 +166,27 @@ runInstr = visual.TextStim(win=win, ori=0, name='runInstr',
     pos=[0, 0], height=0.1, wrapWidth=1.5,
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-5.0)
+
+# Initialize components for Routine "waitForTrigger"
+waitForTriggerClock = core.Clock()
+fmriClock = core.Clock() # clock for syncing with fMRI scanner
+# definitely log it!
+
+#trigger = 'parallel'
+trigger = 'usb'
+if trigger == 'parallel':
+    from psychopy import parallel 
+elif trigger == 'usb':
+    from psychopy.hardware.emulator import launchScan    
+
+    # settings for launchScan:
+    MR_settings = { 
+        'TR': 2.5, # duration (sec) per volume
+        'volumes': 141, # number of whole-brain 3D volumes / frames
+        'sync': 'equal', # character to use as the sync timing event; assumed to come at start of a volume
+        'skip': 0, # number of volumes lacking a sync pulse at start of scan (for T1 stabilization)
+        }
+
 
 # Initialize components for Routine "Fixation"
 FixationClock = core.Clock()
@@ -619,81 +619,10 @@ for thisRun in runs:
         for paramName in thisRun.keys():
             exec(paramName + '= thisRun.' + paramName)
     
-    #------Prepare to start Routine "waitForTrigger"-------
-    t = 0
-    waitForTriggerClock.reset()  # clock 
-    frameN = -1
-    # update component parameters for each repeat
-    if expInfo['mriMode'] != 'off': # or 'scan' !
-        assert expInfo['mriMode'] == 'scan'
-    
-        if trigger == 'usb':
-            vol = launchScan(win, MR_settings, 
-                  globalClock=fmriClock, # <-- how you know the time! 
-                  mode=expInfo['mriMode']) # <-- mode passed in
-        elif trigger == 'parallel':
-            parallel.setPortAddress(0x378)
-            pin = 10; wait_msg = "Waiting for scanner..."
-            pinStatus = parallel.readPin(pin)
-            waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)
-            waitMsgStim.draw()
-            win.flip()
-            while True:
-                if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):
-                   break
-                   # start exp when pin values change
-            globalClock.reset()
-            logging.defaultClock.reset()
-            logging.exp('parallel trigger: start of scan')
-            win.flip()  # blank the screen on first sync pulse received
-    
-    expInfo['triggerWallTime'] = time.ctime()
-    core.wait(1)
-    # keep track of which components have finished
-    waitForTriggerComponents = []
-    for thisComponent in waitForTriggerComponents:
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
-    
-    #-------Start Routine "waitForTrigger"-------
-    continueRoutine = True
-    while continueRoutine:
-        # get current time
-        t = waitForTriggerClock.getTime()
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-        # update/draw components on each frame
-        
-        
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in waitForTriggerComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
-        
-        # check for quit (the Esc key)
-        if endExpNow or event.getKeys(keyList=["escape"]):
-            core.quit()
-        
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
-    
-    #-------Ending Routine "waitForTrigger"-------
-    for thisComponent in waitForTriggerComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    routineTimer.reset()
-    # the Routine "waitForTrigger" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
-    
     #------Prepare to start Routine "new_run"-------
     t = 0
     new_runClock.reset()  # clock 
     frameN = -1
-    routineTimer.add(4.000000)
     # update component parameters for each repeat
     runInstr.setText("Beginning round #" + str(runs.thisN + 1))
     # Parse the comma-separated list of restaurant names
@@ -759,16 +688,19 @@ for thisRun in runs:
     print 'Shuffled contexts: ', contextsReshuffled
     
     
+    key_resp_3 = event.BuilderKeyResponse()  # create an object of type KeyResponse
+    key_resp_3.status = NOT_STARTED
     # keep track of which components have finished
     new_runComponents = []
     new_runComponents.append(runInstr)
+    new_runComponents.append(key_resp_3)
     for thisComponent in new_runComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
     
     #-------Start Routine "new_run"-------
     continueRoutine = True
-    while continueRoutine and routineTimer.getTime() > 0:
+    while continueRoutine:
         # get current time
         t = new_runClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -785,8 +717,29 @@ for thisRun in runs:
             runInstr.tStart = t  # underestimates by a little under one frame
             runInstr.frameNStart = frameN  # exact frame index
             runInstr.setAutoDraw(True)
-        if runInstr.status == STARTED and t >= (0.0 + (4.0-win.monitorFramePeriod*0.75)): #most of one frame period left
+        if runInstr.status == STARTED and t >= (0.0 + (100.0-win.monitorFramePeriod*0.75)): #most of one frame period left
             runInstr.setAutoDraw(False)
+        
+        # *key_resp_3* updates
+        if t >= 0.0 and key_resp_3.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            key_resp_3.tStart = t  # underestimates by a little under one frame
+            key_resp_3.frameNStart = frameN  # exact frame index
+            key_resp_3.status = STARTED
+            # keyboard checking is just starting
+            key_resp_3.clock.reset()  # now t=0
+            event.clearEvents(eventType='keyboard')
+        if key_resp_3.status == STARTED:
+            theseKeys = event.getKeys(keyList=['space'])
+            
+            # check for quit:
+            if "escape" in theseKeys:
+                endExpNow = True
+            if len(theseKeys) > 0:  # at least one key was pressed
+                key_resp_3.keys = theseKeys[-1]  # just the last key pressed
+                key_resp_3.rt = key_resp_3.clock.getTime()
+                # a response ends the routine
+                continueRoutine = False
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -817,6 +770,87 @@ for thisRun in runs:
     #
     if expInfo['isPractice'] == 'yes':
         runs.finished = True
+    # check responses
+    if key_resp_3.keys in ['', [], None]:  # No response was made
+       key_resp_3.keys=None
+    # store data for runs (TrialHandler)
+    runs.addData('key_resp_3.keys',key_resp_3.keys)
+    if key_resp_3.keys != None:  # we had a response
+        runs.addData('key_resp_3.rt', key_resp_3.rt)
+    # the Routine "new_run" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
+    #------Prepare to start Routine "waitForTrigger"-------
+    t = 0
+    waitForTriggerClock.reset()  # clock 
+    frameN = -1
+    # update component parameters for each repeat
+    if expInfo['mriMode'] != 'off': # or 'scan' !
+        assert expInfo['mriMode'] == 'scan'
+    
+        if trigger == 'usb':
+            vol = launchScan(win, MR_settings, 
+                  globalClock=fmriClock, # <-- how you know the time! 
+                  mode=expInfo['mriMode']) # <-- mode passed in
+        elif trigger == 'parallel':
+            parallel.setPortAddress(0x378)
+            pin = 10; wait_msg = "Waiting for scanner..."
+            pinStatus = parallel.readPin(pin)
+            waitMsgStim = visual.TextStim(win, color='DarkGray', text=wait_msg)
+            waitMsgStim.draw()
+            win.flip()
+            while True:
+                if pinStatus != parallel.readPin(pin) or len(event.getKeys('esc')):
+                   break
+                   # start exp when pin values change
+            globalClock.reset()
+            logging.defaultClock.reset()
+            logging.exp('parallel trigger: start of scan')
+            win.flip()  # blank the screen on first sync pulse received
+    else:
+        fmriClock.reset()
+    
+    expInfo['triggerWallTime'] = time.ctime()
+    core.wait(1)
+    # keep track of which components have finished
+    waitForTriggerComponents = []
+    for thisComponent in waitForTriggerComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    #-------Start Routine "waitForTrigger"-------
+    continueRoutine = True
+    while continueRoutine:
+        # get current time
+        t = waitForTriggerClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in waitForTriggerComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    #-------Ending Routine "waitForTrigger"-------
+    for thisComponent in waitForTriggerComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    routineTimer.reset()
+    # the Routine "waitForTrigger" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     
     #------Prepare to start Routine "Fixation"-------
     t = 0
