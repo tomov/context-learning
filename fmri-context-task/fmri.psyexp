@@ -121,7 +121,7 @@
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="text" val="+" valType="str" updates="constant"/>
-        <Param name="stopVal" val="2.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="10.0" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -881,7 +881,7 @@
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
-      <Param name="Selected rows" val="range(20, 24)" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(0, 20)" valType="str" updates="None"/>
     </LoopInitiator>
     <Routine name="trial"/>
     <LoopTerminator name="train_trials"/>
@@ -895,9 +895,9 @@
       <Param name="nReps" val="1" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
-      <Param name="Selected rows" val="range(20, 24)" valType="str" updates="None"/>
+      <Param name="Selected rows" val="range(20, 24)" valType="code" updates="None"/>
     </LoopInitiator>
-    <Routine name="test_2"/>
+    <Routine name="trial"/>
     <LoopTerminator name="test_trials"/>
     <Routine name="Fixation_2"/>
     <LoopTerminator name="runs"/>

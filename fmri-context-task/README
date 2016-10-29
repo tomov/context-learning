@@ -1,0 +1,9 @@
+1) cd itis
+2) run gen_itis.sh or something like that to generate itis for all subjects
+  they should all be generated in the par subdirectory
+3) run parse_itis.py to generate the entire stimulus sequence for all runs for all subjects 
+  they should all be generated in the csv subdirectory
+4) cd ..
+5) run fmri.psyexp
+  the participant should be like: con001, con002, con003, etc
+  it uses this to pick the generated sequence from itis/csv/... 

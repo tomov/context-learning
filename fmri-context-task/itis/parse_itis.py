@@ -249,7 +249,7 @@ if __name__ == "__main__":
 
                     # write training trials
                     #
-                    t = 2 # starting point for first trial is after initial fixation
+                    t = 10 # starting point for first trial is after initial fixation TODO
                     stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId = train[next_train_idx]
                     assert sum(jitter) == 144 - 5 * 20, "Sum of train jitters is wrong: " + str(sum(jitter))
                     for i in range(20):
@@ -274,6 +274,7 @@ if __name__ == "__main__":
                     #   
                     t += itiOffset # starting point for test trials = last offset
                     t += 4 # test warning
+
                     stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId = test[next_test_idx]
                     for i in range(4):
                         isSick = None
@@ -294,4 +295,4 @@ if __name__ == "__main__":
                     assert sum(jitter) == 36 - 6 * 4, "Sum of test jitters is wrong: " + str(sum(jitter))
                     next_test_idx += 1
 
-                    assert t + itiOffset == 186, "It's " + str(t + itiOffset)
+                    assert t + itiOffset == 194, "It's " + str(t + itiOffset) 
