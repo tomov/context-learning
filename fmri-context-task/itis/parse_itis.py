@@ -8,8 +8,7 @@
 import os
 import sys
 import csv
-import random
-from numpy.random import shuffle
+from numpy.random import shuffle, seed
 
 roles = ['irrelevant', 'modulatory', 'additive']
 
@@ -169,10 +168,10 @@ def parse(fname):
 #
 def gen_test():
     stim = ['x1c1', 'x1c3', 'x3c1', 'x3c3']
-    random.shuffle(stim)
+    shuffle(stim)
 
     jitter = [2, 4, 6] # randomly shuffle ITI's of 2, 4, and 6 seconds, one of each
-    random.shuffle(jitter)
+    shuffle(jitter)
     jitter.append(0) # no ITI after last test trial
 
     stimTime = [6] * 4 # each test trial is 6 seconds
@@ -188,6 +187,8 @@ def gen_test():
 
 if __name__ == "__main__":
     pars = os.listdir("par")
+
+    seed(129523)
 
     train = []
     test = []
@@ -248,6 +249,7 @@ if __name__ == "__main__":
 
                     # write training trials
                     #
+                    t = 2 # starting point for first trial is after initial fixation
                     stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId = train[next_train_idx]
                     assert sum(jitter) == 144 - 5 * 20, "Sum of train jitters is wrong: " + str(sum(jitter))
                     for i in range(20):
@@ -262,7 +264,7 @@ if __name__ == "__main__":
                                cueId[i], contextId[i], isSick, corrButton,
                                isTest,
                                choiceDuration, isiDuration, feedbackDuration, jitter[i],
-                               stimOnset[i], stimOffset[i], itiOffset,
+                               stimOnset[i] + t, stimOffset[i] + t, itiOffset + t,
                                foods[cueId[i]], restaurants[contextId[i]]]
                         f.write(','.join(str(x) for x in row) + '\n')
                         print '                          ', cueId[i], contextId[i], 1 if isSick else 0, corrButton, jitter[i], itiOffset, '           ', foods[cueId[i]], restaurants[contextId[i]]
@@ -270,7 +272,7 @@ if __name__ == "__main__":
                    
                     # write test trials
                     #   
-                    t = itiOffset # starting point for test trials = last offset
+                    t += itiOffset # starting point for test trials = last offset
                     t += 4 # test warning
                     stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId = test[next_test_idx]
                     for i in range(4):
@@ -291,3 +293,5 @@ if __name__ == "__main__":
                         print '                          ', cueId[i], contextId[i], 1 if isSick else 0, corrButton, jitter[i], itiOffset + t, '           ', foods[cueId[i]], restaurants[contextId[i]]
                     assert sum(jitter) == 36 - 6 * 4, "Sum of test jitters is wrong: " + str(sum(jitter))
                     next_test_idx += 1
+
+                    assert t + itiOffset == 186, "It's " + str(t + itiOffset)
