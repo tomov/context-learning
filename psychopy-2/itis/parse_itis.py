@@ -140,7 +140,7 @@ if __name__ == "__main__":
                     # write training trials
                     #
                     choice, off, jitter, stimTime, stim, cueId, contextId = train[next_train_idx]
-                    assert sum(jitter) == 144 - 4 * 20, "Sum of train jitters is wrong: " + str(sum(jitter))
+                    assert sum(jitter) == 144 - 5 * 20, "Sum of train jitters is wrong: " + str(sum(jitter))
                     for i in range(20):
                         row = [subj + 1, run + 1, i + 1, choice[i], off[i], jitter[i], stimTime[i], stim[i], cueId[i], contextId[i]]
                         f.write(','.join(str(x) for x in row) + '\n')
