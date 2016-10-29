@@ -84,7 +84,7 @@
         <Param name="wrapWidth" val="" valType="code" updates="constant"/>
         <Param name="color" val="white" valType="str" updates="constant"/>
         <Param name="text" val="$thankYouMsg" valType="str" updates="constant"/>
-        <Param name="stopVal" val="120.0" valType="code" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
         <Param name="flip" val="" valType="str" updates="constant"/>
@@ -101,7 +101,7 @@
         <Param name="correctAns" val="" valType="str" updates="constant"/>
         <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
         <Param name="name" val="key_resp_2" valType="code" updates="None"/>
-        <Param name="stopVal" val="120" valType="code" updates="constant"/>
+        <Param name="stopVal" val="" valType="code" updates="constant"/>
         <Param name="durationEstim" val="" valType="code" updates="None"/>
         <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
         <Param name="startEstim" val="" valType="code" updates="None"/>
@@ -109,7 +109,7 @@
         <Param name="startType" val="time (s)" valType="str" updates="None"/>
         <Param name="allowedKeys" val="'y','n','left','right','space', '1', '2'" valType="code" updates="constant"/>
         <Param name="stopType" val="time (s)" valType="str" updates="None"/>
-        <Param name="startVal" val="10.0" valType="code" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
         <Param name="store" val="last key" valType="str" updates="constant"/>
       </KeyboardComponent>
     </Routine>
