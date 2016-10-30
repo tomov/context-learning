@@ -16,7 +16,7 @@ import csv
 # make sure to update the MATLAB script format too
 #
 colformat = "%s %s %s %d %s" + " %s %d %d %s %s" + " %s %f %d %s %s" + " %d %d %d" + \
-    " %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f"
+    " %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f"
 
 # colnames used for the behavioral pilot
 # may want to be careful adding stuff here -- will have to change things in the analyze.m script too (in ../../model)
@@ -44,7 +44,7 @@ colnames = [
     'roundId',
     'trialId',
 
-    'trialStartWallTime',
+    'expStartWallTime',
     'actualChoiceOnset',
     'actualChoiceOffset',
     'actualIsiOnset',
@@ -55,15 +55,12 @@ colnames = [
     'actualItiOffset',
     'actualItiDuration',
     'itiDriftAdjustment',
-    'trialEndWallTime',
     'stimOnset',
     'stimOffset',
     'itiDuration',
     'itiOffset'
 ]
 
-
-trialStartWallTime, actualChoiceOnset, actualChoiceOffset, actualIsiOnset, actualIsiOffset, actualFeedbackOnset, actualFeedbackOffset, actualItiOnset, actualItiOffset, actualItiDuration, itiDriftAdjustment, trialEndWallTime, stimOnset, stimOffset, itiDuration, itiOffset
 
 assert len(colnames) == len(colformat.split(' ')), "Make sure to update colformat here and in the MATLAB script that parses the file " + str(len(colnames)) + " vs " + str(len(colformat.split(' ')))
 
@@ -111,7 +108,7 @@ def parseRow(entry):
         int(entry['runs.thisN']) + 1,
         (int(entry['test_trials.thisN']) + 1) if isTest else (int(entry['train_trials.thisN']) + 1),
 
-        entry['trialStartWallTime'],
+        entry['expStartWallTime'],
         entry['actualChoiceOnset'],
         entry['actualChoiceOffset'],
         entry['actualIsiOnset'],
@@ -122,7 +119,6 @@ def parseRow(entry):
         entry['actualItiOffset'],
         entry['actualItiDuration'],
         entry['itiDriftAdjustment'],
-        entry['trialEndWallTime'],
         entry['stimOnset'],
         entry['stimOffset'],
         entry['itiDuration'],

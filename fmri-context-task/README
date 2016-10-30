@@ -1,9 +1,26 @@
 1) cd itis
 2) run gen_itis.sh or something like that to generate itis for all subjects
-  they should all be generated in the par subdirectory
+  they should all be generated in the par/ subdirectory
 3) run parse_itis.py to generate the entire stimulus sequence for all runs for all subjects 
-  they should all be generated in the csv subdirectory
+  they should all be generated in the csv/ subdirectory and have the form e.g. con001_run0_itis.csv
+  python parse_itis.py -p   # for practice rounds
 4) cd ..
-5) run fmri.psyexp
+5) run fmri.psyexp in psychopy
   the participant should be like: con001, con002, con003, etc
   it uses this to pick the generated sequence from itis/csv/... 
+  btw on each round:
+    a) get to "Beginning round #XX" screen
+    b) drag and double click the next scan sequence on the console
+        on the first one, make sure the brain is in the yellow box -- adjust as needed
+        on subsequent ones, DON'T MOVE IT
+    c) hit Apply (the green tick) on console
+    d) hit space to get to the "Waiting for scanner..." screen
+    e) wait for dialog box on console and hit Continue
+6) once the experiment is over, copy the resulting csv file from data/ (e.g. con001_blabla.csv) into the snippets/ directory
+7) cd snippets
+8) run parse.py to parse the data file into a format that is suitable for analysis into output file fmri.csv
+    python parse.py con001_blabla.csv fmri.csv       #  for the first subject
+    python parse.py con002_blabla.csv fmri.csv -a    #  for the subsequent subjects -- this appends to the fmri.csv file
+9) cd .. ; cd ..
+10) cp fmri-context-task/snippets/fmri.csv model/fmri.csv
+11) cd model/  and open MATLAB and run analyze_gui2.m from there
