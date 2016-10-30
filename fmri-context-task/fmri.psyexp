@@ -788,7 +788,7 @@
         <Param name="Begin Routine" val="" valType="extendedCode" updates="constant"/>
         <Param name="End Routine" val="logging.exp(&quot;Experiment Finished&quot;)&#10;" valType="extendedCode" updates="constant"/>
         <Param name="End Experiment" val="#win.saveMovieFrames('thumb.png')" valType="extendedCode" updates="constant"/>
-        <Param name="Each Frame" val="if logging.defaultClock.getTime() &gt; EXP_DURATION:&#10;    continueRoutine = False&#10;    finishText.status = FINISHED&#10;    finishText.setAutoDraw(False)" valType="extendedCode" updates="constant"/>
+        <Param name="Each Frame" val="logging.exp(&quot;time = &quot; + str(logging.defaultClock.getTime()))&#10;if logging.defaultClock.getTime() &gt; EXP_DURATION:&#10;    continueRoutine = False&#10;    finishText.status = FINISHED&#10;    finishText.setAutoDraw(False)" valType="extendedCode" updates="constant"/>
       </CodeComponent>
       <TextComponent name="finishText">
         <Param name="opacity" val="1" valType="code" updates="constant"/>
@@ -901,7 +901,6 @@
     <LoopTerminator name="test_trials"/>
     <Routine name="Fixation_2"/>
     <LoopTerminator name="runs"/>
-    <Routine name="waitForFinish"/>
     <Routine name="thankyou"/>
   </Flow>
 </PsychoPy2experiment>

@@ -51,6 +51,14 @@ stimuli = [
         }
 ]
 
+practice_stimuli = [
+        {
+            'restaurants': ['Seven Hills', 'Blue Bottle Cafe', 'Restaurant Gary Danko'],
+            'foods':       ["practice_food0.png", "practice_food1.png", "practice_food2.png"]
+        }
+] * len(stimuli)
+
+
 # this is for the fMRI mode only
 #
 def get_correct_button(isSick):
@@ -186,9 +194,17 @@ def gen_test():
     return stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId
 
 if __name__ == "__main__":
+    isPractice = False 
+    if len(sys.argv) >= 2:
+        if sys.argv[1] in ['-p', '--practice']:
+            isPractice = True
+
     pars = os.listdir("par")
 
-    seed(129523)
+    if isPractice:
+        seed(545123) # different seed for practice
+    else:
+        seed(129523)
 
     train = []
     test = []
@@ -208,6 +224,9 @@ if __name__ == "__main__":
         x = gen_test()
         test.append(x)
 
+    if isPractice:
+        stimuli = practice_stimuli # use different stimuli for practice
+
     next_train_idx = 0
     next_test_idx = 0
     for subj in range(n_subjects):
@@ -219,7 +238,10 @@ if __name__ == "__main__":
         cuisines = range(0, 9)
         shuffle(cuisines)
 
-        subjId = 'con%03d' % subj
+        if isPractice:
+            subjId = 'prac%03d' % subj # use a different subject id for practice
+        else:
+            subjId = 'con%03d' % subj
         subjFname = os.path.join('csv', '%s.csv' % subjId)
         with open(subjFname, 'w') as subjF:
             subjF.write('runFilename\n')
@@ -296,3 +318,8 @@ if __name__ == "__main__":
                     next_test_idx += 1
 
                     assert t + itiOffset == 194, "It's " + str(t + itiOffset) 
+
+                # only one run for practice
+                #
+                if isPractice:
+                    break
