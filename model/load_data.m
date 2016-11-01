@@ -9,6 +9,10 @@
 %[participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
 %    textread('pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
 
+if ~exist('load_data_directory')
+    load_data_directory = ''; % hacksauce to "pass" a directory
+end
+
 % For the real deal -- the fMRI study
 %
 format = '%s %s %s %d %s %s %d %d %s %s %s %f %d %s %s %d %d %d %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s';
@@ -20,7 +24,7 @@ format = '%s %s %s %d %s %s %d %d %s %s %s %f %d %s %s %d %d %d %s %s %s %s %s %
     actualIsiOnset, actualIsiOffset, actualFeedbackOnset, actualFeedbackOffset, ...
     actualItiOnset, actualItiOffset, actualItiDuration, itiDriftAdjustment, ...
     trialEndWallTime, stimOnset, stimOffset, itiDuration, itiOffset] = ...
-    textread('fmri.csv', format, 'delimiter', ',', 'headerlines', 1);
+    textread(strcat(load_data_directory, 'fmri.csv'), format, 'delimiter', ',', 'headerlines', 1);
 
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = training trials per round / 4
