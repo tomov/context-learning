@@ -20,7 +20,7 @@ function EXPT = contextExpt
     % Momchil Tomov, Nov 2016
     
     % main directory
-    exptdir = '/ncf/gershman/Lab/ConLearn-2/';
+    exptdir = '/ncf/gershman/Lab/ConLearn/';
 
     % Load data from file with all subjects, as well as some constants.
     %
@@ -31,7 +31,7 @@ function EXPT = contextExpt
     subjects = {'con001', 'con002'}; % TODO don't hardcode
     subjdirs = {'161030_con001', '161030_con002'};
     nRuns = {9, 9}; % runs per subject
-    assert(isequal(subjects',unique(participant)));
+    %assert(isequal(subjects',unique(participant)));
     
     for subj = 1:length(subjects)
         subjdir = [exptdir, 'subjects/', subjdirs{subj}, '/'];
