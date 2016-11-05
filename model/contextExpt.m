@@ -27,17 +27,23 @@ function EXPT = contextExpt
     %load_data_directory = exptdir; % hacksauce
     load_data;
     
-    nRuns = 9; % runs per subject
 
     subjects = {'con001', 'con002'}; % TODO don't hardcode
     subjdirs = {'161030_con001', '161030_con002'};
+    nRuns = {9, 9}; % runs per subject
     assert(isequal(subjects',unique(participant)));
     
     for subj = 1:length(subjects)
-        EXPT.subject(subj).structural = 'struct.nii';
         subjdir = [exptdir, 'subjects/', subjdirs{subj}, '/'];
         EXPT.subject(subj).datadir = [subjdir, 'preproc'];
-        disp(EXPT.subject(subj))
+        
+        EXPT.subject(subj).structural = 'struct.nii';
+        
+        assert(nRuns{subj} == length(unique(roundId(strcmp(participant, subjects{subj})))));
+        for run = 1:nRuns{subj}
+            EXPT.subject(subj).functional{run} = ['run',sprintf('%03d',run),'.nii'];
+        end
+        disp(EXPT.subject(subj));
     end
     
     % TR repetition time

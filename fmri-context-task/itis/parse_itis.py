@@ -9,6 +9,7 @@ import os
 import sys
 import csv
 from numpy.random import shuffle, seed
+import numpy as np
 
 roles = ['irrelevant', 'modulatory', 'additive']
 
@@ -237,6 +238,8 @@ if __name__ == "__main__":
 
         cuisines = range(0, 9)
         shuffle(cuisines)
+        
+        train_jitters = []
 
         if isPractice:
             subjId = 'prac%03d' % subj # use a different subject id for practice
@@ -274,6 +277,7 @@ if __name__ == "__main__":
                     t = 10 # starting point for first trial is after initial fixation TODO
                     stimOnset, stimOffset, jitter, stimTime, stim, cueId, contextId = train[next_train_idx]
                     assert sum(jitter) == 144 - 5 * 20, "Sum of train jitters is wrong: " + str(sum(jitter))
+                    train_jitters.extend(jitter)
                     for i in range(20):
                         isSick = get_is_sick(contextRole, cueId[i], contextId[i])
                         corrButton = get_correct_button(isSick)
@@ -323,3 +327,8 @@ if __name__ == "__main__":
                 #
                 if isPractice:
                     break
+
+    print 'mean = ', np.mean(train_jitters)
+    print 'min = ', np.min(train_jitters)
+    print 'max = ', np.max(train_jitters)
+    print 'std = ', np.std(train_jitters)
