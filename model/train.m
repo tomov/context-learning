@@ -1,5 +1,7 @@
 function [choices, P_n, ww_n, P, ww] = train(x, k, r, learning_rate, softmax_temp, DO_PRINT)
 
+momchil_mode = false;
+
 predict = @(V_n) 1 ./ (1 + exp(-2 * softmax_temp * V_n + softmax_temp)); % predicts by mapping the expectation to an outcome
 
 % constants
@@ -24,7 +26,11 @@ Sigma_n{2} = repmat(sigma_w^2 * eye(D + 1), 1, 1, K); % note the third dimension
 Sigma_n{3} = sigma_w^2 * eye(D + K);
 Sigma_n{4} = sigma_w^2 * eye(K);
 
-P_n = [1 1 1 1]; % posterior P(M | h_1:n)
+if momchil_mode
+    P_n = [1 1 1 1]; % priors
+else
+    P_n = [1 1 1 0]; % priors
+end
 P_n = P_n / sum(P_n);
 
 % Store history for plotting and analysis
@@ -44,7 +50,11 @@ for n = 1:N % for each trial
     r_n = r(n, :); % reward at trial n
     c_n = zeros(K, 1);
     c_n(k_n) = 1; % context vector like x_n
-    xb_n = [x_n; 1]; % stim vec + bias term
+    if momchil_mode
+        xb_n = [x_n; 1]; % stim vec + bias term
+    else
+        xb_n = [x_n; 0]; % stim vec + bias term
+    end
     xx_n = [x_n; c_n]; % augmented stimulus + context vector
     
     % make a prediction based on h_1:n-1
@@ -95,6 +105,8 @@ for n = 1:N % for each trial
         disp(ww_n{4});
     end
     
+    % posteriors P(M | h_1:n)
+    % 
     P_n(1) = P_n(1) * normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2);
     P_n(2) = P_n(2) * normpdf(r_n, xb_n' * ww_n{2}(:,k_n), xb_n' * SSigma_n{2} * xb_n + sigma_r^2);
     P_n(3) = P_n(3) * normpdf(r_n, xx_n' * ww_n{3}, xx_n' * SSigma_n{3} * xx_n + sigma_r^2);

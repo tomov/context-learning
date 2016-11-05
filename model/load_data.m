@@ -15,8 +15,10 @@ end
 
 % For the real deal -- the fMRI study
 %
-fmri_data = true % set to false for behavioral pilot
+fmri_data = true; % set to false for behavioral pilot
 if fmri_data
+    % behavioral data from scanned subjects
+    %
     format = '%s %s %s %d %s %s %d %d %s %s %s %f %d %s %s %d %d %d %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s';
     [participant, session, mriMode, isPractice, runFilename, ...
         contextRole, contextId, cueId, sick, corrAns, ...
@@ -27,6 +29,13 @@ if fmri_data
         actualItiOnset, actualItiOffset, actualItiDuration, itiDriftAdjustment, ...
         trialEndWallTime, stimOnset, stimOffset, itiDuration, itiOffset] = ...
         textread(strcat(load_data_directory, 'fmri.csv'), format, 'delimiter', ',', 'headerlines', 1);
+else
+    % behavioral data from pilot subjects
+    %
+    format = '%s %s %s %d %s %s %s %d %d %s %s %s %f %d %s %s %d %d %d';
+
+    [participant, session, mriMode, isPractice, restaurantsReshuffled, foodsReshuffled, contextRole, contextId, cueId, sick, corrAns, response.keys, response.rt, response.corr, restaurant, food, isTrain, roundId, trialId] = ...
+        textread('behavioral-pilot.csv', format, 'delimiter', ',', 'headerlines', 1);
 end
     
 roundsPerContext = 3; % = blocks per context = runs per context = runs / 3

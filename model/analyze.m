@@ -127,13 +127,6 @@ for context = contextRoles
     x2c1 = strcmp(corrAns(which & cueId == 1 & contextId == 0), 'left');
     x2c2 = strcmp(corrAns(which & cueId == 1 & contextId == 1), 'left');
 
-    if ~exist('analyze_with_gui') || ~analyze_with_gui
-        assert(length(x1c1) == roundsPerContext * trialsNReps * length(subjects));
-        assert(length(x1c2) == roundsPerContext * trialsNReps * length(subjects));
-        assert(length(x2c1) == roundsPerContext * trialsNReps * length(subjects));
-        assert(length(x2c2) == roundsPerContext * trialsNReps * length(subjects));
-    end
-
     M = get_means(x1c1, x1c2, x2c1, x2c2);
     SEM = get_sems(x1c1, x1c2, x2c1, x2c2);
     %M = mean([x1c1 x1c2 x2c1 x2c2]);
@@ -163,13 +156,6 @@ for context = contextRoles
     x1c2 = strcmp(response.keys(which & cueId == 0 & contextId == 2), 'left');
     x2c1 = strcmp(response.keys(which & cueId == 2 & contextId == 0), 'left');
     x2c2 = strcmp(response.keys(which & cueId == 2 & contextId == 2), 'left');
-
-    if ~exist('analyze_with_gui') || ~analyze_with_gui
-        assert(length(x1c1) == roundsPerContext * length(subjects));
-        assert(length(x1c2) == roundsPerContext * length(subjects));
-        assert(length(x2c1) == roundsPerContext * length(subjects));
-        assert(length(x2c2) == roundsPerContext * length(subjects));
-    end
 
 %    M = mean([x1c1 x1c2 x2c1 x2c2]);
 %    SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
@@ -203,13 +189,6 @@ for context = contextRoles
     x2c1 = strcmp(model.keys(which & cueId == 2 & contextId == 0), 'left');
     x2c2 = strcmp(model.keys(which & cueId == 2 & contextId == 2), 'left');
     
-    if ~exist('analyze_with_gui') || ~analyze_with_gui    
-        assert(length(x1c1) == roundsPerContext * length(subjects));
-        assert(length(x1c2) == roundsPerContext * length(subjects));
-        assert(length(x2c1) == roundsPerContext * length(subjects));
-        assert(length(x2c2) == roundsPerContext * length(subjects));
-    end
-
     %M = mean([x1c1 x1c2 x2c1 x2c2]);
     %SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
     M = get_means(x1c1, x1c2, x2c1, x2c2);
@@ -238,13 +217,6 @@ for context = contextRoles
     x1c2 = model.pred(which & cueId == 0 & contextId == 2);
     x2c1 = model.pred(which & cueId == 2 & contextId == 0);
     x2c2 = model.pred(which & cueId == 2 & contextId == 2);
-
-    if ~exist('analyze_with_gui') || ~analyze_with_gui
-        assert(length(x1c1) == roundsPerContext * length(subjects));
-        assert(length(x1c2) == roundsPerContext * length(subjects));
-        assert(length(x2c1) == roundsPerContext * length(subjects));
-        assert(length(x2c2) == roundsPerContext * length(subjects));
-    end
 
     %M = mean([x1c1 x1c2 x2c1 x2c2]);
     %SEM = std([x1c1 x1c2 x2c1 x2c2]) / sqrt(length(x1c1));
