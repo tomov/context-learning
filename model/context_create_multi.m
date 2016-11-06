@@ -68,12 +68,43 @@ function multi = context_create_multi(glmodel, subj, run)
     %
     switch glmodel
         
-        % Compare conditions (feedback onset)
+        % cue and outcome regressor for each model
+        
+        % Simple. Contrast conditions at feedback time
+        %
+        %
+        % neural correlate of latent structure prob
+        % show it's predictive of the test performance
+        % posterior over structures in OFC and vmPFC
+        % hippo encodes context sensitity
+        % e.g. hippo only active in modulatory condition -- 
+        %     or hippo just codes context, regardless of functional
+        %     role
+        %     whether there's significant info in hippo re context
+        %    option -- classify which context based on hippo activity
+        %        separate GLM --
+        %           regressor for each context at time of stimulus 
+        %           to avoid collinearity, no stimulus event regressor
+        %           just events, no pmods
+        %           and a feedback event
+        %           for each subject, pull out voxel activity in hippo
+        %           leave 1 of 9 runs out
+        %           gives you 1 beta map for each context per run
+        %           have 16 training examples 
+        %           train a classifier on 16 examples 
+        %           
+        %           simple thing -- is context activated selectively in
+        %           modulatory condition
+        %               vs. irrelevant and additive
+        %           modulatory - irrelevant
+        %           additive - irrelevant
+        %           modulatory - additive
+        %           
         %
         case 1
             % Event 1: feedback
             %
-            % names = condition == context role
+            % name = condition == context role
             % onsets = feedback onset
             % durations = 0 s
             % 
@@ -81,6 +112,16 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{1} = actualFeedbackOnset(which_train);
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
+            % Event 2: Stimulus
+            %
+            % name = stim_onset
+            % onsets = stimulus onset
+            % durations = 0 s
+            % 
+            multi.names{2} = 'stim_onset';
+            multi.onsets{2} = actualChoiceOnset(which_train);
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
         % Regress with M2 posterior (feedback onset)
         % and expected outcome (stimulus onset)
         %
@@ -111,22 +152,27 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(2).param{1} = choices; % expected outcome for trials 1..20
             multi.pmod(2).poly{1} = 1; % first order        
             
-            % Event 3: stimulus onset (test)
+            % Events 3, 4, 5, 6: Test stimulus, one per
+            % condition-cue-context tuple
             %
-            % UNDONE should I have each be an actual separate event? i.e.
-            % look at contextId(which_test) and cueId(which_test) and have
-            % 'x1c3_modulatory'
+            % name = test_{condition}_x{cueId + 1}c{contextId + 1}
+            %   e.g. test_irrelevant_x1c3
+            % onset = stimulus onset
+            % duration = 0
             %
-            % onsets = stimulus onset (after choice & ISI)
-            % durations = 0 s
-            % 
-            multi.names{3} = 'test_stim_onset';
-            multi.onsets{3} = actualChoiceOnset(which_test);
-            multi.durations{3} = zeros(size(contextRole(which_test)));
-            
-            multi.pmod(3).names{1} = 'test_expected_outcome';
-            multi.pmod(3).param{1} = test_choices; % expected outcome for trials 1..20
-            multi.pmod(3).poly{1} = 1; % first order        
+            % identify voxels that predict expected outcome purely on training
+            % on test trials, at stimulus onset, do they show the pattern
+            % of modulation that we see in behavior
+            % just look at the betas then (no pmods for test trials)
+            %
+            test_cueIds = cueId(which_test);
+            test_contextIds = contextId(which_test);
+            test_actualChoiceOnsets = actualChoiceOnset(which_test);
+            for i=1:4
+                multi.names{2 + i} = sprintf('test_%s_x%dc%d', condition, test_cueIds(i) + 1, test_contextIds(i) + 1);
+                multi.onsets{2 + i} = test_actualChoiceOnsets(i);
+                multi.durations{2 + i} = 0;
+            end
     end
 
 end
