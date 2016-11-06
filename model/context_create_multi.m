@@ -24,9 +24,8 @@ function multi = context_create_multi(glmodel, subj, run)
     
     load_data;
     
-    subjects = {'con001', 'con002'}; % TODO don't hardcode them
-    subjdirs = {'161030_con001', '161030_con002'};
-    %assert(isequal(subjects',unique(participant)));
+    [subjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
+    assert(isequal(subjects',unique(participant)));
     
     % GLM 1 => 
     % GLM 2 => 

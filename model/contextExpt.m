@@ -27,11 +27,8 @@ function EXPT = contextExpt
     %load_data_directory = exptdir; % hacksauce
     load_data;
     
-
-    subjects = {'con001', 'con002'}; % TODO don't hardcode
-    subjdirs = {'161030_con001', '161030_con002'};
-    nRuns = {9, 9}; % runs per subject
-    %assert(isequal(subjects',unique(participant)));
+    [subjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
+    assert(isequal(subjects',unique(participant)));
     
     for subj = 1:length(subjects)
         subjdir = [exptdir, 'subjects/', subjdirs{subj}, '/'];
