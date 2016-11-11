@@ -34,8 +34,8 @@ function multi = context_create_multi(glmodel, subj, run)
     
     % pick the trials that correspond to that subject & run
     %
-    which_train = isTrain & strcmp(participant, subjects{subj}) & roundId == run;
-    which_test = ~isTrain & strcmp(participant, subjects{subj}) & roundId == run;
+    which_train = ~drop & isTrain & strcmp(participant, subjects{subj}) & roundId == run;
+    which_test = ~drop & ~isTrain & strcmp(participant, subjects{subj}) & roundId == run;
     
     % condition = context role for the run
     %
@@ -108,7 +108,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % durations = 0 s
             % 
             multi.names{1} = condition;
-            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
             % Event 2: Stimulus
@@ -118,7 +118,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % durations = 0 s
             % 
             multi.names{2} = 'stim_onset';
-            multi.onsets{2} = actualChoiceOnset(which_train);
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
 
         % Regress with M2 posterior (feedback onset)
@@ -167,7 +167,7 @@ function multi = context_create_multi(glmodel, subj, run)
             test_cueIds = cueId(which_test);
             test_contextIds = contextId(which_test);
             test_actualChoiceOnsets = actualChoiceOnset(which_test);
-            for i=1:4
+            for i=1:length(test_actualChoiceOnsets)
                 multi.names{2 + i} = sprintf('test_%s_x%dc%d', condition, test_cueIds(i) + 1, test_contextIds(i) + 1);
                 multi.onsets{2 + i} = test_actualChoiceOnsets(i);
                 multi.durations{2 + i} = 0;

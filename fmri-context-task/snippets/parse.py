@@ -15,13 +15,14 @@ import csv
 
 # make sure to update the MATLAB script format too
 #
-colformat = "%s %s %s %d %s" + " %s %d %d %s %s" + " %s %f %d %s %s" + " %d %d %d" + \
+colformat = "%d %s %s %s %d %s" + " %s %d %d %s %s" + " %s %f %d %s %s" + " %d %d %d" + \
     " %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f"
 
 # colnames used for the behavioral pilot
 # may want to be careful adding stuff here -- will have to change things in the analyze.m script too (in ../../model)
 #
 colnames = [
+    'drop',
     'participant',
     'session',
     'mriMode',
@@ -86,6 +87,7 @@ def parseRow(entry):
     assert entry['responseKey.keys'] == '1' or entry['responseKey.keys'] == '2' or entry['responseKey.keys'] == 'None', entry['responseKey.keys']
     isTest = entry['isTest'] == 'True'
     out = [
+        0, # by default don't drop anything
         entry['participant'],
         entry['session'],
         entry['mriMode'],
