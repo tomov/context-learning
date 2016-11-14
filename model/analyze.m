@@ -1,5 +1,3 @@
-% TODO plot prediction certainty Sigma
-%
 
 % Load data from file with all subjects, as well as some constants.
 %
@@ -41,7 +39,7 @@ for who = subjects
             x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww] = train(x, c, r, learning_rate, softmax_temp, false);
+            [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;
@@ -70,7 +68,7 @@ for who = subjects
             test_x = zeros(test_N, D);
             test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
             test_c = contextId(which_test) + 1;
-            [test_choices] = test(test_x, test_c, P_n, ww_n, softmax_temp);
+            [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
             if make_optimal_choices
                 model_test_choices = test_choices > 0.5;

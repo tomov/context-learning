@@ -1,4 +1,6 @@
-function [choices] = test(x, k, P_n, ww_n, softmax_temp)
+function [choices] = test(x, k, P_n, ww_n, inv_softmax_temp)
+% Apply what 
+%
 
 % constants
 %
@@ -7,7 +9,7 @@ D = size(x, 2); % # of stimuli
 K = 3;          % # of contexts
 
 % predict
-predict = @(V_n) 1 ./ (1 + exp(-2 * softmax_temp * V_n + softmax_temp)); % predicts by mapping the expectation to an outcome
+predict = @(V_n) 1 ./ (1 + exp(-2 * inv_softmax_temp * V_n + inv_softmax_temp)); % predicts by mapping the expectation to an outcome
 
 value = @(x_n, xx_n, xb_n, k_n, c_n) (x_n' * ww_n{1}) * P_n(1) + ... % M1 
                                      (xb_n' * ww_n{2}(:, k_n)) * P_n(2) + ... % M2

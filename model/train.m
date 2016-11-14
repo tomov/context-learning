@@ -1,8 +1,11 @@
-function [choices, P_n, ww_n, P, ww] = train(x, k, r, learning_rate, softmax_temp, DO_PRINT)
+function [choices, P_n, ww_n, P, ww] = train(x, k, r, prior_variance, inv_softmax_temp, DO_PRINT)
+% Kalman filter to learn the context-cue-reward associations & posteriors
+% for each context role model
+%
 
 momchil_mode = false;
 
-predict = @(V_n) 1 ./ (1 + exp(-2 * softmax_temp * V_n + softmax_temp)); % predicts by mapping the expectation to an outcome
+predict = @(V_n) 1 ./ (1 + exp(-2 * inv_softmax_temp * V_n + inv_softmax_temp)); % predicts by mapping the expectation to an outcome
 
 % constants
 %
@@ -11,7 +14,7 @@ D = size(x, 2); % # of stimuli
 K = 3;          % # of contexts
 
 sigma_r = sqrt(0.01);
-sigma_w = sqrt(learning_rate); % std for gaussian prior over weights, uncertainty; decreasing the learning rate
+sigma_w = sqrt(prior_variance); % std for gaussian prior over weights, uncertainty; decreasing the learning rate
 tau = sqrt(0.001);
 
 % initialize Kalman filter

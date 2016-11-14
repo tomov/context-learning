@@ -11,8 +11,8 @@ function analyze_gui2
     global make_optimal_choices;
     global roundsPerContext;
     global trialsPerRound;
-    global softmax_temp;
-    global learning_rate;
+    global inv_softmax_temp;
+    global prior_variance;
     global what_to_plot;
     
     global analyze_with_gui; % so analyze.m knows not to do certain things
@@ -32,8 +32,8 @@ function analyze_gui2
     %
     analyze_with_gui = true;
     make_optimal_choices = false;
-    learning_rate = 0.1;
-    softmax_temp = 3;
+    prior_variance = 0.2574;
+    inv_softmax_temp = 2.0309;
     what_to_plot = 'analyze';
 
     % Load the data and some constants
@@ -95,16 +95,16 @@ function analyze_gui2
     
     % Numeric parameter constants
     %
-    learning_rate_caption = uicontrol(f, 'Style', 'text', 'String', 'Learning rate', ...
-                         'Position', [10 100 + 20 * (idx - 1) 80 20]);
-    learning_rate_editbox = uicontrol(f, 'Style', 'edit', 'String', '0.1', ...
-                         'Tag', 'learning_rate_editbox', 'Position', [90 100 + 20 * (idx - 1) 30 20]);
+    prior_variance_caption = uicontrol(f, 'Style', 'text', 'String', 'Prior variance', ...
+                         'Position', [0 100 + 20 * (idx - 1) 90 20]);
+    prior_variance_editbox = uicontrol(f, 'Style', 'edit', 'String', num2str(prior_variance), ...
+                         'Tag', 'prior_variance_editbox', 'Position', [90 100 + 20 * (idx - 1) 40 20]);
     idx = idx + 1;
 
-    softmax_temp_caption = uicontrol(f, 'Style', 'text', 'String', 'Softmax temp', ...
-                         'Position', [10 100 + 20 * (idx - 1) 80 20]);
-    softmax_temp_editbox = uicontrol(f, 'Style', 'edit', 'String', '3', ...
-                         'Tag', 'softmax_temp_editbox', 'Position', [90 100 + 20 * (idx - 1) 30 20]);
+    inv_softmax_temp_caption = uicontrol(f, 'Style', 'text', 'String', 'Inv softmax temp', ...
+                         'Position', [0 100 + 20 * (idx - 1) 90 20]);
+    inv_softmax_temp_editbox = uicontrol(f, 'Style', 'edit', 'String', num2str(inv_softmax_temp), ...
+                         'Tag', 'inv_softmax_temp_editbox', 'Position', [90 100 + 20 * (idx - 1) 40 20]);
     idx = idx + 1;
 
     % What to plot
@@ -189,12 +189,12 @@ function run_button_callback(hObject, eventdata, handles)
     global which_rows;
     global make_optimal_choices;
     global contextRoles;    
-    global softmax_temp;
-    global learning_rate;
+    global inv_softmax_temp;
+    global prior_variance;
     global what_to_plot;
     
-    softmax_temp = str2double(get(findobj('Tag', 'softmax_temp_editbox'), 'String'))
-    learning_rate = str2double(get(findobj('Tag', 'learning_rate_editbox'), 'String'))
+    inv_softmax_temp = str2double(get(findobj('Tag', 'inv_softmax_temp_editbox'), 'String'))
+    prior_variance = str2double(get(findobj('Tag', 'prior_variance_editbox'), 'String'))
     
     % Only what is "global" here will be declared for the stuff in analyze
     % it's like you're copy-pasting the code here/

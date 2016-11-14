@@ -15,7 +15,9 @@ end
 
 % For the real deal -- the fMRI study
 %
-fmri_data = true; % set to false for behavioral pilot
+if ~exist('fmri_data')
+    fmri_data = true; % hacksauce to tell it which data file to load
+end
 if fmri_data
     % behavioral data from fMRI subjects
     %
@@ -42,16 +44,21 @@ roundsPerContext = 3; % = blocks per context = runs per context = runs / 3
 trialsNReps = 5; % = training trials per round / 4
 trialsPerRound = 24;
 
+% In case we're not using the GUI (i.e. analyze_gui2.m)
+%
 if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always reload the data
-    which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them
+    which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them. Mostly relevant for the GUI
     subjects = unique(participant(which_rows))'; % the unique id's of all subjects
     
     contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 
     make_optimal_choices = false;
     
-    learning_rate = 0.1;
-    softmax_temp = 3;
+    % Obtained from fit.m
+    % make sure to also update analyze_gui2.m
+    %
+    prior_variance = 0.2574;
+    inv_softmax_temp = 2.0309;
 end
 
 % b/c sometimes they're vectors of size 1 == scalars, so can't do mean([a b c d e]) 
