@@ -24,15 +24,16 @@ for who = subjects
     subject_data.runs = [];
     
     for run = runs
-        which_train = which_runs & isTrain & roundId == run;
-        which_test = which_runs & ~isTrain & roundId == run;
+        % note they include 20 train + 4 test trials
+        % we separate them when we compute the likelihood
+        which_trials = which_runs & roundId == run;
         
         % TODO handle None (i.e. TIMEOUT) trials
-        run_data.human_choices = strcmp(response.keys(which_train), 'left');
-        run_data.cues = cueId(which_train);
+        run_data.human_choices = strcmp(response.keys(which_trails), 'left');
+        run_data.cues = cueId(which_trials);
         run_data.N = length(run_data.cues);
-        run_data.contexts = contextId(which_train) + 1;
-        run_data.sick = strcmp(sick(which_train), 'Yes');
+        run_data.contexts = contextId(which_trails) + 1;
+        run_data.sick = strcmp(sick(which_trials), 'Yes');
         
         subject_data.runs = [subject_data.runs; run_data];
         subject_data.N = subject_data.N + run_data.N;
@@ -66,6 +67,6 @@ param(2).ub = 20; % can't make it too large b/c you get prob = 0 and -Inf likeli
 %
 nstarts = 2;    % number of random parameter initializations
 disp('... Fitting model 1');
-results(1) = mfit_optimize(@train_lik, param, data, nstarts);
+results(1) = mfit_optimize(@kalman_lik, param, data, nstarts);
 
 fprintf('Prior variance = %.4f, inverse softmax temp = %.4f\n', results(1).x(1), results(1).x(2));
