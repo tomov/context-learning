@@ -51,7 +51,7 @@ function multi = context_create_multi(glmodel, subj, run)
     x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
     c = contextId(which_train) + 1;
     r = strcmp(sick(which_train), 'Yes');
-    [choices, P_n, ww_n, P, ww] = train(x, c, r, learning_rate, softmax_temp, false);    
+    [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, false);    
     
     % Run model on test trials
     %
@@ -61,7 +61,7 @@ function multi = context_create_multi(glmodel, subj, run)
     test_x = zeros(test_N, D);
     test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
     test_c = contextId(which_test) + 1;
-    [test_choices] = test(test_x, test_c, P_n, ww_n, softmax_temp);
+    [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
     % Parametric modulators
     %
