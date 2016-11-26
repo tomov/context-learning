@@ -1,8 +1,6 @@
 % Find optimal parameters for Kalman filter based on behavioral pilot data
 %
 
-addpath('../../mfit/');
-
 clear;
 
 fmri_data = false; % use the behavioral pilot data
@@ -15,7 +13,7 @@ load_data;
 %
 data = [];
 fake_data.N = 0;
-fake_data.subjects = []; % hack b/c we want one set of params for all subjects
+fake_data.subjects = []; % hack -- use 1 "subject"; b/c we want one set of params for all subjects
 for who = subjects
     which_runs = strcmp(participant, who);
     runs = unique(roundId(which_runs))';
@@ -29,10 +27,10 @@ for who = subjects
         which_trials = which_runs & roundId == run;
         
         % TODO handle None (i.e. TIMEOUT) trials
-        run_data.human_choices = strcmp(response.keys(which_trails), 'left');
+        run_data.human_choices = strcmp(response.keys(which_trials), 'left');
         run_data.cues = cueId(which_trials);
         run_data.N = length(run_data.cues);
-        run_data.contexts = contextId(which_trails) + 1;
+        run_data.contexts = contextId(which_trials) + 1;
         run_data.sick = strcmp(sick(which_trials), 'Yes');
         
         subject_data.runs = [subject_data.runs; run_data];

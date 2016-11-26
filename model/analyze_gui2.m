@@ -32,8 +32,8 @@ function analyze_gui2
     %
     analyze_with_gui = true;
     make_optimal_choices = false;
-    prior_variance = 0.1; % 0.2574; <-- from mfit
-    inv_softmax_temp = 3; % 2.0309; <-- from mfit
+    prior_variance = 0.1249;
+    inv_softmax_temp = 2.0064;
     what_to_plot = 'analyze';
 
     % Load the data and some constants

@@ -20,8 +20,9 @@ function EXPT = contextExpt
     % Momchil Tomov, Nov 2016
     
     % main directory
-    exptdir = '/ncf/gershman/Lab/ConLearn/';
-
+    %exptdir = '/ncf/gershman/Lab/ConLearn/'; % on CBS central server
+    exptdir = '/Users/memsql/Dropbox/research/context/'; % local
+    
     % Load data from file with all subjects, as well as some constants.
     %
     %load_data_directory = exptdir; % hacksauce

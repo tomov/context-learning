@@ -57,8 +57,8 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we al
     % Obtained from fit.m
     % make sure to also update analyze_gui2.m
     %
-    prior_variance = 0.1; % 0.2574; <-- from mfit
-    inv_softmax_temp = 3; % 2.0309; <-- from mfit
+    prior_variance = 0.1249;
+    inv_softmax_temp = 2.0064;
 end
 
 % b/c sometimes they're vectors of size 1 == scalars, so can't do mean([a b c d e]) 
