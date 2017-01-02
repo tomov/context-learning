@@ -26,12 +26,7 @@ function multi = context_create_multi(glmodel, subj, run)
     
     [subjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
     assert(isequal(subjects',unique(participant)));
-    
-    % GLM 1 => 
-    % GLM 2 => 
-    %
-    assert(glmodel == 1 || glmodel == 2);
-    
+        
     % pick the trials that correspond to that subject & run
     %
     which_train = ~drop & isTrain & strcmp(participant, subjects{subj}) & roundId == run;
@@ -101,23 +96,15 @@ function multi = context_create_multi(glmodel, subj, run)
         %           
         %
         case 1
-            % Event 1: feedback
-            %
-            % name = condition == context role
-            % onsets = feedback onset
-            % durations = 0 s
+            % context role @ feedback onset
             % 
             multi.names{1} = condition;
             multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
-            % Event 2: Stimulus
-            %
-            % name = stim_onset
-            % onsets = stimulus onset
-            % durations = 0 s
+            % ... @ trial onset
             % 
-            multi.names{2} = 'stim_onset';
+            multi.names{2} = 'trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
 
@@ -125,10 +112,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % and expected outcome (stimulus onset)
         %
         case 2
-            % Event 1: feedback
-            %
-            % onsets = feedback onset
-            % durations = 0 s
+            % M2 (modulatory) posterior @ feedback onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
             multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
@@ -138,12 +122,9 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).param{1} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order        
             
-            % Event 2: stimulus onset (training)
-            %
-            % onsets = stimulus onset (after choice & ISI)
-            % durations = 0 s
+            % expected outcome @ trial onset (trials 1..20)
             % 
-            multi.names{2} = 'stim_onset';
+            multi.names{2} = 'trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
@@ -172,6 +153,76 @@ function multi = context_create_multi(glmodel, subj, run)
                 multi.onsets{2 + i} = test_actualChoiceOnsets(i);
                 multi.durations{2 + i} = 0;
             end
+            
+        case 3
+            % context role @ feedback onset (trials 1..20)
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+
+        case 4
+            % context role @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));            
+
+        case 5
+            % correct vs. wrong @ feedback onset (trials 1..20)
+            % 
+            multi.names{1} = 'correct';
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train & response.corr))';
+            multi.durations{1} = zeros(size(contextRole(which_train & response.corr)));            
+            
+            multi.names{2} = 'wrong';
+            multi.onsets{2} = cellfun(@str2num, actualFeedbackOnset(which_train & ~response.corr))';
+            multi.durations{2} = zeros(size(contextRole(which_train & ~response.corr)));                        
+
+        case 6
+            % prediction error @ feedback onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'prediction error';
+            multi.pmod(1).param{1} = r' - choices'; % outcome - expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+            
+        case 7
+            % expected outcome @ trial onset (trials 1..20)
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'expected_outcome';
+            multi.pmod(1).param{1} = choices'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+        case 8
+            % sick vs. not sick @ feedback onset (trials 1..20)
+            %
+            multi.names{1} = 'sick';
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train & strcmp(sick, 'Yes')))';
+            multi.durations{1} = zeros(size(contextRole(which_train & strcmp(sick, 'Yes'))));            
+            
+            multi.names{2} = 'not sick';
+            multi.onsets{2} = cellfun(@str2num, actualFeedbackOnset(which_train & ~strcmp(sick, 'Yes')))';
+            multi.durations{2} = zeros(size(contextRole(which_train & ~strcmp(sick, 'Yes'))));                        
+            
+        case 9
+            % outcome (sick = 1, not sick = 0) @ feedback onset (trials 1..20)
+            % should be same as 8
+            %
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'outcome';
+            multi.pmod(1).param{1} = r'; % outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
     end
 
 end
