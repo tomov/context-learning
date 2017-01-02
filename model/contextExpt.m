@@ -21,7 +21,8 @@ function EXPT = contextExpt
     
     % main directory
     %exptdir = '/ncf/gershman/Lab/ConLearn/'; % on CBS central server
-    exptdir = '/Users/memsql/Dropbox/research/context/'; % local
+    exptdir = '/Users/memsql/Dropbox/research/context/'; % local group level
+    %exptdir = '/Users/memsql/Documents/MATLAB/conlearn-subject-data/'; % local single subject
     
     % Load data from file with all subjects, as well as some constants.
     %
@@ -29,6 +30,8 @@ function EXPT = contextExpt
     load_data;
     
     [subjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
+    subjects'
+    unique(participant)
     assert(isequal(subjects',unique(participant)));
     
     for subj = 1:length(subjects)

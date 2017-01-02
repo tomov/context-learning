@@ -54,12 +54,20 @@ function analyze_gui2
     %
     subject_checkboxes = {};
     idx = 1;
+    idc = 1; % column
+    max_idx = 1;
     for who = all_subjects
         subject_checkboxes{idx} = uicontrol(f, 'Style', 'checkbox', 'String', who, ... % should be 'who' -- we use that in the callback
-                          'Value', 1, 'Position', [10 10 + 20 * (idx - 1) 130 20], ...
+                          'Value', 1, 'Position', [10 + 60 * (idc - 1) 10 + 20 * (idx - 1) 130 20], ...
                           'Callback', @participant_checkbox_callback);
         idx = idx + 1;
+        max_idx = max(idx, max_idx);
+        if idx > 16
+            idx = 2;
+            idc = idc + 1;
+        end
     end
+    idx = max_idx;
     
     % Whether to make optimal choices. First one is picked by default
     %

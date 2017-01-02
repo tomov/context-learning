@@ -131,10 +131,10 @@ function multi = context_create_multi(glmodel, subj, run)
             % durations = 0 s
             % 
             multi.names{1} = 'feedback';
-            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
-            multi.pmod(1).names{1} = 'M2_posterior';
+            multi.pmod(1).name{1} = 'M2_posterior';
             multi.pmod(1).param{1} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order        
             
@@ -144,11 +144,11 @@ function multi = context_create_multi(glmodel, subj, run)
             % durations = 0 s
             % 
             multi.names{2} = 'stim_onset';
-            multi.onsets{2} = actualChoiceOnset(which_train);
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
-            multi.pmod(2).names{1} = 'expected_outcome';
-            multi.pmod(2).param{1} = choices; % expected outcome for trials 1..20
+            multi.pmod(2).name{1} = 'expected_outcome';
+            multi.pmod(2).param{1} = choices'; % expected outcome for trials 1..20
             multi.pmod(2).poly{1} = 1; % first order        
             
             % Events 3, 4, 5, 6: Test stimulus, one per
@@ -166,7 +166,7 @@ function multi = context_create_multi(glmodel, subj, run)
             %
             test_cueIds = cueId(which_test);
             test_contextIds = contextId(which_test);
-            test_actualChoiceOnsets = actualChoiceOnset(which_test);
+            test_actualChoiceOnsets = cellfun(@str2num, actualChoiceOnset(which_test))';
             for i=1:length(test_actualChoiceOnsets)
                 multi.names{2 + i} = sprintf('test_%s_x%dc%d', condition, test_cueIds(i) + 1, test_contextIds(i) + 1);
                 multi.onsets{2 + i} = test_actualChoiceOnsets(i);
