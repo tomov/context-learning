@@ -293,7 +293,6 @@ end
 %
 % Model per-trial weight matrix ww for each condition
 %
-
 for condition = contextRoles
 
     ww = [];
@@ -304,7 +303,8 @@ for condition = contextRoles
         ww2_n = model.ww2(which, :);
         ww3_n = model.ww3(which, :);
         ww4_n = model.ww4(which, :);
-        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n) mean(ww4_n)];
+%        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n) mean(ww4_n)];
+        ww = [ww; mean(ww3_n)];
     end
 
     subplot(3, 5, next_subplot_idx);
@@ -313,6 +313,7 @@ for condition = contextRoles
     xlabel('n (trial #)');
     ylabel('ww_n');
     title(strcat('Weights after each trial for ', {' '}, condition));
-    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2', 'M4, c1', 'M4, c2'});
+%    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2', 'M4, c1', 'M4, c2'});
+    legend({'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2'});
 
 end

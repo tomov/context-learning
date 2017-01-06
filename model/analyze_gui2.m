@@ -46,7 +46,7 @@ function analyze_gui2
     which_conditions = logical(true(size(contextRole))); % all conditions initially
     which_runs = logical(true(size(roundId))); % all runs initially
     contextRoles = unique(contextRole(which_conditions))'; % all; initially should be == {'irrelevant', 'modulatory', 'additive'}
-    update_invariant;
+    update;
 
     f = figure;
 
@@ -58,7 +58,7 @@ function analyze_gui2
     max_idx = 1;
     for who = all_subjects
         subject_checkboxes{idx} = uicontrol(f, 'Style', 'checkbox', 'String', who, ... % should be 'who' -- we use that in the callback
-                          'Value', 1, 'Position', [10 + 60 * (idc - 1) 10 + 20 * (idx - 1) 130 20], ...
+                          'Value', 1, 'Position', [10 + 60 * (idc - 1) 10 + 20 * (idx - 1) 70 20], ...
                           'Callback', @participant_checkbox_callback);
         idx = idx + 1;
         max_idx = max(idx, max_idx);
@@ -90,14 +90,14 @@ function analyze_gui2
         idx = idx + 1;
     end        
 
-    % Check boxes for picking which conditions
+    % Check boxes for picking which blocks
     %
-    run_checkboxes = {};
-    for run = 3:-1:1
-        run_checkboxes{idx} = uicontrol(f, 'Style', 'checkbox', 'String', strcat('Context run #', int2str(run)), ... % should be 'who' -- we use that in the callback
+    block_checkboxes = {};
+    for block = 3:-1:1
+        block_checkboxes{idx} = uicontrol(f, 'Style', 'checkbox', 'String', strcat('Context block #', int2str(block)), ... % should be 'who' -- we use that in the callback
                           'Value', 1, 'Position', [10 100 + 20 * (idx - 1) 130 20], ...
-                          'UserData', run, ...
-                          'Callback', @run_checkbox_callback);
+                          'UserData', block, ...
+                          'Callback', @block_checkbox_callback);
         idx = idx + 1;
     end
     
@@ -137,7 +137,7 @@ function analyze_gui2
                          
 % Call this every time something changes
 %
-function update_invariant
+function update
     global participant;
     global contextRole;
     global all_contextRoles;
@@ -230,7 +230,7 @@ function condition_checkbox_callback(hObject, eventdata, handles)
         which_conditions = which_conditions & ~strcmp(contextRole, condition);
     end
 
-    update_invariant;
+    update;
 
     
 % Select or remove a subject for the analysis   
@@ -247,12 +247,12 @@ function participant_checkbox_callback(hObject, eventdata, handles)
         which_subjects = which_subjects & ~strcmp(participant, subject);
     end
 
-    update_invariant;
+    update;
 
     
 % Select or remove a run for the analysis   
 %
-function run_checkbox_callback(hObject, eventdata, handles)
+function block_checkbox_callback(hObject, eventdata, handles)
     global all_contextRoles;
     global roundId;
     global contextRole;
@@ -262,7 +262,7 @@ function run_checkbox_callback(hObject, eventdata, handles)
     
     selected_rows = logical(false(size(roundId)));
     
-    ith_round = get(hObject, 'UserData'); % 1st, 2nd, or 3rd r of each condition
+    ith_round = get(hObject, 'UserData'); % 1st, 2nd, or 3rd run of each condition
     first_trial_of_each_round = 1:trialsPerRound:length(contextRole);
     disp(first_trial_of_each_round)
     for condition = all_contextRoles
@@ -289,4 +289,4 @@ function run_checkbox_callback(hObject, eventdata, handles)
         which_runs = which_runs & ~selected_rows;
     end
 
-    update_invariant;
+    update;
