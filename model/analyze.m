@@ -3,6 +3,12 @@
 %
 load_data;
 
+% In case we're not using the GUI (i.e. analyze_gui2.m)
+%
+if ~exist('analyze_with_gui') || ~analyze_with_gui
+    which_models = [1 1 1 0]; % consider M1, M2, and M3
+end
+
 %
 % Simulate
 %
@@ -39,7 +45,7 @@ for who = subjects
             x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, false);
+            [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;
@@ -276,7 +282,13 @@ for condition = contextRoles
         P2_n = model.P2(which);
         P3_n = model.P3(which);
         P4_n = model.P4(which);
-        P = [P; mean(P1_n) mean(P2_n) mean(P3_n) mean(P4_n)];
+        
+        P_n = [];  % only include the posteriors from models we care about
+        if which_models(1), P_n = [P_n mean(P1_n)]; end
+        if which_models(2), P_n = [P_n mean(P2_n)]; end
+        if which_models(3), P_n = [P_n mean(P3_n)]; end
+        if which_models(4), P_n = [P_n mean(P4_n)]; end
+        P = [P; P_n];
     end
 
     subplot(3, 5, next_subplot_idx);
@@ -285,7 +297,13 @@ for condition = contextRoles
     xlabel('n (trial #)');
     ylabel('P(M | h_{1:n})');
     title(strcat('Posterior after each trial for ', {' '}, condition));
-    legend({'M1', 'M2', 'M3', 'M4'});
+    
+    Ms = {}; % only include models we care about
+    if which_models(1), Ms = [Ms, {'M1'}]; end
+    if which_models(2), Ms = [Ms, {'M2'}]; end
+    if which_models(3), Ms = [Ms, {'M3'}]; end
+    if which_models(4), Ms = [Ms, {'M4'}]; end
+    legend(Ms);
 
 end
 
@@ -303,8 +321,13 @@ for condition = contextRoles
         ww2_n = model.ww2(which, :);
         ww3_n = model.ww3(which, :);
         ww4_n = model.ww4(which, :);
-%        ww = [ww; mean(ww1_n) mean(ww2_n) mean(ww3_n) mean(ww4_n)];
-        ww = [ww; mean(ww3_n)];
+        
+        ww_n = []; % only include the weights from models we care about
+        if which_models(1), ww_n = [ww_n mean(ww1_n)]; end
+        if which_models(2), ww_n = [ww_n mean(ww2_n)]; end
+        if which_models(3), ww_n = [ww_n mean(ww3_n)]; end
+        if which_models(4), ww_n = [ww_n mean(ww4_n)]; end
+        ww = [ww; ww_n];
     end
 
     subplot(3, 5, next_subplot_idx);
@@ -313,7 +336,12 @@ for condition = contextRoles
     xlabel('n (trial #)');
     ylabel('ww_n');
     title(strcat('Weights after each trial for ', {' '}, condition));
-%    legend({'M1, x1', 'M1, x2', 'M2, x1c1', 'M2, x2c1', 'M2, x1c2', 'M2, x2c2', 'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2', 'M4, c1', 'M4, c2'});
-    legend({'M3, x1', 'M3, x2', 'M3, c1', 'M3, c2'});
+    
+    Ms = {}; % only include models we care about
+    if which_models(1), Ms = [Ms, {'M1, x1'}, {'M1, x2'}]; end
+    if which_models(2), Ms = [Ms, {'M2, x1c1'}, {'M2, x2c1'}, {'M2, x1c2'}, {'M2, x2c2'}]; end
+    if which_models(3), Ms = [Ms, {'M3, x1'}, {'M3, x2'}, {'M3, c1'}, {'M3, c2'}]; end
+    if which_models(4), Ms = [Ms, {'M4, c1'}, {'M4, c2'}]; end
+    legend(Ms);
 
 end

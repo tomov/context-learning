@@ -23,9 +23,11 @@ function analyze_gui2
     global which_conditions; % which rows correspond to the conditions we've selected for analysis
     global which_runs; % which rows correspond to the runs we've selected for analysis
     global which_rows; % which rows of the data we've selected for analysis (computed)
+    global which_models; % which models to use (M1, M2, M3, etc)
     
     global subjects; % the unique id's of subjects we've selected for analysis (computed)
     global contextRoles; % the unique contextRoles we've selected for analysis (computed)
+    global model_names; % model names; should corresopnd to which_models logical array
     
     % Initialize the state
     % IMPORTANT -- run this before load.m so it knows we're using the GUI
@@ -46,7 +48,9 @@ function analyze_gui2
     which_conditions = logical(true(size(contextRole))); % all conditions initially
     which_runs = logical(true(size(roundId))); % all runs initially
     contextRoles = unique(contextRole(which_conditions))'; % all; initially should be == {'irrelevant', 'modulatory', 'additive'}
-    update;
+    which_models = [1 1 1 0]; % use models M1, M2, M3, and M4; ignore M4
+    model_names = {'M1', 'M2', 'M3', 'M4'}; % model names; correspond to which_models
+    update_rows; % update which trials we are plotting
 
     f = figure;
 
@@ -126,6 +130,17 @@ function analyze_gui2
             'Units','pixels', 'Position',[10 30 80 10], ...
             'Callback', @plot_callback);
 
+    % Which models to consider
+    %
+    model_checkboxes = {};
+    assert(length(which_models) == length(model_names));
+    for i = length(which_models):-1:1
+        model_name = model_names{i};
+        model_checkboxes{idx} = uicontrol(f, 'Style', 'checkbox', 'String', model_name, ...
+                          'Value', which_models(i), 'Position', [10 100 + 20 * (idx - 1) 130 20], ...
+                          'Callback', @model_checkbox_callback);
+        idx = idx + 1;
+    end        
     
     
     % The Run button
@@ -135,9 +150,10 @@ function analyze_gui2
                              'Callback', @run_button_callback);
 
                          
-% Call this every time something changes
+% Call this every time something changes -- it updates which rows
+% i.e. which trials we should plot
 %
-function update
+function update_rows
     global participant;
     global contextRole;
     global all_contextRoles;
@@ -173,6 +189,22 @@ function optimal_callback(hObject, eventdata, handles)
         make_optimal_choices = false;
     end
     disp(make_optimal_choices);
+
+% Select or remove a model (M1, M2, M3, etc) for the analysis   
+%
+function model_checkbox_callback(hObject, eventdata, handles)
+    global which_models;
+    global model_names;
+
+    model_name = get(hObject, 'String');
+    do_include = get(hObject, 'Value');
+    if do_include
+        which_models = which_models | strcmp(model_names, model_name);
+    else
+        which_models = which_models & ~strcmp(model_names, model_name);
+    end
+    
+    disp(which_models);
     
 % Pick what to plot
 %
@@ -200,6 +232,7 @@ function run_button_callback(hObject, eventdata, handles)
     global inv_softmax_temp;
     global prior_variance;
     global what_to_plot;
+    global which_models;
     
     inv_softmax_temp = str2double(get(findobj('Tag', 'inv_softmax_temp_editbox'), 'String'))
     prior_variance = str2double(get(findobj('Tag', 'prior_variance_editbox'), 'String'))
@@ -230,7 +263,7 @@ function condition_checkbox_callback(hObject, eventdata, handles)
         which_conditions = which_conditions & ~strcmp(contextRole, condition);
     end
 
-    update;
+    update_rows;
 
     
 % Select or remove a subject for the analysis   
@@ -247,7 +280,7 @@ function participant_checkbox_callback(hObject, eventdata, handles)
         which_subjects = which_subjects & ~strcmp(participant, subject);
     end
 
-    update;
+    update_rows;
 
     
 % Select or remove a run for the analysis   
@@ -289,4 +322,4 @@ function block_checkbox_callback(hObject, eventdata, handles)
         which_runs = which_runs & ~selected_rows;
     end
 
-    update;
+    update_rows;

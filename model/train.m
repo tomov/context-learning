@@ -1,9 +1,9 @@
-function [choices, P_n, ww_n, P, ww] = train(x, k, r, prior_variance, inv_softmax_temp, DO_PRINT)
+function [choices, P_n, ww_n, P, ww] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
 
-momchil_mode = false;
+momchil_mode = false; % include bias term for context in M2, so M2 = additive + modulatory hybrid
 
 predict = @(V_n) 1 ./ (1 + exp(-2 * inv_softmax_temp * V_n + inv_softmax_temp)); % predicts by mapping the expectation to an outcome
 
@@ -29,11 +29,7 @@ Sigma_n{2} = repmat(sigma_w^2 * eye(D + 1), 1, 1, K); % note the third dimension
 Sigma_n{3} = sigma_w^2 * eye(D + K);
 Sigma_n{4} = sigma_w^2 * eye(K);
 
-if momchil_mode
-    P_n = [1 1 1 1]; % priors
-else
-    P_n = [1 1 1 0]; % priors
-end
+P_n = which_models; % prior = 1 if we're including the model, 0 if not
 P_n = P_n / sum(P_n);
 
 % Store history for plotting and analysis
