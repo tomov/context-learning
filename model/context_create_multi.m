@@ -22,7 +22,13 @@ function multi = context_create_multi(glmodel, subj, run)
     %
     % Cody Kommers, July 2016
     
+    fprintf('glm %d, subj %d, run %d\n', glmodel, subj, run);
+    
     load_data;
+    
+    is_timeout = cellfun(@isempty, actualChoiceOffset);
+    no_response = strcmp(response.keys, 'None');
+    assert(sum(is_timeout ~= no_response) == 0); % these should be the same
     
     [subjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
     assert(isequal(subjects',unique(participant)));
@@ -46,7 +52,7 @@ function multi = context_create_multi(glmodel, subj, run)
     x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
     c = contextId(which_train) + 1;
     r = strcmp(sick(which_train), 'Yes');
-    [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, [1 1 1 0], false);    
+    [choices, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, [1 1 1 0], false);    
     
     % entropy -- exclude M4 which has P = 0
     %
@@ -175,6 +181,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % prediction error pmod @ outcome
+        % WRONG! choices != expected outcome
         %
         case 4
             % prediction error @ feedback onset (trials 1..20)
@@ -233,6 +240,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % expected outcome pmod @ start
+        % WRONG! choices != expected outcome
         %
         case 7
             % expected outcome @ trial onset (trials 1..20)
@@ -457,7 +465,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).poly{1} = 1; % first order        
 
             multi.pmod(1).name{2} = 'M1_posterior';
-            multi.pmod(1).param{2} = P(:, 1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).param{2} = P(:,1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
             multi.pmod(1).poly{2} = 1; % first order
             
             % const @ trial onset (trials 1..20)
@@ -465,6 +473,195 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{2} = 'trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % M3 & M1 posterior pmods @ outcome
+        %
+        case 19
+            % M3 (additive) & M1 (irrelevant) posteriors @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M3_posterior';
+            multi.pmod(1).param{1} = P(:,3)'; % posterior P(M3 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            multi.pmod(1).name{2} = 'M1_posterior';
+            multi.pmod(1).param{2} = P(:,1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % M3 & M2 posterior pmods @ outcome
+        %
+        case 20
+            % M3 (additive) & M2 (modulatory) posteriors @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M3_posterior';
+            multi.pmod(1).param{1} = P(:,3)'; % posterior P(M3 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            multi.pmod(1).name{2} = 'M2_posterior';
+            multi.pmod(1).param{2} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % Response @ reaction onset 
+        %
+        case 21
+            % button press @ reaction onset (trials 1..20)
+            % 
+            multi.names{1} = 'keypress';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOffset(which_train & ~no_response))';
+            multi.durations{1} = zeros(size(contextRole(which_train & ~no_response)));
+            
+            multi.pmod(1).name{1} = 'pressed_sick';
+            multi.pmod(1).param{1} = strcmp(response.keys(which_train & ~no_response), 'left')'; % whether subject pressed "sick", for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % const @ outcome / feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train & ~no_response))';
+            multi.durations{2} = zeros(size(contextRole(which_train & ~no_response)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train & ~no_response))';
+            multi.durations{3} = zeros(size(contextRole(which_train & ~no_response)));
+       
+            
+        % Blocked M2 & M1 posterior pmods @ outcome
+        %
+        case 22
+            % M2 (modulatory) & M1 (irrelevant) posteriors @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = strcat('M2_posterior_', condition);
+            multi.pmod(1).param{1} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            multi.pmod(1).name{2} = strcat('M1_posterior_', condition);
+            multi.pmod(1).param{2} = P(:,1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % Blocked M3 & M1 posterior pmods @ outcome
+        %
+        case 23
+            % M3 (additive) & M1 (irrelevant) posteriors @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = strcat('M3_posterior_', condition);
+            multi.pmod(1).param{1} = P(:,3)'; % posterior P(M3 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            multi.pmod(1).name{2} = strcat('M1_posterior_', condition);
+            multi.pmod(1).param{2} = P(:,1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % Blocked M3 & M2 posterior pmods @ outcome
+        %
+        case 24
+            % M3 (additive) & M2 (modulatory) posteriors @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = strcat('M3_posterior_', condition);
+            multi.pmod(1).param{1} = P(:,3)'; % posterior P(M3 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            multi.pmod(1).name{2} = strcat('M2_posterior_', condition);
+            multi.pmod(1).param{2} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % Expected outcome @ RT
+        % Actual outcome @ feedback
+        % WRONG!
+        %
+        case 25
+            % Expected outcome @ RT
+            %
+            multi.names{1} = 'expected_outcome';
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num,RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'expected';
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % Actual outcome @ feedback
+            %
+            multi.names{2} = 'actual_outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'actual';
+            multi.pmod(2).param{1} = r'; % outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order  
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+            
     end
 
 end 

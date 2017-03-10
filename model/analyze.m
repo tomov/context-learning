@@ -45,7 +45,7 @@ for who = subjects
             x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
+            [choices, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;

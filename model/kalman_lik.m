@@ -22,7 +22,7 @@ for s = 1:numel(fake_data.subjects)
         x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
         c = run_data.contexts(train_trials);
         r = run_data.sick(train_trials);
-        [P_choose_sick_train, P_n, ww_n, P, ww] = train(x, c, r, prior_variance, inv_softmax_temp, false);
+        [P_choose_sick_train, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, false);
 
         % get test choice probabilities
         test_cues = run_data.cues(test_trials);
