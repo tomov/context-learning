@@ -106,7 +106,7 @@ function multi = context_create_multi(glmodel, subj, run)
         %           modulatory - additive
         %           
         %
-        case 1
+        case 1 % <------------- GOOD
             % context role @ feedback/outcome onset
             % 
             multi.names{1} = condition;
@@ -121,7 +121,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % M2 posterior pmod @ outcome
         %
-        case 2
+        case 2 % <------------- GOOD
             % M2 (modulatory) posterior @ feedback / outcome onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
@@ -202,7 +202,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % outcome (sick vs. not sick) @ outcome
         %
-        case 5
+        case 5 % GOOD
             % sick vs. not sick @ feedback / outcome onset (trials 1..20)
             %
             multi.names{1} = 'sick';
@@ -221,7 +221,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % outcome pmod @ outcome -- sanity check
         %
-        case 6
+        case 6 % GOOD
             % sick vs. not sick @ feedback / outcome onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
@@ -261,7 +261,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % M3 posterior pmod @ outcome
         %
-        case 8
+        case 8 % GOOD
             % M3 (additive) posterior @ feedback / outcome onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
@@ -280,7 +280,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % M1 posterior pmod @ outcome
         %
-        case 9
+        case 9 % GOOD
             % M1 (irrelevant) posterior @ feedback / outcome onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
@@ -299,7 +299,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % posterior entropy @ outcome
         %
-        case 10
+        case 10 % OKAY
             % posterior entropy @ feedback / outcome onset (trials 1..20)
             % 
             multi.names{1} = 'feedback';
@@ -627,7 +627,6 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % Expected outcome @ RT
         % Actual outcome @ feedback
-        % WRONG!
         %
         case 25
             % Expected outcome @ RT
@@ -661,6 +660,25 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{3} = 'trial_onset';
             multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{3} = zeros(size(contextRole(which_train)));
+            
+        % Prediction error @ feedback
+        %
+        case 26
+            % Prediction error @ feedback
+            %
+            multi.names{1} = 'prediction_error';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'actual';
+            multi.pmod(1).param{1} = r' - values'; % outcome - expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
             
     end
 
