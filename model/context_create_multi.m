@@ -119,7 +119,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
 
-        % M2 posterior pmod @ outcome
+        % M2 posterior pmod @ outcome + extra stuff for test trials ZOMG
         %
         case 2 % <------------- GOOD
             % M2 (modulatory) posterior @ feedback / outcome onset (trials 1..20)
@@ -673,6 +673,25 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).name{1} = 'actual';
             multi.pmod(1).param{1} = r' - values'; % outcome - expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % M2 posterior pmod @ outcome
+        %
+        case 27 % <------------- GOOD
+            % M2 (modulatory) posterior @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M2_posterior';
+            multi.pmod(1).param{1} = P(:,2)'; % posterior P(M2 | h_1:n) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
             
             % const @ trial onset (trials 1..20)
             % 

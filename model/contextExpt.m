@@ -20,8 +20,13 @@ function EXPT = contextExpt
     % Momchil Tomov, Nov 2016
     
     % main directory
-    %exptdir = '/ncf/gershman/Lab/ConLearn/'; % on CBS central server
-    exptdir = '/Users/memsql/Dropbox/research/context/'; % local group level
+    %
+    is_local = 1; % 1 = on Momchil's machine; 0 = on CBS
+    if is_local
+        exptdir = '/Users/memsql/Dropbox/research/Momchil Sam CCNL/Context Learning/'; % local group level
+    else
+        exptdir = '/ncf/gershman/Lab/ConLearn/'; % on CBS central server
+    end
     %exptdir = '/Users/memsql/Documents/MATLAB/conlearn-subject-data/'; % local single subject
     
     % Load data from file with all subjects, as well as some constants.
@@ -52,7 +57,11 @@ function EXPT = contextExpt
     % Function handle to create subject multi structure
     EXPT.create_multi = @context_create_multi;
     % Where you want model output data to live
-    EXPT.modeldir = [exptdir, 'glmOutput'];
+    if is_local
+        EXPT.modeldir = [exptdir, 'neural'];
+    else
+        EXPT.modeldir = [exptdir, 'glmOutput'];
+    end
     
     % Where the data live, but not sure which data
     EXPT.datadir = [exptdir, 'testOutput'];
