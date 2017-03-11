@@ -8,6 +8,7 @@ addpath('/Users/memsql/Dropbox/Research/libs/bspmview/'); % for viewing fMRI dat
 addpath('/Users/memsql/Dropbox/Research/libs/marsbar-0.44/'); % for ROI analysis
 addpath('/Users/memsql/Dropbox/Research/libs/aal/'); % Automated anatomical labeling
 addpath('/Users/memsql/Dropbox/Research/libs/NIfTI_20140122/'); % Nifti file manipulation
+addpath('/Users/memsql/Dropbox/Research/libs/xml2struct/'); % reading XML files
 
 
 
