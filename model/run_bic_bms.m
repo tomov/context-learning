@@ -18,4 +18,5 @@ for roi=roi_masks
         bic = ccnl_bic(contextExpt(), model, roi{1}, subjects);
         lme = [lme bic];
     end
+    % [alpha,exp_r,xp,pxp,bor] = bms(lme);
 end

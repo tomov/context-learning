@@ -113,7 +113,7 @@ ccnl_fmri_con(contextExpt(), 20, ...
 %ccnl_view(contextExpt(), 20, 'M2_posterior - M3_posterior');
 
 
-ccnl_view(contextExpt(), 21, 'pressed_sick'); % <-- sanity check, V1
+%ccnl_view(contextExpt(), 21, 'pressed_sick'); % <-- sanity check, V1
 
 
 % ccnl_bic.m
@@ -178,3 +178,5 @@ ccnl_view(contextExpt(), 21, 'pressed_sick'); % <-- sanity check, V1
 %ccnl_view(contextExpt(), 24, 'M2_posterior_modulatory - M3_posterior_modulatory');
 %ccnl_view(contextExpt(), 24, 'M3_posterior_additive - M2_posterior_additive');
 
+
+% ccnl_view(contextExpt(), 26, 'prediction_error');
