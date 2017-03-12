@@ -699,6 +699,29 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
+        % context role @ trial onset
+        %
+        case 28
+            % context role @ trial onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % context role @ trial onset, no separate trial_onset regressor
+        %
+        case 29
+            % context role @ trial onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));            
     end
 
 end 

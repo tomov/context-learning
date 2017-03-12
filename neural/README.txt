@@ -1,9 +1,36 @@
 All regressors apply to the training trials only (except for Model 2 which is discarded)
 
-Model 1 -- main effect:
+Model 1 -- main effect @ feedback:
 
     Regressor #1: context role (irrelevant, additive, or modulatory) @ feedback (outcome) time
     Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 1, 'modulatory - irrelevant');
+        ccnl_view(contextExpt(), 1, 'modulatory - additive');
+        ccnl_view(contextExpt(), 1, 'additive - irrelevant');
+
+    Hypothesis: hippocampus would show greater activiation in the modulatory vs. the irrelevant or additive conditions
+
+    Result: 
+
+Model 28 -- main effect @ trial onset:
+
+    Regressor #1: context role (irrelevant, additive, or modulatory) @ trial onset time
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 1, 'modulatory - irrelevant');
+        ccnl_view(contextExpt(), 1, 'modulatory - additive');
+        ccnl_view(contextExpt(), 1, 'additive - irrelevant');
+
+    Hypothesis: hippocampus would show greater activiation in the modulatory vs. the irrelevant or additive conditions
+
+    Result: 
+
+Model 29 -- main effect @ trial onset, no visual regressor:
+
+    Regressor #1: context role (irrelevant, additive, or modulatory) @ trial onset time
 
     Contrasts:
         ccnl_view(contextExpt(), 1, 'modulatory - irrelevant');

@@ -23,7 +23,7 @@ function EXPT = contextExpt
     %
     is_local = 1; % 1 = on Momchil's machine; 0 = on CBS
     if is_local
-        exptdir = '/Users/memsql/Dropbox/research/Momchil Sam CCNL/Context Learning/'; % local group level
+        exptdir = '/Users/memsql/Dropbox/research/context/'; % local group level
     else
         exptdir = '/ncf/gershman/Lab/ConLearn/'; % on CBS central server
     end
