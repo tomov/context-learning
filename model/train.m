@@ -1,4 +1,4 @@
-function [choices, P_n, ww_n, P, ww, values, valuess] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
+function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
@@ -40,8 +40,9 @@ ww{2} = []; % history of ww_1:n for M2
 ww{3} = []; % history of ww_1:n for M3
 ww{4} = []; % history of ww_1:n for M3
 choices = []; % history of choices
-values = []; % history of predicted outcomes, weighted sum across all models
-valuess = []; % history of predicted outcomes, individual for each model
+values = []; % history of predicted outcomes, weighted sum across all models (causal structures)
+valuess = []; % history of predicted outcomes, one for each model (causal structure)
+likelihoods = []; % history of likelihoods, one for each model (causal structure)
 
 % train
 %
@@ -108,12 +109,20 @@ for n = 1:N % for each trial
         disp(ww_n{4});
     end
     
+    % likelihoods P(r_n | x_n, c_n, h_1:n-1, M)
+    %
+    likelihood = [normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2), ...
+                  normpdf(r_n, xb_n' * ww_n{2}(:,k_n), xb_n' * SSigma_n{2} * xb_n + sigma_r^2), ...
+                  normpdf(r_n, xx_n' * ww_n{3}, xx_n' * SSigma_n{3} * xx_n + sigma_r^2), ...
+                  normpdf(r_n, c_n' * ww_n{4}, c_n' * SSigma_n{4} * c_n + sigma_r^2)];
+    likelihoods = [likelihoods; likelihood];
+    
     % posteriors P(M | h_1:n)
     % 
-    P_n(1) = P_n(1) * normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2);
-    P_n(2) = P_n(2) * normpdf(r_n, xb_n' * ww_n{2}(:,k_n), xb_n' * SSigma_n{2} * xb_n + sigma_r^2);
-    P_n(3) = P_n(3) * normpdf(r_n, xx_n' * ww_n{3}, xx_n' * SSigma_n{3} * xx_n + sigma_r^2);
-    P_n(4) = P_n(4) * normpdf(r_n, c_n' * ww_n{4}, c_n' * SSigma_n{4} * c_n + sigma_r^2);
+    P_n(1) = P_n(1) * likelihood(1);
+    P_n(2) = P_n(2) * likelihood(2);
+    P_n(3) = P_n(3) * likelihood(3);
+    P_n(4) = P_n(4) * likelihood(4);
     P_n = P_n / sum(P_n);
 
     shit = [x_n' * ww_n{1}, xb_n' * ww_n{2}(:,k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
