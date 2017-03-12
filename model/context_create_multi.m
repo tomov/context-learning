@@ -52,7 +52,7 @@ function multi = context_create_multi(glmodel, subj, run)
     x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
     c = contextId(which_train) + 1;
     r = strcmp(sick(which_train), 'Yes');
-    [choices, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, [1 1 1 0], false);    
+    [choices, P_n, ww_n, P, ww, values, valuess] = train(x, c, r, prior_variance, inv_softmax_temp, [1 1 1 0], false);    
     
     % entropy -- exclude M4 which has P = 0
     %
@@ -715,6 +715,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
 
         % context role @ trial onset, no separate trial_onset regressor
+        % (almost same as 28)
         %
         case 29
             % context role @ trial onset
@@ -722,6 +723,306 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{1} = condition;
             multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));            
+            
+        % M1, M2 & M3 value pmods @ trial onset (before updated)
+        %
+        case 30
+            % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            multi.pmod(1).name{2} = 'M2_value';
+            multi.pmod(1).param{2} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            multi.pmod(1).name{3} = 'M3_value';
+            multi.pmod(1).param{3} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{3} = 1; % first order        
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % M1, M2 & M3 value pmods @ trial onset
+        % without the separate trial_onset regressor
+        % (almost same as 30)
+        %
+        case 31
+            % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            multi.pmod(1).name{2} = 'M2_value';
+            multi.pmod(1).param{2} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            multi.pmod(1).name{3} = 'M3_value';
+            multi.pmod(1).param{3} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{3} = 1; % first order        
+
+        % M1, M2 & M3 value pmods @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        %
+        case 32
+            % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            multi.pmod(1).name{2} = 'M2_value';
+            multi.pmod(1).param{2} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            multi.pmod(1).name{3} = 'M3_value';
+            multi.pmod(1).param{3} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{3} = 1; % first order        
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - values'; % PE = outcome - expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+
+        % M1, M2 & M3 value pmods @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        % without the separate trial_onset regressor
+        % (almost same as 32; also look a 30/31)
+        %
+        case 33
+            % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.orth{1} = 0; % do NOT orthogonalize them!
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            multi.pmod(1).name{2} = 'M2_value';
+            multi.pmod(1).param{2} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            multi.pmod(1).name{3} = 'M3_value';
+            multi.pmod(1).param{3} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{3} = 1; % first order        
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - values'; % PE = outcome - expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+            
+            
+        % M1 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        %
+        case 34
+            % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,1)'; % PE = outcome - expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+
+        % M2 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        %
+        case 35
+            % M2 (modulatory) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M2_value';
+            multi.pmod(1).param{1} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,2)'; % PE = outcome - expected outcome by M2 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+
+        % M3 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        %
+        case 36
+            % M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M3_value';
+            multi.pmod(1).param{1} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,3)'; % PE = outcome - expected outcome by M3 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+
+            
+        % M1 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        % without the separate trial_onset regressor
+        % (almost same as 34)
+        %
+        case 37
+            % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,1)'; % PE = outcome - expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+
+        % M2 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        % without the separate trial_onset regressor
+        % (almost same as 35)
+        %
+        case 38
+            % M2 (modulatory) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M2_value';
+            multi.pmod(1).param{1} = valuess(:,2)'; % values predicted by M2 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,2)'; % PE = outcome - expected outcome by M2 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
+
+        % M3 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        % without the separate trial_onset regressor
+        % (almost same as 36)
+        %
+        case 39
+            % M3 (additive) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M3_value';
+            multi.pmod(1).param{1} = valuess(:,3)'; % values predicted by M3 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,3)'; % PE = outcome - expected outcome by M3 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order      
     end
 
 end 

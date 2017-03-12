@@ -49,7 +49,7 @@ Ms = [];
 for g=3:3 % for each group
     fprintf('\n\n ---------------- GROUP %d ------------------\n\n', g);
 
-    [choices, P_n, ww_n, P, ww, values] = train(x{g}, c{g}, r{g}, learning_rate, softmax_temp, [1 1 1 0], false);
+    [choices, P_n, ww_n, P, ww, values, valuess] = train(x{g}, c{g}, r{g}, learning_rate, softmax_temp, [1 1 1 0], false);
 
     [test_choices] = test(test_x, test_c, P_n, ww_n, softmax_temp);
     for n = 1:size(test_x, 1)

@@ -1,4 +1,4 @@
-function [choices, P_n, ww_n, P, ww, values] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
+function [choices, P_n, ww_n, P, ww, values, valuess] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
@@ -40,7 +40,8 @@ ww{2} = []; % history of ww_1:n for M2
 ww{3} = []; % history of ww_1:n for M3
 ww{4} = []; % history of ww_1:n for M3
 choices = []; % history of choices
-values = []; % history of predicted outcomes
+values = []; % history of predicted outcomes, weighted sum across all models
+valuess = []; % history of predicted outcomes, individual for each model
 
 % train
 %
@@ -67,6 +68,7 @@ for n = 1:N % for each trial
     out = predict(V_n);
     choices = [choices; out];
     values = [values; V_n];
+    valuess = [valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
     
     if DO_PRINT, fprintf('\npredction for x = %d, c = %d is %f (actual is %f)\n\n', find(x_n), c_n, out, r_n); end
 
@@ -136,3 +138,5 @@ for n = 1:N % for each trial
 
  %   fprintf('            new Ps = %f %f %f\n', P(1), P(2), P(3));
 end
+
+assert(mean(sum(valuess(2:end,:) .* P(1:end-1,:), 2) == values(2:end)) == 1);
