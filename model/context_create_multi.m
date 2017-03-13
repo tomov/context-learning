@@ -702,6 +702,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
 
         % context role @ trial onset
+        % WRONG! cannot have 2 params with the same onset!
         %
         case 28
             % context role @ trial onset
@@ -730,7 +731,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % --------------- PREDICTED VALUES, multiple models ------------
             
             
-        % M1, M2 & M3 value pmods @ trial onset (before updated)
+        % M1, M2 & M3 value pmod s @ trial onset (before updated)
+        % WRONG -- duplicate onsets...
         %
         case 30
             % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
@@ -786,6 +788,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % M1, M2 & M3 value pmods @ trial onset (before updated)
         % + PE @ feedback (outcome) onset
+        % WRONG -- duplicate onsets...
         %
         case 32
             % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
@@ -866,6 +869,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % M1 value pmod @ trial onset (before updated)
         % + PE @ feedback (outcome) onset
+        % WRONG -- duplicate onsets...
         %
         case 34
             % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
@@ -896,6 +900,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % M2 value pmod @ trial onset (before updated)
         % + PE @ feedback (outcome) onset
+        % WRONG -- duplicate onsets...
         %
         case 35
             % M2 (modulatory) predicted values @ trial onset (trials 1..20)
@@ -926,6 +931,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % M3 value pmod @ trial onset (before updated)
         % + PE @ feedback (outcome) onset
+        % WRONG -- duplicate onsets...
         %
         case 36
             % M3 (additive) predicted values @ trial onset (trials 1..20)
