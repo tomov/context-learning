@@ -200,6 +200,144 @@ Model 6 -- outcome:
 
     Result: looks just like Model 5
 
+Model 28 -- context role & trial onset
+
+    Regressor #1: context role (irrelevant, additive, or modulatory) @ trial onset time
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 28, 'modulatory - irrelevant');
+        ccnl_view(contextExpt(), 28, 'modulatory - additive');
+        ccnl_view(contextExpt(), 28, 'additive - irrelevant');
+
+    Hypothesis: hippocampus would show greater activiation in the modulatory vs. the irrelevant or additive conditions
+
+    Result: 
+
+Model 29 -- context role @ trial onset (same as 28) w/o the const regressor
+
+Model 30 -- value pmods @ trial onset
+
+    Regressor #1: predicted values @ trial onset time
+                 pmod 1) = predicted value for M1 (irrelevant)
+                 pmod 2) = predicted value for M2 (modulatory)
+                 pmod 3) = predicted value for M3 (additive)
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 30, 'M1_value');
+        ccnl_view(contextExpt(), 30, 'M2_value');
+        ccnl_view(contextExpt(), 30, 'M3_value');
+
+    Hypothesis:
+
+    Result: 
+
+Model 31 -- value pmods @ trial onset (same as 30) w/o the const regressor
+
+Model 32 -- value pmods @ trial onset (same as 30) + prediction error pmod @ outcome onset
+
+    Regressor #1: predicted values @ trial onset time
+                 pmod 1) = predicted value for M1 (irrelevant)
+                 pmod 2) = predicted value for M2 (modulatory)
+                 pmod 3) = predicted value for M3 (additive)
+    Regressor #2: pmod = prediction error = outcome - predicted value @ feedback (outcome) onset
+    Regressor #3: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 32, 'M1_value');
+        ccnl_view(contextExpt(), 32, 'M2_value');
+        ccnl_view(contextExpt(), 32, 'M3_value');
+        ccnl_view(contextExpt(), 32, 'prediction_error');
+
+    Hypothesis:
+
+    Result: 
+
+Model 33 -- value pmods @ trial onset + prediction error pmod @ outcome onset (same as 32) w/o the const regressor
+
+Model 34 -- M1 (irrelevant) value pmod @ trial onset + PE pmod for M1 only @ outcome onset
+
+    Regressor #1: pmod = predicted value for M1 (irrelevant) @ trial onset time
+    Regressor #2: pmod = prediction error = outcome - predicted value for M1 @ feedback (outcome) onset
+    Regressor #3: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 34, 'M1_value');
+        ccnl_view(contextExpt(), 34, 'prediction_error');
+
+    Hypothesis:
+
+    Result: 
+
+Model 35 -- M2 (modulatory) value pmod @ trial onset + PE pmod for M2 only @ outcome onset (similar to 34)
+
+Model 36 -- M3 (additive) value pmod @ trial onset + PE pmod for M3 only @ outcome onset (similar to 34)
+
+Model 37 -- M1 (irrelevant) value pmod @ trial onset + PE pmod for M1 only @ outcome onset (same as 34) w/o the const regressor
+
+Model 38 -- M2 (modulatory) value pmod @ trial onset + PE pmod for M2 only @ outcome onset (same as 35) w/o the const regressor
+
+Model 39 -- M3 (additive) value pmod @ trial onset + PE pmod for M3 only @ outcome onset (same as 34) w/o the const regressor
+
+Model 40 -- likelihood pmods @ outcome onset
+
+    Regressor #1: outcome likelihood values @ feedback (outcome) onset time
+                 pmod 1) = outcome likelihood for M1 (irrelevant)
+                 pmod 2) = outcome likelihood for M2 (modulatory)
+                 pmod 3) = outcome likelihood for M3 (additive)
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 40, 'M1_lik');
+        ccnl_view(contextExpt(), 40, 'M2_lik');
+        ccnl_view(contextExpt(), 40, 'M3_lik');
+
+    Hypothesis:
+
+    Result: 
+
+Model 41 -- likelihood pmods @ outcome onset (same as 40) w/o the const regressor
+
+Model 42 -- prediction error pmod @ outcome onset (same as 26)
+
+    Regressor #1: pmod = prediction error = outcome - predicted value @ feedback (outcome) onset
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 42, 'prediction_error');
+
+    Hypothesis:
+
+    Result: 
+
+Model 43 -- prediction error pmod @ outcome onset (same as 42) w/o the const regressor
+
+Model 44 -- PE pmod for M1 only @ outcome onset
+
+    Regressor #1: pmod = prediction error = outcome - predicted value for M1 @ feedback (outcome) onset
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 44, 'prediction_error');
+
+    Hypothesis:
+
+    Result: 
+
+Model 45 -- PE pmod for M2 only @ outcome onset (similar to 44)
+
+Model 46 -- PE pmod for M3 only @ outcome onset (similar to 44)
+
+Model 47 -- PE pmod for M1 only @ outcome onset (same as 44) w/o the const regressor
+
+Model 48 -- PE pmod for M2 only @ outcome onset (same as 45) w/o the const regressor
+
+Model 49 -- PE pmod for M3 only @ outcome onset (same as 46) w/o the const regressor
+
+
+
+
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 
 Model 3 is wrong; it had a pmod = 1 if the response was correct, 0 if not @ feedback (outcome) time
