@@ -1244,7 +1244,61 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).param{1} = r' - valuess(:,3)'; % PE = outcome - expected outcome by M3 for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order      
             
+        % Value (expected outcome) @ trial onset
+        % Prediction error @ feedback (outcome) onset
+        %
+        case 50
+            % Value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'stimulus';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
             
+            multi.pmod(1).name{1} = 'value';
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % Prediction error @ feedback (outcome) onset
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - values'; % outcome - expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order  
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+            
+        % Value (expected outcome) @ trial onset
+        % Prediction error @ feedback (outcome) onset
+        % w/o the visual stimulus regressor
+        % (almost same as 50)
+        %
+        case 51
+            % Value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'stimulus';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'value';
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % Prediction error @ feedback (outcome) onset
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - values'; % outcome - expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order  
     end
 
 end 

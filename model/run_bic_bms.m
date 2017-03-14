@@ -6,7 +6,7 @@
 % 
 %
 
-roi_masks = {'mask.nii', 'hippocampus.nii', 'striatum.nii', 'ofc.nii'} % which ROIs to look at (one at a time) as paths to nifti files
+roi_masks = {'mask.nii', 'hippocampus.nii', 'striatum.nii', 'ofc.nii', 'vmpfc.nii'}; % which ROIs to look at (one at a time) as paths to nifti files
 
 subjects = getGoodSubjects(); % which subjects to analyze (as indices of the subjects array returned by contextGetSubjectsDirsAndRuns)
 

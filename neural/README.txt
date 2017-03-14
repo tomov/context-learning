@@ -206,6 +206,7 @@ Model 31 -- value pmods @ trial onset
                  pmod 1) = predicted value for M1 (irrelevant)
                  pmod 2) = predicted value for M2 (modulatory)
                  pmod 3) = predicted value for M3 (additive)
+                 they are NOT orthogonalized
 
     Contrasts:
         ccnl_view(contextExpt(), 31, 'M1_value');
@@ -222,13 +223,14 @@ Model 33 -- value pmods @ trial onset (same as 30) + prediction error pmod @ out
                  pmod 1) = predicted value for M1 (irrelevant)
                  pmod 2) = predicted value for M2 (modulatory)
                  pmod 3) = predicted value for M3 (additive)
+                 they are NOT orthogonalized
     Regressor #2: pmod = prediction error = outcome - predicted value @ feedback (outcome) onset
 
     Contrasts:
-        ccnl_view(contextExpt(), 32, 'M1_value');
-        ccnl_view(contextExpt(), 32, 'M2_value');
-        ccnl_view(contextExpt(), 32, 'M3_value');
-        ccnl_view(contextExpt(), 32, 'prediction_error');
+        ccnl_view(contextExpt(), 33, 'M1_value');
+        ccnl_view(contextExpt(), 33, 'M2_value');
+        ccnl_view(contextExpt(), 33, 'M3_value');
+        ccnl_view(contextExpt(), 33, 'prediction_error');
 
     Hypothesis:
 
@@ -240,8 +242,8 @@ Model 37 -- M1 (irrelevant) value pmod @ trial onset + PE pmod for M1 only @ out
     Regressor #2: pmod = prediction error = outcome - predicted value for M1 @ feedback (outcome) onset
 
     Contrasts:
-        ccnl_view(contextExpt(), 34, 'M1_value');
-        ccnl_view(contextExpt(), 34, 'prediction_error');
+        ccnl_view(contextExpt(), 37, 'M1_value');
+        ccnl_view(contextExpt(), 37, 'prediction_error');
 
     Hypothesis:
 
@@ -257,6 +259,7 @@ Model 40 -- likelihood pmods @ outcome onset
                  pmod 1) = outcome likelihood for M1 (irrelevant)
                  pmod 2) = outcome likelihood for M2 (modulatory)
                  pmod 3) = outcome likelihood for M3 (additive)
+                 they are NOT orthogonalized
     Regressor #2: constant @ trial onset (to account for visual activation)
 
     Contrasts:
@@ -306,8 +309,21 @@ Model 48 -- PE pmod for M2 only @ outcome onset (same as 45) w/o the const regre
 
 Model 49 -- PE pmod for M3 only @ outcome onset (same as 46) w/o the const regressor
 
+Model 50 -- value pmod @ trial onset + prediction error pmod @ outcome onset
 
+    Regressor #1: pmod = predicted value @ trial onset time
+    Regressor #2: pmod = prediction error = outcome - predicted value @ feedback (outcome) onset
+    Regressor #3: constant @ trial onset (to account for visual activation)
 
+    Contrasts:
+        ccnl_view(contextExpt(), 50, 'value');
+        ccnl_view(contextExpt(), 50, 'prediction_error');
+
+    Hypothesis:
+
+    Result: 
+
+Model 51 -- value pmod @ trial onset + prediction error pmod @ outcome onset (same as 50) w/o the const regressor
 
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 
