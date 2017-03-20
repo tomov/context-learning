@@ -52,7 +52,8 @@ function multi = context_create_multi(glmodel, subj, run)
     x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
     c = contextId(which_train) + 1;
     r = strcmp(sick(which_train), 'Yes');
-    [choices, P_n, ww_n, P, ww, values, valuess, likelihoods] = train(x, c, r, prior_variance, inv_softmax_temp, [1 1 1 0], false);    
+    which_models = [1 1 1 0];
+    [choices, P_n, ww_n, P, ww, values, valuess, likelihoods] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);    
     
     % entropy -- exclude M4 which has P = 0
     %
@@ -1299,6 +1300,69 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(2).name{1} = 'prediction_error';
             multi.pmod(2).param{1} = r' - values'; % outcome - expected outcome for trials 1..20
             multi.pmod(2).poly{1} = 1; % first order  
+            
+        % M3 posterior - M2 posterior pmod @ outcome
+        %
+        case 52
+            % M3 - M2 posterior @ feedback / outcome onset (trials 1..20)
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M3_minus_M2_posterior';
+            multi.pmod(1).param{1} = P(:,3)' - P(:,2)';
+            multi.pmod(1).poly{1} = 1; % first order        
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % Bayesian surprise = Kullback?Leibler divergence @ feedback
+        % (outcome) onset
+        % https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
+        %
+        case 53
+            % Q(t,:) = prior distribution over causal structures (models)
+            % at trial t (i.e. before update)
+            % P(t,:) = posterior (i.e. after update)
+            % Note that Q(t+1,:) = P(t,:)
+            % surprise(t) = D_KL(P(t,:) || Q(t,:)) = sum P(t,i) log( P(t,i) / Q(t,i) )
+            % 
+            priors = which_models / sum(which_models);
+            Q = [priors; P(1:end-1,:)];
+            logs = log(P ./ Q); 
+            logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
+            surprise = sum(P .* logs, 2);
+            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
+            
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'surprise';
+            multi.pmod(1).param{1} = surprise';
+            multi.pmod(1).poly{1} = 1; % first order        
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % One regressor for each trial onset (for classifier)
+        % http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/
+        % 
+        %
+        case 54
+            trial_onsets = actualChoiceOnset(which_train);
+            for t=1:20
+                multi.names{t} = ['trial_onset_', num2str(t)];
+                multi.onsets{t} = [str2double(trial_onsets(t))];
+                multi.durations{t} = [0];
+            end            
     end
 
 end 

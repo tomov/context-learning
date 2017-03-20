@@ -325,6 +325,19 @@ Model 50 -- value pmod @ trial onset + prediction error pmod @ outcome onset
 
 Model 51 -- value pmod @ trial onset + prediction error pmod @ outcome onset (same as 50) w/o the const regressor
 
+Model 53 -- Bayesian surprise @ feedback (outcome) onset
+
+    Regressor #1: pmod = Bayesian surprise = Kullback–Leibler divergence of prior to posterior @ feedback (outcome) onset time
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 53, 'surprise');
+
+    Hypothesis:
+
+    Result:
+
+
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 
 Model 3 is wrong; it had a pmod = 1 if the response was correct, 0 if not @ feedback (outcome) time
@@ -335,7 +348,7 @@ Model 7 is wrong; it is the choice probability pmod
 
 Models 11, 12, 13 are for Momchil's own entertainment
 
-Models 15, 16, 17 are for Momchil's own entertainment
+Models 15, 16, 17, 52 are for Momchil's own entertainment
 
 Model 21 tried to capture motor stuff with a pmod = 1 if subject pressed sick, 0 otherwise
 

@@ -9,7 +9,8 @@ addpath('/Users/memsql/Dropbox/Research/libs/marsbar-0.44/'); % for ROI analysis
 addpath('/Users/memsql/Dropbox/Research/libs/aal/'); % Automated anatomical labeling
 addpath('/Users/memsql/Dropbox/Research/libs/NIfTI_20140122/'); % Nifti file manipulation
 addpath('/Users/memsql/Dropbox/Research/libs/xml2struct/'); % reading XML files
-
+addpath('/Users/memsql/Dropbox/Research/libs/glmnet_matlab/'); % generalized linear model fitting toolbox
+addpath('/Users/memsql/Dropbox/Research/libs/utils/'); % useful one-off utils from MathWorks
 
 
 %addpath('/Users/memsql/Dropbox/research/context/model'); % the model code and behavioral data
