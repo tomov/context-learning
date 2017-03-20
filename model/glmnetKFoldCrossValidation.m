@@ -1,4 +1,4 @@
-function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, K)
+function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, family, K)
     % perform k-fold cross validation with a model trained to predict y
     % from x.
     % x = independent variables
@@ -21,7 +21,7 @@ function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, K)
         y_train = y(bucket ~= i, :);
         x_test = x(bucket == i, :);
         y_test = y(bucket == i, :);
-        kfit = glmnet(x_train, y_train, [], options);
+        kfit = glmnet(x_train, y_train, family, options);
         assert(immse(fitObj.lambda, kfit.lambda) < 1e-9); % should be the same lambdas
         y_pred = glmnetPredict(kfit, x_test, fitObj.lambda); % == glmnetPredict(fitObj, x_test);
         % get mean squared error (predicted vs. actual) for each lambda

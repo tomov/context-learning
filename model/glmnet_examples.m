@@ -91,20 +91,37 @@ pred=glmnetPredict(fit,[],[],'coefficients')
 %
 % except glmnet supports multinomials
 
-x = rand(100, 10);
-y = x(:,[1 2 6]) * [100 10 1]' + 23 + randn([size(x, 1) 1]) * 10; % no noise TODO add noise
-fitObj = glmnet(x, y);
+%x = rand(100, 10);
+%y = x(:,[1 2 6]) * [100 10 1]' + 23 + randn([size(x, 1) 1]) * 10; % no noise TODO add noise
+%fitObj = glmnet(x, y);
+%glmnetPrint(fitObj);
+
+% generate some random data
+%
+x = randn(100,20);
+mu = exp(x(:,[5 10 15])*[.4;.2;.3] + 1);
+y = poissrnd(mu);
+
+
+% fit using MATLAB generalized linear model lasso thing
+%
+[B, FitInfo] = lassoglm(x,y,'poisson','CV',10);
+lassoPlot(B,FitInfo,'plottype','CV');
+
+
+% fit using the third party lib
+% note that the MSE SEM's are a bit screwed
+%
+fitObj = glmnet(x, y, 'poisson');
 glmnetPrint(fitObj);
+[mses, msesems] = glmnetKFoldCrossValidation(x, y, fitObj, 'poisson', 10);
 
-
-[mses, msesems] = glmnetKFoldCrossValidation(x, y, fitObj, 10);
-
+figure;
 errorbar(fitObj.lambda, mses, msesems, 'o-');
 set(gca,'XScale','log', 'XDir', 'reverse'); % set the X axis in reversed log scale.
 xlabel('Lambda');
 ylabel('MSE');
 title('Cross-validated mean squared error');
-%errorbarlogx();
 
 % scatter(x(:,1), y);
 
