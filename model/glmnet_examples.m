@@ -1,3 +1,5 @@
+clear all;
+
 % glmnet
 % fit = glmnet(x, y, family)
 %{
@@ -98,7 +100,7 @@ pred=glmnetPredict(fit,[],[],'coefficients')
 
 % generate some random data
 %
-x = randn(100,20);
+x = randn(1000,20);
 mu = exp(x(:,[5 10 15])*[.4;.2;.3] + 1);
 y = poissrnd(mu);
 
@@ -111,9 +113,13 @@ lassoPlot(B,FitInfo,'plottype','CV');
 
 % fit using the third party lib
 % note that the MSE SEM's are a bit screwed
+% also fit is not as good. Decent tho
 %
 fitObj = glmnet(x, y, 'poisson');
 glmnetPrint(fitObj);
+
+% plot the cross-validation (should mimic lassoPlot) 
+%
 [mses, msesems] = glmnetKFoldCrossValidation(x, y, fitObj, 'poisson', 10);
 
 figure;
@@ -123,9 +129,50 @@ xlabel('Lambda');
 ylabel('MSE');
 title('Cross-validated mean squared error');
 
-% scatter(x(:,1), y);
+[~, lambda_idx] = min(mses); % pick lambda with smallest MSE
+lambda = fitObj.lambda(lambda_idx);
+hold on;
+plot(lambda, mses(lambda_idx), 'or', 'MarkerSize', 5, 'LineWidth', 2);
 
-%xnew = rand(20, 10);
+yL = get(gca,'YLim');
+line([lambda lambda], yL, 'LineStyle', '--', 'Color', [0.3 0.3 0.3]);
+hold off;
 
-%ynew = pred(:,1);
+% the betas
+%
+disp(fitObj.beta(:, lambda_idx));
 
+% do some predicting with new dat
+%
+
+x_new = randn(100,20);
+mu_new = exp(x_new(:,[5 10 15])*[.4;.2;.3] + 1);
+y_new = poissrnd(mu_new);
+
+% predict with the lasso
+% https://www.mathworks.com/help/stats/regularize-logistic-regression.html
+%
+indx = FitInfo.IndexMinDeviance; % alternatively use Index1SE
+B0 = B(:,indx);
+cnst = FitInfo.Intercept(indx);
+B1 = [cnst;B0];
+y_pred_matlab = glmval(B1,x_new,'log'); % link function for poisson is log -- https://www.mathworks.com/help/stats/glmfit.html
+
+figure;
+scatter(y_new, y_pred_matlab);
+xlabel('True y');
+ylabel('Predicted y');
+title('Predictions by glmval (MATLAB)');
+
+% predict with glmnet
+%
+y_pred_glmnet = glmnetPredict(fitObj, x_new, lambda, 'link');
+
+figure;
+scatter(y_new, y_pred_glmnet);
+xlabel('True y');
+ylabel('Predicted y');
+title('Predictions by glmnet');
+
+
+fprintf('Test set performance: MATLAB MSE = %.4f vs. glmnet MSE = %.4f\n', immse(y_new, y_pred_matlab), immse(y_new, y_pred_glmnet));

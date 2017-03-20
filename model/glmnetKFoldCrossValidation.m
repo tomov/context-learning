@@ -23,7 +23,7 @@ function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, family
         y_test = y(bucket == i, :);
         kfit = glmnet(x_train, y_train, family, options);
         assert(immse(fitObj.lambda, kfit.lambda) < 1e-9); % should be the same lambdas
-        y_pred = glmnetPredict(kfit, x_test, fitObj.lambda); % == glmnetPredict(fitObj, x_test);
+        y_pred = glmnetPredict(kfit, x_test, fitObj.lambda, 'link'); % == glmnetPredict(fitObj, x_test);
         % get mean squared error (predicted vs. actual) for each lambda
         % 
         mse = mean((y_pred - repmat(y_test, [1 size(y_pred, 2)])) .^ 2, 1);
