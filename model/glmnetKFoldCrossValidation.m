@@ -29,10 +29,27 @@ function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, family
         kfit = glmnet(x_train, y_train, family, options);
         assert(immse(fitObj.lambda, kfit.lambda) < 1e-9); % should be the same lambdas
         y_pred = glmnetPredict(kfit, x_test, fitObj.lambda, type); % == glmnetPredict(fitObj, x_test);
-        % get mean squared error (predicted vs. actual) for each lambda
-        % 
-        mse = mean((y_pred - repmat(y_test, [1 size(y_pred, 2)])) .^ 2, 1);
-        mses = [mses; mse];
+        if strcmp(family, 'poisson') || strcmp(family, 'normal')
+            % get mean squared error (predicted vs. actual) for each lambda
+            % in the case of poisson / gaussian / etc
+            % 
+            mse = mean((y_pred - repmat(y_test, [1 size(y_pred, 2)])) .^ 2, 1);
+        elseif strcmp(family, 'multinomial')
+            % this is sort of like a MSE but with a flavor of chi-squared #HACKSAUCE...
+            % for each observation, I just sum the squared errors
+            % and count this as the "squared error" for the observation
+            % then take the mean across all observations (for the given
+            % lambda)
+            % dimensions = observations x categories x lambda
+            %
+            y_expected = repmat(y_test, [1 1 size(y_pred, 3)]);
+            mse = mean(sum((y_pred - y_expected) .^ 2, 2), 1);
+            mse = reshape(mse, [1 size(mse, 3)]); % for consistency
+        else
+            assert(false); % not supported
+        end
+        
+        mses = [mses; mse]; % add to list of MSEs for the different buckets
     end
     % average the MSEs
     %
