@@ -1352,13 +1352,23 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
-        % One regressor for each trial onset (for classifier)
+        % One regressor for each training trial onset (for classifier)
         % http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/
-        % 
         %
         case 54
             trial_onsets = actualChoiceOnset(which_train);
             for t=1:20
+                multi.names{t} = ['trial_onset_', num2str(t)];
+                multi.onsets{t} = [str2double(trial_onsets(t))];
+                multi.durations{t} = [0];
+            end
+            
+        % One regressor for each test trial onset (for classifier)
+        % http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/
+        %
+        case 55
+            trial_onsets = actualChoiceOnset(which_test);
+            for t=1:4
                 multi.names{t} = ['trial_onset_', num2str(t)];
                 multi.onsets{t} = [str2double(trial_onsets(t))];
                 multi.durations{t} = [0];

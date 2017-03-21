@@ -22,6 +22,7 @@ function [mse_means, mse_sems] = glmnetKFoldCrossValidation(x, y, fitObj, family
     bucket = crossvalind('Kfold', size(x, 1), K); % partition observations
     mses = [];
     for i = 1:K
+        fprintf('i = %d / %d\n', i, K);
         x_train = x(bucket ~= i, :);
         y_train = y(bucket ~= i, :);
         x_test = x(bucket == i, :);
