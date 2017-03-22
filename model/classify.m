@@ -6,10 +6,9 @@ EXPT = contextExpt();
 is_local = 1; % 1 = Momchil's dropbox; 0 = NCF
 method = 'glmnet'; % patternnet or glmnet
 
+sss = getGoodSubjects();
 if is_local
-    sss = [1 2];
-else
-    sss = getGoodSubjects();
+    sss = sss(1:6);
 end
 
 % which betas to get for each run -- see SPM.xX.name' in any one of the subjects model
@@ -17,7 +16,7 @@ end
 %
 betas = [];
 for run = 1:9
-    idx = [1:20] + (run - 1) * (20 + 6);
+    idx = [13:19] + (run - 1) * (20 + 6);
     betas = [betas; idx];
 end
 
@@ -38,11 +37,15 @@ for subj = sss
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
         for i = betas(run,:)
+            beta_vec = ccnl_get_beta(EXPT, model, i, 'mask.nii', [subj]);
+            %{
             beta_file = fullfile(modeldir, ['beta_', sprintf('%04d', i), '.nii'])
             beta_nii = load_untouch_nii(beta_file);
             beta_nii.img(isnan(beta_nii.img)) = 0; % NaNs... TODO
             beta_vec = reshape(beta_nii.img, [1, numel(beta_nii.img)]); % reshape to 1D array. Lame
+            %}
             %beta_vec = beta_vec(1:20);
+            beta_vec(isnan(beta_vec)) = 0;
             
             if numel(inputs) == 0
                 inputs = zeros(numel(sss) * numel(betas), numel(beta_vec));
@@ -96,6 +99,10 @@ if strcmp(method, 'patternnet')
     %save('classify_patternnet_w000t.mat', '-v7.3');
     save('classify_patternnet_net_only.mat', 'net');
 
+    [~, i] = max(targets, [], 1);
+    [~, j] = max(outputs, [], 1);
+    fprintf('Success rate = %.2f%%\n', 100 * mean(i == j));    
+    
     % TODO these break for some reason...
     %
     A = cm';
@@ -119,11 +126,24 @@ elseif strcmp(method, 'glmnet')
     fitObj = glmnet(inputs, targets, 'multinomial');
     glmnetPrint(fitObj);
     
-    [mses, msesems] = glmnetKFoldCrossValidation(inputs, targets, fitObj, 'multinomial', 'response', 10);
-    [~, lambda_idx] = min(mses); % pick lambda with smallest MSE
-    lambda = fitObj.lambda(lambda_idx);
+    save('classify_glmnet_fitObj_only.mat', 'fitObj');
     
-    save('classify_glmnet_w000t.mat', '-v7.3');
+    %[mses, msesems] = glmnetKFoldCrossValidation(inputs, targets, fitObj, 'multinomial', 'response', 4);
+    %[~, lambda_idx] = min(mses); % pick lambda with smallest MSE
+    %lambda = fitObj.lambda(lambda_idx);
+    
+    %save('classify_glmnet_fitObj_only.mat', 'fitObj', 'mses', 'msesems', 'lambda');
+    %save('classify_glmnet_w000t.mat', '-v7.3');
+    
+    outputss = glmnetPredict(fitObj, inputs, fitObj.lambda, 'response');
+    
+    for l = 1:size(outputss, 3) % for all lambdas
+        outputs = outputss(:,:,l);
+        [~, i] = max(targets, [], 2);
+        [~, j] = max(outputs, [], 2);
+        fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), 100 * mean(i == j));
+    end
+
 else
     assert(false); % no other methods supported
 end
