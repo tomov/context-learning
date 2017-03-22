@@ -26,6 +26,7 @@ end
 labels = containers.Map({'irrelevant', 'modulatory', 'additive'}, ...
                         {[1 0 0], [0 1 0], [0 0 1]});
 
+%{
 inputs = []; % rows = x = observations, cols = voxels / dependent vars
 targets = zeros(numel(sss) * numel(betas), 3); % rows = y = observations, cols = indep vars (condition as binary vector)
 idx = 0;
@@ -36,7 +37,7 @@ for subj = sss
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
         for i = betas(run,:)
-            beta_vec = ccnl_get_beta(EXPT, model, i, 'striatum.nii', [subj]);
+            beta_vec = ccnl_get_beta(EXPT, model, i, 'vmpfc.nii', [subj]);
             beta_vec(isnan(beta_vec)) = 0;
             
             if numel(inputs) == 0
@@ -48,6 +49,9 @@ for subj = sss
         end
     end
 end
+%}
+                        
+load('classify_betas_for_trial_20_hippocampus.mat');
 
 
 if strcmp(method, 'patternnet')
@@ -84,7 +88,7 @@ if strcmp(method, 'patternnet')
     ylabel('Outputs');
 
 elseif strcmp(method, 'glmnet')
-    load('classify_glmnet_fitObj_only_1-19_vmpfc.mat'); % load the fit object
+    load('classify_glmnet_fitObj_only_1-19_hippocampus.mat'); % load the fit object
     
     outputss = glmnetPredict(fitObj, inputs, fitObj.lambda, 'response');
     
@@ -95,7 +99,7 @@ elseif strcmp(method, 'glmnet')
         fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), 100 * mean(i == j));
     end
     
-    save('classify_glmnet_outputss_1-19_vmpfc_20.mat', 'outputss');
+    save('classify_glmnet_outputss_1-19_hippocampus_20_copy.mat', 'outputss');
     
 else
     assert(false); % no other methods supported

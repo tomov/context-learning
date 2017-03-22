@@ -337,6 +337,15 @@ Model 53 -- Bayesian surprise @ feedback (outcome) onset
 
     Result:
 
+Model 54 -- const @ trial onset of each training trial
+
+    Regressor #1: different regressor (no pmod) @ each trial onset time
+                  The goal is to have a separate beta for the start of each training trial
+
+Model 55 -- const @ trial onset of each test trial
+
+    Regressor #1: different regressor (no pmod) @ each trial onset time
+                  The goal is to have a separate beta for the start of each test trial
 
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 

@@ -37,8 +37,10 @@ for subj = sss
     for run = 1:9
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
+        %remove_me = 0;
         for i = betas(run,:)
-            beta_vec = ccnl_get_beta(EXPT, model, i, 'vmpfc.nii', [subj]);
+            %remove_me = remove_me + 1;
+            beta_vec = ccnl_get_beta(EXPT, model, i, 'mask.nii', [subj]);
             beta_vec(isnan(beta_vec)) = 0;
             
             if numel(inputs) == 0
@@ -47,6 +49,13 @@ for subj = sss
             idx = idx + 1;
             inputs(idx,:) = beta_vec;
             targets(idx,:) = labels(condition);
+            %{
+            % scramble the labels on trials 1..19
+            if remove_me < 20
+                bla = [1 0 0; 0 1 0; 0 0 1];
+                targets(idx,:) = bla(randi(3,1),:);
+            end
+            %}
         end
     end
 end
@@ -120,7 +129,7 @@ elseif strcmp(method, 'glmnet')
     fitObj = glmnet(inputs, targets, 'multinomial');
     glmnetPrint(fitObj);
     
-    save('classify_glmnet_fitObj_only_1-19_vmpfc.mat', 'fitObj');
+    save('classify_glmnet_fitObj_only_1-19_mask_scramble.mat', 'fitObj');
     
     %[mses, msesems] = glmnetKFoldCrossValidation(inputs, targets, fitObj, 'multinomial', 'response', 4);
     %[~, lambda_idx] = min(mses); % pick lambda with smallest MSE
