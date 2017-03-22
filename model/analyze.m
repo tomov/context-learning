@@ -16,6 +16,7 @@ end
 human_correct_all_runs = [];
 model_correct_all_runs = [];
 
+clear model;
 model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
 model.pred = []; % the choice probability (not the actual choice) for each trial
 model.P1 = []; % posterior P(M1 | ...) at each trial
@@ -27,7 +28,19 @@ model.ww2 = []; % weights for M2
 model.ww3 = []; % weights for M3
 model.ww4 = []; % weights for M4
 
+% HACKSAUCE TODO FIXME
+% to predict stuff based on the classifier
+%
+sss = getGoodSubjects();
+[all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
+subjects = all_subjects(sss);
+load('classify_glmnet_outputss_1-19_vmpfc_20.mat');
+ppp = outputss(:,:,end);
+which_rows = which_rows & ismember(participant, subjects);
+
+s_id = 0;
 for who = subjects
+    s_id = s_id + 1;
     for condition = unique(contextRole)'
         which_runs = which_rows & strcmp(participant, who) & strcmp(contextRole, condition);
         runs = unique(roundId(which_runs))';
@@ -74,6 +87,8 @@ for who = subjects
             test_x = zeros(test_N, D);
             test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
             test_c = contextId(which_test) + 1;
+            
+            P_n = [ppp((s_id - 1) * 9 + run,:) 0]; % HACKSAUCE TODO FIXME -- this is to predict based on the classifier
             [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
             if make_optimal_choices
@@ -103,7 +118,11 @@ model.P3 = model.P3';
 model.P4 = model.P4';
 
 
-
+% HACKSAUCE -- for the classifier TODO FIXME
+%
+which = which_rows & ~isTrain;
+fprintf('MSE for behavioral prediction based on classifier: %.4f\n', ...
+    immse(model.pred(which), double(strcmp(response.keys(which), 'left'))));
 
 
 %

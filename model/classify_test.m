@@ -8,8 +8,7 @@ is_local = 1; % 1 = Momchil's dropbox; 0 = NCF
 method = 'glmnet'; % patternnet or glmnet
 
 sss = getGoodSubjects();
-sss(sss == 5) = []; % subject 5 got reconned and the test trials on run 3 were lost :(
-sss = sss(1:5);
+%sss(sss == 5) = []; % subject 5 got reconned and the test trials on run 3 were lost :(
 
 % which betas to get for each run -- see SPM.xX.name' in any one of the subjects model
 % directories
@@ -37,15 +36,8 @@ for subj = sss
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
         for i = betas(run,:)
-            beta_vec = ccnl_get_beta(EXPT, model, i, 'mask.nii', [subj]);
+            beta_vec = ccnl_get_beta(EXPT, model, i, 'striatum.nii', [subj]);
             beta_vec(isnan(beta_vec)) = 0;
-            %{
-            beta_file = fullfile(modeldir, ['beta_', sprintf('%04d', i), '.nii'])
-            beta_nii = load_untouch_nii(beta_file);
-            beta_nii.img(isnan(beta_nii.img)) = 0; % NaNs... TODO
-            beta_vec = reshape(beta_nii.img, [1, numel(beta_nii.img)]); % reshape to 1D array. Lame
-            %}
-            %beta_vec = beta_vec(1:20);
             
             if numel(inputs) == 0
                 inputs = zeros(numel(sss) * numel(betas), numel(beta_vec));
@@ -92,7 +84,7 @@ if strcmp(method, 'patternnet')
     ylabel('Outputs');
 
 elseif strcmp(method, 'glmnet')
-    load('classify_glmnet_fitObj_only.mat'); % load the fit object
+    load('classify_glmnet_fitObj_only_1-19_vmpfc.mat'); % load the fit object
     
     outputss = glmnetPredict(fitObj, inputs, fitObj.lambda, 'response');
     
@@ -102,6 +94,8 @@ elseif strcmp(method, 'glmnet')
         [~, j] = max(outputs, [], 2);
         fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), 100 * mean(i == j));
     end
+    
+    save('classify_glmnet_outputss_1-19_vmpfc_20.mat', 'outputss');
     
 else
     assert(false); % no other methods supported

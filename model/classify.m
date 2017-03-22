@@ -7,8 +7,9 @@ is_local = 1; % 1 = Momchil's dropbox; 0 = NCF
 method = 'glmnet'; % patternnet or glmnet
 
 sss = getGoodSubjects();
+%sss(sss == 5) = []; % subject 5 got reconned and the test trials on run 3 were lost :(
 if is_local
-    sss = sss(1:6);
+%    sss = sss(1:5);
 end
 
 % which betas to get for each run -- see SPM.xX.name' in any one of the subjects model
@@ -16,7 +17,7 @@ end
 %
 betas = [];
 for run = 1:9
-    idx = [13:19] + (run - 1) * (20 + 6);
+    idx = [1:19] + (run - 1) * (20 + 6);
     betas = [betas; idx];
 end
 
@@ -37,14 +38,7 @@ for subj = sss
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
         for i = betas(run,:)
-            beta_vec = ccnl_get_beta(EXPT, model, i, 'mask.nii', [subj]);
-            %{
-            beta_file = fullfile(modeldir, ['beta_', sprintf('%04d', i), '.nii'])
-            beta_nii = load_untouch_nii(beta_file);
-            beta_nii.img(isnan(beta_nii.img)) = 0; % NaNs... TODO
-            beta_vec = reshape(beta_nii.img, [1, numel(beta_nii.img)]); % reshape to 1D array. Lame
-            %}
-            %beta_vec = beta_vec(1:20);
+            beta_vec = ccnl_get_beta(EXPT, model, i, 'vmpfc.nii', [subj]);
             beta_vec(isnan(beta_vec)) = 0;
             
             if numel(inputs) == 0
@@ -126,7 +120,7 @@ elseif strcmp(method, 'glmnet')
     fitObj = glmnet(inputs, targets, 'multinomial');
     glmnetPrint(fitObj);
     
-    save('classify_glmnet_fitObj_only.mat', 'fitObj');
+    save('classify_glmnet_fitObj_only_1-19_vmpfc.mat', 'fitObj');
     
     %[mses, msesems] = glmnetKFoldCrossValidation(inputs, targets, fitObj, 'multinomial', 'response', 4);
     %[~, lambda_idx] = min(mses); % pick lambda with smallest MSE
