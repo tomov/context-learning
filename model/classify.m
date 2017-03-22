@@ -16,6 +16,7 @@ end
 % directories
 %
 betas = [];
+%bla = [1 0 0; 0 1 0; 0 0 1];
 for run = 1:9
     idx = [1:19] + (run - 1) * (20 + 6);
     betas = [betas; idx];
@@ -31,12 +32,16 @@ labels = containers.Map({'irrelevant', 'modulatory', 'additive'}, ...
 inputs = []; % rows = x = observations, cols = voxels / dependent vars
 targets = zeros(numel(sss) * numel(betas), 3); % rows = y = observations, cols = indep vars (condition as binary vector)
 idx = 0;
+%random_run_labels = [];
 for subj = sss
     modeldir = fullfile(EXPT.modeldir,['model',num2str(model)],['subj',num2str(subj)]);
    
     for run = 1:9
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
+    
+        %random_run_label = bla(randi(3,1),:);
+        %random_run_labels = [random_run_labels; random_run_label];
         %remove_me = 0;
         for i = betas(run,:)
             %remove_me = remove_me + 1;
@@ -49,6 +54,9 @@ for subj = sss
             idx = idx + 1;
             inputs(idx,:) = beta_vec;
             targets(idx,:) = labels(condition);
+            
+            % scramble the labels on the runs
+            %targets(idx,:) = random_run_label;
             %{
             % scramble the labels on trials 1..19
             if remove_me < 20
@@ -129,7 +137,8 @@ elseif strcmp(method, 'glmnet')
     fitObj = glmnet(inputs, targets, 'multinomial');
     glmnetPrint(fitObj);
     
-    save('classify_glmnet_fitObj_only_1-19_mask_scramble.mat', 'fitObj');
+    save('classify_glmnet_fitObj_only_1-19_mask.mat', 'fitObj', 'random_run_labels');    
+    %save('classify_glmnet_fitObj_only_1-19_mask_scramble_runs.mat', 'fitObj', 'random_run_labels');
     
     %[mses, msesems] = glmnetKFoldCrossValidation(inputs, targets, fitObj, 'multinomial', 'response', 4);
     %[~, lambda_idx] = min(mses); % pick lambda with smallest MSE
