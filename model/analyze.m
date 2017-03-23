@@ -34,7 +34,7 @@ model.ww4 = []; % weights for M4
 sss = getGoodSubjects();
 [all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
 subjects = all_subjects(sss);
-load('classify_glmnet_outputss_1-19_vmpfc_20.mat');
+load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
 ppp = outputss(:,:,end);
 which_rows = which_rows & ismember(participant, subjects);
 
