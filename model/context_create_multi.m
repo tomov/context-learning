@@ -54,6 +54,7 @@ function multi = context_create_multi(glmodel, subj, run)
     r = strcmp(sick(which_train), 'Yes');
     which_models = [1 1 1 0];
     [choices, P_n, ww_n, P, ww, values, valuess, likelihoods] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);    
+    correct = ~strcmp(corrAns(which_train), 'left'); % to compare with (choices < 0.5)
     
     % entropy -- exclude M4 which has P = 0
     %
@@ -1333,7 +1334,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % 
             priors = which_models / sum(which_models);
             Q = [priors; P(1:end-1,:)];
-            logs = log(P ./ Q); 
+            logs = log2(P ./ Q); 
             logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
             surprise = sum(P .* logs, 2);
             surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
@@ -1373,6 +1374,69 @@ function multi = context_create_multi(glmodel, subj, run)
                 multi.onsets{t} = [str2double(trial_onsets(t))];
                 multi.durations{t} = [0];
             end            
+            
+        % main effect but 1 s durations
+        case 56
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train)));
+
+        % main effect but 3 s durations at trial onset
+        case 57
+            % context role @ trial onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = 3 * ones(size(contextRole(which_train)));            
+
+        % main effect but 1 s durations at ITI (sanity check)
+        case 58
+            % context role @ trial onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualItiOnset(which_train))';
+            multi.durations{1} = 1 * ones(size(contextRole(which_train)));            
+            
+        % One regressor for each training feedback onset (for classifier)
+        % http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/
+        %
+        case 59
+            feedback_onsets = actualFeedbackOnset(which_train);
+            for t=1:20
+                multi.names{t} = ['trial_onset_', num2str(t)];
+                multi.onsets{t} = [str2double(feedback_onsets(t))];
+                multi.durations{t} = [0];
+            end
+
+        % One regressor for each training + test trial onset (for classifier)
+        % same as 54 + 55
+        % http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/
+        %
+        case 60
+            % training trials
+            trial_onsets = actualChoiceOnset(which_train);
+            for t=1:20
+                multi.names{t} = ['trial_onset_', num2str(t)];
+                multi.onsets{t} = [str2double(trial_onsets(t))];
+                multi.durations{t} = [0];
+            end
+            
+            % test trials
+            trial_onsets = actualChoiceOnset(which_test);
+            for t=21:24
+                multi.names{t} = ['trial_onset_', num2str(t)];
+                multi.onsets{t} = [str2double(trial_onsets(t - 20))];
+                multi.durations{t} = [0];
+            end            
+
     end
 
 end 

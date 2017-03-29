@@ -5,7 +5,7 @@
 %   AAL SPM toolbox: http://www.gin.cnrs.fr/AAL  (only need the AAL.nii & AAL.xlm files)
 %   xml2struct script: https://www.mathworks.com/matlabcentral/fileexchange/28518-xml2struct
 %
-filename = 'vmpfc.nii'; % where to save the mask 
+filename = 'rlpfc.nii'; % where to save the mask 
 
 % Some pre-defined ROIs for your convenience
 %
@@ -17,11 +17,12 @@ vmpfc_rois = {'Frontal_Med_Orb_L', 'Frontal_Med_Orb_R', ...
               'Rectus_L', 'Rectus_R'};
 striatum_rois = {'Caudate_L', 'Caudate_R', ...
                  'Putamen_L', 'Putamen_R'};
+rlpfc_rois = {'Frontal_Inf_Tri_L', 'Frontal_Inf_Tri_R'}; % TODO wrong
 
 % which regions to include (must match names exactly as in AAL).
 % Consult http://qnl.bu.edu/obart/explore/AAL/ or roi_names below
 %
-my_rois = vmpfc_rois;
+my_rois = rlpfc_rois;
 
 
 atlas = load_untouch_nii('../../libs/aal/atlas/AAL.nii'); % load atlas

@@ -1,6 +1,20 @@
-function classify_train(method, trials, sss, mask, outFilename)
+function classify_train(method, trials, runs, sss, mask, outFilename)
 % Train classifier to predict condition based on neural activity at trial onset
 %
+
+fprintf('classify_train');
+disp(method)
+disp(trials)
+disp(runs)
+disp(mask)
+disp(sss)
+disp(outfilename)
+
+if exist(outFilename, 'file') == 1
+    fprintf('file exists');
+    return
+end
+
 
 % trials = which training trials to use to train from each run, e.g. 1:19 or 1:20
 % sss = subject indices in the subjects array returned by
@@ -9,10 +23,10 @@ function classify_train(method, trials, sss, mask, outFilename)
 % method = 'glmnet' or 'patternnet'
 % outFilename = .mat file name where to save the results
 
-model = 54; % the model with the classifier for training trials betas
+model = 60; % the model with the classifier for all trials betas
 EXPT = contextExpt();
 is_local = 1; % 1 = Momchil's dropbox; 0 = NCF
-n_trials_per_run = 20;
+n_trials_per_run = 24;
 %method = 'glmnet'; % patternnet or glmnet
 %trials = 1:19;
 %sss = getGoodSubjects();
@@ -24,7 +38,7 @@ n_trials_per_run = 20;
 %
 betas = [];
 %bla = [1 0 0; 0 1 0; 0 0 1];
-for run = 1:9
+for run = runs
     idx = trials + (run - 1) * (n_trials_per_run + 6);
     betas = [betas; idx];
 end
@@ -43,7 +57,7 @@ idx = 0;
 for subj = sss
     modeldir = fullfile(EXPT.modeldir,['model',num2str(model)],['subj',num2str(subj)]);
    
-    for run = 1:9
+    for run = runs
         multi = context_create_multi(1, subj, run);
         condition = multi.names{1};
     
