@@ -31,12 +31,14 @@ model.ww4 = []; % weights for M4
 % HACKSAUCE TODO FIXME
 % to predict stuff based on the classifier
 %
+%{
 sss = getGoodSubjects();
 [all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
 subjects = all_subjects(sss);
 load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
 ppp = outputss(:,:,end);
 which_rows = which_rows & ismember(participant, subjects);
+%}
 
 s_id = 0;
 for who = subjects
@@ -54,11 +56,11 @@ for who = subjects
             cues = cueId(which_train);
             N = length(cues); % # of trials
             D = 3; % # of stimuli
-            x = zeros(N, D);
-            x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
+            prev_trials_surprise = zeros(N, D);
+            prev_trials_surprise(sub2ind(size(prev_trials_surprise), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
+            [choices, P_n, ww_n, P, ww, values] = train(prev_trials_surprise, c, r, prior_variance, inv_softmax_temp, which_models, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;
@@ -74,6 +76,12 @@ for who = subjects
             model.P2(which_train) = P(:,2);
             model.P3(which_train) = P(:,3);
             model.P4(which_train) = P(:,4);
+            priors = which_models / sum(which_models);
+            Q = [priors; P(1:end-1,:)];
+            model.Q1(which_train) = Q(:,1);
+            model.Q2(which_train) = Q(:,2);
+            model.Q3(which_train) = Q(:,3);
+            model.Q4(which_train) = Q(:,4);
             model.ww1(which_train, :) = ww{1};
             model.ww2(which_train, :) = ww{2};
             model.ww3(which_train, :) = ww{3};
@@ -88,7 +96,7 @@ for who = subjects
             test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
             test_c = contextId(which_test) + 1;
             
-            P_n = [ppp((s_id - 1) * 9 + run,:) 0]; % HACKSAUCE TODO FIXME -- this is to predict based on the classifier
+            %P_n = [ppp((s_id - 1) * 9 + run,:) 0]; % HACKSAUCE TODO FIXME -- this is to predict based on the classifier
             [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
             if make_optimal_choices
@@ -116,13 +124,19 @@ model.P1 = model.P1';
 model.P2 = model.P2';
 model.P3 = model.P3';
 model.P4 = model.P4';
+model.Q1 = model.Q1';
+model.Q2 = model.Q2';
+model.Q3 = model.Q3';
+model.Q4 = model.Q4';
 
 
 % HACKSAUCE -- for the classifier TODO FIXME
 %
+%{
 which = which_rows & ~isTrain;
 fprintf('MSE for behavioral prediction based on classifier: %.4f\n', ...
     immse(model.pred(which), double(strcmp(response.keys(which), 'left'))));
+%}
 
 
 %
@@ -364,3 +378,57 @@ for condition = contextRoles
     legend(Ms);
 
 end
+
+%
+% D_KL == bayesian surprise on each training trial, by whether trial was
+% correct
+%
+P = [model.P1 model.P2 model.P3 model.P4];
+Q = [model.Q1 model.Q2 model.Q3 model.Q4];
+
+means = zeros(1,2);
+sems = zeros(1,2);
+sem = @(x) std(x) / sqrt(length(x));
+for correct = 1:-1:0
+    which = which_rows & isTrain & response.corr == correct;
+    
+    logs = log2(P ./ Q); 
+    logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
+    surprise = sum(P .* logs, 2);
+    surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
+    
+    means(1, 2 - correct) = mean(surprise(which)); 
+    sems(1, 2 - correct) = sem(surprise(which));
+end
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(means, sems);
+legend({'correct', 'wrong'});
+ylabel('D_{KL} on current trial');
+
+%
+% D_KL == bayesian surprise on each training trial, by whether next trial
+% was correct
+%
+
+which_next_trials = which_rows & isTrain & trialId ~= 1;
+which_prev_trials = which_rows & isTrain & trialId ~= 20;
+prev_trials_surprise = surprise(which_prev_trials);
+next_trials_corr = response.corr(which_next_trials);
+
+
+means = [mean(prev_trials_surprise(next_trials_corr == 1)) mean(prev_trials_surprise(next_trials_corr == 0))];
+sems = [sem(prev_trials_surprise(next_trials_corr == 1)) sem(prev_trials_surprise(next_trials_corr == 0))];
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(means, sems);
+legend({'correct', 'wrong'});
+ylabel('D_{KL} on previous trial');
+
+
+
+%
+% Voxels tracking 
+%

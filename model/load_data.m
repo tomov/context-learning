@@ -47,8 +47,12 @@ trialsPerRound = 24;
 % In case we're not using the GUI (i.e. analyze_gui2.m)
 %
 if ~exist('analyze_with_gui') || ~analyze_with_gui % for the GUI; normally we always reload the data
+    [allSubjects, subjdirs, nRuns] = contextGetSubjectsDirsAndRuns();
+    goodSubjects = allSubjects(getGoodSubjects()); % get id's of good subjects only i.e. the ones we're using in the fMRI analysis
+    
     which_rows = logical(true(size(participant))); % which rows to include/exclude. By default all of them. Mostly relevant for the GUI
-    subjects = unique(participant(which_rows))'; % the unique id's of all subjects
+    which_rows = which_rows & ismember(participant, goodSubjects); % only use the subjects we care about
+    subjects = unique(participant(which_rows))'; % the unique id's of all subjects we're using
     
     contextRoles = {'irrelevant', 'modulatory', 'additive'}; % should be == unique(contextRole)'
 

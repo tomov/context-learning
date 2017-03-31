@@ -1,19 +1,17 @@
-function classify_train(method, trials, runs, sss, mask, outFilename)
+function [classifier] = classify_train(method, trials, runs, sss, mask)
 % Train classifier to predict condition based on neural activity at trial onset
+% returns a fitObj that you can pass to glmnetPredict
+% or a petternnet net that you can use e.g. like net(inputs)
 %
 
-fprintf('classify_train');
+fprintf('classify_train\n');
 disp(method)
 disp(trials)
 disp(runs)
 disp(mask)
 disp(sss)
-disp(outfilename)
 
-if exist(outFilename, 'file') == 1
-    fprintf('file exists');
-    return
-end
+outFilename = random_string();
 
 
 % trials = which training trials to use to train from each run, e.g. 1:19 or 1:20
@@ -40,7 +38,7 @@ betas = [];
 %bla = [1 0 0; 0 1 0; 0 0 1];
 for run = runs
     idx = trials + (run - 1) * (n_trials_per_run + 6);
-    betas = [betas; idx];
+    betas(run,:) = idx;
 end
 
 % Get the input vector and labels from the betas
@@ -51,7 +49,7 @@ labels = containers.Map({'irrelevant', 'modulatory', 'additive'}, ...
                         {[1 0 0], [0 1 0], [0 0 1]});
 
 inputs = []; % rows = x = observations, cols = voxels / dependent vars
-targets = zeros(numel(sss) * numel(betas), 3); % rows = y = observations, cols = indep vars (condition as binary vector)
+targets = []; % rows = y = observations, cols = indep vars (condition as binary vector)
 idx = 0;
 %random_run_labels = [];
 for subj = sss
@@ -69,9 +67,6 @@ for subj = sss
             beta_vec = ccnl_get_beta(EXPT, model, i, mask, [subj]);
             beta_vec(isnan(beta_vec)) = 0;
             
-            if numel(inputs) == 0
-                inputs = zeros(numel(sss) * numel(betas), numel(beta_vec));
-            end
             idx = idx + 1;
             inputs(idx,:) = beta_vec;
             targets(idx,:) = labels(condition);
@@ -129,14 +124,18 @@ if strcmp(method, 'patternnet')
     [c,cm,ind,per] = confusion(targets,outputs);
     
     %save('classify_patternnet_w000t.mat', '-v7.3');
+    fprintf('SAVING net to %s\n', outFilename);
     save(outFilename, 'net');
 
     [~, i] = max(targets, [], 1);
     [~, j] = max(outputs, [], 1);
     fprintf('Success rate = %.2f%%\n', 100 * mean(i == j));    
     
+    classifier = net;
+    
     % TODO these break for some reason...
     %
+    %{
     A = cm';
     B = bsxfun(@rdivide,A,sum(A));
     C = imresize(1 - B, 15, 'method', 'box');
@@ -149,6 +148,7 @@ if strcmp(method, 'patternnet')
     sprintf('%.2f %% bottom 10', mean(b(1:10) * 100))
     sprintf('%.2f %% top 10', mean(b(41:50) * 100))
     sprintf('%.2f %% correct', (1 - c) * 100)
+    %}
     
 elseif strcmp(method, 'glmnet')
     
@@ -158,6 +158,7 @@ elseif strcmp(method, 'glmnet')
     fitObj = glmnet(inputs, targets, 'multinomial');
     glmnetPrint(fitObj);
     
+    fprintf('SAVING fitObj to %s\n', outFilename);
     save(outFilename, 'fitObj');
     %save('classify_glmnet_fitObj_only_1-19_mask_scramble_runs.mat', 'fitObj', 'random_run_labels');
     
@@ -177,6 +178,8 @@ elseif strcmp(method, 'glmnet')
         fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), 100 * mean(i == j));
     end
 
+    classifier = fitObj;
+    
 else
     assert(false); % no other methods supported
 end
