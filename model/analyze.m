@@ -27,6 +27,8 @@ model.ww1 = []; % weights for M1
 model.ww2 = []; % weights for M2
 model.ww3 = []; % weights for M3
 model.ww4 = []; % weights for M4
+model.values = []; % values at each trial
+model.surprise = []; % D_KL at each trial
 
 % HACKSAUCE TODO FIXME
 % to predict stuff based on the classifier
@@ -39,6 +41,8 @@ load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
 ppp = outputss(:,:,end);
 which_rows = which_rows & ismember(participant, subjects);
 %}
+
+%make_optimal_choices = true;
 
 s_id = 0;
 for who = subjects
@@ -86,6 +90,13 @@ for who = subjects
             model.ww2(which_train, :) = ww{2};
             model.ww3(which_train, :) = ww{3};
             model.ww4(which_train, :) = ww{4};
+            model.values(which_train, :) = values;
+            logs = log2(P ./ Q); 
+            logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
+            surprise = sum(P .* logs, 2);
+            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
+            model.surprise(which_train, :) = surprise;
+            
 
             % See what the model predicts for the test trials of that run
             %
@@ -391,14 +402,9 @@ sems = zeros(1,2);
 sem = @(x) std(x) / sqrt(length(x));
 for correct = 1:-1:0
     which = which_rows & isTrain & response.corr == correct;
-    
-    logs = log2(P ./ Q); 
-    logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
-    surprise = sum(P .* logs, 2);
-    surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
-    
-    means(1, 2 - correct) = mean(surprise(which)); 
-    sems(1, 2 - correct) = sem(surprise(which));
+        
+    means(1, 2 - correct) = mean(model.surprise(which)); 
+    sems(1, 2 - correct) = sem(model.surprise(which));
 end
 
 subplot(3, 5, next_subplot_idx);
@@ -414,7 +420,7 @@ ylabel('D_{KL} on current trial');
 
 which_next_trials = which_rows & isTrain & trialId ~= 1;
 which_prev_trials = which_rows & isTrain & trialId ~= 20;
-prev_trials_surprise = surprise(which_prev_trials);
+prev_trials_surprise = model.surprise(which_prev_trials);
 next_trials_corr = response.corr(which_next_trials);
 
 
@@ -429,6 +435,58 @@ ylabel('D_{KL} on previous trial');
 
 
 
+
 %
-% Voxels tracking 
+% value in sick vs. not sick
 %
+%{
+outcomes = strcmp(sick(which_rows & isTrain), 'Yes');
+values = model.values(which_rows & isTrain);
+
+means = [mean(values(outcomes == 1)) mean(values(outcomes == 0))];
+sems = [sem(values(outcomes == 1)) sem(values(outcomes == 0))];
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(means, sems);
+legend({'sick', 'not sick'});
+ylabel('value');
+%}
+
+
+%
+% value in chose sick vs. chose not sick, on wrong trials
+%
+
+wrong_trials = which_rows & isTrain & response.corr == 0;
+subject_choices = strcmp(response.keys(wrong_trials), 'left');
+values = model.values(wrong_trials);
+
+means = [mean(values(subject_choices == 1)) mean(values(subject_choices == 0))];
+sems = [sem(values(subject_choices == 1)) sem(values(subject_choices == 0))];
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(means, sems);
+title('Wrong Trials');
+legend({'chose sick', 'chose not sick'});
+ylabel('value');
+
+%
+% value in chose sick vs. chose not sick, on correct trials
+%
+
+correct_trials = which_rows & isTrain & response.corr == 1;
+subject_choices = strcmp(response.keys(correct_trials), 'left');
+values = model.values(correct_trials);
+
+means = [mean(values(subject_choices == 1)) mean(values(subject_choices == 0))];
+sems = [sem(values(subject_choices == 1)) sem(values(subject_choices == 0))];
+
+subplot(3, 5, next_subplot_idx);
+next_subplot_idx = next_subplot_idx + 1;
+barweb(means, sems);
+title('Correct Trials');
+legend({'chose sick', 'chose not sick'});
+ylabel('value');
+
