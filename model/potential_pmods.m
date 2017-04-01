@@ -140,7 +140,7 @@ ylabel('D_{KL}');
 
 
 %
-% |PE| vs whether subject was right or wrong on the following trial
+% |PE| vs whether subject was right or wrong on the current trial
 %
 
 labels = {};
