@@ -181,3 +181,21 @@ ccnl_fmri_con(contextExpt(), 20, ...
 
 % ccnl_view(contextExpt(), 26, 'prediction_error');
 
+%ccnl_view(contextExpt(), 58, 'modulatory - irrelevant');
+%ccnl_view(contextExpt(), 57, 'modulatory - additive');
+%ccnl_view(contextExpt(), 57, 'additive - irrelevant');
+
+%ccnl_view(contextExpt(), 64, 'M1_value_irrelevant');
+%ccnl_view(contextExpt(), 64, 'M2_value_modulatory');
+%ccnl_view(contextExpt(), 64, 'M3_value_additive');
+
+%ccnl_view(contextExpt(), 65, 'modulatory - irrelevant');
+%ccnl_view(contextExpt(), 65, 'modulatory - additive');
+%ccnl_view(contextExpt(), 65, 'additive - irrelevant');
+
+
+%ccnl_view(contextExpt(), 66, 'modulatory - irrelevant');
+%ccnl_view(contextExpt(), 66, 'modulatory - additive');
+%ccnl_view(contextExpt(), 66, 'additive - irrelevant');
+
+

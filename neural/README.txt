@@ -346,6 +346,34 @@ Model 55 -- const @ trial onset of each test trial
 
     Regressor #1: different regressor (no pmod) @ each trial onset time
                   The goal is to have a separate beta for the start of each test trial
+                 
+Model 61 -- Expected value, separated by condition (context role) @ trial onset
+
+    Regressor #1: pmod = expected value for given condition @ trial onset time
+
+    Contrasts:
+        ccnl_view(contextExpt(), 61, 'value_irrelevant');
+        ccnl_view(contextExpt(), 61, 'value_modulatory');
+        ccnl_view(contextExpt(), 61, 'value_additive');
+
+    Hypothesis:
+
+    Result:
+
+Model 62 -- Expected value, separated by condition (context role) @ reaction time
+
+    Regressor #1: pmod = expected value for given condition @ RT
+    Regressor #2: constant @ trial onset (to account for visual activation)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 61, 'value_irrelevant');
+        ccnl_view(contextExpt(), 61, 'value_modulatory');
+        ccnl_view(contextExpt(), 61, 'value_additive');
+
+    Hypothesis:
+
+    Result:
+
 
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 
@@ -375,3 +403,4 @@ Model 35 is wrong; M2 (modulatory) value pmod @ trial onset + PE pmod for M2 onl
 
 Model 36 is wrong; M3 (additive) value pmod @ trial onset + PE pmod for M3 only @ outcome onset (same as 39) w the const regressor => can't have two at same onset
 
+Models 56..60 are for Momchil's own entertainment

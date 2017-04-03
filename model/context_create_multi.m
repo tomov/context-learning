@@ -37,6 +37,7 @@ function multi = context_create_multi(glmodel, subj, run)
     %
     which_train = ~drop & isTrain & strcmp(participant, subjects{subj}) & roundId == run;
     which_test = ~drop & ~isTrain & strcmp(participant, subjects{subj}) & roundId == run;
+    which_all = which_test | which_train;
     
     % condition = context role for the run
     %
@@ -1437,6 +1438,747 @@ function multi = context_create_multi(glmodel, subj, run)
                 multi.durations{t} = [0];
             end            
 
+            
+        % Value (expected outcome) @ trial onset, separated by condition
+        %
+        case 61
+            % Value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Value (expected outcome) @ RT, separated by condition
+        %
+        case 62
+            % Value (expected outcome) @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % Cause-specific value @ trial onset, separated by condition
+        %
+        case 63
+            % Cause-specific value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            M = -1;
+            if strcmp(condition, 'irrelevant')
+                M = 1;
+            elseif strcmp(condition, 'modulatory')
+                M = 2;
+            else
+                assert(strcmp(condition, 'additive'));
+                M = 3;
+            end
+            multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
+            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Cause-specific value @ RT, separated by condition
+        %
+        case 64
+            % Cause-specific value (expected outcome) @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            M = -1;
+            if strcmp(condition, 'irrelevant')
+                M = 1;
+            elseif strcmp(condition, 'modulatory')
+                M = 2;
+            else
+                assert(strcmp(condition, 'additive'));
+                M = 3;
+            end
+            multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
+            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % main effect @ feedback for trials 10..20
+        case 65
+            which_trials = which_train & trialId >= 10;
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+            
+        % main effect @ RT, trials 10..20
+        case 66
+            which_trials = which_train & trialId >= 10;
+            
+            % context role @ RT
+            % 
+            multi.names{1} = condition;
+            RTs = actualChoiceOffset(which_trials);
+            feedback_time = actualFeedbackOnset(which_trials);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+
+        % Response @ 1 s before reaction onset 
+        %
+        case 67
+            % button press @ 1 s before reaction onset (trials 1..20)
+            % 
+            multi.names{1} = 'keypress';
+            multi.onsets{1} = -1 + cellfun(@str2num,actualChoiceOffset(which_train & ~no_response))';
+            multi.durations{1} = zeros(size(contextRole(which_train & ~no_response)));
+            
+            multi.pmod(1).name{1} = 'pressed_sick';
+            multi.pmod(1).param{1} = strcmp(response.keys(which_train & ~no_response), 'left')'; % whether subject pressed "sick", for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % const @ outcome / feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train & ~no_response))';
+            multi.durations{2} = zeros(size(contextRole(which_train & ~no_response)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train & ~no_response))';
+            multi.durations{3} = zeros(size(contextRole(which_train & ~no_response)));
+
+        % Response @ trial onset 
+        %
+        case 68
+            % button press @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train & ~no_response))';
+            multi.durations{1} = zeros(size(contextRole(which_train & ~no_response)));
+            
+            multi.pmod(1).name{1} = 'pressed_sick';
+            multi.pmod(1).param{1} = strcmp(response.keys(which_train & ~no_response), 'left')'; % whether subject pressed "sick", for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % const @ outcome / feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train & ~no_response))';
+            multi.durations{2} = zeros(size(contextRole(which_train & ~no_response)));
+
+        % Value (expected outcome) @ 1 s after trial onset, separated by condition
+        %
+        case 69
+            % Value (expected outcome) @ 1 s after trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Value (expected outcome) @ 1 s before RT, separated by condition
+        %
+        case 70
+            % Value (expected outcome) 1 s before @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        %
+        % ----------- THESE INCLUDE THE TEST TRIALS -----------------
+        %
+            
+        % main effect for ALL trials (including test)
+        %
+        case 71 %
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+                    
+        % Value (expected outcome) @ trial onset, separated by condition INCLUDING test trials
+        % same as 61
+        %
+        case 72
+            % Value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Value (expected outcome) @ RT, separated by condition INCLUDING test trials
+        % same as 62
+        %
+        case 73
+            % Value (expected outcome) @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+        % Cause-specific value @ trial onset, separated by condition INCLUDING test trials
+        % same as 63
+        %
+        case 74
+            % Cause-specific value (expected outcome) @ trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            M = -1;
+            if strcmp(condition, 'irrelevant')
+                M = 1;
+            elseif strcmp(condition, 'modulatory')
+                M = 2;
+            else
+                assert(strcmp(condition, 'additive'));
+                M = 3;
+            end
+            multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
+            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Cause-specific value @ RT, separated by condition INCLUDING test trials
+        % same as 64
+        %
+        case 75
+            % Cause-specific value (expected outcome) @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            M = -1;
+            if strcmp(condition, 'irrelevant')
+                M = 1;
+            elseif strcmp(condition, 'modulatory')
+                M = 2;
+            else
+                assert(strcmp(condition, 'additive'));
+                M = 3;
+            end
+            multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
+            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+        % main effect @ feedback for all trials INCLUDING test trials
+        %
+        case 76
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+        % main effect @ RT, all trials INCLUDING test trials
+        %
+        case 77
+            % context role @ RT
+            % 
+            multi.names{1} = condition;
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+
+        % Response @ 1 s before reaction onset  INCLUDING test trials
+        % same as 67
+        %
+        case 78
+            % button press @ 1 s before reaction onset (trials 1..20)
+            % 
+            multi.names{1} = 'keypress';
+            multi.onsets{1} = -1 + cellfun(@str2num,actualChoiceOffset(which_all & ~no_response))';
+            multi.durations{1} = zeros(size(contextRole(which_all & ~no_response)));
+            
+            multi.pmod(1).name{1} = 'pressed_sick';
+            multi.pmod(1).param{1} = strcmp(response.keys(which_all & ~no_response), 'left')'; % whether subject pressed "sick", for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % const @ outcome / feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_all & ~no_response))';
+            multi.durations{2} = zeros(size(contextRole(which_all & ~no_response)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_all & ~no_response))';
+            multi.durations{3} = zeros(size(contextRole(which_all & ~no_response)));
+
+        % Response @ trial onset  INCLUDING test trials
+        % same as 68
+        %
+        case 79
+            % button press @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'keypress';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_all & ~no_response))';
+            multi.durations{1} = zeros(size(contextRole(which_all & ~no_response)));
+            
+            multi.pmod(1).name{1} = 'pressed_sick';
+            multi.pmod(1).param{1} = strcmp(response.keys(which_all & ~no_response), 'left')'; % whether subject pressed "sick", for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % const @ outcome / feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_all & ~no_response))';
+            multi.durations{2} = zeros(size(contextRole(which_all & ~no_response)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_all & ~no_response))';
+            multi.durations{3} = zeros(size(contextRole(which_all & ~no_response)));
+
+        % Value (expected outcome) @ 1 s after trial onset, separated by condition INCLUDING test trials
+        % same as 69
+        %
+        case 80
+            % Value (expected outcome) @ 1 s after trial onset
+            %
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+        % Value (expected outcome) @ 1 s before RT, separated by condition INCLUDING test trials
+        % same as 70
+        %
+        case 81
+            % Value (expected outcome) 1 s before @ RT
+            %
+            multi.names{1} = 'RT';
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            multi.pmod(1).name{1} = ['value_', condition];
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+
+        
+        %
+        % ------------- MORE MAIN EFFECTS ---------------
+        %
+        
+        
+        
+        % main effect @ trial onset + 0.5 s, trials 1..20
+        %
+        case 82
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+        % main effect @ trial onset + 1 s, trials 1..20
+        %
+        case 83
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+        % main effect @ RT - 0.5s, trials 1..20
+        %
+        case 84
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -0.5 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % main effect @ RT - 1s, trials 1..20
+        %
+        case 85
+            RTs = actualChoiceOffset(which_train);
+            feedback_time = actualFeedbackOnset(which_train);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            
+            
+            
+        % main effect @ trial onset + 0.5 s, trials 10..20
+        %
+        case 86
+            which_trials = which_train & trialId >= 10;
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+        % main effect @ trial onset + 1 s, trials 10..20
+        %
+        case 87
+            which_trials = which_train & trialId >= 10;
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+        % main effect @ RT - 0.5s, trials 10..20
+        %
+        case 88
+            which_trials = which_train & trialId >= 10;
+
+            RTs = actualChoiceOffset(which_trials);
+            feedback_time = actualFeedbackOnset(which_trials);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -0.5 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+
+        % main effect @ RT - 1s, trials 10..20
+        %
+        case 89
+            which_trials = which_train & trialId >= 10;
+            
+            RTs = actualChoiceOffset(which_trials);
+            feedback_time = actualFeedbackOnset(which_trials);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -1 + cellfun(@str2num, RT(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+            
+            
+            
+        % main effect @ trial onset + 0.5 s, trials 1..24
+        %
+        case 90
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+        % main effect @ trial onset + 1 s, trials 1..24
+        %
+        case 91
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+        % main effect @ RT - 0.5s, trials 1..24
+        %
+        case 92
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -0.5 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+
+        % main effect @ RT - 1s, trials 1..24
+        %
+        case 93
+            RTs = actualChoiceOffset(which_all);
+            feedback_time = actualFeedbackOnset(which_all);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+        
+
+
+        % main effect @ trial onset + 0.5 s, trials 10..24
+        %
+        case 94
+            which_trials = which_all & trialId >= 10;
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+        % main effect @ trial onset + 1 s, trials 10..24
+        %
+        case 95
+            which_trials = which_all & trialId >= 10;
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = 1 + cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+        % main effect @ feedback - 1.5s (RT - 0.5s), trials 10..24
+        %
+        case 96
+            which_trials = which_all & trialId >= 10;
+
+            RTs = actualChoiceOffset(which_trials);
+            feedback_time = actualFeedbackOnset(which_trials);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+            
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -0.5 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+
+        % main effect @ feedback - 2s (RT - 1s), trials 10..24
+        %
+        case 97
+            which_trials = which_all & trialId >= 10;
+            
+            RTs = actualChoiceOffset(which_trials);
+            feedback_time = actualFeedbackOnset(which_trials);
+            % for the TIMEOUTs, use the time 1 second before feedback (i.e.
+            % ISI onset)
+            %
+            RTs(strcmp(RTs, '')) = cellfun(@num2str, num2cell(cellfun(@str2num, feedback_time(strcmp(RTs, ''))) - 1), 'uniformoutput', 0);
+
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
+            multi.durations{1} = zeros(size(contextRole(which_trials)));
+            
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
+            multi.durations{2} = zeros(size(contextRole(which_trials)));
+            
+            
     end
 
 end 

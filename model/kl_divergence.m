@@ -89,6 +89,7 @@ which_prev_trials = which_rows & isTrain & trialId ~= 20;
 which_next_trials = which_rows & isTrain & trialId ~= 1;
 assert(sum(which_next_trials) == sum(which_prev_trials));
 assert(sum(which_prev_trials) == size(prev_trials_act, 1)); % this is crucial
+assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
 next_trials_corr = response.corr(which_next_trials);
 % so now, both next_trials_corr and prev_trials_act
 % contain 20 subjects x 9 runs x 19 trials (1..19)
@@ -96,9 +97,9 @@ next_trials_corr = response.corr(which_next_trials);
 % only look at trials 10..19
 %
 cutoff = 10;
-which_10_19 = logical(repmat([zeros(cutoff, 1); ones(19-cutoff, 1)], size(prev_trials_act, 1)/19, 1));
+which_pattern = [zeros(cutoff, 1); ones(19-cutoff, 1)];
+which_10_19 = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
 assert(size(which_10_19, 1) == size(prev_trials_act, 1));
-
 
 
 means = [];
@@ -111,6 +112,7 @@ for i = 1:numel(rois)
                   sem(prev_trials_act(next_trials_corr == 0 & which_10_19, i))];
 end
 
+% top 20
 means = [means; mean(mean(prev_trials_act(next_trials_corr == 1 & which_10_19, 8:end), 2)), ...
                 mean(mean(prev_trials_act(next_trials_corr == 0 & which_10_19, 8:end), 2))];
 sems = [sems; sem(mean(prev_trials_act(next_trials_corr == 1 & which_10_19, 8:end), 2)), ...
@@ -122,6 +124,51 @@ barweb(means, sems);
 legend({'correct', 'wrong'});
 ylabel('activation ~ D_{KL} on previous trial');
 xticklabels([rois, {'top 20 voxels'}]);
+
+
+
+%
+% by trial
+%
+roi_id = 5;
+labels = {};
+
+means = [];
+sems = [];
+sem = @(x) std(x) / sqrt(length(x));
+blah1 = [];
+blah0 = [];
+
+for trial = cutoff+1:19 
+    which_pattern = zeros(19, 1);
+    which_pattern(trial) = 1;
+    which_trials = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
+    assert(size(which_trials, 1) == size(prev_trials_act, 1));
+
+    surprise = model.surprise(which_trials);
+    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1);
+
+    
+    blah1 = [blah1; prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)];
+    blah0 = [blah0; prev_trials_act(next_trials_corr == 0 & which_trials, roi_id)];
+    means = [means; mean(prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)) mean(prev_trials_act(next_trials_corr == 0 & which_trials, roi_id))];
+    sems = [sems; sem(prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)) mean(prev_trials_act(next_trials_corr == 0 & which_trials, roi_id))];
+
+    labels = [labels; {sprintf('#%d', trial)}];
+end
+
+means = [means; mean(blah1) mean(blah0)];
+sems = [sems; sem(blah1) sem(blah0)];
+labels = [labels; {'total'}];
+
+figure;
+barweb(means, sems);
+title(rois{roi_id});
+legend({'correct on next', 'wrong on next'});
+xlabel('trial');
+xticklabels(labels);
+ylabel('activation ~ D_{KL}');
+
 
 
 % load('DKL.mat');
