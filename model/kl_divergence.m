@@ -130,7 +130,7 @@ xticklabels([rois, {'top 20 voxels'}]);
 %
 % by trial
 %
-roi_id = 5;
+roi_id = 9;
 labels = {};
 
 means = [];

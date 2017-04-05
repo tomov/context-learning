@@ -366,9 +366,9 @@ Model 62 -- Expected value, separated by condition (context role) @ reaction tim
     Regressor #2: constant @ trial onset (to account for visual activation)
 
     Contrasts:
-        ccnl_view(contextExpt(), 61, 'value_irrelevant');
-        ccnl_view(contextExpt(), 61, 'value_modulatory');
-        ccnl_view(contextExpt(), 61, 'value_additive');
+        ccnl_view(contextExpt(), 62, 'value_irrelevant');
+        ccnl_view(contextExpt(), 62, 'value_modulatory');
+        ccnl_view(contextExpt(), 62, 'value_additive');
 
     Hypothesis:
 

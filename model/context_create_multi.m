@@ -2032,7 +2032,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % context role @ feedback/outcome onset
             % 
             multi.names{1} = condition;
-            multi.onsets{1} = -1 + cellfun(@str2num, RT(which_trials))';
+            multi.onsets{1} = -1 + cellfun(@str2num, RTs)';
             multi.durations{1} = zeros(size(contextRole(which_trials)));
             
             % const @ trial onset
@@ -2111,7 +2111,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % main effect @ trial onset + 0.5 s, trials 10..24
         %
         case 94
-            which_trials = which_all & trialId >= 10;
+            which_trials = (which_train & trialId >= 10) | which_test;
             
             % context role @ feedback/outcome onset
             % 
@@ -2122,7 +2122,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % main effect @ trial onset + 1 s, trials 10..24
         %
         case 95
-            which_trials = which_all & trialId >= 10;
+            which_trials = (which_train & trialId >= 10) | which_test;
             
             % context role @ feedback/outcome onset
             % 
@@ -2133,7 +2133,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % main effect @ feedback - 1.5s (RT - 0.5s), trials 10..24
         %
         case 96
-            which_trials = which_all & trialId >= 10;
+            which_trials = (which_train & trialId >= 10) | which_test;
 
             RTs = actualChoiceOffset(which_trials);
             feedback_time = actualFeedbackOnset(which_trials);
@@ -2157,7 +2157,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % main effect @ feedback - 2s (RT - 1s), trials 10..24
         %
         case 97
-            which_trials = which_all & trialId >= 10;
+            which_trials = (which_train & trialId >= 10) | which_test;
             
             RTs = actualChoiceOffset(which_trials);
             feedback_time = actualFeedbackOnset(which_trials);
