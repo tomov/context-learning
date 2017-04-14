@@ -1,5 +1,5 @@
-function [classifier] = classify_train(method, trials, runs, sss, mask)
-% Train classifier to predict condition based on neural activity at trial onset
+function [classifier] = classify_train(method, trials, runs, sss, mask, predict_what)
+% Train classifier to predict stuff based on neural activity at trial onset
 % returns a fitObj that you can pass to glmnetPredict
 % or a petternnet net that you can use e.g. like net(inputs)
 %
@@ -14,12 +14,13 @@ disp(sss)
 outFilename = random_string();
 
 
-% trials = which training trials to use to train from each run, e.g. 1:19 or 1:20
+% method = 'glmnet' or 'patternnet'
+% trials = which trials to use to train from each run e.g. 1:19 or 1:24
+% runs = which runs to use, e.g. 1:9 or 1:8
 % sss = subject indices in the subjects array returned by
 %       contextGetSubjectsDirsAndRuns, e.g. getGoodSubjects()
 % mask = .nii file name of which mask to use
-% method = 'glmnet' or 'patternnet'
-% outFilename = .mat file name where to save the results
+% predict_what = 'condition' or 'responses'
 
 model = 60; % the model with the classifier for all trials betas
 EXPT = contextExpt();
@@ -41,6 +42,11 @@ for run = runs
     betas(run,:) = idx;
 end
 
+load_data;
+[subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
+assert(isequal(subjects',unique(participant)));
+
+
 % Get the input vector and labels from the betas
 % goal is to infer the targets from the inputs
 % assumption is that the targets underlie the inputs
@@ -55,21 +61,45 @@ idx = 0;
 for subj = sss
     modeldir = fullfile(EXPT.modeldir,['model',num2str(model)],['subj',num2str(subj)]);
    
-    for run = runs
+    for run = runs        
+        which_trials = ~drop & isTrain & strcmp(participant, subjects{subj}) & roundId == run & ismember(trialId, trials);
+        condition = contextRole(which_trials);
+        condition = condition{1};
+        responses = response.keys(which_trials);
+        assert(length(responses) == length(trials));
+        
+        % for sanity check
         multi = context_create_multi(1, subj, run);
-        condition = multi.names{1};
+        condition_sanity = multi.names{1};
+        assert(strcmp(condition, condition_sanity));
     
         %random_run_label = bla(randi(3,1),:);
         %random_run_labels = [random_run_labels; random_run_label];
         %remove_me = 0;
+        trial_idx = 0;
         for i = betas(run,:)
+            trial_idx = trial_idx + 1;
+            
             %remove_me = remove_me + 1;
             beta_vec = ccnl_get_beta(EXPT, model, i, mask, [subj]);
             beta_vec(isnan(beta_vec)) = 0;
             
-            idx = idx + 1;
-            inputs(idx,:) = beta_vec;
-            targets(idx,:) = labels(condition);
+            if strcmp(predict_what, 'condition')
+                idx = idx + 1;
+                inputs(idx,:) = beta_vec;
+                targets(idx,:) = labels(condition);
+            elseif strcmp(predict_what, 'responses')
+                if strcmp(responses{trial_idx}, 'None')
+                else
+                    chose_sick = strcmp(responses{trial_idx}, 'left');
+                    idx = idx + 1;
+                    inputs(idx,:) = beta_vec;
+                    targets(idx,:) = chose_sick;
+                end
+            else
+                assert(false);
+            end
+            % targets(idx,:) = labels(condition);
             
             % scramble the labels on the runs
             %targets(idx,:) = random_run_label;
@@ -83,6 +113,8 @@ for subj = sss
         end
     end
 end
+
+%assert(size(targets, 1) >= length(sss) * length(runs) * 20 * 0.9);
 
 %
 % Fit them

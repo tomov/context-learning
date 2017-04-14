@@ -374,6 +374,22 @@ Model 62 -- Expected value, separated by condition (context role) @ reaction tim
 
     Result:
 
+PMODS to try:
+            pressed_sick_modulatory vs _irrelevant vs _additive <-- similar to value_...
+            M1 & M4 values 
+                  also blocked by condition
+                  also change in value @ feedback? (proxy for PE?)
+        
+            
+   for each run:
+         if you think c1 makes you sick (x3c1+), then:
+               activation @ feedback (x1c1+) - (x2c1-)
+               hypothesis: if you had stronger activation in hippocampus during encoding, your contextual association would be stronger
+               btw this applies to irrelevant and modulatory only; additive is x1c1+, x2c1+
+         if you don't think c1 makes you sick (x3c1-), then:
+                
+
+
 
 Model 2 is wrong; was supposed to be the M2 posterior @ feedback (outcome) time but have extra regressors for the test trials that mess things up--
 

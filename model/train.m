@@ -71,6 +71,8 @@ for n = 1:N % for each trial
     values = [values; V_n];
     valuess = [valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
     
+    save(['kalman_state_', num2str(n), '.mat']);
+    
     if DO_PRINT, fprintf('\npredction for x = %d, c = %d is %f (actual is %f)\n\n', find(x_n), c_n, out, r_n); end
 
     % get reward and update state

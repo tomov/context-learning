@@ -1,6 +1,17 @@
 
 
 %{
+context_create_multi(1, 2, 2); % <-- 1 = additive , 2 = modulatory, 3 = irrelevant
+load('context_create_multi.mat')
+condition
+
+strcmp(response.keys(strcmp(contextRole, 'modulatory') & contextId == 0 & cueId == 2) , 'left')
+
+sum(strcmp(response.keys(strcmp(contextRole, 'modulatory') & contextId == 0 & cueId == 2) , 'left')) / 73
+%}
+
+
+%{
 figure;
 which = which_rows & isTrain;
 scatter(surprise(which), response.rt(which));
@@ -45,3 +56,4 @@ for x = 1:20
     immse(beta_vec54, beta_vec60)
 end
 %}
+

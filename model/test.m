@@ -1,4 +1,4 @@
-function [choices] = test(x, k, P_n, ww_n, inv_softmax_temp)
+function [choices, values, valuess] = test(x, k, P_n, ww_n, inv_softmax_temp)
 % Apply what 
 %
 
@@ -16,7 +16,10 @@ value = @(x_n, xx_n, xb_n, k_n, c_n) (x_n' * ww_n{1}) * P_n(1) + ... % M1
                                      (xx_n' * ww_n{3}) * P_n(3) + ... % M3   
                                      (c_n' * ww_n{4}) * P_n(4); % M4
 
-choices = [];
+choices = []; % history of choices
+values = []; % history of predicted outcomes, weighted sum across all models (causal structures)
+valuess = []; % history of predicted outcomes, one for each model (causal structure)
+
                     
 for n = 1:N
     x_n = x(n, :)'; % stimulus at trial n
@@ -30,4 +33,6 @@ for n = 1:N
     V_n = value(x_n, xx_n, xb_n, k_n, c_n);
     out = predict(V_n);
     choices = [choices; out];
+    values = [values; V_n];
+    valuess = [valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];    
 end

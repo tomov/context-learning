@@ -70,8 +70,10 @@ function multi = context_create_multi(glmodel, subj, run)
     test_x = zeros(test_N, D);
     test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
     test_c = contextId(which_test) + 1;
-    [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
+    [test_choices, test_values, test_valuess] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
+    save('context_create_multi.mat');
+    
     % Parametric modulators
     %
     switch glmodel
@@ -223,6 +225,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{3} = zeros(size(contextRole(which_train)));
             
         % outcome pmod @ outcome -- sanity check
+        % should be same as 5
         %
         case 6 % GOOD
             % sick vs. not sick @ feedback / outcome onset (trials 1..20)
@@ -968,6 +971,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % + PE @ feedback (outcome) onset
         % without the separate trial_onset regressor
         % (almost same as 34)
+        % result: nothing really
         %
         case 37
             % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
@@ -994,6 +998,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % + PE @ feedback (outcome) onset
         % without the separate trial_onset regressor
         % (almost same as 35)
+        % result: b/4 FWE -- 'M2_value' -> weird visual neg
         %
         case 38
             % M2 (modulatory) predicted values @ trial onset (trials 1..20)
@@ -1020,6 +1025,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % + PE @ feedback (outcome) onset
         % without the separate trial_onset regressor
         % (almost same as 36)
+        % result: b/4 FWE -- 'M3_value' -> bilateral posterior hippocampus
+        %                                  weird visual neg
         %
         case 39
             % M3 (additive) predicted values @ trial onset (trials 1..20)
@@ -1440,6 +1447,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
             
         % Value (expected outcome) @ trial onset, separated by condition
+        % result: before FWE, 'value_additive - value_irrelevant' -> bilateral putamen
         %
         case 61
             % Value (expected outcome) @ trial onset
@@ -1453,6 +1461,8 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Value (expected outcome) @ RT, separated by condition
+        % result: before FWE, 'value_modulatory - value_irrelevant' -> S1
+        %                     'value_additive - value_irrelevant' -> R Put
         %
         case 62
             % Value (expected outcome) @ RT
@@ -1478,6 +1488,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % Cause-specific value @ trial onset, separated by condition
+        % result: nothing
         %
         case 63
             % Cause-specific value (expected outcome) @ trial onset
@@ -1500,6 +1511,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Cause-specific value @ RT, separated by condition
+        % result: nothing
         %
         case 64
             % Cause-specific value (expected outcome) @ RT
@@ -1534,6 +1546,8 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % main effect @ feedback for trials 10..20
+        % result: almost same as main effect on 1..20
+        %
         case 65
             which_trials = which_train & trialId >= 10;
             
@@ -1550,6 +1564,8 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_trials)));
             
         % main effect @ RT, trials 10..20
+        % result: almost same as main effect on 1..20
+        %
         case 66
             which_trials = which_train & trialId >= 10;
             
@@ -1572,6 +1588,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_trials)));
 
         % Response @ 1 s before reaction onset 
+        % result: same as pressed_sick @ RT => big opposite blobs in visual
         %
         case 67
             % button press @ 1 s before reaction onset (trials 1..20)
@@ -1597,6 +1614,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{3} = zeros(size(contextRole(which_train & ~no_response)));
 
         % Response @ trial onset 
+        % result: same as pressed_sick @ RT => big opposite blobs in visual
         %
         case 68
             % button press @ trial onset (trials 1..20)
@@ -1616,6 +1634,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train & ~no_response)));
 
         % Value (expected outcome) @ 1 s after trial onset, separated by condition
+        % result: before FWE, 'value_modulatory - value_irrelevant' -> S1 
         %
         case 69
             % Value (expected outcome) @ 1 s after trial onset
@@ -1629,6 +1648,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Value (expected outcome) @ 1 s before RT, separated by condition
+        % result: before FWE, 'value_additive - value_irrelevant' --> bilateral putamen, some hippo
         %
         case 70
             % Value (expected outcome) 1 s before @ RT
@@ -1658,6 +1678,9 @@ function multi = context_create_multi(glmodel, subj, run)
         %
             
         % main effect for ALL trials (including test)
+        % result: before FWE, 'modulatory - irrelevant' -> parietal
+        %                     'modulatory - additive' -> putamen (neg)
+        %                     'additive - irrelevant' -> midbrain?     
         %
         case 71 %
             % context role @ feedback/outcome onset
@@ -1683,7 +1706,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{1} = zeros(size(contextRole(which_all)));
             
             multi.pmod(1).name{1} = ['value_', condition];
-            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).param{1} = [values' test_values']; % expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Value (expected outcome) @ RT, separated by condition INCLUDING test trials
@@ -1703,7 +1726,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{1} = zeros(size(contextRole(which_all)));
             
             multi.pmod(1).name{1} = ['value_', condition];
-            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).param{1} = [values' test_values']; % expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
             % const @ trial onset (trials 1..20)
@@ -1732,7 +1755,7 @@ function multi = context_create_multi(glmodel, subj, run)
                 M = 3;
             end
             multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
-            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).param{1} = [valuess(:,M)' test_valuess(:,M)']; % cause-specific value (expected outcome) for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Cause-specific value @ RT, separated by condition INCLUDING test trials
@@ -1761,7 +1784,7 @@ function multi = context_create_multi(glmodel, subj, run)
                 M = 3;
             end
             multi.pmod(1).name{1} = ['M', num2str(M), '_value_', condition];
-            multi.pmod(1).param{1} = valuess(:,M)'; % cause-specific value (expected outcome) for trials 1..20
+            multi.pmod(1).param{1} = [valuess(:,M)' test_valuess(:,M)']; % cause-specific value (expected outcome) for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
             % const @ trial onset (trials 1..20)
@@ -1869,7 +1892,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{1} = zeros(size(contextRole(which_all)));
             
             multi.pmod(1).name{1} = ['value_', condition];
-            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).param{1} = [values' test_values']; % expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
         % Value (expected outcome) @ 1 s before RT, separated by condition INCLUDING test trials
@@ -1889,7 +1912,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{1} = zeros(size(contextRole(which_all)));
             
             multi.pmod(1).name{1} = ['value_', condition];
-            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).param{1} = [values' test_values']; % expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order  
 
             % const @ trial onset (trials 1..20)
@@ -2177,6 +2200,138 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{2} = 'trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_trials))';
             multi.durations{2} = zeros(size(contextRole(which_trials)));
+            
+            
+        %
+        % ------------------ VALUES --------------------
+        %
+            
+        % M4 value pmod @ trial onset (before updated)
+        % + PE @ feedback (outcome) onset
+        % without the separate trial_onset regressor
+        % (almost same as 34)
+        %
+        case 98
+            % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M4_value';
+            multi.pmod(1).param{1} = valuess(:,4)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % Prediction error @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(2).name{1} = 'prediction_error';
+            multi.pmod(2).param{1} = r' - valuess(:,4)'; % PE = outcome - expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+        % learned association with c1, blocked by reported value of c1
+        % (x3c1)
+        % hypothesis: if you had stronger activation in hippocampus during encoding, your contextual association would be stronger
+        %             btw this applies to irrelevant and modulatory only; additive is x1c1+, x2c1+ 
+        % expect: 'sick x c1_outcome': significant in hippocampus
+        %         'not sick x c1_outcome': not significant in hippocampus
+        %
+        case 99
+            % whether subject thought c1 makes you sick (unlikely but does
+            % happen ~25% of the time)
+            x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
+            if strcmp(x3c1_choice, 'left')
+                x3c1_choice = 'sick';
+            else
+                x3c1_choice = 'not_sick';
+            end
+
+            % c1 association @ feedback/outcome onset
+            % 
+            multi.names{1} = x3c1_choice;
+            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1s durations
+            
+            % whether c1 made you sick on a given trial
+            c1_outcomes = strcmp(corrAns(which_train & contextId == 0), 'left');
+            if ~strcmp(condition, 'additive') % we don't like additive here (c1 always makes you sick)
+                multi.pmod(1).name{1} = 'c1_outcome';
+                multi.pmod(1).param{1} = c1_outcomes'; % whether c1 made you sick on trials 1..20
+                multi.pmod(1).poly{1} = 1; % first order            
+            end 
+           
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+        % same as 99 but different regressor names
+        %
+        case 100
+            % whether subject thought c1 makes you sick (unlikely but does
+            % happen ~25% of the time)
+            x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
+            if strcmp(x3c1_choice, 'left')
+                x3c1_choice = 'sick';
+            else
+                x3c1_choice = 'not_sick';
+            end
+
+            % c1 association @ feedback/outcome onset
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1s durations
+            
+            % whether c1 made you sick on a given trial
+            c1_outcomes = strcmp(corrAns(which_train & contextId == 0), 'left');
+            if ~strcmp(condition, 'additive') % we don't like additive here (c1 always makes you sick)
+                multi.pmod(1).name{1} = ['c1_outcome_x3c1_', x3c1_choice];
+                multi.pmod(1).param{1} = c1_outcomes'; % whether c1 made you sick on trials 1..20
+                multi.pmod(1).poly{1} = 1; % first order            
+            end 
+           
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % same as 100 but duration = 0
+        %
+        case 101
+            % whether subject thought c1 makes you sick (unlikely but does
+            % happen ~25% of the time)
+            x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
+            if strcmp(x3c1_choice, 'left')
+                x3c1_choice = 'sick';
+            else
+                x3c1_choice = 'not_sick';
+            end
+
+            % c1 association @ feedback/outcome onset
+            % 
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            % whether c1 made you sick on a given trial
+            c1_outcomes = strcmp(corrAns(which_train & contextId == 0), 'left');
+            if ~strcmp(condition, 'additive') % we don't like additive here (c1 always makes you sick)
+                multi.pmod(1).name{1} = ['c1_outcome_x3c1_', x3c1_choice];
+                multi.pmod(1).param{1} = c1_outcomes'; % whether c1 made you sick on trials 1..20
+                multi.pmod(1).poly{1} = 1; % first order            
+            end 
+           
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
             
             
     end
