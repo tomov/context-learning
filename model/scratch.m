@@ -1,5 +1,4 @@
 
-
 %{
 context_create_multi(1, 2, 2); % <-- 1 = additive , 2 = modulatory, 3 = irrelevant
 load('context_create_multi.mat')
