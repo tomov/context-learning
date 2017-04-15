@@ -2212,17 +2212,15 @@ function multi = context_create_multi(glmodel, subj, run)
         % (almost same as 34)
         %
         case 98
-            % M1 (irrelevant) predicted values @ trial onset (trials 1..20)
-            % 
             multi.names{1} = 'trial';
             multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
             multi.pmod(1).name{1} = 'M4_value';
-            multi.pmod(1).param{1} = valuess(:,4)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).param{1} = valuess(:,4)'; % values predicted by M4 for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order
             
-            % Prediction error @ feedback
+            % M4 prediction error @ feedback
             %
             multi.names{2} = 'outcome';
             multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
@@ -2231,6 +2229,39 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(2).name{1} = 'prediction_error';
             multi.pmod(2).param{1} = r' - valuess(:,4)'; % PE = outcome - expected outcome by M1 for trials 1..20
             multi.pmod(2).poly{1} = 1; % first order
+
+        % M1 value + M4 value pmod @ trial onset (before updated)
+        % without the separate trial_onset regressor
+        %
+        case 99
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M4_value';
+            multi.pmod(1).param{1} = valuess(:,4)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+                        
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % values predicted by M4 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+
+        % M4 value + M1 value pmod @ trial onset (before updated)
+        % without the separate trial_onset regressor
+        % same as 99 but flipped, for sanity check
+        %
+        case 100
+            multi.names{1} = 'trial';
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'M1_value';
+            multi.pmod(1).param{1} = valuess(:,1)'; % values predicted by M1 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+                        
+            multi.pmod(1).name{2} = 'M4_value';
+            multi.pmod(1).param{2} = valuess(:,4)'; % values predicted by M4 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
             
         % learned association with c1, blocked by reported value of c1
         % (x3c1)
@@ -2239,7 +2270,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % expect: 'sick x c1_outcome': significant in hippocampus
         %         'not sick x c1_outcome': not significant in hippocampus
         %
-        case 99
+        case 101
             % whether subject thought c1 makes you sick (unlikely but does
             % happen ~25% of the time)
             x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
@@ -2252,7 +2283,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % c1 association @ feedback/outcome onset
             % 
             multi.names{1} = x3c1_choice;
-            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train));
             multi.durations{1} = ones(size(contextRole(which_train))); % 1s durations
             
             % whether c1 made you sick on a given trial
@@ -2269,9 +2300,9 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
 
-        % same as 99 but different regressor names
+        % same as 101 but different regressor names
         %
-        case 100
+        case 102
             % whether subject thought c1 makes you sick (unlikely but does
             % happen ~25% of the time)
             x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
@@ -2284,7 +2315,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % c1 association @ feedback/outcome onset
             % 
             multi.names{1} = 'feedback';
-            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train));
             multi.durations{1} = ones(size(contextRole(which_train))); % 1s durations
             
             % whether c1 made you sick on a given trial
@@ -2301,9 +2332,9 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
-        % same as 100 but duration = 0
+        % same as 102 but duration = 0
         %
-        case 101
+        case 103
             % whether subject thought c1 makes you sick (unlikely but does
             % happen ~25% of the time)
             x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
@@ -2316,7 +2347,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % c1 association @ feedback/outcome onset
             % 
             multi.names{1} = 'feedback';
-            multi.onsets{1} = actualFeedbackOnset(which_train);
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train));
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
             % whether c1 made you sick on a given trial

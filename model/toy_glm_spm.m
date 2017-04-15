@@ -12,7 +12,7 @@ sem = @(x) std(x)  / sqrt(length(x));
 %% generate some random data that is definitely not linear
 %
 
-T = 900; % # data points
+T = 900 / 10; % # data points ~= # TRs
 scale = 1;
 beta_0 = 16;
 beta_1 = 10;
