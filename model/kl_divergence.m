@@ -1,5 +1,7 @@
 % get the voxel statistics of the D_KL model
 %
+clear all;
+
 EXPT = contextExpt();
 modeldir = EXPT.modeldir;
 %V = spm_vol(fullfile(modeldir, ['model59'], ['subj1'], sprintf('beta_%04d.nii',1)));
@@ -39,9 +41,8 @@ end
             
 sss = getGoodSubjects();
 
-
 %{
-n_trials_per_run = 20;
+n_trials_per_run = 20; % NOTE: 20 for model59, 24 for model60
 EXPT = contextExpt();
 prev_trials = zeros(numel(sss) * 9 * 19, numel(max_voxels) + numel(max_vox_x)); % col = ROI, row = activation of max voxel for given trial
 idx = 0;
@@ -82,8 +83,7 @@ prev_trials_act = prev_trials;
 analyze;
 %}
 
-
-load('prev_trials.mat');
+load('kl_divergence_59.mat');
 
 which_prev_trials = which_rows & isTrain & trialId ~= 20;
 which_next_trials = which_rows & isTrain & trialId ~= 1;
@@ -130,7 +130,7 @@ xticklabels([rois, {'top 20 voxels'}]);
 %
 % by trial
 %
-roi_id = 9;
+roi_id = 1;
 labels = {};
 
 means = [];

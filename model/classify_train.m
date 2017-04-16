@@ -60,6 +60,7 @@ idx = 0;
 %random_run_labels = [];
 for subj = sss
     modeldir = fullfile(EXPT.modeldir,['model',num2str(model)],['subj',num2str(subj)]);
+    load(fullfile(modeldir,'SPM.mat'));
    
     for run = runs        
         which_trials = ~drop & isTrain & strcmp(participant, subjects{subj}) & roundId == run & ismember(trialId, trials);
@@ -78,6 +79,7 @@ for subj = sss
         %remove_me = 0;
         trial_idx = 0;
         for i = betas(run,:)
+            disp(SPM.xX.name{i});
             trial_idx = trial_idx + 1;
             
             %remove_me = remove_me + 1;
