@@ -36,13 +36,15 @@ design_matrix{1} = @(x) [ones(length(x),1) * scale, x];
 design_matrix{2} = @(x) design_matrix_spm(x, 2);
                      
 % model 3: two "sessions" but shared regressor (slope)                     
-design_matrix{3} = @(x) [[ones(round(length(x)/2),1); zeros(round(length(x)/2),1)], ...
-                         [zeros(round(length(x)/2),1); ones(round(length(x)/2),1)], ...
-                         x];
+design_matrix{3} = @(x) design_matrix_shared_slope(x, 2);
                      
 % model 4: SPM-style design matrix w/ 9 sessions                     
 design_matrix{4} = @(x) design_matrix_spm(x, 9);
                      
+% model 5: 9 "sessions" but shared regressor (slope)                     
+design_matrix{5} = @(x) design_matrix_shared_slope(x, 9);
+
+
 M = length(design_matrix); % # models
 
 %% fit & plot the data
@@ -108,19 +110,47 @@ for m = [2 4]
     p_cum{m} = 2 * (1 - tcdf(t_cum{m}, length(x) - 2));
 end
 
-fprintf('\nt-stat of beta1 of model 1 = %.4f\n   vs. beta2+beta3 from model 2 = %.4f\n   vs. beta2 from model 3 = %.4f\n   vs. beta10 + .. + beta18 from model 4 = %.4f\n', ...
-        stats{1}.t(2), t_cum{2}, stats{3}.t(3), t_cum{4});
+fprintf('t-stat of beta1 of model 1                  = %.4f\n', stats{1}.t(2));
+fprintf('t-stat of beta2+beta3 from model 2          = %.4f\n', t_cum{2});
+fprintf('t-stat of beta2 from model 3                = %.4f\n', stats{3}.t(3));
+fprintf('t-stat of beta10 + .. + beta18 from model 4 = %.4f\n', t_cum{4});
+fprintf('t-stat of beta10 from model 5               = %.4f\n', stats{5}.t(10));
 
-fprintf('\np-value of beta1 of model 1 = %e\n   vs. beta2+beta3 from model 2 = %e\n   vs. beta2 from model 3 = %e\n   vs. beta10+...+beta18 from model 4 = %e\n', ...
-        stats{1}.p(2), p_cum{2}, stats{3}.p(3), p_cum{4});
+
+fprintf('p-value of  beta1 of model 1               = %e\n', stats{1}.p(2));   
+fprintf('p-value of  beta2+beta3 from model 2       = %e\n', p_cum{2});
+fprintf('p-value of  beta2 from model 3             = %e\n', stats{3}.p(3));
+fprintf('p-value of  beta10+...+beta18 from model 4 = %e\n', p_cum{4});
+fprintf('p-value of  beta10 from model 5            = %e\n', stats{5}.p(10));
 
 figure;
 title('slopes & CIs from the different design matrices');
-barweb([stats{1}.beta(2), b_cum{2}, stats{3}.beta(3), b_cum{4}], ...
-       [stats{1}.se(2), se_cum{2}, stats{3}.se(3), se_cum{4}]);
-legend({'slope for model 1 (\beta_1)', 'avg slope for model 2 (\beta_2 & \beta_3)', 'slope for model 3 (\beta_2)', 'avg slope for model 4 (\beta_{10}..\beta_{18})'});
+barweb([stats{1}.beta(2), b_cum{2}, stats{3}.beta(3), b_cum{4}, stats{5}.beta(10)], ...
+       [stats{1}.se(2), se_cum{2}, stats{3}.se(3), se_cum{4}, stats{5}.se(10)]);
+legend({'slope for model 1 (\beta_1)', ...
+        'avg slope for model 2 (\beta_2 & \beta_3)', ...
+        'slope for model 3 (\beta_2)', ...
+        'avg slope for model 4 (\beta_{10}..\beta_{18})', ...
+        'slope for model 5 (\beta_{10})'});
 
 
+
+% split regressors into a design matrix with a given # of sessions
+% but with a shared slope (i.e. only the y-intercepts vary)
+%
+function X = design_matrix_shared_slope(x, sessions)
+    X = zeros(length(x), sessions + 1);
+    interval = floor(length(x) / sessions);
+    
+    for session = 1:sessions
+        r = (session - 1) * interval + 1 : session * interval;
+        if session == sessions
+            r = r(1) : length(x);
+        end
+        X(r, session) = 1;
+    end
+    X(:, sessions + 1) = x;
+end
 
 % split regressors into a design matrix with a given # of sessions
 %

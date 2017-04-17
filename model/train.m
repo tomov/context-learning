@@ -1,4 +1,4 @@
-function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
+function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
@@ -38,11 +38,13 @@ P = []; % history of posterior P(M | h_1:n)
 ww{1} = []; % history of ww_1:n for M1
 ww{2} = []; % history of ww_1:n for M2
 ww{3} = []; % history of ww_1:n for M3
-ww{4} = []; % history of ww_1:n for M3
+ww{4} = []; % history of ww_1:n for M4
 choices = []; % history of choices
 values = []; % history of predicted outcomes, weighted sum across all models (causal structures)
 valuess = []; % history of predicted outcomes, one for each model (causal structure)
 likelihoods = []; % history of likelihoods, one for each model (causal structure)
+new_values = []; % same as values but after the update (for the same stimulus)
+new_valuess = []; % same as valuess but after the update (for the same stimulus)
 
 % train
 %
@@ -61,11 +63,11 @@ for n = 1:N % for each trial
     
     % make a prediction based on h_1:n-1
     %
-    value = @(x_n, xx_n, xb_n, k_n, c_n) (x_n' * ww_n{1}) * P_n(1) + ... % M1 
+    value = @(x_n, xx_n, xb_n, k_n, c_n, ww_n, P_n) (x_n' * ww_n{1}) * P_n(1) + ... % M1 
                                          (xb_n' * ww_n{2}(:, k_n)) * P_n(2) + ... % M2
                                          (xx_n' * ww_n{3}) * P_n(3) + ... % M3   
                                          (c_n' * ww_n{4}) * P_n(4); % M4
-    V_n = value(x_n, xx_n, xb_n, k_n, c_n);
+    V_n = value(x_n, xx_n, xb_n, k_n, c_n, ww_n, P_n);
     out = predict(V_n);
     choices = [choices; out];
     values = [values; V_n];
@@ -147,6 +149,9 @@ for n = 1:N % for each trial
     ww{3} = [ww{3}; ww_n{3}([1:2 4:5])'];
     ww{4} = [ww{4}; ww_n{4}(1:2)'];
 
+    new_values = [new_values; value(x_n, xx_n, xb_n, k_n, c_n, ww_n, P_n)];
+    new_valuess = [new_valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
+    
  %   fprintf('            new Ps = %f %f %f\n', P(1), P(2), P(3));
 end
 

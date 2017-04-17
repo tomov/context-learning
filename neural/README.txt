@@ -374,16 +374,22 @@ Model 62 -- Expected value, separated by condition (context role) @ reaction tim
 
     Result:
 
-Model 101 -- e @ outcome
+Model 101 -- c1-associated outcome pmod @ outcome
 
-    Regressor #1: x3c1 test trial decision (sick vs. not_sick) @ feedback (outcome) time on c1 training trials only (x1c1 or x2c1)
-                  pmod = outcome at trials (1 = sick, 0 = not sick)
+    Regressor #1: x3c1 test trial decision (sick vs. not_sick) as a proxy for the formed c1 association @ feedback (outcome) time, on c1 training trials only (x1c1 or x2c1)
+                  with pmod = outcome at trials (1 = sick, 0 = not sick)
     Regressor #2: constant @ trial onset (to account for visual activation)
 
     Contrats:
         ccnl_view(contextExpt(), 101, 'sickxc1_outcome')
         ccnl_view(contextExpt(), 101, 'not_sickxc1_outcome')
         ccnl_view(contextExpt(), 101, 'sickxc1_outcome - not_sickxc1_outcome')
+
+    Hypothesis: if you had stronger activation in hippocampus during encoding, your contextual association would be stronger for that outcome
+                btw this applies to irrelevant and modulatory only; additive is x1c1+, x2c1+
+
+    Result: 
+
 
 PMODS to try:
             pressed_sick_modulatory vs _irrelevant vs _additive <-- similar to value_...
@@ -393,12 +399,12 @@ PMODS to try:
         
             
    for each run:
-         if you think c1 makes you sick (x3c1+), then:
-               activation @ feedback (x1c1+) - (x2c1-)
-               hypothesis: if you had stronger activation in hippocampus during encoding, your contextual association would be stronger
-               btw this applies to irrelevant and modulatory only; additive is x1c1+, x2c1+
-         if you don't think c1 makes you sick (x3c1-), then:
-                
+               
+    PE for item vs. context:
+       context PE = M4_value after - M4_value before feedback
+       do item - context
+
+    value 
 
 
 
