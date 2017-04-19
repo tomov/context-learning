@@ -1350,7 +1350,7 @@ function multi = context_create_multi(glmodel, subj, run)
             % 
             priors = which_models / sum(which_models);
             Q = [priors; P(1:end-1,:)];
-            logs = log2(P ./ Q); 
+            logs = log2(P) - log2(Q); 
             logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
             surprise = sum(P .* logs, 2);
             surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
@@ -2413,6 +2413,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % Bayesian surprise = Kullback?Leibler divergence @ feedback
         % (outcome) onset
         % same as 53 but only trials 6..20
+        % WRONG: can't do it; not enough info ... contrasts fail sp_conman,
+        %                     sp_opp : !invalid contrast
         %
         case 103
             which_trials = which_train & trialId >= 6;
@@ -2439,6 +2441,153 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_trials)));
             
             
+        % M4 & M1 value pmod @ trial onset, before updated
+        % + M4 & M1 update pmods @ feedback (outcome) onset, after update
+        %
+        case 104
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M4_value';
+            multi.pmod(1).param{1} = valuess(:,4)'; % expected outcome predicted by M4 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M4 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M4_update';
+            multi.pmod(2).param{1} = new_valuess(:,4)' - valuess(:,4)'; % PE = new expected outcome - old expected outcome by M4 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+            
+        % M4 & M1 value pmod @ trial onset, before updated
+        % + M4 & M1 update pmods @ feedback (outcome) onset, after update
+        % same as 104 but with absolute updates
+        %
+        case 105
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M4_value';
+            multi.pmod(1).param{1} = valuess(:,4)'; % expected outcome predicted by M4 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M4 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M4_update';
+            multi.pmod(2).param{1} = abs(new_valuess(:,4)' - valuess(:,4)'); % PE = new expected outcome - old expected outcome by M4 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = abs(new_valuess(:,1)' - valuess(:,1)'); % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+
+        % M2 value pmod @ trial onset, before updated
+        % + M2 update pmod @ feedback (outcome) onset, after update
+        % similar to 105 but with absolute changes
+        %
+        case 106
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M2_value';
+            multi.pmod(1).param{1} = valuess(:,2)'; % expected outcome predicted by M2 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % M2 update ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M2_update';
+            multi.pmod(2).param{1} = abs(new_valuess(:,2)' - valuess(:,2)'); % PE = new expected outcome - old expected outcome by M2 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));            
+            
+        % value pmod @ trial onset, before updated
+        % + update pmod @ feedback (outcome) onset, after update
+        % similar to 106 but with total value
+        %
+        case 107
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'value';
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % update ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'update';
+            multi.pmod(2).param{1} = abs(new_values' - values'); % PE = new expected outcome - old expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));            
+
+        % value pmod @ trial onset, before updated
+        % + abs update pmod @ feedback (outcome) onset, after update
+        % same as 107 but absolute value
+        %
+        case 108
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'value';
+            multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+            
+            % M2 update ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'update';
+            multi.pmod(2).param{1} = new_values' - values'; % PE = new expected outcome - old expected outcome for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));            
             
     end
 

@@ -74,6 +74,8 @@ for m = 1:M
     hold on;
     plot(x1, y_pred{m}, 'LineWidth', 2);
     hold off;
+    xlabel('x (predictor)');
+    ylabel('y (activation)');
 
     subplot(3, M, m + 2*M);
     barweb(stats{m}.beta, stats{m}.se);

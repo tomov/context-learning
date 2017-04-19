@@ -1,5 +1,17 @@
 
 
+
+%{
+    % lame
+    for i = 1:size(beta_vecs,1)
+        for j = 1:size(beta_vecs,1)
+            dist = sum((beta_vecs(i,:) - beta_vecs(j,:)).^2);
+            rdm(i, j) = dist;
+        end    
+    end
+%}
+
+
 %{
 context_create_multi(1, 2, 2); % <-- 1 = additive , 2 = modulatory, 3 = irrelevant
 load('context_create_multi.mat')

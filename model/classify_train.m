@@ -20,7 +20,7 @@ outFilename = random_string();
 % sss = subject indices in the subjects array returned by
 %       contextGetSubjectsDirsAndRuns, e.g. getGoodSubjects()
 % mask = .nii file name of which mask to use
-% predict_what = 'condition' or 'responses'
+% predict_what = 'condition' or 'responses' or 'roundId'
 
 model = 60; % the model with the classifier for all trials betas
 EXPT = contextExpt();
@@ -67,6 +67,7 @@ for subj = sss
         condition = contextRole(which_trials);
         condition = condition{1};
         responses = response.keys(which_trials);
+        roundIds = roundId(which_trials);
         assert(length(responses) == length(trials));
         
         % for sanity check
@@ -98,6 +99,12 @@ for subj = sss
                     inputs(idx,:) = beta_vec;
                     targets(idx,:) = chose_sick;
                 end
+            elseif strcmp(predict_what, 'roundId')
+                idx = idx + 1;
+                inputs(idx,:) = beta_vec;
+                tar = zeros(1, 9);
+                tar(roundIds(trial_idx)) = 1;
+                targets(idx,:) = tar;
             else
                 assert(false);
             end
