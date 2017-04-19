@@ -1,11 +1,12 @@
 % representational similarity analysis
+% get the beta vectors from each subject (to be used for the single-subject
+% RDM)
 %
 function representational_similarity(mask)
 %clear all;
 
 subj = 1;
 trials = 1:24;
-
 
 
 model = 60; % the model with the classifier for all trials betas

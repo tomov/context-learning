@@ -63,10 +63,17 @@ if preload_betas
     % representational_similarity.m -- for convenience; otherwise loading them
     % 1 by 1 is too slow
     m = regexp(mask,'\.','split');
+    disp('preloading betas...')
+    tic
     load(['rsa_beta_vecs_', m{1}, '.mat'], 'beta_vecs', 'beta_runs');
+    toc
 end
                     
-inputs = []; % rows = x = observations, cols = voxels / dependent vars
+n_observations = length(sss) * length(runs) * length(trials);
+beta_vec = ccnl_get_beta(EXPT, model, 1, mask, sss(1)); % just to get the # of voxels
+n_voxels = length(beta_vec);
+
+inputs = nan(n_observations, n_voxels); % rows = x = observations, cols = voxels / dependent vars
 targets = []; % rows = y = observations, cols = indep vars (condition as binary vector)
 idx = 0;
 %random_run_labels = [];
@@ -85,10 +92,10 @@ for subj = sss
         assert(length(this_run_roundIds) == length(trials));
         assert(length(this_run_trialIds) == length(trials));
         
-        % for sanity check
-        multi = context_create_multi(1, subj, run);
-        condition_sanity = multi.names{1};
-        assert(strcmp(condition, condition_sanity));
+        % for SANITY check -- make sure condition is the same
+        %multi = context_create_multi(1, subj, run);
+        %condition_sanity = multi.names{1};
+        %assert(strcmp(condition, condition_sanity));
     
         %random_run_label = bla(randi(3,1),:);
         %random_run_labels = [random_run_labels; random_run_label];
@@ -110,11 +117,12 @@ for subj = sss
             end
             beta_vec(isnan(beta_vec)) = 0;
             
-            % sanity check !!!! ALWAYS RUN e.g. if change masks or
+            % SANITY check !!!! make sure preloaded betas are correct
+            % ALWAYS RUN e.g. if change masks or
             % something
-            beta_vec1 = ccnl_get_beta(EXPT, model, i, mask, [subj]);
-            beta_vec1(isnan(beta_vec1)) = 0;
-            assert(sum((beta_vec1 - beta_vec).^2) < 1e-12);
+            %beta_vec1 = ccnl_get_beta(EXPT, model, i, mask, [subj]);
+            %beta_vec1(isnan(beta_vec1)) = 0;
+            %assert(sum((beta_vec1 - beta_vec).^2) < 1e-12);
             
             if strcmp(predict_what, 'condition')
                 idx = idx + 1;
@@ -151,5 +159,6 @@ for subj = sss
         end
     end
 end
+
 
 %assert(size(targets, 1) >= length(sss) * length(runs) * 20 * 0.9);

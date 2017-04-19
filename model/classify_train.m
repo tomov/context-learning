@@ -15,6 +15,8 @@ disp(method);
 
 outFilename = ['classify_train_', random_string()];
 
+disp('training classifier...');
+
 %
 % Fit them
 %
@@ -58,9 +60,8 @@ if strcmp(method, 'patternnet')
     fprintf('SAVING net to %s\n', outFilename);
     save(outFilename, 'net');
 
-    [~, i] = max(targets, [], 1);
-    [~, j] = max(outputs, [], 1);
-    fprintf('Success rate = %.2f%%\n', 100 * mean(i == j));    
+    accuracy = classify_get_accuracy(outputs, targets);
+    fprintf('Success rate = %.2f%%\n', accuracy);    
     
     classifier = net;
     
@@ -102,9 +103,8 @@ elseif strcmp(method, 'glmnet')
     
     for l = 1:size(outputss, 3) % for all lambdas
         outputs = outputss(:,:,l);
-        [~, i] = max(targets, [], 2);
-        [~, j] = max(outputs, [], 2);
-        fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), 100 * mean(i == j));
+        accuracy = classify_get_accuracy(outputs, targets);
+        fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), accuracy);
     end
     
     fprintf('SAVING fitObj to %s\n', outFilename);
