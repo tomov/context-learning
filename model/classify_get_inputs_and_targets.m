@@ -134,7 +134,9 @@ for subj = sss
                     chose_sick = strcmp(this_run_responses{this_run_trial_idx}, 'left');
                     idx = idx + 1;
                     inputs(idx,:) = beta_vec;
-                    targets(idx,:) = chose_sick;
+                    tar = [0 0];
+                    tar(chose_sick + 1) = 1;
+                    targets(idx,:) = tar;
                 end
             elseif strcmp(predict_what, 'roundId')
                 idx = idx + 1;
