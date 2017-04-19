@@ -1,6 +1,7 @@
 % representational similarity analysis
 %
-clear all;
+function representational_similarity(mask)
+%clear all;
 
 subj = 1;
 trials = 1:24;
@@ -12,7 +13,7 @@ EXPT = contextExpt();
 is_local = 1; % 1 = Momchil's dropbox; 0 = NCF
 n_trials_per_run = 24;
 sss = getGoodSubjects();
-mask = 'mask.nii';
+%mask = 'hippocampus.nii';
 
 
 % which betas to get for each run -- see SPM.xX.name' in any one of the subjects model
@@ -30,7 +31,7 @@ load_data;
 [subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
 assert(isequal(subjects',unique(participant)));
 
-%{
+
 idx = 0;
 beta_vecs = {};
 beta_runs = {};
@@ -69,5 +70,5 @@ for subj = sss
     end
 end
 
-save('rsa_sss.mat', '-v7.3');
-%}
+m = regexp(mask,'\.','split');
+save(['rsa_beta_vecs_', m{1}, '.mat'], '-v7.3');

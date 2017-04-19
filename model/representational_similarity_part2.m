@@ -1,20 +1,24 @@
-clear all;
-close all;
+function representational_similarity_part2(mask, distance_measure)
+%clear all;
+%close all;
+%distance_measure = 'correlation';
+
+% addpath('rsatoolbox/Engines/'); % RSA toolbox <------- for NCF / CBS
 
 %% compute the subject-average RDM
 %
 
 % as output by representational_similarity.m
-%{
-load('rsa_sss.mat');
+
+m = regexp(mask,'\.','split');
+load(['rsa_beta_vecs_', m{1}, '.mat']);
+
 
 beta_subjs = sss;
 n_runs = 9;
 n_subjects = length(beta_subjs);
 subjectRDMs = nan(n_runs * n_trials_per_run, n_runs * n_trials_per_run, n_subjects);
 
-
-distance_measure = 'correlation';
 
 rdm = zeros(size(beta_vecs, 1));
 
@@ -30,14 +34,14 @@ avgSubjectRDM = mean(subjectRDMs, 3);
 
 all = cat(3, subjectRDMs, avgSubjectRDM); % TODO why does concatRDMs_unwrapped not work properly?
 
-clear beta_vecs;
-save(['rsa_rdms_', distance_measure, '.mat'], '-v7.3');
-%}
+clear beta_vecs; % too big; don't need any longer
+save(['rsa_rdms_', m{1}, '_', distance_measure, '.mat'], '-v7.3');
+
 
 % subjectRDMs(11) = []; -- outlier???
 
 %load('rsa_rdms_euclidean.mat');
-load('rsa_rdms_correlation.mat');
+%load('rsa_rdms_correlation.mat');
 
 avgRDM.RDM = avgSubjectRDM;
 avgRDM.name = 'subject-averaged RDM';
