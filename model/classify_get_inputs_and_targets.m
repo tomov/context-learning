@@ -1,4 +1,4 @@
-function [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas)
+function [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score)
 % helper method that gets the input betas and the targets for the
 % classifier to train / test on
 %
@@ -11,6 +11,7 @@ function [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, 
 % preload_betas = whether to preload the betas from a .mat file WARNING --
 %      this is DANGEROUS; assumes the .mat file was generated using
 %      representational_similarity.m and other dangerous coupling things
+% z_score = whether to z-score the betas
 
 fprintf('classify_get_inputs_and_targets\n');
 disp(trials)
@@ -38,8 +39,8 @@ n_training_trials_per_run = 20;
 betas = [];
 %bla = [1 0 0; 0 1 0; 0 0 1];
 for run = runs
-    idx = trials + (run - 1) * (n_trials_per_run + 6);
-    betas(run,:) = idx;
+    input_idx = trials + (run - 1) * (n_trials_per_run + 6);
+    betas(run,:) = input_idx;
 end
 
 load_data;
@@ -75,7 +76,7 @@ n_voxels = length(beta_vec);
 
 inputs = nan(n_observations, n_voxels); % rows = x = observations, cols = voxels / dependent vars
 targets = []; % rows = y = observations, cols = indep vars (condition as binary vector)
-idx = 0;
+input_idx = 0;
 %random_run_labels = [];
 for subj = sss
     modeldir = fullfile(EXPT.modeldir,['model',num2str(model)],['subj',num2str(subj)]);
@@ -96,12 +97,14 @@ for subj = sss
         %multi = context_create_multi(1, subj, run);
         %condition_sanity = multi.names{1};
         %assert(strcmp(condition, condition_sanity));
+        fprintf('\n----subject %d, run %d\n', subj, run);
     
         %random_run_label = bla(randi(3,1),:);
         %random_run_labels = [random_run_labels; random_run_label];
         %remove_me = 0;
         this_run_trial_idx = 0;
         assert(length(betas(run,:)) == length(trials));
+        run_input_idxs = [];
         for i = betas(run,:)
             disp(SPM.xX.name{i});
             this_run_trial_idx = this_run_trial_idx + 1;
@@ -125,25 +128,28 @@ for subj = sss
             %assert(sum((beta_vec1 - beta_vec).^2) < 1e-12);
             
             if strcmp(predict_what, 'condition')
-                idx = idx + 1;
-                inputs(idx,:) = beta_vec;
-                targets(idx,:) = labels(condition);
+                input_idx = input_idx + 1;
+                run_input_idxs = [run_input_idxs, input_idx];
+                inputs(input_idx,:) = beta_vec;
+                targets(input_idx,:) = labels(condition);
             elseif strcmp(predict_what, 'responses')
                 if strcmp(this_run_responses{this_run_trial_idx}, 'None')
                 else
                     chose_sick = strcmp(this_run_responses{this_run_trial_idx}, 'left');
-                    idx = idx + 1;
-                    inputs(idx,:) = beta_vec;
+                    input_idx = input_idx + 1;
+                    run_input_idxs = [run_input_idxs, input_idx];
+                    inputs(input_idx,:) = beta_vec;
                     tar = [0 0];
                     tar(chose_sick + 1) = 1;
-                    targets(idx,:) = tar;
+                    targets(input_idx,:) = tar;
                 end
             elseif strcmp(predict_what, 'roundId')
-                idx = idx + 1;
-                inputs(idx,:) = beta_vec;
+                input_idx = input_idx + 1;
+                run_input_idxs = [run_input_idxs, input_idx];
+                inputs(input_idx,:) = beta_vec;
                 tar = zeros(1, 9);
                 tar(this_run_roundIds(this_run_trial_idx)) = 1;
-                targets(idx,:) = tar;
+                targets(input_idx,:) = tar;
             else
                 assert(false);
             end
@@ -159,8 +165,17 @@ for subj = sss
             end
             %}
         end
+        
+        if z_score
+            run_mean_voxel = mean(reshape(inputs(run_input_idxs, :), 1, length(run_input_idxs) * n_voxels));
+            run_std_voxel = std(reshape(inputs(run_input_idxs, :), 1, length(run_input_idxs) * n_voxels));
+            inputs(run_input_idxs, :) = (inputs(run_input_idxs, :) - run_mean_voxel) / run_std_voxel;
+        end
     end
 end
 
+inputs = inputs(1:size(targets,1), :);
+
+assert(size(inputs, 1) == size(targets, 1));
 
 %assert(size(targets, 1) >= length(sss) * length(runs) * 20 * 0.9);

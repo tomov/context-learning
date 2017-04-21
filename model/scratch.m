@@ -1,13 +1,5 @@
-load('classify_test_CBCUPOXNKR.mat');
 
-for l = 1:size(outputss, 3) % for all lambdas
-    outputs = outputss(:,:,l);
-    accuracy = classify_get_accuracy(outputs, targets);
-    fprintf('Success rate for %d (lambda = %.4f) = %.2f%%\n', l, fitObj.lambda(l), accuracy);
-end
-
-
-
+        
 %{
     % lame
     for i = 1:size(beta_vecs,1)

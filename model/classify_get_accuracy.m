@@ -20,7 +20,8 @@ assert(size(outputs, 2) == size(targets, 2));
 % option 2 -- average probability of guessing the right answer
 %           = E(# right answers)
 %
-outputs = outputs ./ sum(outputs, 2); % normalize (just in case)
+%outputs = outputs ./ sum(outputs, 2); % normalize (just in case) WARNING unsupported by matlab on ncf
+assert(abs(mean(sum(outputs, 2)) - 1) < 1e-6);
 accuracy = 100 * mean(outputs(logical(targets)));
 
 

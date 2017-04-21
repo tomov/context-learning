@@ -1,4 +1,4 @@
-function [classifier] = classify_train(method, trials, runs, sss, mask, predict_what, preload_betas)
+function [classifier] = classify_train(method, trials, runs, sss, mask, predict_what, preload_betas, z_score)
 % Train classifier to predict stuff based on neural activity at trial onset
 % returns a fitObj that you can pass to glmnetPredict
 % or a petternnet net that you can use e.g. like net(inputs)
@@ -11,10 +11,11 @@ rng('shuffle');
 fprintf('classify_train\n');
 disp(method);
 
-[inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas);
+[inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score);
 
 outFilename = ['classify_train_', random_string()];
 
+tic
 disp('training classifier...');
 
 %
@@ -84,10 +85,16 @@ if strcmp(method, 'patternnet')
     
 elseif strcmp(method, 'glmnet')
     
+    opts.alpha = 0; % 0 = ridge penalty; 1 = lasso penalty (force betas to zero); default = 1
+    opts.mtype = 'ungrouped'; % 'grouped' = for multinomial, all betas are in our out together; default = 'ungrouped'
+    opts.nlambda = 1000; % # lambdas to use; default = 100
+    opts.lambda_min = 0.00000001; % as a fraction of lambda_max which is derived from the data; default = 0.0001
+    options = glmnetSet(opts);
+    
     % x = inputs
     % y = targets
     %
-    fitObj = glmnet(inputs, targets, 'multinomial');
+    fitObj = glmnet(inputs, targets, 'multinomial', options);
     glmnetPrint(fitObj);
     
     %save('classify_glmnet_fitObj_only_1-19_mask_scramble_runs.mat', 'fitObj', 'random_run_labels');
@@ -117,3 +124,4 @@ else
 end
 
 
+toc

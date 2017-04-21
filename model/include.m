@@ -12,6 +12,7 @@ addpath('/Users/memsql/Dropbox/Research/libs/xml2struct/'); % reading XML files
 addpath('/Users/memsql/Dropbox/Research/libs/glmnet_matlab/'); % generalized linear model fitting toolbox
 addpath('/Users/memsql/Dropbox/Research/libs/utils/'); % useful one-off utils from MathWorks
 addpath('/Users/memsql/Dropbox/Research/libs/rsatoolbox/Engines/'); % RSA toolbox
+addpath('/Users/memsql/Dropbox/Research/libs/rsatoolbox/Modules/'); % RSA toolbox
 
 
 %addpath('/Users/memsql/Dropbox/research/context/model'); % the model code and behavioral data

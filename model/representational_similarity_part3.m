@@ -1,8 +1,10 @@
 % visualize the RDMs, compute RDM correlation for differnet models, plot
 % stuff
 %
+close all;
+clear all;
 
-mask = 'hippocampus.nii';
+mask = 'rlpfc.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
@@ -91,15 +93,16 @@ userOptions.rootPath = '~/Downloads/'; % TODO how to turn off saving the figure?
 pairwiseCorrelateRDMs({avgRDM, Model}, userOptions, struct('figureNumber', 3,'fileName',[]));
 
 
-%% aggregate
+%% aggregates
 %
 
 conditions = {'irr', 'mod', 'add'};
 
+figure;
 
 sem = @(x) std(x) / sqrt(length(x));
 
-% e.g. Mod-Add
+% all pairs of conditions
 %
 means1 = [];
 sems1 = [];
@@ -116,40 +119,97 @@ for i = 1:size(cond_pairs, 1)
     sems1 = [sems1, sem_dissim];
     labels = [labels; [conditions{cond1}, '-', conditions{cond2}]];
 end
-figure;
+
+subplot(1, 4, 1);
 barweb(means1, sems1);
 legend(labels);
 ylabel('mean trial distance (from subject-average RDM)');
-ylim([min(means1) * 0.9, max(means1) * 1.1]);
+ylim([min(means1) * 0.95, max(means1) * 1.05]);
+
+title(['ROI: ', m{1}]);
+
+
 
 % pairs of trials form different conditions (3)
 %
 % remember, the RDM is flipped! 1 = diff conditions, 0 = same condition
 % i.e. we're taking the yellow stuff from showRDMs(conditionRDM)
-subRDM = avgRDM.RDM(conditionRDM);
-mean_diff_cond = mean(subRDM(:));
-sem_diff_cond = sem(subRDM(:));
+diff_cond_subRDM = avgRDM.RDM(conditionRDM);
+mean_diff_cond = mean(diff_cond_subRDM(:));
+sem_diff_cond = sem(diff_cond_subRDM(:));
 
 % pairs of trials from the same condition, but different runs (2)
 %
 % remember, the RDM is flipped! 1 = diff conditions, 0 = same condition
 % i.e. we're taking the yellow stuff from showRDMs(~conditionRDM & runNotRealRDM)
-subRDM = avgRDM.RDM(~conditionRDM & runNotRealRDM);
-mean_same_cond = mean(subRDM(:));
-sem_same_cond = sem(subRDM(:));
+same_cond_subRDM = avgRDM.RDM(~conditionRDM & runNotRealRDM);
+mean_same_cond = mean(same_cond_subRDM(:));
+sem_same_cond = sem(same_cond_subRDM(:));
 
 % pairs of trials from the same run (1)
 %
 % remember, the RDM is flipped! 1 = diff conditions, 0 = same condition
 % i.e. we're taking the yellow stuff from showRDMs(~runNotRealRDM)
-subRDM = avgRDM.RDM(~runNotRealRDM);
-mean_same_run = mean(subRDM(:));
-sem_same_run = sem(subRDM(:));
+same_run_subRDM = avgRDM.RDM(~runNotRealRDM);
+mean_same_run = mean(same_run_subRDM(:));
+sem_same_run = sem(same_run_subRDM(:));
 
-figure;
+subplot(1, 4, 2);
 means2 = [mean_diff_cond, mean_same_cond, mean_same_run];
 sems2 = [sem_diff_cond,  sem_same_cond,  sem_same_run];
 barweb(means2, sems2);
 legend({'Different cond (e.g. Add/Mod)', 'Same cond, diff runs (e.g. Add/Add)', 'Same run'});
 ylabel('mean trial distance (from subject-average RDM)');
-ylim([min(means2) * 0.9, max(means2) * 1.1]);
+ylim([min(means2) * 0.95, max(means2) * 1.05]);
+
+
+
+
+% zoom in on pairs of trials from same condition vs. diff conditions
+%
+[p,tbl,stats] = anova1([diff_cond_subRDM; same_cond_subRDM], [ones(size(diff_cond_subRDM)); zeros(size(same_cond_subRDM))], 'off');
+
+subplot(1, 4, 3);
+means3 = [mean_diff_cond, mean_same_cond];
+sems3 = [sem_diff_cond,  sem_same_cond];
+barweb(means3, sems3);
+legend({'Different cond (e.g. Add/Mod)', 'Same cond, diff runs (e.g. Add/Add)'});
+ylabel('mean trial distance (from subject-average RDM)');
+ylim([min(means3) * 0.995, max(means3) * 1.005]);
+title(sprintf('p = %f', p));
+
+%hist(same_run_subRDM);
+
+
+% pairs of runs within each condition
+%
+means4 = [];
+sems4 = [];
+labels = {};
+run_in_group_pairs = [1 2; 1 3; 2 3; 1 1; 2 2; 3 3];
+
+for cond = 1:3
+    m = [];
+    s = [];
+    for i = 1:size(run_in_group_pairs, 1)
+        run1 = run_in_group_pairs(i, 1);
+        run2 = run_in_group_pairs(i, 2);
+        subRDM = avgRDM.RDM(condition(trial_row) == cond & condition(trial_col) == cond & runInCond(trial_row) == run1 & runInCond(trial_col) == run2);
+        mean_dissim = mean(subRDM(:));
+        sem_dissim = sem(subRDM(:));
+        m = [m, mean_dissim];
+        s = [s, sem_dissim];
+        if cond == 1
+            labels = [labels; ['Run ', num2str(run1), '-', 'Run ', num2str(run2)]];
+        end
+    end
+    means4 = [means4; m];
+    sems4 = [sems4; s];
+end
+
+subplot(1, 4, 4);
+barweb(means4, sems4);
+legend(labels);
+ylabel('mean trial distance (from subject-average RDM)');
+ylim([min(means4(:)) * 0.95, max(means4(:)) * 1.05]);
+xticklabels(conditions);
