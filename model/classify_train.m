@@ -85,7 +85,7 @@ if strcmp(method, 'patternnet')
     
 elseif strcmp(method, 'glmnet')
     
-    opts.alpha = 0; % 0 = ridge penalty; 1 = lasso penalty (force betas to zero); default = 1
+    opts.alpha = 1; % 0 = ridge penalty; 1 = lasso penalty (force betas to zero); default = 1
     opts.mtype = 'ungrouped'; % 'grouped' = for multinomial, all betas are in our out together; default = 'ungrouped'
     opts.nlambda = 1000; % # lambdas to use; default = 100
     opts.lambda_min = 0.00000001; % as a fraction of lambda_max which is derived from the data; default = 0.0001
