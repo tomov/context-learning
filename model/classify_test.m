@@ -11,7 +11,8 @@ disp(method);
 
 [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score);
 
-outFilename = ['classify_test_', random_string()];
+m = regexp(mask,'\.','split');
+outFilename = ['classify_test_', method, '_', m{1}, '_', predict_what, '_', random_string()];
 
 if strcmp(method, 'patternnet')
     net = classifier;
@@ -64,6 +65,20 @@ elseif strcmp(method, 'glmnet')
     fprintf('SAVING outputss to %s\n', outFilename);
     save(outFilename, 'outputss', 'targets');
     
+elseif strcmp(method, 'cvglmnet')
+    
+    CVfit = classifier;
+    
+    outputs = cvglmnetPredict(CVfit, inputs, CVfit.lambda_1se, 'response');
+    
+    accuracy = classify_get_accuracy(outputs, targets);
+    fprintf('Success rate (lambda = %.4f) is %.2f%%\n', CVfit.lambda_1se, accuracy);
+    
+    fprintf('SAVING CVfit to %s\n', outFilename);
+    save(outFilename, 'CVfit', 'outputs', 'targets');
+
+    classifier = CVfit;
 else
+    
     assert(false); % no other methods supported
 end

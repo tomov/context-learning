@@ -391,6 +391,17 @@ Model 101 -- c1-associated outcome pmod @ outcome
     Result: 
 
 
+
+
+
+
+
+
+
+
+
+
+    
 PMODS to try:
             pressed_sick_modulatory vs _irrelevant vs _additive <-- similar to value_...
             M1 & M4 values 

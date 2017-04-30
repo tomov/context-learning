@@ -2373,6 +2373,9 @@ function multi = context_create_multi(glmodel, subj, run)
         % (x1c3)
         % same as 101 except for x1 instead of c1
         %
+        % result: not same activation as 101 => good! hippo is context-dep
+        % bla sanity check
+        %
         case 102
             % whether subject thought x1 makes you sick (unlikely but does
             % happen ~25% of the time)
@@ -2443,6 +2446,9 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % M4 & M1 value pmod @ trial onset, before updated
         % + M4 & M1 update pmods @ feedback (outcome) onset, after update
+        % result: after clust FWE, M4_value overlaps with posterior hippo a bit but it's mostly
+        %         temporal / insula + S1
+        %         M4_update is all over the place
         %
         case 104
             multi.names{1} = condition;
@@ -2474,6 +2480,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % M4 & M1 value pmod @ trial onset, before updated
         % + M4 & M1 update pmods @ feedback (outcome) onset, after update
         % same as 104 but with absolute updates
+        % result: nothing really; M4_value is kind of temporal again;
+        %         M4_update - M1_update is negative in posterior hippo
         %
         case 105
             multi.names{1} = condition;
@@ -2505,6 +2513,10 @@ function multi = context_create_multi(glmodel, subj, run)
         % M2 value pmod @ trial onset, before updated
         % + M2 update pmod @ feedback (outcome) onset, after update
         % similar to 105 but with absolute changes
+        % result: M2_value with posterior hippo; kinda like M4_value in 104
+        %         but smaller; does NOT survive cluster FWE
+        %         M2_update overlaps with striatum but also with everything
+        %         else
         %
         case 106
             multi.names{1} = condition;
@@ -2534,6 +2546,9 @@ function multi = context_create_multi(glmodel, subj, run)
         % value pmod @ trial onset, before updated
         % + update pmod @ feedback (outcome) onset, after update
         % similar to 106 but with total value
+        % result: value in posterior hippo; not after FWE correction
+        %         BUT ...very suspicious of the negative activations there
+        %         at feedback time
         %
         case 107
             multi.names{1} = condition;
@@ -2562,7 +2577,8 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % value pmod @ trial onset, before updated
         % + abs update pmod @ feedback (outcome) onset, after update
-        % same as 107 but absolute value
+        % same as 107 but absolute update
+        % result: similar to 107
         %
         case 108
             multi.names{1} = condition;
@@ -2588,6 +2604,70 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{3} = 'trial_onset';
             multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{3} = zeros(size(contextRole(which_train)));            
+
+            
+        % M2 & M1 value pmod @ trial onset, before updated
+        % + M2 & M1 update pmods @ feedback (outcome) onset, after update
+        % same idea as 104 except M2 instead of M4
+        %
+        case 109
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M2_value';
+            multi.pmod(1).param{1} = valuess(:,2)'; % expected outcome predicted by M2 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M2 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M2_update';
+            multi.pmod(2).param{1} = new_valuess(:,2)' - valuess(:,2)'; % PE = new expected outcome - old expected outcome by M2 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+
+        % M3 & M1 value pmod @ trial onset, before updated
+        % + M3 & M1 update pmods @ feedback (outcome) onset, after update
+        % same idea as 104 except M3 instead of M4
+        %
+        case 110
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M3_value';
+            multi.pmod(1).param{1} = valuess(:,3)'; % expected outcome predicted by M3 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M3 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M3_update';
+            multi.pmod(2).param{1} = new_valuess(:,3)' - valuess(:,3)'; % PE = new expected outcome - old expected outcome by M3 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+            
             
     end
 

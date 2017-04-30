@@ -13,7 +13,8 @@ disp(method);
 
 [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score);
 
-outFilename = ['classify_train_', random_string()];
+m = regexp(mask,'\.','split');
+outFilename = ['classify_train_', method, '_', m{1}, '_', predict_what, '_', random_string()];
 
 tic
 disp('training classifier...');
@@ -119,7 +120,31 @@ elseif strcmp(method, 'glmnet')
 
     classifier = fitObj;
     
+elseif strcmp(method, 'cvglmnet')
+    
+    opts.alpha = 1; % 0 = ridge penalty; 1 = lasso penalty (force betas to zero); default = 1
+    opts.mtype = 'ungrouped'; % 'grouped' = for multinomial, all betas are in our out together; default = 'ungrouped'
+    opts.nlambda = 1000; % # lambdas to use; default = 100
+    opts.lambda_min = 0.00000001; % as a fraction of lambda_max which is derived from the data; default = 0.0001
+    options = glmnetSet(opts);
+    
+    % x = inputs
+    % y = targets
+    %
+    CVfit = cvglmnet(inputs, targets, 'multinomial', options, 'deviance');
+    disp(CVfit);
+    
+    outputs = cvglmnetPredict(CVfit, inputs, CVfit.lambda_1se, 'response');
+    
+    accuracy = classify_get_accuracy(outputs, targets);
+    fprintf('Success rate (lambda = %.4f) is %.2f%%\n', CVfit.lambda_1se, accuracy);
+    
+    fprintf('SAVING CVfit to %s\n', outFilename);
+    save(outFilename, 'CVfit', 'outputs', 'targets');
+
+    classifier = CVfit;
 else
+    
     assert(false); % no other methods supported
 end
 

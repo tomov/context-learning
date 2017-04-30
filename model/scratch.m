@@ -1,4 +1,12 @@
 
+l = 0;
+for i=1:1000
+    x = rand(1, 100) > 0.5;
+    y = x(1:end-1) + x(2:end) * 10;
+    f = 1 + find(y == 11);
+    l = l + f(1);
+end
+disp(l / 1000);
 
 %{
     % lame
