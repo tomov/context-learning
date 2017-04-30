@@ -1,4 +1,27 @@
+contrasts = {'M2_value', 'M1_value', 'M2_value - M1_value', ...
+     'M2_update', 'M1_update', 'M2_update - M1_update', ...
+     'irrelevantxM2_value', 'irrelevantxM1_value', 'irrelevantxM2_value - irrelevantxM1_value', ...
+     'irrelevantxM2_update', 'irrelevantxM1_update', 'irrelevantM2_update - irrelevantM1_update', ...
+     'modulatoryxM2_value', 'modulatoryxM1_value', 'modulatoryxM2_value - modulatoryxM1_value', ...
+     'modulatoryxM2_update', 'modulatoryxM1_update', 'modulatoryM2_update - modulatoryM1_update', ...
+     'additivexM2_value', 'additivexM1_value', 'additivexM2_value - additivexM1_value', ...
+     'additivexM2_update', 'additivexM1_update', 'additiveM2_update - additiveM1_update', ...
+     'modulatory - irrelevant', 'modulatory - additive', 'additive - irrelevant'};
+convec = zeros(size(SPM.xX.name));
+C = [1 -1];
+for j = 1:length(contrasts)
+    con = regexp(contrasts{j},'-','split');
+    for c = 1:length(con)
+        con{c} = strtrim(con{c});
+        for i = 1:length(SPM.xX.name)
+            if ~isempty(strfind(SPM.xX.name{i},[con{c},'*'])) || ~isempty(strfind(SPM.xX.name{i},[con{c},'^']))
+                convec(j,i) = C(c);
+            end
+        end        
+    end
+end
 
+%{
 l = 0;
 for i=1:1000
     x = rand(1, 100) > 0.5;
@@ -7,6 +30,7 @@ for i=1:1000
     l = l + f(1);
 end
 disp(l / 1000);
+%}
 
 %{
     % lame

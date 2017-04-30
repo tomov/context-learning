@@ -9,6 +9,8 @@ test_files = {'classify_test_cvglmnet_hippocampus_condition_WILXEUYUYD.mat', ...
              'classify_test_cvglmnet_striatum_condition_CIZZYJXHYV.mat', ...
              'classify_test_cvglmnet_vmpfc_condition_HLIEVWVNXN.mat'
             };
+        
+conds = {'irr', 'mod', 'add'};
 
 sem = @(x) std(x) / sqrt(length(x));
 
@@ -88,6 +90,21 @@ for i = 1:length(rois)
     xticklabels({'irr', 'mod', 'add'});
     yticklabels({'irr', 'mod', 'add'});    
     %}
+
+    % they're different lengths => pad with NaNs for anova
+    %
+    res = rmanova1(outputs, 0.05, 0, 1);
+
+    fprintf('ROI = %s\n', roi);
+    fprintf('   p = %e\n', res.P);
+    for k = 1:3
+        a = strsplit(res.ttests(k).comparison, ' ');
+        c1 = str2num(a{1});
+        c2 = str2num(a{3});
+     %   fprintf('   t-test %s %s %s:  p = %f\n', conds{c1}, a{2}, conds{c2}, res.ttests(k).P);
+        assert(abs(mean(outputs(:,c1)) - res.ttests(k).nanmeans(1)) < 1e-6);
+        assert(abs(mean(outputs(:,c2)) - res.ttests(k).nanmeans(2)) < 1e-6);
+    end
 end
 
 figure;

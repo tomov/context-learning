@@ -2668,7 +2668,81 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
             multi.pmod(2).poly{2} = 1; % first order
             
+
+        % M2 & M1 value pmod @ trial onset, before updated
+        % + M2 & M1 update pmods @ feedback (outcome) onset, after update
+        % same as 109 except with const reaction regressor
+        %
+        case 111
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
             
+            multi.pmod(1).name{1} = 'M2_value';
+            multi.pmod(1).param{1} = valuess(:,2)'; % expected outcome predicted by M2 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M2 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M2_update';
+            multi.pmod(2).param{1} = new_valuess(:,2)' - valuess(:,2)'; % PE = new expected outcome - old expected outcome by M2 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+
+            % const @ RT (trials 1..20)
+            % 
+            multi.names{3} = 'RT';
+            multi.onsets{3} = -1 + cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));            
+            
+        % M3 & M1 value pmod @ trial onset, before updated
+        % + M3 & M1 update pmods @ feedback (outcome) onset, after update
+        % same as 110 except with const reaction regressor
+        %
+        case 112
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num,actualChoiceOnset(which_train))';
+            multi.durations{1} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(1).name{1} = 'M3_value';
+            multi.pmod(1).param{1} = valuess(:,3)'; % expected outcome predicted by M3 for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order
+
+            multi.pmod(1).name{2} = 'M1_value';
+            multi.pmod(1).param{2} = valuess(:,1)'; % expected outcome predicted by M1 for trials 1..20
+            multi.pmod(1).poly{2} = 1; % first order
+            
+            % M1 & M3 updates ~= prediction errors @ feedback
+            %
+            multi.names{2} = 'outcome';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{2} = ones(size(contextRole(which_train))); % 1 s durations
+            
+            multi.pmod(2).name{1} = 'M3_update';
+            multi.pmod(2).param{1} = new_valuess(:,3)' - valuess(:,3)'; % PE = new expected outcome - old expected outcome by M3 for trials 1..20
+            multi.pmod(2).poly{1} = 1; % first order
+            
+            multi.pmod(2).name{2} = 'M1_update';
+            multi.pmod(2).param{2} = new_valuess(:,1)' - valuess(:,1)'; % PE = new expected outcome - old expected outcome by M1 for trials 1..20
+            multi.pmod(2).poly{2} = 1; % first order
+            
+            % const @ RT (trials 1..20)
+            % 
+            multi.names{3} = 'RT';
+            multi.onsets{3} = -1 + cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));            
+                        
     end
 
 end 
