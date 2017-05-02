@@ -1,5 +1,7 @@
 % compare different classifier parameter settings based on classification
-% perf
+% perf.
+% This is classifying the condition based on all trials on runs 1..8,
+% then testing on run 9
 %
 
 jobs = [86320806,86320811,86320812,86320813,86320815,86320817,86320821,86320822;

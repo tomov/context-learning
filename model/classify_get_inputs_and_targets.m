@@ -1,4 +1,4 @@
-function [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score)
+function [inputs, targets, out_subjIds, out_runIds, out_trialIds] = classify_get_inputs_and_targets(trials, runs, sss, mask, predict_what, preload_betas, z_score)
 % helper method that gets the input betas and the targets for the
 % classifier to train / test on
 %
@@ -77,6 +77,9 @@ n_voxels = length(beta_vec);
 
 inputs = nan(n_observations, n_voxels); % rows = x = observations, cols = voxels / dependent vars
 targets = []; % rows = y = observations, cols = indep vars (condition as binary vector)
+out_subjIds = nan(n_observations, 1);
+out_runIds = nan(n_observations, 1);
+out_trialIds = nan(n_observations, 1);
 input_idx = 0;
 %random_run_labels = [];
 for subj = sss
@@ -104,7 +107,7 @@ for subj = sss
         %random_run_label = bla(randi(3,1),:);
         %random_run_labels = [random_run_labels; random_run_label];
         %remove_me = 0;
-        this_run_trial_idx = 0;
+        this_run_trial_idx = 0; % this is just an iterator, not the actual trial id
         assert(length(betas(run,:)) == length(trials));
         run_input_idxs = [];
         for i = betas(run,:)
@@ -138,6 +141,11 @@ for subj = sss
             input_idx = input_idx + 1; 
             run_input_idxs = [run_input_idxs, input_idx]; % bookkeeping for z-score
             inputs(input_idx,:) = beta_vec;
+            
+            % keep track of which trial each input/target corresponds to
+            out_subjIds(input_idx) = subj;
+            out_runIds(input_idx) = this_run_roundIds(this_run_trial_idx);
+            out_trialIds(input_idx) = this_run_trialIds(this_run_trial_idx);
 
             % target depends on what we're trying to predict
             %
@@ -187,5 +195,9 @@ end
 inputs = inputs(1:size(targets,1), :);
 
 assert(size(inputs, 1) == size(targets, 1));
+assert(size(inputs, 1) == n_observations);
+assert(size(out_subjIds, 1) == n_observations);
+assert(size(out_runIds, 1) == n_observations);
+assert(size(out_trialIds, 1) == n_observations);
 
 %assert(size(targets, 1) >= length(sss) * length(runs) * 20 * 0.9);

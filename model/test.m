@@ -1,4 +1,4 @@
-function [choices, values, valuess] = test(x, k, P_n, ww_n, inv_softmax_temp)
+function [choices, values, valuess, predict] = test(x, k, P_n, ww_n, inv_softmax_temp)
 % Apply what 
 %
 
