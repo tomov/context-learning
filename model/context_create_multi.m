@@ -2577,7 +2577,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % value pmod @ trial onset, before updated
         % + abs update pmod @ feedback (outcome) onset, after update
-        % same as 107 but absolute update
+        % same as 107 but total update
         % result: similar to 107
         %
         case 108
@@ -2589,7 +2589,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).param{1} = values'; % expected outcome for trials 1..20
             multi.pmod(1).poly{1} = 1; % first order
             
-            % M2 update ~= prediction errors @ feedback
+            % update ~= prediction errors @ feedback
             %
             multi.names{2} = 'outcome';
             multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_train))';
@@ -2609,6 +2609,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % M2 & M1 value pmod @ trial onset, before updated
         % + M2 & M1 update pmods @ feedback (outcome) onset, after update
         % same idea as 104 except M2 instead of M4
+        % result: nothing
         %
         case 109
             multi.names{1} = condition;
@@ -2640,6 +2641,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % M3 & M1 value pmod @ trial onset, before updated
         % + M3 & M1 update pmods @ feedback (outcome) onset, after update
         % same idea as 104 except M3 instead of M4
+        % result: M3_value -> bilateral posterior hippocampus activation;
+        %                     doesn't survive cluster FWE
         %
         case 110
             multi.names{1} = condition;
@@ -2672,6 +2675,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % M2 & M1 value pmod @ trial onset, before updated
         % + M2 & M1 update pmods @ feedback (outcome) onset, after update
         % same as 109 except with const reaction regressor
+        % result: nothing
         %
         case 111
             multi.names{1} = condition;
@@ -2709,6 +2713,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % M3 & M1 value pmod @ trial onset, before updated
         % + M3 & M1 update pmods @ feedback (outcome) onset, after update
         % same as 110 except with const reaction regressor
+        % result: same as 110
         %
         case 112
             multi.names{1} = condition;

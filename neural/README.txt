@@ -390,6 +390,45 @@ Model 101 -- c1-associated outcome pmod @ outcome
 
     Result: 
 
+Model 108 -- expected value @ trial onset
+
+    Regressor #1: pmod = expected value (averaged) @ trial onset time, duration 1 s
+    Regressor #2: update of expected value (new value - old value) @ feedback (outcome) onset time, duration 0 s
+
+    Contrasts:
+        ccnl_view(contextExpt(), 108, 'value')
+        ccnl_view(contextExpt(), 108, 'update')
+
+    Hypothesis:
+
+    Result: 
+
+Model 110 -- M3 & M1 value @ trial onset
+
+    Regressor #1: expected value of different causal structures @ trial onset time, duration 1 s
+                 pmod 1) = value predicted by M3 (additive)
+                 pmod 2) = value predicted by M1 (irrelevant)
+    Regressor #2: update of expected value of different causal structures @ feedback (outcome) onset time, duration 0 s
+                 pmod 1) = new M3 value - old M3 value (additive)
+                 pmod 2) = new M1 value - old M1 value (irrelevant)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 110, 'M3_value')
+        ccnl_view(contextExpt(), 110, 'M1_value')
+        ccnl_view(contextExpt(), 110, 'M3_update')
+        ccnl_view(contextExpt(), 110, 'M1_update')
+
+    Hypothesis:
+
+    Result: 
+
+Model 109 -- same as 110 except for M2 and M1
+
+    Contrasts: 
+        ccnl_view(contextExpt(), 109, 'M2_value')
+        ccnl_view(contextExpt(), 109, 'M1_value')
+        ccnl_view(contextExpt(), 109, 'M2_update')
+        ccnl_view(contextExpt(), 109, 'M1_update')
 
 
 

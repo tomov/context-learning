@@ -11,7 +11,8 @@ function [inputs, targets] = classify_get_inputs_and_targets(trials, runs, sss, 
 % preload_betas = whether to preload the betas from a .mat file WARNING --
 %      this is DANGEROUS; assumes the .mat file was generated using
 %      representational_similarity.m and other dangerous coupling things
-% z_score = whether to z-score the betas
+% z_score = whether to z-score the betas within each run to account for
+%           stuff like drift and faciliate cross-run comparison
 
 fprintf('classify_get_inputs_and_targets\n');
 disp(trials)
@@ -89,6 +90,7 @@ for subj = sss
         this_run_responses = response.keys(which_trials);
         this_run_roundIds = roundId(which_trials);
         this_run_trialIds = newTrialId(which_trials);
+        this_run_contextIds = contextId(which_trials);
         assert(length(this_run_responses) == length(trials));
         assert(length(this_run_roundIds) == length(trials));
         assert(length(this_run_trialIds) == length(trials));
@@ -127,28 +129,36 @@ for subj = sss
             %beta_vec1(isnan(beta_vec1)) = 0;
             %assert(sum((beta_vec1 - beta_vec).^2) < 1e-12);
             
+            if strcmp(predict_what, 'responses') && strcmp(this_run_responses{this_run_trial_idx}, 'None')
+                % no response => move on
+                continue
+            end
+
+            % input = beta vector
+            input_idx = input_idx + 1; 
+            run_input_idxs = [run_input_idxs, input_idx]; % bookkeeping for z-score
+            inputs(input_idx,:) = beta_vec;
+
+            % target depends on what we're trying to predict
+            %
             if strcmp(predict_what, 'condition')
-                input_idx = input_idx + 1;
-                run_input_idxs = [run_input_idxs, input_idx];
-                inputs(input_idx,:) = beta_vec;
                 targets(input_idx,:) = labels(condition);
             elseif strcmp(predict_what, 'responses')
-                if strcmp(this_run_responses{this_run_trial_idx}, 'None')
-                else
-                    chose_sick = strcmp(this_run_responses{this_run_trial_idx}, 'left');
-                    input_idx = input_idx + 1;
-                    run_input_idxs = [run_input_idxs, input_idx];
-                    inputs(input_idx,:) = beta_vec;
-                    tar = [0 0];
-                    tar(chose_sick + 1) = 1;
-                    targets(input_idx,:) = tar;
-                end
+                chose_sick = strcmp(this_run_responses{this_run_trial_idx}, 'left');
+                tar = [0 0];
+                tar(chose_sick + 1) = 1;
+                targets(input_idx,:) = tar;
             elseif strcmp(predict_what, 'roundId')
-                input_idx = input_idx + 1;
-                run_input_idxs = [run_input_idxs, input_idx];
-                inputs(input_idx,:) = beta_vec;
                 tar = zeros(1, 9);
                 tar(this_run_roundIds(this_run_trial_idx)) = 1;
+                targets(input_idx,:) = tar;
+            elseif strcmp(predict_what, 'contextId')
+                tar = zeros(1, 3);
+                tar(this_run_contextIds(this_run_trial_idx) + 1) = 1;
+                targets(input_idx,:) = tar;
+            elseif strcmp(predict_what, 'contextId_training_only')
+                tar = zeros(1, 2);
+                tar(this_run_contextIds(this_run_trial_idx) + 1) = 1;
                 targets(input_idx,:) = tar;
             else
                 assert(false);

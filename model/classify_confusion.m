@@ -1,5 +1,7 @@
+
 close all;
 rois = {'hippocampus', 'ofc', 'striatum', 'vmpfc'};
+folder = 'classify_test_run_9';
 train_files = {'classify_train_cvglmnet_hippocampus_condition_XOXXBCRZHJ.mat', ...
               'classify_train_cvglmnet_ofc_condition_LKBAAJVYCM.mat', ...
               'classify_train_cvglmnet_striatum_condition_XYNEMIWJJO.mat', ...
@@ -25,8 +27,8 @@ for i = 1:length(rois)
     % cv)
     %load(['classify_rois_all_lambdas/classify_train_', roi{1}, '.mat']);
     %load(['classify_rois_all_lambdas/classify_test_', roi{1}, '.mat']);
-    train_file = train_files{i};
-    test_file = test_files{i};
+    train_file = fullfile(folder, train_files{i});
+    test_file = fullfile(folder, test_files{i});
     load(train_file);
     load(test_file);
     
