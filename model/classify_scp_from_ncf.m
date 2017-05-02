@@ -6,8 +6,11 @@
 %
 
 folder = 'classify_outputs_3';
+mat_folder = 'classify_heldout_trial_18';
 
-jobs = [86846035,86846036,86846037,86846038,86846039,86846040,86846041];
+jobs = [86846107,86846108,86846109,86846110,86846111,86846112,86846113]; % hold out trial 18
+%jobs = [86846035,86846036,86846037,86846038,86846039,86846040,86846041]; % hold out trial 19
+%jobs = [86845655,86845657,86845658,86845660,86845661,86845663,86845664]; % hold out trial 20
 
 masks = {'hippocampus', 'ofc', 'striatum', 'vmpfc', 'rlpfc', 'bg', 'pallidum'};
 
@@ -81,9 +84,9 @@ for classifier = 1:size(jobs, 1)
         train_files = [train_files; {fitObj_filename}];
         test_files = [test_files; {test_results_filename}];
         
-        scp = ['scp ', fullfile(scp_from, fitObj_filename), ' ', folder];
+        scp = [' ', fullfile(scp_from, fitObj_filename), ' ', mat_folder];
         scps = [scps; {scp}];
-        scp = ['scp ', fullfile(scp_from, test_results_filename), ' ', folder];
+        scp = [' ', fullfile(scp_from, test_results_filename), ' ', mat_folder];
         scps = [scps; {scp}];
     end
 end

@@ -17,17 +17,44 @@
 close all;
 clear all;
 rois = {'hippocampus', 'ofc', 'striatum', 'vmpfc', 'rlpfc', 'bg', 'pallidum'};
-folder = 'classify_test_trial_19';
-train_files = {'classify_train_cvglmnet_hippocampus_condition_LUBGSMICBJ.mat', ...
+
+held_out_trials = [18 19 20];
+
+folders = {'classify_heldout_trial_18', ...
+    'classify_heldout_trial_19', ...
+    'classify_heldout_trial_20'};
+
+% held out trial 18
+train_files = [
+    {'classify_train_cvglmnet_hippocampus_condition_DTJYVAPPHH.mat', ...
+    'classify_train_cvglmnet_ofc_condition_ZRGZEKCRKX.mat', ...
+    'classify_train_cvglmnet_striatum_condition_ZRGZEKCRKX.mat', ...
+    'classify_train_cvglmnet_vmpfc_condition_FSFRDGKWFR.mat', ...
+    'classify_train_cvglmnet_rlpfc_condition_FSFRDGKWFR.mat', ...
+    'classify_train_cvglmnet_bg_condition_QAMTDFVUBY.mat', ...
+    'classify_train_cvglmnet_pallidum_condition_QAMTDFVUBY.mat'}];
+
+% held out trial 19
+train_files = [train_files; 
+    {'classify_train_cvglmnet_hippocampus_condition_LUBGSMICBJ.mat', ...
     'classify_train_cvglmnet_ofc_condition_MSGHNNRZNE.mat', ...
     'classify_train_cvglmnet_striatum_condition_MSGHNNRZNE.mat', ...
     'classify_train_cvglmnet_vmpfc_condition_MSGHNNRZNE.mat', ...
     'classify_train_cvglmnet_rlpfc_condition_BJXGPGEKME.mat', ...
     'classify_train_cvglmnet_bg_condition_XSLBHVRBBC.mat' ...
-    'classify_train_cvglmnet_pallidum_condition_BNGQOOQVXF.mat'};
+    'classify_train_cvglmnet_pallidum_condition_BNGQOOQVXF.mat'}];
+
+% held out trial 20
+train_files = [train_files; 
+    {'classify_train_cvglmnet_hippocampus_condition_KQISMCFOKU.mat', ...
+    'classify_train_cvglmnet_ofc_condition_SHCJEIGUIE.mat', ...
+    'classify_train_cvglmnet_striatum_condition_JDAADPFEQL.mat', ...
+    'classify_train_cvglmnet_vmpfc_condition_OSIJBKMSGN.mat', ...
+    'classify_train_cvglmnet_rlpfc_condition_FOUWXRXSEY.mat', ...
+    'classify_train_cvglmnet_bg_condition_FOUWXRXSEY.mat', ...
+    'classify_train_cvglmnet_pallidum_condition_OBGQFGVQFB.mat'}];
 
 held_out_runs = 1:9;
-held_out_trials = [19]; % !!! HARDCODED FIXME TODO
 n_training_trials_per_run = 20;
 n_test_trials_per_run = 4;
 
@@ -43,6 +70,8 @@ sem = @(x) std(x) / sqrt(length(x));
 means = [];
 sems = [];
 
+roi_corr_coefs = [];
+
 for i = 1:length(rois)
     roi = rois{i};
 
@@ -51,28 +80,39 @@ for i = 1:length(rois)
     % for the corresponding causal structure (based on test trial behavior)
     corr_coefs = []; % rows = subject, cols = causal structure / condition
     
+    disp(roi);
+        
     %
     % Get Y = P(condition), computed by the classifier on the held out trail
     % for all blocks / subjects
+    % note that we average it across a bunch of held-out trials
     % TODO dedupe with classify_test
-    %
-    
-    train_file = fullfile(folder, train_files{i});
-    load(train_file);
-    
-    disp(roi);
+    %    
+    outputs_from_all_heldout_trials = [];
+    for t=1:length(held_out_trials)
+        train_file = fullfile(folders{t}, train_files{t, i});
+        load(train_file, 'CVfit');
 
-    % IMPORTANT -- the parameters here must correspond to the ones that the classifier
-    % was trained with
-    mask = [roi, '.nii'];
-    [inputs, targets, subjIds, runIds, trialIds] = classify_get_inputs_and_targets(held_out_trials, held_out_runs, sss, mask, 'condition', true, true);
-
-    load(train_file, 'CVfit');    
-
-    outputs = cvglmnetPredict(CVfit, inputs, CVfit.lambda_1se, 'response');    
-    accuracy = classify_get_accuracy(outputs, targets);
-    % TODO sanity check with output frmo classify_scp_from_ncf
-    fprintf('Success rate (lambda = %.4f) is %.2f%%\n', CVfit.lambda_1se, accuracy);
+        % IMPORTANT -- the parameters here must correspond to the ones that the classifier
+        % was trained with
+        mask = [roi, '.nii'];
+        held_out_trial = held_out_trials(t);
+        [inputs, targets, subjIds, runIds, trialIds] = classify_get_inputs_and_targets(held_out_trial, held_out_runs, sss, mask, 'condition', true, true);
+        
+        outputs = cvglmnetPredict(CVfit, inputs, CVfit.lambda_1se, 'response');    
+        accuracy = classify_get_accuracy(outputs, targets);
+        % TODO sanity check with output frmo classify_scp_from_ncf
+        fprintf('Success rate (held out trial = %d, lambda = %.4f) is %.2f%%\n', held_out_trial, CVfit.lambda_1se, accuracy);
+        
+        if isempty(outputs_from_all_heldout_trials)
+            outputs_from_all_heldout_trials = outputs;
+        else
+            outputs_from_all_heldout_trials = outputs_from_all_heldout_trials + outputs;
+        end
+    end
+    % average P(condition) across all held out runs 
+    % TODO sanity check sems
+    outputs = outputs_from_all_heldout_trials / length(held_out_trials);
 
     for subj = unique(subjIds)'
         fprintf('Kalman for subj %s\n', subjects{subj});
@@ -156,6 +196,8 @@ for i = 1:length(rois)
     
     means = [means; mean(corr_coefs)];
     sems = [sems; sem(corr_coefs)];
+    
+    roi_corr_coefs{i} = corr_coefs;
     
    % break; % TODO other ROIs too
 end
