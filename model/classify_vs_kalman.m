@@ -357,9 +357,11 @@ for i = 1:length(rois)
         % the test trials.
         %
         cs = [];
-        for m=1:3
-            c = corrcoef(P_condition_all_runs(:,m), P_structure_all_runs(:,m));
-            cs = [cs c(2,1)];
+        for m1=1:3
+            for m2=1:3
+                c = corrcoef(P_condition_all_runs(:,m1), P_structure_all_runs(:,m2));
+                cs = [cs c(2,1)];
+            end
         end
         corr_coefs = [corr_coefs; cs];
         disp(cs);
@@ -376,7 +378,8 @@ end
 figure;
 barweb(means, sems);
 xticklabels(rois);
-legend('irr-M1', 'mod-M2', 'add-M3');
+%legend('irr-M1', 'mod-M2', 'add-M3');
+legend('irr-M1', 'irr-M2', 'irr-M3', 'mod-M1', 'mod-M2', 'mod-M3', 'add-M1', 'add-M2', 'add-M3');
 ylabel('correlation coefficient');
 title('Corr(P_{classifier}(condition), P_{Kalman}(structure | test choices)), averaged across subjects');
 
