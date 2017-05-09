@@ -4,7 +4,7 @@
 close all;
 clear all;
 
-mask = 'rlpfc.nii';
+mask = 'striatum.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
@@ -109,16 +109,25 @@ sems1 = [];
 labels = {};
 cond_pairs = [1 2; 1 3; 2 3; 1 1; 2 2; 3 3];
 
+bla = [];
 for i = 1:size(cond_pairs, 1)
     cond1 = cond_pairs(i, 1);
     cond2 = cond_pairs(i, 2);
     subRDM = avgRDM.RDM(condition(trial_row) == cond1 & condition(trial_col) == cond2 & runNotReal(trial_row) ~= runNotReal(trial_col));
     mean_dissim = mean(subRDM(:));
     sem_dissim = sem(subRDM(:));
+    if i <= 3
+        bla = [bla, subRDM];
+    end
     means1 = [means1, mean_dissim];
     sems1 = [sems1, sem_dissim];
     labels = [labels; [conditions{cond1}, '-', conditions{cond2}]];
 end
+
+res = rmanova1(bla, 0.05, 0, 1)
+res.ttests(1)
+res.ttests(2)
+res.ttests(3)
 
 subplot(1, 4, 1);
 barweb(means1, sems1);
