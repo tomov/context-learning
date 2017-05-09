@@ -139,8 +139,8 @@ Model 25 -- prediction & outcome
     Regressor #3: constant @ trial onset (to account for visual activation)
 
     Contrasts:
-        ccnl_view(contextExpt(), 20, 'expected'); 
-        ccnl_view(contextExpt(), 20, 'actual'); 
+        ccnl_view(contextExpt(), 25, 'expected'); 
+        ccnl_view(contextExpt(), 25, 'actual'); 
 
     Hypothesis: 
 
@@ -152,7 +152,7 @@ Model 26 -- prediction error
     Regressor #2: constant @ trial onset (to account for visual activation)
 
     Contrasts:
-        ccnl_view(contextExpt(), 20, 'actual'); 
+        ccnl_view(contextExpt(), 26, 'actual'); 
 
     Hypothesis: 
 

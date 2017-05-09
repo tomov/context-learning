@@ -33,14 +33,13 @@ model.surprise = []; % D_KL at each trial
 % HACKSAUCE TODO FIXME
 % to predict stuff based on the classifier
 %
-%{
 sss = getGoodSubjects();
 [all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
 subjects = all_subjects(sss);
-load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
-ppp = outputss(:,:,end);
 which_rows = which_rows & ismember(participant, subjects);
-%}
+%load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
+%ppp = outputss(:,:,end);
+
 
 %make_optimal_choices = true;
 
@@ -490,3 +489,12 @@ title('Correct Trials');
 legend({'chose sick', 'chose not sick'});
 ylabel('value');
 
+
+%
+% Get correlation between predicted and actual choices
+%
+%which = which_rows & ~isTrain;
+which = which_rows;
+x = strcmp(response.keys(which), 'left');
+y = model.pred(which);
+[r, p] = corrcoef(x, y);
