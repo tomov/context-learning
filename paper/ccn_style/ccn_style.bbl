@@ -57,29 +57,6 @@ Feigenbaum, E\BPBI A.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-Gershman%
-}{%
-Gershman%
-}{%
-{\protect \APACyear {2017}}%
-}]{%
-Gershman2017}
-\APACinsertmetastar {%
-Gershman2017}%
-\begin{APACrefauthors}%
-Gershman, S\BPBI J.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2017}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {Context-dependent learning and causal structure}
-  {Context-dependent learning and causal structure}.{\BBCQ}
-\newblock
-\APACjournalVolNumPages{Psychonomic Bulletin and Review}{24}{}{557--565}.
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
 Hill%
 }{%
 Hill%

@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: context_paper.aux
+The style file: apacite.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Database file #1: context_paper.bib.bib
+Warning--I didn't find a database entry for "ChalnickBillman1988a"
+Warning--I didn't find a database entry for "Feigenbaum1963a"
+Warning--I didn't find a database entry for "Hill1983a"
+Warning--I didn't find a database entry for "OhlssonLangley1985a"
+Warning--I didn't find a database entry for "Matlock2001"
+Warning--I didn't find a database entry for "NewellSimon1972a"
+Warning--I didn't find a database entry for "ShragerLangley1990a"
+apacite.bst [2012/02/25 v6.01 APA bibliography style]
+You've used 1 entry,
+            6735 wiz_defined-function locations,
+            1257 strings with 10695 characters,
+and the built_in function-call counts, 1570 in all, are:
+= -- 193
+> -- 10
+< -- 65
++ -- 66
+- -- 2
+* -- 95
+:= -- 305
+add.period$ -- 4
+call.type$ -- 1
+change.case$ -- 17
+chr.to.int$ -- 0
+cite$ -- 2
+duplicate$ -- 35
+empty$ -- 69
+format.name$ -- 14
+if$ -- 300
+int.to.chr$ -- 0
+int.to.str$ -- 2
+missing$ -- 0
+newline$ -- 25
+num.names$ -- 8
+pop$ -- 22
+preamble$ -- 1
+purify$ -- 4
+quote$ -- 0
+skip$ -- 119
+stack$ -- 0
+substring$ -- 74
+swap$ -- 23
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 80
+warning$ -- 0
+while$ -- 5
+width$ -- 0
+write$ -- 26
+(There were 7 warnings)
