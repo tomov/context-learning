@@ -1,9 +1,7 @@
 % get the voxel statistics of the D_KL model
 %
-clear all;
 close all;
-
-analyze;
+clear all;
 
 EXPT = contextExpt();
 modeldir = EXPT.modeldir;
@@ -92,13 +90,15 @@ which_prev_trials = which_rows & isTrain & trialId ~= 20;
 which_next_trials = which_rows & isTrain & trialId ~= 1;
 assert(sum(which_next_trials) == sum(which_prev_trials));
 assert(sum(which_prev_trials) == size(prev_trials_act, 1)); % this is crucial
-assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
 next_trials_corr = response.corr(which_next_trials);
+assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
 % so now, both next_trials_corr and prev_trials_act
 % contain 20 subjects x 9 runs x 19 trials (2..20 or 1..19, respectively)
 
-prev_trial_surprise = model.surprise(which_prev_trials); % run after analyze.m; for sanity check
-assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
+prev_trial_surprise = model.surprise(which_prev_trials); %  for sanity check
+assert(size(prev_trials_act, 1) == size(prev_trial_surprise, 1));
+prev_trials_corr = response.corr(which_prev_trials);
+
 
 % only look at trials 10..19
 %
@@ -137,41 +137,57 @@ xticklabels([rois, {'top 20 voxels'}]);
 % by trial
 %
 roi_id = 1;
-labels = {};
 
-means = [];
-sems = [];
-sem = @(x) std(x) / sqrt(length(x));
-blah1 = [];
-blah0 = [];
+% plot activation in given ROI, or D_KL from the model
+plot_what = {prev_trials_act, prev_trial_surprise};
+y_labels = {'activation ~ D_{KL}', 'D_{KL}'};
+% separated by whether it's correct on the next trial, or the current trial
+plot_wrt_what = {next_trials_corr, prev_trials_corr};
+legends = {{'correct on next', 'wrong on next'}, {'correct on cur', 'wrong on cur'}};
 
-for trial = cutoff+1:19 
-    which_pattern = zeros(19, 1);
-    which_pattern(trial) = 1;
-    % note that these are logicals in the prev_trials_act space, where 1
-    % trial is missing (the last one)
-    which_trials = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
-    assert(size(which_trials, 1) == size(prev_trials_act, 1));
-    
-    blah1 = [blah1; prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)];
-    blah0 = [blah0; prev_trials_act(next_trials_corr == 0 & which_trials, roi_id)];
-    means = [means; mean(prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)) mean(prev_trials_act(next_trials_corr == 0 & which_trials, roi_id))];
-    sems = [sems; sem(prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)) mean(prev_trials_act(next_trials_corr == 0 & which_trials, roi_id))];
+for plot_what_idx = 1:numel(plot_what)
+    y = plot_what{plot_what_idx};
+    for plot_wrt_what_idx = 1:numel(plot_wrt_what)
+        x = plot_wrt_what{plot_wrt_what_idx};
 
-    labels = [labels; {sprintf('#%d', trial)}];
+        labels = {};
+
+        means = [];
+        sems = [];
+        sem = @(x) std(x) / sqrt(length(x));
+        blah1 = [];
+        blah0 = [];
+
+        for trial = cutoff+1:19 
+            which_pattern = zeros(19, 1);
+            which_pattern(trial) = 1;
+            % note that these are logicals in the prev_trials_act space, where one
+            % trial is missing (the last one)
+            which_trials = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
+            assert(size(which_trials, 1) == size(prev_trials_act, 1));
+
+            blah1 = [blah1; y(x == 1 & which_trials, roi_id)];
+            blah0 = [blah0; y(x == 0 & which_trials, roi_id)];
+            means = [means; mean(y(x == 1 & which_trials, roi_id)) mean(y(x == 0 & which_trials, roi_id))];
+            sems = [sems; sem(y(x == 1 & which_trials, roi_id)) mean(y(x == 0 & which_trials, roi_id))];
+
+            labels = [labels; {sprintf('#%d', trial)}];
+        end
+
+        means = [means; mean(blah1) mean(blah0)];
+        sems = [sems; sem(blah1) sem(blah0)];
+        labels = [labels; {'total'}];
+
+        figure;
+        barweb(means, sems);
+        title(rois{roi_id});
+        legend(legends{plot_wrt_what_idx});
+        xlabel('trial');
+        xticklabels(labels);
+        ylabel(y_labels{plot_what_idx});
+    end
 end
 
-means = [means; mean(blah1) mean(blah0)];
-sems = [sems; sem(blah1) sem(blah0)];
-labels = [labels; {'total'}];
-
-figure;
-barweb(means, sems);
-title(rois{roi_id});
-legend({'correct on next', 'wrong on next'});
-xlabel('trial');
-xticklabels(labels);
-ylabel('activation ~ D_{KL}');
 
 
 
