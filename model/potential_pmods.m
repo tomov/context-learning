@@ -23,7 +23,7 @@ for trial = 1:19
     labels = [labels; {sprintf('#%d', trial)}];
 end
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 title('Wrong Trials');
@@ -52,7 +52,7 @@ for trial = 1:19
     labels = [labels; {sprintf('#%d', trial)}];
 end
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 title('Wrong Trials');
@@ -76,7 +76,7 @@ blah0 = [];
 for trial = 1:19 
     which_trials = which_rows & isTrain & trialId == trial;
     surprise = model.surprise(which_trials);
-    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1);
+    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1); % TODO why -1 not +1
 
     blah1 = [blah1; surprise(next_trial_correct == 1)];
     blah0 = [blah0; surprise(next_trial_correct == 0)];
@@ -90,7 +90,7 @@ means = [means; mean(blah1) mean(blah0)];
 sems = [sems; sem(blah1) sem(blah0)];
 labels = [labels; {'total'}];
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 legend({'correct on next', 'wrong on next'});
@@ -114,7 +114,7 @@ blah0 = [];
 for trial = 10:19 
     which_trials = which_rows & isTrain & trialId == trial;
     surprise = model.surprise(which_trials);
-    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1);
+    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1); % TODO why -1 not +1
 
     blah1 = [blah1; surprise(next_trial_correct == 1)];
     blah0 = [blah0; surprise(next_trial_correct == 0)];
@@ -128,7 +128,7 @@ means = [means; mean(blah1) mean(blah0)];
 sems = [sems; sem(blah1) sem(blah0)];
 labels = [labels; {'total'}];
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 legend({'correct on next', 'wrong on next'});
@@ -167,7 +167,7 @@ means = [means; mean(blah1) mean(blah0)];
 sems = [sems; sem(blah1) sem(blah0)];
 labels = [labels; {'total'}];
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 legend({'correct', 'wrong'});
@@ -190,7 +190,7 @@ blah0 = [];
 for trial = 1:19 
     which_trials = which_rows & isTrain & trialId == trial;
     prediction_error = abs(strcmp(corrAns(which_trials), 'left') - model.pred(which_trials));
-    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1);
+    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1); % TODO why -1 not +1
 
     blah1 = [blah1; prediction_error(next_trial_correct == 1)];
     blah0 = [blah0; prediction_error(next_trial_correct == 0)];
@@ -204,10 +204,11 @@ means = [means; mean(blah1) mean(blah0)];
 sems = [sems; sem(blah1) sem(blah0)];
 labels = [labels; {'total'}];
 
-subplot(2, 3, next_subplot_idx);
+subplot(3, 3, next_subplot_idx);
 next_subplot_idx = next_subplot_idx + 1;
 barweb(means, sems);
 legend({'correct on next', 'wrong on next'});
 xlabel('trial');
 xticklabels(labels);
 ylabel('|PE|');
+

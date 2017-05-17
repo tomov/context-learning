@@ -23,4 +23,89 @@ Gershman, S\BPBI J.%
 \APACjournalVolNumPages{Psychonomic Bulletin and Review}{24}{}{557--565}.
 \PrintBackRefs{\CurrentBib}
 
+\bibitem [\protect \citeauthoryear {%
+Grau%
+\ \BBA {} Rescorla%
+}{%
+Grau%
+\ \BBA {} Rescorla%
+}{%
+{\protect \APACyear {1984}}%
+}]{%
+Rescorla1984}
+\APACinsertmetastar {%
+Rescorla1984}%
+\begin{APACrefauthors}%
+Grau, J\BPBI W.%
+\BCBT {}\ \BBA {} Rescorla, R\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1984}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Role of context in autoshaping} {Role of context in
+  autoshaping}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Experimental Psychology: Animal Behavior
+  Processes}{10}{}{324--332}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kaye%
+, Preston%
+, Szabo%
+, Druiff%
+\BCBL {}\ \BBA {} Mackintosh%
+}{%
+Kaye%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1987}}%
+}]{%
+Kaye1987}
+\APACinsertmetastar {%
+Kaye1987}%
+\begin{APACrefauthors}%
+Kaye, H.%
+, Preston, G\BPBI C.%
+, Szabo, L.%
+, Druiff, H.%
+\BCBL {}\ \BBA {} Mackintosh, N\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1987}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Context specificity of conditioning and latent
+  inhibition: Evidence for a dissociation of latent inhibition and associative
+  interference} {Context specificity of conditioning and latent inhibition:
+  Evidence for a dissociation of latent inhibition and associative
+  interference}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{The Quarterly Journal of Experimental Psychology
+  Section B}{39}{2}{127-145}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Swartzentruber%
+}{%
+Swartzentruber%
+}{%
+{\protect \APACyear {1995}}%
+}]{%
+Swartzentruber1995}
+\APACinsertmetastar {%
+Swartzentruber1995}%
+\begin{APACrefauthors}%
+Swartzentruber, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1995}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Modulatory mechanisms in pavlovian conditioning}
+  {Modulatory mechanisms in pavlovian conditioning}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Animal Learning \& Behavior}{23}{}{123-143}.
+\PrintBackRefs{\CurrentBib}
+
 \end{thebibliography}

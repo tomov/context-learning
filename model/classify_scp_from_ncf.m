@@ -15,7 +15,7 @@ folder = 'classify_outputs_3';
 %masks = {'hippocampus', 'ofc', 'striatum', 'vmpfc', 'rlpfc', 'bg', 'pallidum'};
 
 
-% these is for Sam's first suggestion; classifying condition based on training trials & 1 held out trial
+% these is for Sam's first suggestion; classifying context id based on training trials & 1 held out trial
 %mat_folder = 'classify_heldout_trial_18';
 jobss = {};
 jobss{1} = [86987048, 86987049, 86987051, 86987053, 86987056, 86987058, 86987060]; % hold out trial 1

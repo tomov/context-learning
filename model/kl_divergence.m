@@ -1,6 +1,9 @@
 % get the voxel statistics of the D_KL model
 %
 clear all;
+close all;
+
+analyze;
 
 EXPT = contextExpt();
 modeldir = EXPT.modeldir;
@@ -92,7 +95,10 @@ assert(sum(which_prev_trials) == size(prev_trials_act, 1)); % this is crucial
 assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
 next_trials_corr = response.corr(which_next_trials);
 % so now, both next_trials_corr and prev_trials_act
-% contain 20 subjects x 9 runs x 19 trials (1..19)
+% contain 20 subjects x 9 runs x 19 trials (2..20 or 1..19, respectively)
+
+prev_trial_surprise = model.surprise(which_prev_trials); % run after analyze.m; for sanity check
+assert(size(prev_trials_act, 1) == size(next_trials_corr, 1));
 
 % only look at trials 10..19
 %
@@ -142,12 +148,10 @@ blah0 = [];
 for trial = cutoff+1:19 
     which_pattern = zeros(19, 1);
     which_pattern(trial) = 1;
+    % note that these are logicals in the prev_trials_act space, where 1
+    % trial is missing (the last one)
     which_trials = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
     assert(size(which_trials, 1) == size(prev_trials_act, 1));
-
-    surprise = model.surprise(which_trials);
-    next_trial_correct = response.corr(which_rows & isTrain & trialId == trial - 1);
-
     
     blah1 = [blah1; prev_trials_act(next_trials_corr == 1 & which_trials, roi_id)];
     blah0 = [blah0; prev_trials_act(next_trials_corr == 0 & which_trials, roi_id)];

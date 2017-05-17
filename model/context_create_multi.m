@@ -166,7 +166,7 @@ function multi = context_create_multi(glmodel, subj, run)
             end
 
         % correct vs. wrong pmod @ outcome
-        % TODO WTFFFFFFFFFFFFFFFFFFFFFFFFFF
+        % TODO WTFFFFFFFFFFFFFFFFFFFFFFFFFF didn't work on NCF
         %
         case 3
             % correct vs. wrong (1/0) @ feedback / outcome onset (trials 1..20)
@@ -226,6 +226,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % outcome pmod @ outcome -- sanity check
         % should be same as 5
+        % result: nothing after FWE; asymmetrical V1
         %
         case 6 % GOOD
             % sick vs. not sick @ feedback / outcome onset (trials 1..20)
@@ -633,7 +634,10 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % Expected outcome @ RT
         % Actual outcome @ feedback
-        % result: 
+        % result: expected -- strange bilateral in ventricles (behind
+        %                     hippo), after cluster FWE
+        %         actual -- lots: negative of above, bilateral insula,
+        %                   bilateral OFC?
         %
         case 25
             % Expected outcome @ RT
@@ -669,7 +673,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{3} = zeros(size(contextRole(which_train)));
             
         % Prediction error @ feedback
-        % result: 
+        % result: all over the place but not where we want it
         %
         case 26
             % Prediction error @ feedback
@@ -730,6 +734,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % context role @ trial onset, no separate trial_onset regressor
         % (almost same as 28)
+        % result: don't get hippocampus in 'additive - irrelevant' !
         %
         case 29
             % context role @ trial onset
@@ -1340,6 +1345,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % (outcome) onset
         % https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
         % result: bilteral rlPFC, after cluster FWE
+        %         negative -- mPFC, posterior cingulate
         %
         case 53
             % Q(t,:) = prior distribution over causal structures (models)
@@ -1353,7 +1359,16 @@ function multi = context_create_multi(glmodel, subj, run)
             logs = log2(P) - log2(Q); 
             logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
             surprise = sum(P .* logs, 2);
-            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
+            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0, e.g. we get -Infs
+
+            % sanity check
+            %logs2 = log2(P ./ Q); 
+            %logs2(isnan(logs2)) = 0; % lim_{x->0} x log(x) = 0
+            %disp(P)
+            %disp(logs)
+            %disp(logs2)
+            %logs2 - logs
+            %assert(abs(sum(sum(logs2(~isinf(logs2)) - logs(~isinf(logs))))) < 1e-6);
             
             multi.names{1} = 'feedback';
             multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
@@ -1392,6 +1407,7 @@ function multi = context_create_multi(glmodel, subj, run)
             end            
             
         % main effect but 1 s durations
+        % result: additive - irrelevant becomes less significant
         case 56
             % context role @ feedback/outcome onset
             % 
@@ -1406,6 +1422,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = ones(size(contextRole(which_train)));
 
         % main effect but 3 s durations at trial onset
+        % result: nothing for additive - irrelevant
         case 57
             % context role @ trial onset
             % 
@@ -1414,6 +1431,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{1} = 3 * ones(size(contextRole(which_train)));            
 
         % main effect but 1 s durations at ITI (sanity check)
+        % result: nothing for additive - irrelevant
         case 58
             % context role @ trial onset
             % 
@@ -1877,7 +1895,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
         % Response @ trial onset  INCLUDING test trials
         % same as 68
-        % result: similar visual activations as 79 but the positiveo one
+        % result: similar visual activations as 79 but the positive one
         %         disappeared
         %
         case 79

@@ -11,53 +11,45 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Database file #1: context_paper.bib.bib
-Warning--I didn't find a database entry for "ChalnickBillman1988a"
-Warning--I didn't find a database entry for "Feigenbaum1963a"
-Warning--I didn't find a database entry for "Hill1983a"
-Warning--I didn't find a database entry for "OhlssonLangley1985a"
-Warning--I didn't find a database entry for "Matlock2001"
-Warning--I didn't find a database entry for "NewellSimon1972a"
-Warning--I didn't find a database entry for "ShragerLangley1990a"
 apacite.bst [2012/02/25 v6.01 APA bibliography style]
-You've used 1 entry,
+You've used 4 entries,
             6735 wiz_defined-function locations,
-            1257 strings with 10695 characters,
-and the built_in function-call counts, 1570 in all, are:
-= -- 193
-> -- 10
-< -- 65
-+ -- 66
-- -- 2
-* -- 95
-:= -- 305
-add.period$ -- 4
-call.type$ -- 1
-change.case$ -- 17
+            1266 strings with 11072 characters,
+and the built_in function-call counts, 7530 in all, are:
+= -- 924
+> -- 61
+< -- 361
++ -- 387
+- -- 8
+* -- 496
+:= -- 1431
+add.period$ -- 16
+call.type$ -- 4
+change.case$ -- 68
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 35
-empty$ -- 69
-format.name$ -- 14
-if$ -- 300
+cite$ -- 8
+duplicate$ -- 188
+empty$ -- 293
+format.name$ -- 102
+if$ -- 1402
 int.to.chr$ -- 0
-int.to.str$ -- 2
+int.to.str$ -- 8
 missing$ -- 0
-newline$ -- 25
-num.names$ -- 8
-pop$ -- 22
+newline$ -- 102
+num.names$ -- 32
+pop$ -- 99
 preamble$ -- 1
-purify$ -- 4
+purify$ -- 16
 quote$ -- 0
-skip$ -- 119
+skip$ -- 500
 stack$ -- 0
-substring$ -- 74
-swap$ -- 23
-text.length$ -- 2
+substring$ -- 422
+swap$ -- 115
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 80
+type$ -- 320
 warning$ -- 0
-while$ -- 5
+while$ -- 33
 width$ -- 0
-write$ -- 26
-(There were 7 warnings)
+write$ -- 124
