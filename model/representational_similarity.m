@@ -1,6 +1,7 @@
 % representational similarity analysis
 % get the beta vectors from each subject (to be used for the single-subject
 % RDM)
+% mask must be nifti file, e.g. 'visual.nii'
 %
 function representational_similarity(mask)
 %clear all;

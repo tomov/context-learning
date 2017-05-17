@@ -18,12 +18,23 @@ striatum_rois = {'Caudate_L', 'Caudate_R', ...
                  'Putamen_L', 'Putamen_R'};
 pallidum_rois = {'Pallidum_L', 'Pallidum_R'};
 bg_rois = [striatum_rois, pallidum_rois];
+occipital_rois = {'Occipital_Sup_L', 'Occipital_Sup_R', ...
+                  'Occipital_Mid_L', 'Occipital_Mid_R', ...
+                  'Occipital_Inf_L', 'Occipital_Inf_R'};
+visual_rois = [{'Calcarine_L', 'Calcarine_R', 'Cuneus_L', 'Cuneus_R', ...
+               'Lingual_L', 'Lingual_R'}, occipital_rois];
+motor_rois = {'Precentral_L', 'Precentral_R'};
+sensory_rois = {'Postcentral_L', 'Postcentral_R'};
 rlpfc_rois = {'Frontal_Inf_Tri_L', 'Frontal_Inf_Tri_R'}; % TODO wrong
+
+interesting_rois = [hippocampus_rois, ofc_rois, vmpfc_rois, striatum_rois, pallidum_rois];
+
+negative = false;
 
 % which regions to include (must match names exactly as in AAL).
 % Consult http://qnl.bu.edu/obart/explore/AAL/ or roi_names below
 %
-my_rois = pallidum_rois;
+my_rois = interesting_rois;
 filename = 'bla.nii'; % where to save the mask 
 
 
@@ -48,8 +59,16 @@ end
 
 % all_rois = containers.Map(roi_names, roi_idxs);
 
-atlas.img(~ismember(atlas.img, my_idxs)) = 0; % remove all regions we don't care about
-atlas.img(ismember(atlas.img, my_idxs)) = 1; % make our regions uniform
+if ~negative
+    % normal
+    which = ismember(atlas.img, my_idxs);
+else
+    % negative -- mask == everything that's not in our ROIs
+    which = ~ismember(atlas.img, my_idxs) & atlas.img > 0;
+end
+atlas.img(~which) = 0; % remove all regions we don't care about
+atlas.img(which) = 1; % make our regions uniform
+
 
 save_untouch_nii(atlas, filename); % save the mask
 

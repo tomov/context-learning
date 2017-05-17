@@ -1,3 +1,8 @@
+%representational_similarity_part2('visual.nii', 'correlation');
+%representational_similarity_part2('motor.nii', 'correlation');
+%representational_similarity_part2('sensory.nii', 'correlation');
+
+%{
 contrasts = {'M2_value', 'M1_value', 'M2_value - M1_value', ...
      'M2_update', 'M1_update', 'M2_update - M1_update', ...
      'irrelevantxM2_value', 'irrelevantxM1_value', 'irrelevantxM2_value - irrelevantxM1_value', ...
@@ -20,6 +25,9 @@ for j = 1:length(contrasts)
         end        
     end
 end
+%}
+
+
 
 %{
 l = 0;

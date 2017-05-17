@@ -2765,9 +2765,83 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{3} = 'RT';
             multi.onsets{3} = -1 + cellfun(@str2num, actualFeedbackOnset(which_train))';
             multi.durations{3} = zeros(size(contextRole(which_train)));            
+            
+            
+            
+        % Prediction error using subject choices @ feedback
+        % result:
+        %
+        case 113
+            % Prediction error @ feedback
+            %
+            multi.names{1} = 'prediction_error';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            pressed_sick = strcmp(response.keys(which_train), 'left');
+            PE = r' - pressed_sick'; % outcome - subject predicted outcome for trials 1..20
+            if std(PE) > 1e-6 % only include if variable
+                multi.pmod(1).name{1} = 'actual';
+                multi.pmod(1).param{1} = PE;
+                multi.pmod(1).poly{1} = 1; % first order  
+            end
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+                        
+        % Prediction error using subject choices @ feedback
+        % same as 113 + const regressor @ RT
+        % result:
+        %
+        case 114
+            % Prediction error @ feedback
+            %
+            multi.names{1} = 'prediction_error';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            pressed_sick = strcmp(response.keys(which_train), 'left');
+            PE = r' - pressed_sick'; % outcome - subject predicted outcome for trials 1..20
+            if std(PE) > 1e-6 % only include if variable
+                multi.pmod(1).name{1} = 'actual';
+                multi.pmod(1).param{1} = PE;
+                multi.pmod(1).poly{1} = 1; % first order  
+            end
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            % const @ RT (trials 1..20) TODO some trials don't have
+            % responses
+            %
+            multi.names{3} = 'keypress';
+            multi.onsets{3} = -1 + cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
                         
     end
 
 end 
-            
+           
 
+%{
+grid search over hyperparameter space
+nested cross-validation -- two numbers
+   two numbers: held out perf & nested CV perf (training)
+   pick hyperparameter settings that maximize the nested CV performance
+   -- for those, look at held out performace
+       
+do it separately for each ROI
+
+
+
+DO STATS on the RDMs (rmanova + t-tests)
+
+run control ROIs e.g. Motor cortex or V1
+
+%}

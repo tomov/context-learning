@@ -4,7 +4,7 @@
 close all;
 clear all;
 
-mask = 'striatum.nii';
+mask = 'sensory.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
