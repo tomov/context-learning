@@ -7,7 +7,7 @@ EXPT = contextExpt();
 modeldir = EXPT.modeldir;
 %V = spm_vol(fullfile(modeldir, ['model59'], ['subj1'], sprintf('beta_%04d.nii',1)));
 %V = spm_vol(fullfile(modeldir, ['model53'], ['con1'], sprintf('con_%04d.nii',1)));
-V = spm_vol(fullfile(modeldir, ['model53'], ['con1'], 'spmT_0001.nii'));
+V = spm_vol(fullfile(modeldir, ['model53'], ['con1'], 'spmT_0001.nii')); % T-value map
 Y = spm_read_vols(V);
 
 cor = mni2cor([34 -64 48],V.mat)
@@ -17,6 +17,25 @@ Y(cor(1), cor(2), cor(3)) % sanity check -- should be 8.8376
 %
 [~, i] = sort(Y(:), 'descend');
 [max_vox_x, max_vox_y, max_vox_z] = ind2sub(size(Y), i(1:20)); % pick top 20 voxels
+
+% find some random voxels as controls
+%
+rand_vox_x = nan(20, 1);
+rand_vox_y = nan(20, 1);
+rand_vox_z = nan(20, 1);
+for i = 1:numel(rand_vox_x)
+    while true
+        x = randi(size(Y, 1));
+        y = randi(size(Y, 2));
+        z = randi(size(Y, 3));
+        if Y(x, y, z) ~= 0
+            rand_vox_x(i) = x;
+            rand_vox_y(i) = y;
+            rand_vox_z(i) = z;
+            break
+        end
+    end
+end
 
 % max_voxels = max voxel from each interesting cluster
 % obtained from Show Results Table from ccnl_view(contextExpt(), 53,
@@ -76,6 +95,17 @@ for subj = sss
                 value = Y(max_vox_x(j), max_vox_y(j), max_vox_z(j));
                 prev_trials(idx, j + numel(max_voxels)) = value;
             end
+            % the "average" voxel, for a sanity check
+            %
+            prev_trials(idx, 1 + numel(max_voxels) + numel(max_vox_x)) = nanmean(Y(:));
+            % also find the activation in some random voxels
+            % for sanity check
+            %
+            for j = 1:numel(rand_vox_x)
+                value = Y(rand_vox_x(j), rand_vox_y(j), rand_vox_z(j));
+                assert(~isnan(value));
+                prev_trials(idx, j + 1 + numel(max_voxels) + numel(max_vox_x)) = value;
+            end
         end
     end
 end
@@ -84,7 +114,9 @@ prev_trials_act = prev_trials;
 analyze;
 %}
 
-load('kl_divergence_59.mat');
+%save('kl_divergence_59_with_controls.mat');
+
+load('kl_divergence_59_with_controls.mat');
 
 which_prev_trials = which_rows & isTrain & trialId ~= 20;
 which_next_trials = which_rows & isTrain & trialId ~= 1;
@@ -99,6 +131,8 @@ prev_trial_surprise = model.surprise(which_prev_trials); %  for sanity check
 assert(size(prev_trials_act, 1) == size(prev_trial_surprise, 1));
 prev_trials_corr = response.corr(which_prev_trials);
 
+model_corr = strcmp(model.keys, corrAns); % for sanity check
+model_prev_trials_corr = model_corr(which_prev_trials);
 
 % only look at trials cutoff+1..19
 %
@@ -131,13 +165,13 @@ sems = [sems; sem(mean(prev_trials_act(next_trials_corr == 1 & which_10_19, 8:en
 
 figure;
 barweb(means, sems);
-legend({'correct', 'wrong'});
-ylabel('activation ~ D_{KL} on previous trial');
+legend({'subj correct on next', 'subj wrong on next'});
+ylabel('activation ~ D_{KL}');
 xticklabels([rois, {'top 20 voxels'}]);
 
 
 
-%% activation vs. current trial performance, collapsed across trials
+%% activation vs. CURRENT trial performance, collapsed across trials
 % CONFOUND: being wrong activates everything more; we're taking this at
 % feedback time...
 %
@@ -145,25 +179,59 @@ xticklabels([rois, {'top 20 voxels'}]);
 means = [];
 sems = [];
 sem = @(x) std(x) / sqrt(length(x));
+labels = {};
+
 for i = 1:numel(rois)
     means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, i)), ...
                     mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, i))];
     sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, i)), ...
                   sem(prev_trials_act(prev_trials_corr == 0 & which_10_19, i))];
+    labels = [labels, rois(i)];
 end
 
-% top 20
-means = [means; mean(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
-                mean(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
-sems = [sems; sem(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
-              sem(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
+% top voxels
+for i = 1:numel(max_vox_x)
+    idx = i + numel(max_voxels);
+    means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+                    mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+    sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+                  sem(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+    labels = [labels, {['top voxel ', num2str(i)]}];
+end
+
+% top 20 voxels averaged
+%means = [means; mean(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
+%                mean(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
+%sems = [sems; sem(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
+%              sem(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
+
+% average voxel
+idx = 1 + numel(max_voxels) + numel(max_vox_x);
+means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+                mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+              sem(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+labels = [labels, {'average voxel'}];
+
+% random voxels
+for i = 1:numel(rand_vox_x)
+    idx = i +  + 1 + numel(max_voxels) + numel(max_vox_x);
+    means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+                    mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+    sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
+                  sem(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
+    labels = [labels, {['rand voxel ', num2str(i)]}];
+end
+
 
 
 figure;
 barweb(means, sems);
-legend({'correct', 'wrong'});
-ylabel('activation ~ D_{KL} on current trial');
-xticklabels([rois, {'top 20 voxels'}]);
+legend({'subj correct on cur', 'subj wrong on cur'});
+ylabel('activation ~ D_{KL}');
+xticklabels(labels);
+xtickangle(90);
+title('Voxel activation vs. performance on current trial');
 
 
 %% activation / D_KL vs. next / current trial performance, trial-by-trial
@@ -177,10 +245,12 @@ roi_id = 1;
 % plot activation in given ROI, or D_KL from the model
 plot_what = {prev_trials_act, prev_trial_surprise};
 y_labels = {'activation ~ D_{KL}', 'D_{KL}'};
-titles = {rois{roi_id}, 'model'};
+titles = {['Top voxel from ', rois{roi_id}], 'D_{KL} from model'};
 % separated by whether it's correct on the next trial, or the current trial
-plot_wrt_what = {next_trials_corr, prev_trials_corr};
-legends = {{'correct on next', 'wrong on next'}, {'correct on cur', 'wrong on cur'}};
+plot_wrt_what = {next_trials_corr, prev_trials_corr, model_prev_trials_corr};
+legends = {{'subj correct on next', 'subj wrong on next'}, ...
+           {'subj correct on cur', 'subj wrong on cur'}, ...
+           {'model correct on cur', 'model wrong on cur'}};
 
 for plot_what_idx = 1:numel(plot_what)
     y = plot_what{plot_what_idx};

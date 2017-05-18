@@ -36,6 +36,14 @@ if strcmp(method, 'patternnet')
 
     % View confusion matrix
     [c,cm,ind,per] = confusion(targets,outputs);
+
+    % patternnet wants column feature vectors, so we rotated those
+    % but the rest of the code expects them to be rotated
+    % so we undo that...
+    % 
+    inputs = inputs';
+    targets = targets';
+    outputs = outputs';
     
     accuracy = classify_get_accuracy(outputs, targets);
     fprintf('Success rate = %.2f%%\n', accuracy);
