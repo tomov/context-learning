@@ -1,6 +1,6 @@
-%representational_similarity_part2('visual.nii', 'correlation');
-%representational_similarity_part2('motor.nii', 'correlation');
-%representational_similarity_part2('sensory.nii', 'correlation');
+%representational_similarity_part2('visual.nii', 'euclidean');
+%representational_similarity_part2('motor.nii', 'euclidean');
+%representational_similarity_part2('sensory.nii', 'euclidean');
 
 %{
 contrasts = {'M2_value', 'M1_value', 'M2_value - M1_value', ...

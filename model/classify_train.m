@@ -40,9 +40,7 @@ if strcmp(method, 'patternnet')
     net.divideParam.trainRatio = 70/100;
     net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
-    if ~is_local
-        net.trainParam.showWindow = false; % don't show GUI on NCF
-    end
+    net.trainParam.showWindow = false; % don't show GUI on NCF
 
     % Train the Network
     [net,tr] = train(net,inputs,targets);
@@ -62,6 +60,14 @@ if strcmp(method, 'patternnet')
     fprintf('SAVING net to %s\n', outFilename);
     save(outFilename, 'net');
 
+    % patternnet wants column feature vectors, so we rotated those
+    % but the rest of the code expects them to be rotated
+    % so we undo that...
+    % 
+    inputs = inputs';
+    targets = targets';
+    outputs = outputs';
+    
     accuracy = classify_get_accuracy(outputs, targets);
     fprintf('Success rate = %.2f%%\n', accuracy);    
     

@@ -100,13 +100,17 @@ assert(size(prev_trials_act, 1) == size(prev_trial_surprise, 1));
 prev_trials_corr = response.corr(which_prev_trials);
 
 
-% only look at trials 10..19
+% only look at trials cutoff+1..19
 %
-cutoff = 10;
+cutoff = 0; % 0 or 10
 which_pattern = [zeros(cutoff, 1); ones(19-cutoff, 1)];
 which_10_19 = logical(repmat(which_pattern, size(prev_trials_act, 1)/19, 1));
 assert(size(which_10_19, 1) == size(prev_trials_act, 1));
 
+
+
+%% activation vs. next trial performance, collapsed across trials
+%
 
 means = [];
 sems = [];
@@ -133,6 +137,38 @@ xticklabels([rois, {'top 20 voxels'}]);
 
 
 
+%% activation vs. current trial performance, collapsed across trials
+% CONFOUND: being wrong activates everything more; we're taking this at
+% feedback time...
+%
+
+means = [];
+sems = [];
+sem = @(x) std(x) / sqrt(length(x));
+for i = 1:numel(rois)
+    means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, i)), ...
+                    mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, i))];
+    sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, i)), ...
+                  sem(prev_trials_act(prev_trials_corr == 0 & which_10_19, i))];
+end
+
+% top 20
+means = [means; mean(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
+                mean(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
+sems = [sems; sem(mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, 8:end), 2)), ...
+              sem(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
+
+
+figure;
+barweb(means, sems);
+legend({'correct', 'wrong'});
+ylabel('activation ~ D_{KL} on current trial');
+xticklabels([rois, {'top 20 voxels'}]);
+
+
+%% activation / D_KL vs. next / current trial performance, trial-by-trial
+%
+
 %
 % by trial
 %
@@ -141,6 +177,7 @@ roi_id = 1;
 % plot activation in given ROI, or D_KL from the model
 plot_what = {prev_trials_act, prev_trial_surprise};
 y_labels = {'activation ~ D_{KL}', 'D_{KL}'};
+titles = {rois{roi_id}, 'model'};
 % separated by whether it's correct on the next trial, or the current trial
 plot_wrt_what = {next_trials_corr, prev_trials_corr};
 legends = {{'correct on next', 'wrong on next'}, {'correct on cur', 'wrong on cur'}};
@@ -180,7 +217,7 @@ for plot_what_idx = 1:numel(plot_what)
 
         figure;
         barweb(means, sems);
-        title(rois{roi_id});
+        title(titles{plot_what_idx});
         legend(legends{plot_wrt_what_idx});
         xlabel('trial');
         xticklabels(labels);

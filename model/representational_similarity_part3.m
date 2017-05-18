@@ -4,7 +4,9 @@
 close all;
 clear all;
 
-mask = 'sensory.nii';
+%rois = {'hippocampus.nii', 'striatum.nii', 'pallidum.nii', 'ofc.nii', 'vmpfc.nii', 'visual.nii', 'motor.nii', 'sensory.nii'};
+
+mask = 'mask.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
@@ -92,17 +94,18 @@ userOptions.analysisName='blah';
 userOptions.rootPath = '~/Downloads/'; % TODO how to turn off saving the figure?
 pairwiseCorrelateRDMs({avgRDM, Model}, userOptions, struct('figureNumber', 3,'fileName',[]));
 
-
-%% aggregates
-%
+sem = @(x) std(x) / sqrt(length(x));
 
 conditions = {'irr', 'mod', 'add'};
 
+%{
+%
+% aggregates
+%
+
 figure;
 
-sem = @(x) std(x) / sqrt(length(x));
-
-% all pairs of conditions
+%% all pairs of conditions
 %
 means1 = [];
 sems1 = [];
@@ -113,7 +116,8 @@ bla = [];
 for i = 1:size(cond_pairs, 1)
     cond1 = cond_pairs(i, 1);
     cond2 = cond_pairs(i, 2);
-    subRDM = avgRDM.RDM(condition(trial_row) == cond1 & condition(trial_col) == cond2 & runNotReal(trial_row) ~= runNotReal(trial_col));
+    RDM_mask = condition(trial_row) == cond1 & condition(trial_col) == cond2 & runNotReal(trial_row) ~= runNotReal(trial_col);
+    subRDM = avgRDM.RDM(RDM_mask);
     mean_dissim = mean(subRDM(:));
     sem_dissim = sem(subRDM(:));
     if i <= 3
@@ -139,7 +143,7 @@ title(['ROI: ', m{1}]);
 
 
 
-% pairs of trials form different conditions (3)
+%% pairs of trials form different conditions (3)
 %
 % remember, the RDM is flipped! 1 = diff conditions, 0 = same condition
 % i.e. we're taking the yellow stuff from showRDMs(conditionRDM)
@@ -174,7 +178,7 @@ ylim([min(means2) * 0.95, max(means2) * 1.05]);
 
 
 
-% zoom in on pairs of trials from same condition vs. diff conditions
+%% zoom in on pairs of trials from same condition vs. diff conditions
 %
 [p,tbl,stats] = anova1([diff_cond_subRDM; same_cond_subRDM], [ones(size(diff_cond_subRDM)); zeros(size(same_cond_subRDM))], 'off');
 
@@ -190,7 +194,7 @@ title(sprintf('p = %f', p));
 %hist(same_run_subRDM);
 
 
-% pairs of runs within each condition
+%% pairs of runs within each condition
 %
 means4 = [];
 sems4 = [];
@@ -198,22 +202,23 @@ labels = {};
 run_in_group_pairs = [1 2; 1 3; 2 3; 1 1; 2 2; 3 3];
 
 for cond = 1:3
-    m = [];
-    s = [];
+    means = [];
+    sems = [];
     for i = 1:size(run_in_group_pairs, 1)
         run1 = run_in_group_pairs(i, 1);
         run2 = run_in_group_pairs(i, 2);
-        subRDM = avgRDM.RDM(condition(trial_row) == cond & condition(trial_col) == cond & runInCond(trial_row) == run1 & runInCond(trial_col) == run2);
+        RDM_mask = condition(trial_row) == cond & condition(trial_col) == cond & runInCond(trial_row) == run1 & runInCond(trial_col) == run2;
+        subRDM = avgRDM.RDM(RDM_mask);
         mean_dissim = mean(subRDM(:));
         sem_dissim = sem(subRDM(:));
-        m = [m, mean_dissim];
-        s = [s, sem_dissim];
+        means = [means, mean_dissim];
+        sems = [sems, sem_dissim];
         if cond == 1
             labels = [labels; ['Run ', num2str(run1), '-', 'Run ', num2str(run2)]];
         end
     end
-    means4 = [means4; m];
-    sems4 = [sems4; s];
+    means4 = [means4; means];
+    sems4 = [sems4; sems];
 end
 
 subplot(1, 4, 4);
@@ -222,3 +227,39 @@ legend(labels);
 ylabel('mean trial distance (from subject-average RDM)');
 ylim([min(means4(:)) * 0.95, max(means4(:)) * 1.05]);
 xticklabels(conditions);
+
+%}
+
+
+%% all pairs of conditions, by trial
+%
+cond_pairs = [1 2; 1 1; 1 3; 2 2; 2 3; 3 3];
+
+figure;
+
+for i = 1:size(cond_pairs, 1)
+    cond1 = cond_pairs(i, 1);
+    cond2 = cond_pairs(i, 2);
+    means1 = [];
+    sems1 = [];
+    labels = {};
+    
+    for j = 1:max(trial)
+        RDM_mask = condition(trial_row) == cond1 & condition(trial_col) == cond2 ...
+                   & runNotReal(trial_row) ~= runNotReal(trial_col) ...
+                   & trial(trial_row) == j & trial(trial_col) == j;
+        subRDM = avgRDM.RDM(RDM_mask);
+        mean_dissim = mean(subRDM(:));
+        sem_dissim = sem(subRDM(:));
+        means1 = [means1, mean_dissim];
+        sems1 = [sems1, sem_dissim];
+        %labels = [labels, ['#', num2str(j)]];
+    end
+    
+    subplot(3, 2, i);
+    barweb(means1, sems1);
+    xticklabels({'trials'});
+    ylabel('mean trial distance');
+    ylim([min(means1) * 0.95, max(means1) * 1.05]);
+    title([m{1}, ': ', conditions{cond1}, '-', conditions{cond2}]);
+end

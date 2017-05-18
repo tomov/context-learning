@@ -847,6 +847,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % + PE @ feedback (outcome) onset
         % without the separate trial_onset regressor
         % (almost same as 32; also look a 30/31)
+        % result: prediction_error -- all over the place; big blob in mPFC
         %
         case 33
             % M1 (irrelevant), M2 (modulatory) & M3 (additive) predicted values @ trial onset (trials 1..20)
@@ -2769,7 +2770,8 @@ function multi = context_create_multi(glmodel, subj, run)
             
             
         % Prediction error using subject choices @ feedback
-        % result:
+        % result: 'actual' -- weird left cuneus after cluster FWE
+        %                    for P = 0.005, also mPFC
         %
         case 113
             % Prediction error @ feedback
@@ -2794,7 +2796,7 @@ function multi = context_create_multi(glmodel, subj, run)
                         
         % Prediction error using subject choices @ feedback
         % same as 113 + const regressor @ RT
-        % result:
+        % WRONG: doesn't work, also events too close together
         %
         case 114
             % Prediction error @ feedback
@@ -2823,25 +2825,153 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{3} = 'keypress';
             multi.onsets{3} = -1 + cellfun(@str2num, actualFeedbackOnset(which_train))';
             multi.durations{3} = zeros(size(contextRole(which_train)));
-                        
+
+            
+        % regressors 1s around trial onset time
+        % to see how things change around it
+        %
+        case 115
+            % const @ trial onset - 1 (trials 1..24)
+            % 
+            multi.names{1} = 'before_trial_onset';
+            multi.onsets{1} = -1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+
+            % const @ trial onset (trials 1..24)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset + 1 (trials 1..24)
+            % 
+            multi.names{3} = 'after_trial_onset';
+            multi.onsets{3} = 1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{3} = zeros(size(contextRole(which_all)));
+            
+        % regressors 0.5s around trial onset time
+        % to see how things change around it
+        % similar to 115
+        %
+        case 116
+            % const @ trial onset - 0.5 (trials 1..24)
+            % 
+            multi.names{1} = 'before_trial_onset';
+            multi.onsets{1} = -0.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+
+            % const @ trial onset (trials 1..24)
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset + 0.5 (trials 1..24)
+            % 
+            multi.names{3} = 'after_trial_onset';
+            multi.onsets{3} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{3} = zeros(size(contextRole(which_all)));
+
+        % regressors before trial onset time
+        % to see how things change around it
+        % similar to 116
+        %
+        case 117
+            % const @ trial onset - 1.5 (trials 1..24)
+            % 
+            multi.names{1} = '1.5_before_trial_onset';
+            multi.onsets{1} = -1.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+
+            % const @ trial onset - 1 (trials 1..24)
+            % 
+            multi.names{2} = '1_before_trial_onset';
+            multi.onsets{2} = -1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset - 0.5 (trials 1..24)
+            % 
+            multi.names{3} = '0.5_before_trial_onset';
+            multi.onsets{3} = -0.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{3} = zeros(size(contextRole(which_all)));
+
+        % regressors after trial onset time
+        % to see how things change around it
+        % similar to 116
+        %
+        case 118
+            % const @ trial onset (trials 1..24)
+            % 
+            multi.names{1} = 'trial_onset';
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{1} = zeros(size(contextRole(which_all)));
+
+            % const @ trial onset + 0.5 (trials 1..24)
+            % 
+            multi.names{2} = '0.5_after_trial_onset';
+            multi.onsets{2} = 0.5 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{2} = zeros(size(contextRole(which_all)));
+            
+            % const @ trial onset + 1 (trials 1..24)
+            % 
+            multi.names{3} = '1_after_trial_onset';
+            multi.onsets{3} = 1 + cellfun(@str2num, actualChoiceOnset(which_all))';
+            multi.durations{3} = zeros(size(contextRole(which_all)));
+            
+        % regressors 0.5s around feedback time
+        % to see how things change around it
+        % similar to 115
+        %
+        case 119
+            % const @ feedback onset - 0.5 (trials 1..20)
+            % 
+            multi.names{1} = 'before_feedback_onset';
+            multi.onsets{1} = -0.5 + cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+
+            % const @ feedback onset (trials 1..20)
+            % 
+            multi.names{2} = 'feedback_onset';
+            multi.onsets{2} = cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+            % const @ feedback onset + 0.5 (trials 1..20)
+            % 
+            multi.names{3} = 'after_feedback_onset';
+            multi.onsets{3} = 0.5 + cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+            
+
+        % regressors 0.5s around feedback time
+        % to see how things change around it
+        % similar to 115
+        %
+        case 120
+            trial_onsets = cellfun(@str2num, actualChoiceOnset(which_all))';
+            iti_onsets = cellfun(@str2num, actualItiOnset(which_all))';
+            iti_offsets = cellfun(@str2num, actualItiOffset(which_all))';
+            
+            % const during trials (trials 1..24)
+            % 
+            multi.names{1} = 'trial';
+            multi.onsets{1} = trial_onsets;
+            multi.durations{1} = iti_onsets - trial_onsets;
+
+            % const during ITIs (trials 1..24)
+            % 
+            multi.names{2} = 'iti';
+            multi.onsets{2} = iti_onsets;
+            multi.durations{2} = iti_offsets - iti_onsets;
+       
+        % main effect @ trial onset, test trials only
+        %
+        case 121
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_test))';
+            multi.durations{1} = zeros(size(contextRole(which_test)));
+            
     end
 
 end 
-           
-
-%{
-grid search over hyperparameter space
-nested cross-validation -- two numbers
-   two numbers: held out perf & nested CV perf (training)
-   pick hyperparameter settings that maximize the nested CV performance
-   -- for those, look at held out performace
-       
-do it separately for each ROI
-
-
-
-DO STATS on the RDMs (rmanova + t-tests)
-
-run control ROIs e.g. Motor cortex or V1
-
-%}
