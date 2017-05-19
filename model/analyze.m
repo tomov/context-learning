@@ -23,12 +23,21 @@ model.P1 = []; % posterior P(M1 | ...) at each trial
 model.P2 = []; % posterior P(M2 | ...) at each trial
 model.P3 = []; % posterior P(M3 | ...) at each trial
 model.P4 = []; % posterior P(M4 | ...) at each trial
+model.P = []; % concatenated posteriors
 model.ww1 = []; % weights for M1 
 model.ww2 = []; % weights for M2
 model.ww3 = []; % weights for M3
 model.ww4 = []; % weights for M4
 model.values = []; % values at each trial
+model.valuess = []; % values for each sturcture at each trial
 model.surprise = []; % D_KL at each trial
+model.likelihoods = []; % likelihoods for each causal structure
+model.new_values = []; % updated values AFTER the trial
+model.new_valuess = []; % updated values for each sturcture AFTER each trial
+model.Sigma1 = []; % Sigma for M1 at each trial
+model.Sigma2 = []; % Sigma for M2 at each trial
+model.Sigma3 = []; % Sigma for M3 at each trial
+model.Sigma4 = []; % Sigma for M4 at each trial
 
 % HACKSAUCE TODO FIXME
 % to predict stuff based on the classifier
@@ -63,7 +72,7 @@ for who = subjects
             prev_trials_surprise(sub2ind(size(prev_trials_surprise), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww, values] = train(prev_trials_surprise, c, r, prior_variance, inv_softmax_temp, which_models, false);
+            [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(prev_trials_surprise, c, r, prior_variance, inv_softmax_temp, which_models, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;
@@ -79,6 +88,7 @@ for who = subjects
             model.P2(which_train) = P(:,2);
             model.P3(which_train) = P(:,3);
             model.P4(which_train) = P(:,4);
+            model.P(which_train, :) = P;
             priors = which_models / sum(which_models);
             Q = [priors; P(1:end-1,:)];
             model.Q1(which_train) = Q(:,1);
@@ -90,11 +100,19 @@ for who = subjects
             model.ww3(which_train, :) = ww{3};
             model.ww4(which_train, :) = ww{4};
             model.values(which_train, :) = values;
+            model.valuess(which_train, :) = valuess;
             logs = log2(P ./ Q); 
             logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
             surprise = sum(P .* logs, 2);
             surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
             model.surprise(which_train, :) = surprise;
+            model.likelihoods(which_train, :) = likelihoods;
+            model.new_values(which_train, :) = new_values;
+            model.new_valuess(which_train, :) = new_valuess;
+            model.Sigma1(which_train, :) = Sigma{1};
+            model.Sigma2(which_train, :) = Sigma{2};
+            model.Sigma3(which_train, :) = Sigma{3};
+            model.Sigma4(which_train, :) = Sigma{4};
             
 
             % See what the model predicts for the test trials of that run

@@ -1,4 +1,4 @@
-function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
+function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
@@ -45,6 +45,10 @@ valuess = []; % history of predicted outcomes, one for each model (causal struct
 likelihoods = []; % history of likelihoods, one for each model (causal structure)
 new_values = []; % same as values but after the update (for the same stimulus)
 new_valuess = []; % same as valuess but after the update (for the same stimulus)
+Sigma{1} = []; % history of Sigma_1:n for M1
+Sigma{2} = []; % history of Sigma_1:n for M2
+Sigma{3} = []; % history of Sigma_1:n for M3
+Sigma{4} = []; % history of Sigma_1:n for M4
 
 % train
 %
@@ -148,6 +152,11 @@ for n = 1:N % for each trial
     ww{2} = [ww{2}; reshape(ww_n{2}(1:3,1:2), [1 6])];
     ww{3} = [ww{3}; ww_n{3}([1:2 4:5])'];
     ww{4} = [ww{4}; ww_n{4}(1:2)'];
+    
+    Sigma{1} = [Sigma{1}; Sigma_n{1}(eye(3) == 1)'];
+    Sigma{2} = [Sigma{2}; Sigma_n{2}(eye(4) == 1)'];
+    Sigma{3} = [Sigma{3}; [Sigma_n{3}(eye(6) == 1)', reshape(Sigma_n{3}([1:2 4:5], [1:2 4:5]), 16, 1)']];
+    Sigma{4} = [Sigma{4}; Sigma_n{4}(eye(3) == 1)'];
 
     new_values = [new_values; value(x_n, xx_n, xb_n, k_n, c_n, ww_n, P_n)];
     new_valuess = [new_valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];

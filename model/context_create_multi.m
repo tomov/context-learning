@@ -3023,17 +3023,20 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
             multi.durations{1} = zeros(size(contextRole(which_train)));
             
-            % correct vs. wrong (0/1) @ feedback / outcome onset (WRONG trials 1..20)
-            % 
-            multi.names{2} = 'wrong';
-            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_error))';
-            multi.durations{2} = zeros(size(contextRole(which_error)));
-            
             % const @ trial onset (trials 1..20)
             % 
-            multi.names{3} = 'trial_onset';
-            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
-            multi.durations{3} = zeros(size(contextRole(which_train)));
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+
+            % correct vs. wrong (0/1) @ feedback / outcome onset (WRONG trials 1..20)
+            % 
+            if sum(which_error) > 0
+                multi.names{3} = 'wrong';
+                multi.onsets{3} = cellfun(@str2num,actualFeedbackOnset(which_error))';
+                multi.durations{3} = zeros(size(contextRole(which_error)));
+            end
+            
             
         % Bayesian surprise = Kullback?Leibler divergence @ feedback
         % (outcome) onset
@@ -3057,19 +3060,21 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).param{1} = surprise';
             multi.pmod(1).poly{1} = 1; % first order        
 
-            % wrong trials @ feedback onset
-            %
-            multi.names{2} = 'wrong';
-            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_error))';
-            multi.durations{2} = zeros(size(contextRole(which_error)));
-            
             % const @ trial onset (trials 1..20)
             % 
-            multi.names{3} = 'trial_onset';
-            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
-            multi.durations{3} = zeros(size(contextRole(which_train)));
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
             
+            % correct vs. wrong (0/1) @ feedback / outcome onset (WRONG trials 1..20)
+            % 
+            if sum(which_error) > 0
+                multi.names{3} = 'wrong';
+                multi.onsets{3} = cellfun(@str2num,actualFeedbackOnset(which_error))';
+                multi.durations{3} = zeros(size(contextRole(which_error)));
+            end
         
+            
             
     end
 

@@ -6,6 +6,8 @@
 function representational_similarity_rdm_kalman(distance_measure)
 %distance_measure = 'correlation';
 
+%analyze;
+%save('analyze.mat');
 load('analyze.mat');
 
 % addpath('rsatoolbox/Engines/'); % RSA toolbox <------- for NCF / CBS
@@ -24,11 +26,13 @@ kalmanRDMs = nan(n_runs * n_trials_per_run, n_runs * n_trials_per_run, n_subject
 
 % massage the features a little bit
 %
-model.P1 = [model.P1; zeros(4,1)];
-model.P2 = [model.P2; zeros(4,1)];
-model.P3 = [model.P3; zeros(4,1)];
 
 % copy P's from last training trial for test trials
+%{
+%model.P1 = [model.P1; zeros(4,1)];
+%model.P2 = [model.P2; zeros(4,1)];
+%model.P3 = [model.P3; zeros(4,1)];
+
 x = repmat(model.P1(trialId == 20), 1, 4);
 x = x';
 x = x(:);
@@ -41,10 +45,16 @@ x = repmat(model.P3(trialId == 20), 1, 4);
 x = x';
 x = x(:);
 model.P3(isTrain == 0) = x;
+%}
+
 
 % which features from the kalman filter to use to compute the RDM
 %
-all_subj_feature_vecs = [model.P1, model.P2, model.P3];
+all_subj_feature_vecs = [model.P(:,1:3), model.values, model.valuess(:,1:3), model.surprise, ...
+                         model.likelihoods(:,1:3), model.new_values, model.new_valuess(:,1:3), ...
+                         model.ww1, model.ww2, model.ww3, model.ww4, ...
+                         model.Sigma1, model.Sigma2, model.Sigma3, model.Sigma4];
+all_subj_feature_vecs = [all_subj_feature_vecs; zeros(4, size(all_subj_feature_vecs, 2))];
 
 subj_idx = 0;
 for subj = kalman_subjs
