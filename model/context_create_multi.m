@@ -2829,7 +2829,18 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % regressors 1s around trial onset time
         % to see how things change around it
-        %
+        % results:
+        %    before_trial_onset: low visual; neg motor & medial
+        %         frontal
+        %    trial_onset: lots visual, left motor (right hand)!; neg
+        %         medial frontal
+        %    after_trial_onset: visual, neg med frontal
+        %    trial_onset - before_trial_onset: left motor (right
+        %         hand), med cinculate cortex; NO visual?
+        %    after_trial_onset - before_trial_onset: lots visual!, left
+        %         motor, ACC
+        %    after_trial_onset - trial_onset: lots mPFC!, neg visual!
+        % 
         case 115
             % const @ trial onset - 1 (trials 1..24)
             % 
@@ -2839,7 +2850,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
             % const @ trial onset (trials 1..24)
             % 
-            multi.names{2} = 'trial_onset';
+            multi.names{2} = 'at_trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
             multi.durations{2} = zeros(size(contextRole(which_all)));
             
@@ -2852,6 +2863,7 @@ function multi = context_create_multi(glmodel, subj, run)
         % regressors 0.5s around trial onset time
         % to see how things change around it
         % similar to 115
+        % results: poor version of 115; ignore these (too close)
         %
         case 116
             % const @ trial onset - 0.5 (trials 1..24)
@@ -2862,7 +2874,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
             % const @ trial onset (trials 1..24)
             % 
-            multi.names{2} = 'trial_onset';
+            multi.names{2} = 'at_trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_all))';
             multi.durations{2} = zeros(size(contextRole(which_all)));
             
@@ -2875,6 +2887,17 @@ function multi = context_create_multi(glmodel, subj, run)
         % regressors before trial onset time
         % to see how things change around it
         % similar to 116
+        % results: 
+        %    1.5_before_trial_onset: pos visual & left motor?; neg mPFC?
+        %    1_before_trial_onset: neg visual & left motor; pos mPFC ?
+        %                   (opposite of above)
+        %    0.5_before_trial_onset: same as first one
+        %    0.5_before_trial_onset - 1.5_before_trial_onset: lots of very
+        %              high activity in visual & parietal
+        %    1_before_trial_onset - 1.5_before_trial_onset: neg visual &
+        %              left motor, pos mPFC
+        %    0.5_before_trial_onset - 1_before_trial_onset: negative of
+        %              above
         %
         case 117
             % const @ trial onset - 1.5 (trials 1..24)
@@ -2898,11 +2921,17 @@ function multi = context_create_multi(glmodel, subj, run)
         % regressors after trial onset time
         % to see how things change around it
         % similar to 116
+        % results:
+        %   1_after_trial_onset - 0.5_after_trial_onset: neg left motor;
+        %     low pos visual
+        %   1_after_trial_onset - trial_onset: pos mPFC; neg left motor &
+        %   visual
+        %   0.5_after_trial_onset - trial_onset: same
         %
         case 118
             % const @ trial onset (trials 1..24)
             % 
-            multi.names{1} = 'trial_onset';
+            multi.names{1} = '0_trial_onset';
             multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_all))';
             multi.durations{1} = zeros(size(contextRole(which_all)));
 
@@ -2921,6 +2950,13 @@ function multi = context_create_multi(glmodel, subj, run)
         % regressors 0.5s around feedback time
         % to see how things change around it
         % similar to 115
+        % results:
+        %   feedback_onset - before_feedback_onset: pos mPFC; neg left
+        %      motor; low visual
+        %   after_feedback_onset - before_feedback_onset: massive neg
+        %      visual, left motor & cingulate; pos mPFC
+        %   afterfeedback_onset - feedback_onset: neg visual & motor; pos
+        %      mPFC
         %
         case 119
             % const @ feedback onset - 0.5 (trials 1..20)
@@ -2931,7 +2967,7 @@ function multi = context_create_multi(glmodel, subj, run)
 
             % const @ feedback onset (trials 1..20)
             % 
-            multi.names{2} = 'feedback_onset';
+            multi.names{2} = 'at_feedback_onset';
             multi.onsets{2} = cellfun(@str2num, actualFeedbackOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
@@ -2942,9 +2978,11 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{3} = zeros(size(contextRole(which_train)));
             
 
-        % regressors 0.5s around feedback time
-        % to see how things change around it
-        % similar to 115
+        % continuous regressors during iti and trials
+        % results:
+        %   trial = positive activations everywhere; visual in particular
+        %   iti = negative everywhere
+        %   trial - iti: positive everywhere (!!YES!!!)
         %
         case 120
             trial_onsets = cellfun(@str2num, actualChoiceOnset(which_all))';
@@ -2971,6 +3009,67 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{1} = condition;
             multi.onsets{1} = cellfun(@str2num, actualChoiceOnset(which_test))';
             multi.durations{1} = zeros(size(contextRole(which_test)));
+            
+            
+        % correct vs. wrong pmod @ outcome
+        % similar to 3 but done right
+        %
+        case 122
+            which_error = which_train & ~response.corr;
+            
+            % const @ feedback onset (trials 1..20)
+            %
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            % correct vs. wrong (0/1) @ feedback / outcome onset (WRONG trials 1..20)
+            % 
+            multi.names{2} = 'wrong';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_error))';
+            multi.durations{2} = zeros(size(contextRole(which_error)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+            
+        % Bayesian surprise = Kullback?Leibler divergence @ feedback
+        % (outcome) onset
+        % + error regressor on wrong trials, to account for error signal
+        %
+        case 123
+            which_error = which_train & ~response.corr;
+            
+            priors = which_models / sum(which_models);
+            Q = [priors; P(1:end-1,:)];
+            logs = log2(P) - log2(Q); 
+            logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
+            surprise = sum(P .* logs, 2);
+            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0, e.g. we get -Infs
+
+            multi.names{1} = 'feedback';
+            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            multi.pmod(1).name{1} = 'surprise';
+            multi.pmod(1).param{1} = surprise';
+            multi.pmod(1).poly{1} = 1; % first order        
+
+            % wrong trials @ feedback onset
+            %
+            multi.names{2} = 'wrong';
+            multi.onsets{2} = cellfun(@str2num,actualFeedbackOnset(which_error))';
+            multi.durations{2} = zeros(size(contextRole(which_error)));
+            
+            % const @ trial onset (trials 1..20)
+            % 
+            multi.names{3} = 'trial_onset';
+            multi.onsets{3} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{3} = zeros(size(contextRole(which_train)));
+            
+        
             
     end
 

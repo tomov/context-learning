@@ -112,10 +112,17 @@ for i = cols
     leg = {}; % legend
     for j = 1:length(multi.names)
         n = length(multi.onsets{j});
-        x = [multi.onsets{j} - eps; multi.onsets{j}; multi.onsets{j} + multi.durations{j}'; multi.onsets{j} + multi.durations{j}' + eps];
+        onsets = multi.onsets{j};
+        durations = multi.durations{j};
+        if ~(size(durations, 1) == size(onsets, 1) && size(durations, 2) == size(onsets, 2))
+            % need to rotate one of the vectors
+            durations = durations';
+        end
+        assert(size(durations, 1) == size(onsets, 1) && size(durations, 2) == size(onsets, 2));
+        x = [onsets - eps; onsets; onsets + durations; onsets + durations + eps];
         x = x(:)';
         x = [0 x max(trs)];
-        if ~isempty(strfind(SPM.xX.name{i}, [multi.names{j}, '*']))
+        if ~isempty(strfind(SPM.xX.name{i}, [' ', multi.names{j}, '*']))
             y = [zeros(1,n); ones(1,n); ones(1,n); zeros(1,n)];
             y = y(:)';
             y = [0 y 0];
@@ -125,7 +132,7 @@ for i = cols
             
         if isfield(multi, 'pmod') && j <= length(multi.pmod)
             for k = 1:length(multi.pmod(j).name)
-                if ~isempty(strfind(SPM.xX.name{i}, [multi.pmod(j).name{k}, '^']))
+                if ~isempty(strfind(SPM.xX.name{i}, ['x', multi.pmod(j).name{k}, '^']))
                     y = reshape(multi.pmod(j).param{k}, 1, n);
                     y = [zeros(1,n); y; y; zeros(1,n)];
                     y = y(:)';

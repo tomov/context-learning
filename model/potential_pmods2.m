@@ -1,5 +1,64 @@
 % run after analyze
 %
+%analyze
+
+%% D_KL vs. next trial RT
+%
+which_prev_trials = which_rows & isTrain & trialId ~= 20;
+which_next_trials = which_rows & isTrain & trialId ~= 1;
+
+prev_trial_surprise = model.surprise(which_prev_trials);
+next_trial_rt = response.rt(which_next_trials);
+
+figure;
+scatter(prev_trial_surprise, next_trial_rt);
+
+
+%% RTs by trial
+%
+no_response = strcmp(response.keys, 'None');
+
+labels = {};
+
+means = [];
+sems = [];
+sem = @(x) std(x) / sqrt(length(x));
+blah1 = [];
+blah0 = [];
+for trial = 1:24
+    if trial <= 20
+        which_trials = which_rows & isTrain & trialId == trial & ~no_response;
+    else
+        which_trials = which_rows & ~isTrain & trialId == trial - 20 & ~no_response;
+    end
+    %surprise = model.surprise(which_trials);
+    %next_trial_correct = response.corr(which_rows & isTrain & trialId == trial + 1);
+    rt = response.rt(which_trials);
+
+    %blah1 = [blah1; surprise(next_trial_correct == 1)];
+    %blah0 = [blah0; surprise(next_trial_correct == 0)];
+    %means = [means; mean(surprise(next_trial_correct == 1)) mean(surprise(next_trial_correct == 0))];
+    %sems = [sems; sem(surprise(next_trial_correct == 1)) sem(surprise(next_trial_correct == 0))];
+    means = [means; mean(rt)];
+    sems = [sems; sem(rt)];
+
+    labels = [labels; {sprintf('#%d', trial)}];
+end
+
+%means = [means; mean(blah1) mean(blah0)];
+%sems = [sems; sem(blah1) sem(blah0)];
+%labels = [labels; {'total'}];
+
+figure;
+barweb(means, sems);
+%legend({'correct on next', 'wrong on next'});
+xlabel('trial');
+xticklabels(labels);
+ylabel('RT (s)');
+
+
+%% other plots
+%
 
 %{
 %
