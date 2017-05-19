@@ -1,5 +1,7 @@
 % visualize the RDMs, compute RDM correlation for differnet models, plot
 % stuff
+% for reference, consult DEMO1_RSA_ROI_simulatedAndRealData from the rsa
+% toolbox
 %
 close all;
 clear all;
@@ -12,6 +14,7 @@ distance_measure = 'correlation';
 % as output by representational_similarity_part2.m
 m = regexp(mask,'\.','split');
 load(['rsa_rdms_', m{1}, '_', distance_measure, '.mat']);
+
 
 
 % subjectRDMs(11) = []; -- outlier???
@@ -83,6 +86,12 @@ Model(7).color = [0 1 0];
 Model(8).RDM = runNotRealRDM + runInCondRDM + firstRunInCondRDM + conditionRDM;
 Model(8).name = 'run + run in group + first run in group + condition';
 Model(8).color = [0 1 0];
+
+% as output by representational_similarity_rdm_kalman.m
+load(['rsa_rdms_kalman_', distance_measure, '.mat']);
+Model(9).RDM = avgKalmanRDM;
+Model(9).name = 'kalman';
+Model(9).color = [0 1 0];
 
 showRDMs(Model, 2);
 

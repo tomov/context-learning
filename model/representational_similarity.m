@@ -2,6 +2,8 @@
 % get the beta vectors from each subject (to be used for the single-subject
 % RDM)
 % mask must be nifti file, e.g. 'visual.nii'
+% for reference, consult DEMO1_RSA_ROI_simulatedAndRealData from the rsa
+% toolbox
 %
 function representational_similarity(mask)
 %clear all;
