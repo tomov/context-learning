@@ -8,7 +8,7 @@ clear all;
 
 %rois = {'hippocampus.nii', 'striatum.nii', 'pallidum.nii', 'ofc.nii', 'vmpfc.nii', 'visual.nii', 'motor.nii', 'sensory.nii'};
 
-mask = 'mask.nii';
+mask = 'striatum.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
@@ -92,6 +92,12 @@ load(['rsa_rdms_kalman_', distance_measure, '.mat']);
 Model(9).RDM = avgKalmanRDM;
 Model(9).name = 'kalman';
 Model(9).color = [0 1 0];
+
+% as output by representational_similarity_rdm_kalman.m
+load(['rsa_rdms_kalman_P_', distance_measure, '.mat']);
+Model(10).RDM = avgKalmanRDM;
+Model(10).name = 'kalman_P';
+Model(10).color = [0 1 0];
 
 showRDMs(Model, 2);
 

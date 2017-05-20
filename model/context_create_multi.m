@@ -70,7 +70,7 @@ function multi = context_create_multi(glmodel, subj, run)
     test_x = zeros(test_N, D);
     test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
     test_c = contextId(which_test) + 1;
-    [test_choices, test_values, test_valuess] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
+    [test_choices, test_values, test_valuess, predict] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
     save('context_create_multi.mat');
     
@@ -3075,6 +3075,92 @@ function multi = context_create_multi(glmodel, subj, run)
             end
         
             
+        % main effect BUT with the most likely structure (not the actual
+        % condition) based on subject's choices
+        %
+        case 124
+            % sanity check
+            %{ 
+            x1c3_choice = response.keys(which_test & cueId == 0 & contextId == 2);
+            x3c1_choice = response.keys(which_test & cueId == 2 & contextId == 0);
+            if ~strcmp(x1c3_choice, 'None') && ~strcmp(x3c1_choice, 'None')
+                x1c3_choice = strcmp(x1c3_choice, 'left');
+                x3c1_choice = strcmp(x3c1_choice, 'left');
+                
+                x1c3_idx = trialId(which_test & cueId == 0 & contextId == 2);
+                x3c1_idx = trialId(which_test & cueId == 2 & contextId == 0);
+                
+                x1c3_values = test_valuess(x1c3_idx, :);
+                x3c1_values = test_valuess(x3c1_idx, :);
+               
+                x1c3_probs = predict(x1c3_values);
+                x3c1_probs = predict(x3c1_values);
+                
+                x1c3_likelihoods = binopdf(x1c3_choice, 1, x1c3_probs);
+                x3c1_likelihoods = binopdf(x3c1_choice, 1, x3c1_probs);
+            end
+            %}
+            
+            % for sanity check with above
+            %which_trials = which_test & cueId ~= contextId & ~strcmp(response.keys, 'None');
+            which_trials = which_test & ~strcmp(response.keys, 'None');
+            if sum(which_trials) > 0
+                subj_choices = strcmp(response.keys(which_trials), 'left');
+                trial_idxs = trialId(which_trials);
+                
+                trial_values = test_valuess(trial_idxs, :);
+                trial_probs = predict(trial_values);
+                
+                %trial_likelihoods = arrayfun(@(i) binopdf(subj_choices(i), 1, trial_probs(i,:)), 1:numel(subj_choices), 'UniformOutput', false);
+                %trial_likelihoods = reshape(cell2mat(trial_likelihoods'), size(trial_probs)); % careful -- must transpose first
+                % FUCK ncf...
+                liks = nan(size(trial_probs));
+                for i = 1:size(trial_probs, 1) % for each test trial
+                    for j = 1:size(trial_probs, 2) % for each causal structure
+                        liks(i,j) = binopdf(subj_choices(i), 1, trial_probs(i, j));
+                    end
+                end
+                %assert(immse(liks, trial_likelihoods) < 1e-10);
+                
+                test_log_lik = sum(log(liks), 1);
+                test_log_lik = test_log_lik(:, 1:3); % exclude M4
+                [~, most_likely_M] = max(test_log_lik);
+                
+                % see if we match the actual condition, just FYI
+                %
+                M = -1;
+                if strcmp(condition, 'irrelevant')
+                    M = 1;
+                elseif strcmp(condition, 'modulatory')
+                    M = 2;
+                else
+                    assert(strcmp(condition, 'additive'));
+                    M = 3;
+                end
+                fprintf('   M = %d, most likely M = %d\n', M, most_likely_M);
+                if M ~= most_likely_M
+                    disp('                DIFFERENT!');
+                end
+                                
+                % most likely causal structure @ feedback
+                %
+                switch most_likely_M
+                    case 1
+                        multi.names{1} = 'irrelevant';
+                    case 2
+                        multi.names{1} = 'modulatory';
+                    case 3
+                        multi.names{1} = 'additive';
+                end
+                multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+                multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+                % const @ trial onset (trials 1..20)
+                % 
+                multi.names{2} = 'trial_onset';
+                multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+                multi.durations{2} = zeros(size(contextRole(which_train)));
+            end
             
     end
 

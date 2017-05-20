@@ -1,5 +1,30 @@
 All regressors apply to the training trials only (except for Model 2 which is discarded)
 
+Model 121 -- main effect @ trial onset for test trials only
+
+Model 123 -- KL divergence + wrong response @ feedback:
+
+    Regressor #1: 'feedback' @ feedback onset
+                  pmod 'surprise' = KL divergence 
+    Regressor #2: 'trial_onset' @ trial onset
+    Regressor #3: 'wrong' @ feedback onset only for trials where subject made an error
+
+    Contrasts:
+        ccnl_view(contextExpt(), 123, 'surprise');
+        ccnl_view(contextExpt(), 123, 'wrong');
+        ccnl_view(contextExpt(), 123, 'surprise - wrong');
+
+Model 122 -- wrong @ feedback:
+
+    Regressor #1: constant @ feedback onset
+    Regressor #2: constant @ trial onset
+    Regressor #3: wrong response @ feedback onset (only for trials where subject was wrong)
+
+    Contrasts:
+        ccnl_view(contextExpt(), 122, 'wrong - feedback');
+        ccnl_view(contextExpt(), 122, 'wrong');
+        ccnl_view(contextExpt(), 122, 'feedback');
+
 Model 1 -- main effect @ feedback:
 
     Regressor #1: context role (irrelevant, additive, or modulatory) @ feedback (outcome) time
@@ -325,7 +350,7 @@ Model 50 -- value pmod @ trial onset + prediction error pmod @ outcome onset
 
 Model 51 -- value pmod @ trial onset + prediction error pmod @ outcome onset (same as 50) w/o the const regressor
 
-Model 53 -- Bayesian surprise @ feedback (outcome) onset
+Model 53 -- KL divergence (Bayesian surprise) @ feedback (outcome) onset
 
     Regressor #1: pmod = Bayesian surprise = Kullback–Leibler divergence of prior to posterior @ feedback (outcome) onset time
     Regressor #2: constant @ trial onset (to account for visual activation)

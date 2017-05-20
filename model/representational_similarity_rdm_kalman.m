@@ -50,10 +50,15 @@ model.P3(isTrain == 0) = x;
 
 % which features from the kalman filter to use to compute the RDM
 %
+%{
 all_subj_feature_vecs = [model.P(:,1:3), model.values, model.valuess(:,1:3), model.surprise, ...
                          model.likelihoods(:,1:3), model.new_values, model.new_valuess(:,1:3), ...
                          model.ww1, model.ww2, model.ww3, model.ww4, ...
                          model.Sigma1, model.Sigma2, model.Sigma3, model.Sigma4];
+%}
+%all_subj_feature_vecs = [model.P(:,1:3)];                     
+%all_subj_feature_vecs = [model.Sigma1, model.Sigma2, model.Sigma3, model.Sigma4];
+all_subj_feature_vecs = [model.ww1, model.ww2, model.ww3, model.ww4];
 all_subj_feature_vecs = [all_subj_feature_vecs; zeros(4, size(all_subj_feature_vecs, 2))];
 
 subj_idx = 0;
@@ -76,5 +81,5 @@ all_kalman = cat(3, kalmanRDMs, avgKalmanRDM); % TODO why does concatRDMs_unwrap
 
 showRDMs(avgKalmanRDM, 1);
 
-save(['rsa_rdms_kalman_', distance_measure, '.mat'], 'avgKalmanRDM');
+save(['rsa_rdms_kalman_ww_', distance_measure, '.mat'], 'avgKalmanRDM');
 
