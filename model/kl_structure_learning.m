@@ -3,12 +3,18 @@
 
 % activity ~ D_KL vs. structure learning effect from test trial choices
 %
-% That's great. In terms of linking this to behavior, we should try to address the more interesting aspects of the task, namely the test trials. If these regions are computing Bayesian updates, then their activity during training trials should be related to behavioral performance at test. For each condition, there is a key contrast:
+% That's great. In terms of linking this to behavior, we should try to address the more interesting aspects of the task, namely the test trials. 
+% If these regions are computing Bayesian updates, then their activity during training trials should be related to behavioral performance at test. 
+% For each condition, there is a key contrast:
 % irrelevant: c = [1 1 -1 -1]
 % modulatory: c = [1 -1/3 -1/3 -1/3]
 % additive: c = [1 -1 1 - 1]
 % where the components are [x1c1, x1c3, x3c1, x3c3].
-% When you take the dot product between c and the choice probability at test, you get a measure of the "structure learning effect". So the idea would be to first estimate a separate KL regressor for each block, and then correlate this beta (e.g., peak voxels from lateral OFC and angular gyrus based on your previous GLM) with the structure learning effect on each block. You can also try this at the subject level with the analysis you already ran, looking at the correlation between beta and the structure learning effect across subjects.
+% When you take the dot product between c and the choice probability at test, you get a measure of the "structure learning effect".
+% So the idea would be to first estimate a separate KL regressor for each block, and then correlate this beta
+% (e.g., peak voxels from lateral OFC and angular gyrus based on your previous GLM) with the structure learning 
+% effect on each block. You can also try this at the subject level with the analysis you already ran, looking at the 
+% correlation between beta and the structure learning effect across subjects.
 
 
 % sanity check max voxel from 'surprise - wrong' contrast
@@ -154,29 +160,80 @@ assert(P < 1e-30);
 % TODO is this real hypothesis testing???
 
 
-%% within-subject
+%% within-subject analysis
 %
 % In the within-subject analysis, you would split the pairs into N lists and report the average 
 % correlation across subjects
 %
+r_means = [];
+r_sems = [];
+p_means = [];
+p_sems = [];
 
-for roi = 1:numel(rois)
+figure;
+
+for roi = 1:size(kl_betas, 3)
     kl_betas_roi = kl_betas(:, :, roi);
-    avg_r = 0;
-    avg_p = 0;
+    rs = [];
+    ps = [];
     for subj_idx = 1:n_subjects
-        [r, p] = corrcoef(structure_learnings(:, subj_idx), kl_betas_roi(:, subj_idx));
+        x = structure_learnings(:, subj_idx);
+        y = kl_betas_roi(:, subj_idx);
+        [r, p] = corrcoef(x, y);
         r = r(1,2);
         p = p(1,2);
-       % fprintf('       subj = %d, r = %f, p = %f\n', roi, r(1,2), p(1,2));
-        avg_r = avg_r + r;
-        avg_p = avg_p + p;
+        % fprintf('       subj = %d, r = %f, p = %f\n', roi, r(1,2), p(1,2));
+        rs = [rs, r];
+        ps = [ps, p];
+        
+        if roi <= numel(rois)
+            subplot(numel(rois), n_subjects, (roi - 1) * n_subjects + subj_idx);
+            scatter(x, y);
+            lsline;
+            %set(gca, 'XTick', []);
+            %set(gca, 'YTick', []);
+            if subj_idx == 1
+                ylabel(rois{roi}, 'Interpreter', 'none');
+            end
+            if roi == numel(rois)
+                xlabel(['Subj ', num2str(subj_idx)]);
+            end
+            if roi == 1 && subj_idx == 10
+                title('structure learning effect (x-axis) vs. KL betas from ''surprise - wrong'' contrast (y-axis):  within-subject analysis');
+            end
+        end
     end
     % average correlation across subjects
-    avg_r = avg_r / n_subjects;
-    avg_p = avg_p / n_subjects; % TODO this is certainly wrong
-    fprintf(' within-subject: ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, avg_r, avg_p);
+    % TODO is it okay to average the p's?
+    if roi < numel(rois)
+        fprintf(' within-subject: ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, mean(r), mean(p));
+    end
+    
+    r_means = [r_means; mean(rs) 0];
+    r_sems = [r_sems; sem(rs) 0];
+    p_means = [p_means; mean(ps) 0];
+    p_sems = [p_sems; sem(ps) 0];
 end
+
+
+figure;
+
+subplot(2, 1, 1);
+barweb(r_means, r_sems);
+ylabel('average r across subjects');
+xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
+xtickangle(60);
+xlabel('voxel');
+%set(gca, 'XTick', []);
+title('KL betas correlated with structure learning effect: within-subject analysis', 'Interpreter', 'none');
+
+subplot(2, 1, 2);
+barweb(p_means, p_sems);
+ylabel('average p across subjects');
+xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
+xtickangle(60);
+xlabel('voxel');
+%title('KL betas correlated with structure learning effect: within-subject analysis', 'Interpreter', 'none');
 
 %% between-subject
 % In the between-subjects analysis, you would have one pair per subject: 
@@ -194,8 +251,9 @@ for roi = 1:numel(rois)
     [r, p] = corrcoef(avg_kl_betas, avg_structure_learnings);
     r = r(1,2);
     p = p(1,2);
-    fprintf(' between-subject: ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, r, p);
+    fprintf(' between-subject: ROI = %25s, r = %f, p = %f\n', rois{roi}, r, p);
 end
+
 
 
 %% all -- this is WRONG but just for funzies
@@ -225,7 +283,6 @@ end
 
 figure;
 barweb(means, sems);
-%legend({'subj correct on next', 'subj wrong on next'});
 ylabel('average beta across runs and subjects');
 xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
 xtickangle(60);
