@@ -136,7 +136,7 @@ save('kl_structure_learning_effect.mat');
 
 load('kl_structure_learning_effect.mat');
 
-%% sanity check
+%% sanity check SLE
 %
 
 % take the SLE for the corresponding run only, compare to the used SLE
@@ -158,6 +158,28 @@ n = n_runs * n_subjects;
 P = (1/3)^k * (2/3)^(n-k) * nchoosek(n, k);
 assert(P < 1e-30);
 % TODO is this real hypothesis testing???
+
+
+%% sanity check betas
+%
+% make sure betas from peak voxels are > 0 and betas from random voxels are random
+%
+means = [];
+sems = [];
+for v_idx = 1:size(kl_betas, 3)
+    x = kl_betas(:,:,v_idx);
+    
+    means = [means; mean(x(:)) 0]; % TODO this is wrong again; between- vs. within-subjects
+    sems = [sems; sem(x(:)) 0];
+end
+
+figure;
+barweb(means, sems);
+ylabel('average beta across runs and subjects');
+xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
+xtickangle(60);
+xlabel('voxel');
+title('Betas from ccnl_view(EXPT, 123, ''surprise - wrong'')', 'Interpreter', 'none');
 
 
 %% within-subject analysis
@@ -186,6 +208,7 @@ for roi = 1:size(kl_betas, 3)
         rs = [rs, r];
         ps = [ps, p];
         
+        % plot stuff
         if roi <= numel(rois)
             subplot(numel(rois), n_subjects, (roi - 1) * n_subjects + subj_idx);
             scatter(x, y);
@@ -235,6 +258,7 @@ xtickangle(60);
 xlabel('voxel');
 %title('KL betas correlated with structure learning effect: within-subject analysis', 'Interpreter', 'none');
 
+
 %% between-subject
 % In the between-subjects analysis, you would have one pair per subject: 
 % (KL beta, average structure learning effect).
@@ -242,16 +266,30 @@ xlabel('voxel');
 % which is equivalent to computing the effect on the choice probabilities. Note that in this version you don't need to estimate a new GLM, you just use the subject-specific betas from the GLM you already estimated.
 %
 
+figure;
+
 for roi = 1:numel(rois)
     kl_betas_roi = kl_betas(:, :, roi);
     % average kl_beta and structure learning across runs
-    avg_kl_betas = mean(kl_betas_roi, 1);
     avg_structure_learnings = mean(structure_learnings, 1);
+    avg_kl_betas = mean(kl_betas_roi, 1);
     
-    [r, p] = corrcoef(avg_kl_betas, avg_structure_learnings);
+    x = avg_structure_learnings;
+    y = avg_kl_betas;
+    [r, p] = corrcoef(x, y);
+    
     r = r(1,2);
     p = p(1,2);
     fprintf(' between-subject: ROI = %25s, r = %f, p = %f\n', rois{roi}, r, p);
+    
+    % plot stuff
+    subplot(1, numel(rois), roi);
+    scatter(x, y);
+    lsline;
+    xlabel([rois{roi}, sprintf(', p = %.2f', p)], 'Interpreter', 'none');
+    if roi == 4
+        title('subject SLE averaged across runs (x-axis) vs. subject KL beta from ''surprise - wrong'' contrast (y-axis):  between-subject analysis');
+    end
 end
 
 
@@ -270,21 +308,3 @@ for roi = 1:numel(rois)
     fprintf(' overall (WRONG): ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, r, p);
 end
 
-%% sanity check -- make sure betas from peak voxels are > 0 and betas from random voxels are random
-%
-means = [];
-sems = [];
-for v_idx = 1:size(kl_betas, 3)
-    x = kl_betas(:,:,v_idx);
-    
-    means = [means; mean(x(:)) 0]; % TODO this is wrong again; between- vs. within-subjects
-    sems = [sems; sem(x(:)) 0];
-end
-
-figure;
-barweb(means, sems);
-ylabel('average beta across runs and subjects');
-xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
-xtickangle(60);
-xlabel('voxel');
-title('Betas from ccnl_view(EXPT, 123, ''surprise - wrong'')', 'Interpreter', 'none');
