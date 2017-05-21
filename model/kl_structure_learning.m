@@ -11,16 +11,34 @@
 % When you take the dot product between c and the choice probability at test, you get a measure of the "structure learning effect". So the idea would be to first estimate a separate KL regressor for each block, and then correlate this beta (e.g., peak voxels from lateral OFC and angular gyrus based on your previous GLM) with the structure learning effect on each block. You can also try this at the subject level with the analysis you already ran, looking at the correlation between beta and the structure learning effect across subjects.
 
 
-% max_voxels = max voxel from each interesting cluster
+% sanity check max voxel from 'surprise - wrong' contrast
+% to make sure our method of extracting these is correct
+EXPT = contextExpt();
+modeldir = EXPT.modeldir;
+V = spm_vol(fullfile(modeldir, ['model123'], ['con6'], 'spmT_0001.nii')); % T-value map
+Y = spm_read_vols(V);
+cor = mni2cor([34  -68 52],V.mat)
+Y(cor(1), cor(2), cor(3)) % sanity check -- should be 6.9122 (as seen in ccnl_view Show Results Table)
+assert(abs(Y(cor(1), cor(2), cor(3)) - 6.9122) < 1e-3);
+
+%% load the KL betas and compute the structure learning effect
+%
+%{
+
+% peak_voxels = peak voxel from each interesting cluster
 % obtained from Show Results Table from ccnl_view(contextExpt(), 123,
 % 'surprise - wrong');
+% note that we're overriding the max_voxels from kl_divergence.m TODO coupling
 %
-
 rois = {'Angular_R', 'Parietal_Inf_R', 'Frontal_Mid_2_L', 'Location not in atlas', 'Frontal_Mid_2_R', 'OFCmed_R', 'Frontal_Mid_2_R'};
-max_voxels = {[34  -68 52], [40  -46 38], [-42 54  2], [-30 62  22], [36  54  0], [18  42  -16], [52  32  32]};
+peak_voxels = {[34  -68 52], [40  -46 38], [-42 54  2], [-30 62  22], [36  54  0], [18  42  -16], [52  32  32]};
 
-structure_learnings = nan(n_runs, n_subjects); % structure learning effect for each run for each subject
-kl_betas = nan(n_runs, n_subjects, numel(max_voxels)); % beta KL for each subject for each run, in each voxel we're interested in 
+
+structure_learnings = nan(n_runs, n_subjects); % structure learning effect (SLE) for each run for each subject
+kl_betas = nan(n_runs, n_subjects, numel(peak_voxels)); % beta KL for each subject for each run, in each voxel we're interested in 
+
+sl_sanity = nan(n_runs, n_subjects, 3); % structure learning effect (SLE), sanity check -- one for each condition
+run_conditions = nan(n_runs, n_subjects); % 1 = irrelevant, 2 = modulatory, 3 = additive
 
 subj_idx = 0;
 for subj = sss
@@ -60,17 +78,25 @@ for subj = sss
         c = [];
         if strcmp(condition, 'irrelevant')
             c = [1 1 -1 -1];
+            run_conditions(run, subj_idx) = 1;
         elseif strcmp(condition, 'modulatory')
             c = [1 -1/3 -1/3 -1/3];
+            run_conditions(run, subj_idx) = 2;
         else
             assert(strcmp(condition, 'additive'));
             c = [1 -1 1 -1];
+            run_conditions(run, subj_idx) = 3;
         end
         % structure learning effect = contrast * test choice probabilities
         s = c * choices';
         structure_learnings(run, subj_idx) = s;
         
-        % get the betas for the peak voxels
+        sl_sanity(run, subj_idx, 1) = [1 1 -1 -1] * choices';
+        sl_sanity(run, subj_idx, 2) = [1 -1/3 -1/3 -1/3] * choices';
+        sl_sanity(run, subj_idx, 3) = [1 -1 1 -1] * choices';
+        
+        % get the betas for the peak voxels and other voxels of interest
+        % TODO dedupe with kl_divergence.m
         %
         beta_idx = surprise_regressors_idxs(run);
         assert(~isempty(strfind(SPM.xX.name{beta_idx}, 'surprise')));
@@ -81,22 +107,52 @@ for subj = sss
         Y = spm_read_vols(V);
         % for each ROI, get the activation at the max voxel
         %
-        for roi = 1:numel(max_voxels)
-            voxel = max_voxels{roi};
+        for roi = 1:numel(peak_voxels)
+            voxel = peak_voxels{roi};
             cor = mni2cor(voxel, V.mat);
             value = Y(cor(1), cor(2), cor(3));
             fprintf('     max voxel %d = %f\n', roi, value);
             kl_betas(run, subj_idx, roi) = value;
         end
+        % also find the activation in some random voxels
+        % for sanity check
+        %
+        for j = 1:numel(rand_vox_x)
+            value = Y(rand_vox_x(j), rand_vox_y(j), rand_vox_z(j));
+            assert(~isnan(value));
+            kl_betas(run, subj_idx, j + numel(peak_voxels)) = value;
+        end 
     end
 end
 
-%save('kl_structure_learning_effect.mat');
+save('kl_structure_learning_effect.mat');
+%}
 
+load('kl_structure_learning_effect.mat');
 
+%% sanity check
+%
 
+% take the SLE for the corresponding run only, compare to the used SLE
+% (sanity check for the sanity check; should by definition be equal)
+[c, r] = meshgrid(1:n_subjects, 1:n_runs); % TODO why should they be flipped?
+ind = sub2ind(size(sl_sanity), r(:), c(:), run_conditions(:));
+x = reshape(sl_sanity(ind), size(structure_learnings));
+assert(immse(x, structure_learnings) < 1e-20);
 
-%load('kl_structure_learning_effect.mat');
+sl_max = max(sl_sanity, [], 3); % take the max SLE 
+which_runs_had_max_SLEs = abs(sl_max - structure_learnings) < 1e-6; % which runs had the max SLE from the 3 possible conditions
+% H0 = we fucked up and assigned them randomly i.e. for a given run of a given subject, the probability that the max
+% SLE across conditions corresponds to the SLE for the actual condition is 1/3. So H0 says each
+% element of which_runs_had_max_SLEs is ~ Bern(1/3)
+% So # of 1's in which_runs_had_max_SLEs is ~ Binom(n, 1/3) with n = 9 * 20 (runs * subjects)
+% see how likely (P(# of 1's in which_runs_had_max_SLEs | H0)) this is
+k = sum(which_runs_had_max_SLEs(:));
+n = n_runs * n_subjects;
+P = (1/3)^k * (2/3)^(n-k) * nchoosek(n, k);
+assert(P < 1e-30);
+% TODO is this real hypothesis testing???
+
 
 %% within-subject
 %
@@ -104,7 +160,7 @@ end
 % correlation across subjects
 %
 
-for roi = 1:size(kl_betas, 3)
+for roi = 1:numel(rois)
     kl_betas_roi = kl_betas(:, :, roi);
     avg_r = 0;
     avg_p = 0;
@@ -129,7 +185,7 @@ end
 % which is equivalent to computing the effect on the choice probabilities. Note that in this version you don't need to estimate a new GLM, you just use the subject-specific betas from the GLM you already estimated.
 %
 
-for roi = 1:size(kl_betas, 3)
+for roi = 1:numel(rois)
     kl_betas_roi = kl_betas(:, :, roi);
     % average kl_beta and structure learning across runs
     avg_kl_betas = mean(kl_betas_roi, 1);
@@ -144,7 +200,7 @@ end
 
 %% all -- this is WRONG but just for funzies
 %
-for roi = 1:size(kl_betas, 3)
+for roi = 1:numel(rois)
     kl_betas_roi = kl_betas(:, :, roi);
     % list all kl_beta and structure learning (subjects and runs lumped together)
     all_kl_betas = kl_betas_roi(:);
@@ -153,5 +209,25 @@ for roi = 1:size(kl_betas, 3)
     [r, p] = corrcoef(all_kl_betas, all_structure_learnings);
     r = r(1,2);
     p = p(1,2);
-    fprintf(' between-subject: ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, r, p);
+    fprintf(' overall (WRONG): ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, r, p);
 end
+
+%% sanity check -- make sure betas from peak voxels are > 0 and betas from random voxels are random
+%
+means = [];
+sems = [];
+for v_idx = 1:size(kl_betas, 3)
+    x = kl_betas(:,:,v_idx);
+    
+    means = [means; mean(x(:)) 0]; % TODO this is wrong again; between- vs. within-subjects
+    sems = [sems; sem(x(:)) 0];
+end
+
+figure;
+barweb(means, sems);
+%legend({'subj correct on next', 'subj wrong on next'});
+ylabel('average beta across runs and subjects');
+xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
+xtickangle(60);
+xlabel('voxel');
+title('Betas from ccnl_view(EXPT, 123, ''surprise - wrong'')', 'Interpreter', 'none');

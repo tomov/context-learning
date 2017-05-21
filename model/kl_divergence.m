@@ -11,7 +11,8 @@ V = spm_vol(fullfile(modeldir, ['model53'], ['con1'], 'spmT_0001.nii')); % T-val
 Y = spm_read_vols(V);
 
 cor = mni2cor([34 -64 48],V.mat)
-Y(cor(1), cor(2), cor(3)) % sanity check -- should be 8.8376
+Y(cor(1), cor(2), cor(3)) % sanity check -- should be 8.6376 (as seen in ccnl_view Show Results Table)
+assert(abs(Y(cor(1), cor(2), cor(3)) - 8.6376) < 1e-3);
 
 % find the actual max voxels for the D_KL model
 %
@@ -37,24 +38,24 @@ for i = 1:numel(rand_vox_x)
     end
 end
 
-% max_voxels = max voxel from each interesting cluster
+% peak_voxels = max voxel from each interesting cluster
 % obtained from Show Results Table from ccnl_view(contextExpt(), 53,
 % 'surprise');
 %
 rois = {'Angular\_R', 'Frontal\_Inf\_Oper\_R', 'Frontal\_Mid\_2\_R\_dorsal', ...
         'Frontal\_Mid\_2\_R\_ventral', 'OFCant\_R', 'Frontal\_Mid\_2\_L', ...
         'Frontal\_Sup\_2\_L', 'Frontal\_Inf\_Tri\_L'};
-max_voxels = {[34 -64 48], [48 20 34], [34 12 54], ...
+peak_voxels = {[34 -64 48], [48 20 34], [34 12 54], ...
               [36 56 -2],  [20 48 -16], [-42 56 2], ...
               [-24 60 -10], [-44 20 22]};
-rois_max_voxels = containers.Map(rois, max_voxels);
+rois_peak_voxels = containers.Map(rois, peak_voxels);
 
 % sanity check -- compare with ccnl_view(contextExpt(), 53, 'surprise'),
 % particularly the last column (= Stat in Show Results Table)
 %
-for j = 1:numel(max_voxels)
+for j = 1:numel(peak_voxels)
     roi = rois{j};
-    voxel = max_voxels{j};
+    voxel = peak_voxels{j};
     cor = mni2cor(voxel,V.mat);
     fprintf('%s --> %.4f %.4f %.4f = %.4f\n', roi, voxel(1), voxel(2), voxel(3), Y(cor(1), cor(2), cor(3)));
 end
@@ -67,7 +68,7 @@ n_subjects = numel(sss);
 %{
 n_trials_per_run = 20; % NOTE: 20 for model59, 24 for model60
 EXPT = contextExpt();
-prev_trials = zeros(numel(sss) * 9 * 19, numel(max_voxels) + numel(max_vox_x)); % col = ROI, row = activation of max voxel for given trial
+prev_trials = zeros(numel(sss) * 9 * 19, numel(peak_voxels) + numel(max_vox_x)); % col = ROI, row = activation of max voxel for given trial
 idx = 0;
 % the order here is essential -- it needs to match the way it's loaded by
 % load_data i.e. the way it's stored in fmri.csv
@@ -85,8 +86,8 @@ for subj = sss
             idx = idx + 1;
             % for each ROI, get the activation at the max voxel
             %
-            for j = 1:numel(max_voxels)
-                voxel = max_voxels{j};
+            for j = 1:numel(peak_voxels)
+                voxel = peak_voxels{j};
                 cor = mni2cor(voxel, V.mat);
                 value = Y(cor(1), cor(2), cor(3));
                 prev_trials(idx, j) = value;
@@ -96,18 +97,18 @@ for subj = sss
             %
             for j = 1:numel(max_vox_x)
                 value = Y(max_vox_x(j), max_vox_y(j), max_vox_z(j));
-                prev_trials(idx, j + numel(max_voxels)) = value;
+                prev_trials(idx, j + numel(peak_voxels)) = value;
             end
             % the "average" voxel, for a sanity check
             %
-            prev_trials(idx, 1 + numel(max_voxels) + numel(max_vox_x)) = nanmean(Y(:));
+            prev_trials(idx, 1 + numel(peak_voxels) + numel(max_vox_x)) = nanmean(Y(:));
             % also find the activation in some random voxels
             % for sanity check
             %
             for j = 1:numel(rand_vox_x)
                 value = Y(rand_vox_x(j), rand_vox_y(j), rand_vox_z(j));
                 assert(~isnan(value));
-                prev_trials(idx, j + 1 + numel(max_voxels) + numel(max_vox_x)) = value;
+                prev_trials(idx, j + 1 + numel(peak_voxels) + numel(max_vox_x)) = value;
             end
         end
     end
@@ -194,7 +195,7 @@ end
 
 % top voxels
 for i = 1:numel(max_vox_x)
-    idx = i + numel(max_voxels);
+    idx = i + numel(peak_voxels);
     means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
                     mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
     sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
@@ -209,7 +210,7 @@ end
 %              sem(mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, 8:end), 2))];
 
 % average voxel
-idx = 1 + numel(max_voxels) + numel(max_vox_x);
+idx = 1 + numel(peak_voxels) + numel(max_vox_x);
 means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
                 mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
 sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
@@ -218,7 +219,7 @@ labels = [labels, {'average voxel'}];
 
 % random voxels
 for i = 1:numel(rand_vox_x)
-    idx = i + 1 + numel(max_voxels) + numel(max_vox_x);
+    idx = i + 1 + numel(peak_voxels) + numel(max_vox_x);
     means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
                     mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
     sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
