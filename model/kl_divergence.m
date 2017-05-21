@@ -61,6 +61,9 @@ end
             
 sss = getGoodSubjects();
 
+n_runs = 9;
+n_subjects = numel(sss);
+
 %{
 n_trials_per_run = 20; % NOTE: 20 for model59, 24 for model60
 EXPT = contextExpt();
@@ -215,7 +218,7 @@ labels = [labels, {'average voxel'}];
 
 % random voxels
 for i = 1:numel(rand_vox_x)
-    idx = i +  + 1 + numel(max_voxels) + numel(max_vox_x);
+    idx = i + 1 + numel(max_voxels) + numel(max_vox_x);
     means = [means; mean(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
                     mean(prev_trials_act(prev_trials_corr == 0 & which_10_19, idx))];
     sems = [sems; sem(prev_trials_act(prev_trials_corr == 1 & which_10_19, idx)), ...
@@ -294,7 +297,6 @@ for plot_what_idx = 1:numel(plot_what)
         ylabel(y_labels{plot_what_idx});
     end
 end
-
 
 
 
