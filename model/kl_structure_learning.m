@@ -253,6 +253,8 @@ all_rs = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of correla
 
 figure;
 
+% TODO HACKSAUCE FIXME -- this is how you get log likelihoods instead of
+% structure learning for the correlations
 %structure_learnings = test_liks;
 
 for roi = 1:size(kl_betas, 3)

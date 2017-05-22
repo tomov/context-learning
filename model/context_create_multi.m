@@ -3000,6 +3000,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = iti_offsets - iti_onsets;
        
         % main effect @ trial onset, test trials only
+        % result: nothing
         %
         case 121
             % context role @ feedback/outcome onset
@@ -3011,6 +3012,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % correct vs. wrong pmod @ outcome
         % similar to 3 but done right
+        % result: 'wrong': anterior insula, mPFC (after FWE)
         %
         case 122
             which_error = which_train & ~response.corr;
@@ -3039,6 +3041,8 @@ function multi = context_create_multi(glmodel, subj, run)
         % Bayesian surprise = Kullback?Leibler divergence @ feedback
         % (outcome) onset
         % + error regressor on wrong trials, to account for error signal
+        % result: THIS IS IT -- R angular gyrus, lateral OFC, R lateral PFC
+        %          (after FWE)
         %
         case 123
             which_error = which_train & ~response.corr;
@@ -3075,6 +3079,7 @@ function multi = context_create_multi(glmodel, subj, run)
             
         % main effect BUT with the most likely structure (not the actual
         % condition) based on subject's choices
+        % result: nothing
         %
         case 124
             % sanity check
@@ -3164,6 +3169,35 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
             %end
+            
+        % Cause-specific posterior @ feedback time
+        %
+        case 125
+            % context role @ feedback/outcome onset
+            % 
+            multi.names{1} = condition;
+            multi.onsets{1} = cellfun(@str2num, actualFeedbackOnset(which_train))';
+            multi.durations{1} = zeros(size(contextRole(which_train)));
+            
+            M = -1;
+            if strcmp(condition, 'irrelevant')
+                M = 1;
+            elseif strcmp(condition, 'modulatory')
+                M = 2;
+            else
+                assert(strcmp(condition, 'additive'));
+                M = 3;
+            end
+            multi.pmod(1).name{1} = 'posterior';
+            multi.pmod(1).param{1} = P(:,M)'; % cause-specific posterior for trials 1..20
+            multi.pmod(1).poly{1} = 1; % first order  
+
+            % const @ trial onset
+            % 
+            multi.names{2} = 'trial_onset';
+            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+            multi.durations{2} = zeros(size(contextRole(which_train)));
+            
             
     end % end of switch statement
 
