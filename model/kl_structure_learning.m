@@ -28,6 +28,7 @@ Y(cor(1), cor(2), cor(3)) % sanity check -- should be 6.9122 (as seen in ccnl_vi
 assert(abs(Y(cor(1), cor(2), cor(3)) - 6.9122) < 1e-3);
 
 %{
+
 %% load the KL betas and compute the structure learning effect
 %
 
@@ -252,7 +253,7 @@ all_rs = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of correla
 
 figure;
 
-% structure_learnings = test_liks;
+%structure_learnings = test_liks;
 
 for roi = 1:size(kl_betas, 3)
     kl_betas_roi = kl_betas(:, :, roi);
