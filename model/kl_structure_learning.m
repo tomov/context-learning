@@ -1,5 +1,5 @@
-% run after kl_divergence.m
-%kl_divergence.m
+% run after kl_divergence.m 
+%kl_divergence
 
 % activity ~ D_KL vs. structure learning effect from test trial choices
 %
@@ -27,9 +27,9 @@ cor = mni2cor([34  -68 52],V.mat)
 Y(cor(1), cor(2), cor(3)) % sanity check -- should be 6.9122 (as seen in ccnl_view Show Results Table)
 assert(abs(Y(cor(1), cor(2), cor(3)) - 6.9122) < 1e-3);
 
+%{
 %% load the KL betas and compute the structure learning effect
 %
-%{
 
 % peak_voxels = peak voxel from each interesting cluster
 % obtained from Show Results Table from ccnl_view(contextExpt(), 123,
@@ -42,9 +42,12 @@ peak_voxels = {[34  -68 52], [40  -46 38], [-42 54  2], [-30 62  22], [36  54  0
 
 structure_learnings = nan(n_runs, n_subjects); % structure learning effect (SLE) for each run for each subject
 kl_betas = nan(n_runs, n_subjects, numel(peak_voxels)); % beta KL for each subject for each run, in each voxel we're interested in 
+test_liks = nan(n_runs, n_subjects); % log likelihood of test choices given the model posterior, for each run for each subject
 
+% for sanity testing
 sl_sanity = nan(n_runs, n_subjects, 3); % structure learning effect (SLE), sanity check -- one for each condition
 run_conditions = nan(n_runs, n_subjects); % 1 = irrelevant, 2 = modulatory, 3 = additive
+liks_sanity = nan(n_runs, n_subjects, 3); % test choice log likelihood, one for each condition
 
 subj_idx = 0;
 for subj = sss
@@ -68,6 +71,10 @@ for subj = sss
         run_test_trials = subj_trials & roundId == run & ~isTrain;
         condition = contextRole(run_test_trials);
         condition = condition{1};
+        
+        %
+        % calculate SLE
+        %
         
         % make sure to get them in the right order:
         % x1c1, x1c3, x3c1, x3c3
@@ -97,13 +104,36 @@ for subj = sss
         s = c * choices';
         structure_learnings(run, subj_idx) = s;
         
+        % sanity checks
         sl_sanity(run, subj_idx, 1) = [1 1 -1 -1] * choices';
         sl_sanity(run, subj_idx, 2) = [1 -1/3 -1/3 -1/3] * choices';
         sl_sanity(run, subj_idx, 3) = [1 -1 1 -1] * choices';
         
+        %
+        % calculate likelihood of test choices given model posterior
+        % relies on context_create_multi GLM 124 (NOT 123...)
+        %
+        
+        multi = EXPT.create_multi(124, subj, run);
+        load('context_create_multi.mat'); % WARNING WARNING WARNING: MASSIVE COUPLING. This relies on context_create_multi saving its state into this file. I just don't wanna copy-paste or abstract away the code that load the data from there
+        
+        if strcmp(condition, 'irrelevant')
+            test_liks(run, subj_idx) = test_log_lik(1);
+        elseif strcmp(condition, 'modulatory')
+            test_liks(run, subj_idx) = test_log_lik(2);
+        else
+            assert(strcmp(condition, 'additive'));
+            test_liks(run, subj_idx) = test_log_lik(3);
+        end
+                        
+        % sanity checks
+        liks_sanity(run, subj_idx, :) = test_log_lik;        
+        
+        %
         % get the betas for the peak voxels and other voxels of interest
         % TODO dedupe with kl_divergence.m
         %
+        
         beta_idx = surprise_regressors_idxs(run);
         assert(~isempty(strfind(SPM.xX.name{beta_idx}, 'surprise')));
         % this does not give you the full 3D volume, just the non-nan
@@ -132,7 +162,26 @@ for subj = sss
 end
 
 save('kl_structure_learning_effect.mat');
+
 %}
+
+% State versus Reward paper
+%
+% 39 ?54 39    Angular
+% ?27 ?54 45      Post IPS
+% ?45 9 33     Lat PFC
+% 45 12 30     Lat PFC
+%
+%
+% both sessions (conjunction):
+% 48 9 36      lat PFC
+% ?39 9 33    lat PFC
+% 33 ?66 39      Angular
+% 39 ?54 39     Angular
+%
+% SPE in both > abs RPE
+% 36 ?66 39
+%
 
 load('kl_structure_learning_effect.mat');
 
@@ -156,8 +205,17 @@ which_runs_had_max_SLEs = abs(sl_max - structure_learnings) < 1e-6; % which runs
 k = sum(which_runs_had_max_SLEs(:));
 n = n_runs * n_subjects;
 P = (1/3)^k * (2/3)^(n-k) * nchoosek(n, k);
-assert(P < 1e-30);
+assert(P < 1e-20);
 % TODO is this real hypothesis testing???
+
+% same thing but for log likelihood
+lik_max = max(liks_sanity, [], 3);
+which_runs_had_max_liks = abs(lik_max - test_liks) < 1e-6; % which runs had the max log likelihood from the 3 possible conditions
+k = sum(which_runs_had_max_liks(:));
+n = n_runs * n_subjects;
+P = (1/3)^k * (2/3)^(n-k) * nchoosek(n, k);
+assert(P < 1e-20);
+
 
 
 %% sanity check betas
@@ -189,15 +247,16 @@ title('Betas from ccnl_view(EXPT, 123, ''surprise - wrong'')', 'Interpreter', 'n
 %
 r_means = [];
 r_sems = [];
-p_means = [];
-p_sems = [];
+
+all_rs = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of correlation coefficients (for group-level stats)
 
 figure;
+
+% structure_learnings = test_liks;
 
 for roi = 1:size(kl_betas, 3)
     kl_betas_roi = kl_betas(:, :, roi);
     rs = [];
-    ps = [];
     for subj_idx = 1:n_subjects
         x = structure_learnings(:, subj_idx);
         y = kl_betas_roi(:, subj_idx);
@@ -206,7 +265,7 @@ for roi = 1:size(kl_betas, 3)
         p = p(1,2);
         % fprintf('       subj = %d, r = %f, p = %f\n', roi, r(1,2), p(1,2));
         rs = [rs, r];
-        ps = [ps, p];
+        all_rs(roi, subj_idx) = r;
         
         % plot stuff
         if roi <= numel(rois)
@@ -229,15 +288,22 @@ for roi = 1:size(kl_betas, 3)
     % average correlation across subjects
     % TODO is it okay to average the p's?
     if roi < numel(rois)
-        fprintf(' within-subject: ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, mean(r), mean(p));
+        fprintf(' within-subject: ROI = %25s, avg r = %f\n', rois{roi}, mean(rs));
     end
     
     r_means = [r_means; mean(rs) 0];
     r_sems = [r_sems; sem(rs) 0];
-    p_means = [p_means; mean(ps) 0];
-    p_sems = [p_sems; sem(ps) 0];
 end
 
+% group-level analysis
+%
+% For the within-subject analysis, 
+% to get the group-level stats you should Fisher z-transform the correlation coefficients 
+% (atanh function in matlab) and then do a one-sample t-test against 0.
+%
+all_rs = atanh(all_rs);
+[h, ps] = ttest(all_rs');
+assert(numel(ps) == size(kl_betas, 3));
 
 figure;
 
@@ -251,8 +317,11 @@ xlabel('voxel');
 title('KL betas correlated with structure learning effect: within-subject analysis', 'Interpreter', 'none');
 
 subplot(2, 1, 2);
-barweb(p_means, p_sems);
-ylabel('average p across subjects');
+barweb([ps' zeros(size(ps))'], [zeros(size(ps))' zeros(size(ps))']); % hack to make it pretty
+hold on;
+plot([0 100],[0.05 0.05],'k--');
+hold off;
+ylabel('one-sample t-test, p-value');
 xticklabels([strrep(rois, '_', '\_'), repmat({'random'}, 1, numel(rand_vox_x))]);
 xtickangle(60);
 xlabel('voxel');

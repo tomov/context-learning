@@ -72,8 +72,6 @@ function multi = context_create_multi(glmodel, subj, run)
     test_c = contextId(which_test) + 1;
     [test_choices, test_values, test_valuess, predict] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
 
-    save('context_create_multi.mat');
-    
     % Parametric modulators
     %
     switch glmodel
@@ -3162,6 +3160,7 @@ function multi = context_create_multi(glmodel, subj, run)
                 multi.durations{2} = zeros(size(contextRole(which_train)));
             end
             
-    end
+    end % end of switch statement
 
+    save('context_create_multi.mat');    
 end 
