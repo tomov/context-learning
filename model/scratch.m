@@ -1,3 +1,15 @@
+%--Distributions contain more information than boxplot can capture
+r = rand(1000,1);
+rn = randn(1000,1)*0.38+0.5;
+rn2 = [randn(500,1)*0.1+0.27;randn(500,1)*0.1+0.73];
+rn2=min(rn2,1);rn2=max(rn2,0);
+figure
+ah(1)=subplot(3,4,1:2);
+boxplot([r,rn,rn2])
+ah(2)=subplot(3,4,3:4);
+distributionPlot([r,rn,rn2],'histOpt',2); % histOpt=2 works better for uniform distributions than the default
+set(ah,'ylim',[-1 2])
+
 
 %representational_similarity_part2('visual.nii', 'euclidean');
 %representational_similarity_part2('motor.nii', 'euclidean');

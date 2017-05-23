@@ -13,6 +13,8 @@ addpath('/Users/memsql/Dropbox/Research/libs/glmnet_matlab/'); % generalized lin
 addpath('/Users/memsql/Dropbox/Research/libs/utils/'); % useful one-off utils from MathWorks
 addpath('/Users/memsql/Dropbox/Research/libs/rsatoolbox/Engines/'); % RSA toolbox
 addpath('/Users/memsql/Dropbox/Research/libs/rsatoolbox/Modules/'); % RSA toolbox
+addpath('/Users/memsql/Dropbox/Research/libs/distributionPlot/'); % for plotting stuff
+
 
 
 %addpath('/Users/memsql/Dropbox/research/context/model'); % the model code and behavioral data

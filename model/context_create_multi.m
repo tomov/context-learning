@@ -3107,68 +3107,68 @@ function multi = context_create_multi(glmodel, subj, run)
             % for sanity check with above
             %which_trials = which_test & cueId ~= contextId & ~strcmp(response.keys, 'None');
             
-            % no response == 'not sick'
-            % TODO figure out what to do for reals
-            %which_trials = which_test & ~strcmp(response.keys, 'None');
-            %if sum(which_trials) > 0
-            which_trials = which_test;
-            
-            subj_choices = strcmp(response.keys(which_trials), 'left');
-            trial_idxs = trialId(which_trials);
+            which_trials = which_test & ~strcmp(response.keys, 'None');
+            if sum(which_trials) > 0
+                subj_choices = strcmp(response.keys(which_trials), 'left');
+                trial_idxs = trialId(which_trials);
 
-            trial_values = test_valuess(trial_idxs, :);
-            trial_probs = predict(trial_values);
+                trial_values = test_valuess(trial_idxs, :);
+                trial_probs = predict(trial_values);
 
-            %trial_likelihoods = arrayfun(@(i) binopdf(subj_choices(i), 1, trial_probs(i,:)), 1:numel(subj_choices), 'UniformOutput', false);
-            %trial_likelihoods = reshape(cell2mat(trial_likelihoods'), size(trial_probs)); % careful -- must transpose first
-            % FUCK ncf...
-            liks = nan(size(trial_probs));
-            for i = 1:size(trial_probs, 1) % for each test trial
-                for j = 1:size(trial_probs, 2) % for each causal structure
-                    liks(i,j) = binopdf(subj_choices(i), 1, trial_probs(i, j));
+                %trial_likelihoods = arrayfun(@(i) binopdf(subj_choices(i), 1, trial_probs(i,:)), 1:numel(subj_choices), 'UniformOutput', false);
+                %trial_likelihoods = reshape(cell2mat(trial_likelihoods'), size(trial_probs)); % careful -- must transpose first
+                % FUCK ncf...
+                liks = nan(size(trial_probs));
+                for i = 1:size(trial_probs, 1) % for each test trial
+                    for j = 1:size(trial_probs, 2) % for each causal structure
+                        liks(i,j) = binopdf(subj_choices(i), 1, trial_probs(i, j));
+                    end
                 end
-            end
-            %assert(immse(liks, trial_likelihoods) < 1e-10);
+                %assert(immse(liks, trial_likelihoods) < 1e-10);
 
-            test_log_lik = sum(log(liks), 1);
-            test_log_lik = test_log_lik(:, 1:3); % exclude M4
-            [~, most_likely_M] = max(test_log_lik);
+                % take average log likelihood !!!
+                % this is to account for missing trials where subject timed
+                % out. Note that taking the sum would be wrong -- imagine
+                % if subject responded on only 1 trial
+                test_log_lik = mean(log(liks), 1);
+                test_log_lik = test_log_lik(:, 1:3); % exclude M4
+                [~, most_likely_M] = max(test_log_lik);
 
-            % see if we match the actual condition, just FYI
-            %
-            M = -1;
-            if strcmp(condition, 'irrelevant')
-                M = 1;
-            elseif strcmp(condition, 'modulatory')
-                M = 2;
-            else
-                assert(strcmp(condition, 'additive'));
-                M = 3;
-            end
-            fprintf('   M = %d, most likely M = %d\n', M, most_likely_M);
-            if M ~= most_likely_M
-                disp('                DIFFERENT!');
-            end
+                % see if we match the actual condition, just FYI
+                %
+                M = -1;
+                if strcmp(condition, 'irrelevant')
+                    M = 1;
+                elseif strcmp(condition, 'modulatory')
+                    M = 2;
+                else
+                    assert(strcmp(condition, 'additive'));
+                    M = 3;
+                end
+                fprintf('   M = %d, most likely M = %d\n', M, most_likely_M);
+                if M ~= most_likely_M
+                    disp('                DIFFERENT!');
+                end
 
-            % most likely causal structure @ feedback
-            %
-            switch most_likely_M
-                case 1
-                    multi.names{1} = 'irrelevant';
-                case 2
-                    multi.names{1} = 'modulatory';
-                case 3
-                    multi.names{1} = 'additive';
-            end
-            multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
-            multi.durations{1} = zeros(size(contextRole(which_train)));
+                % most likely causal structure @ feedback
+                %
+                switch most_likely_M
+                    case 1
+                        multi.names{1} = 'irrelevant';
+                    case 2
+                        multi.names{1} = 'modulatory';
+                    case 3
+                        multi.names{1} = 'additive';
+                end
+                multi.onsets{1} = cellfun(@str2num,actualFeedbackOnset(which_train))';
+                multi.durations{1} = zeros(size(contextRole(which_train)));
 
-            % const @ trial onset (trials 1..20)
-            % 
-            multi.names{2} = 'trial_onset';
-            multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
-            multi.durations{2} = zeros(size(contextRole(which_train)));
-            %end
+                % const @ trial onset (trials 1..20)
+                % 
+                multi.names{2} = 'trial_onset';
+                multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
+                multi.durations{2} = zeros(size(contextRole(which_train)));
+            end
             
         % Cause-specific posterior @ feedback time
         %
@@ -3197,6 +3197,17 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.names{2} = 'trial_onset';
             multi.onsets{2} = cellfun(@str2num, actualChoiceOnset(which_train))';
             multi.durations{2} = zeros(size(contextRole(which_train)));
+            
+        % Main effect boxcar for whole trial @ trial onset
+        %
+        case 126
+            % context role @ feedback/outcome onset
+            % 
+            trial_onsets = cellfun(@str2num, actualChoiceOnset(which_train))';
+            iti_onsets = cellfun(@str2num, actualItiOnset(which_train))';
+            multi.names{1} = condition;
+            multi.onsets{1} = trial_onsets;
+            multi.durations{1} = iti_onsets - trial_onsets;
             
             
     end % end of switch statement

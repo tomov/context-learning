@@ -27,6 +27,8 @@ cor = mni2cor([34  -68 52],V.mat)
 Y(cor(1), cor(2), cor(3)) % sanity check -- should be 6.9122 (as seen in ccnl_view Show Results Table)
 assert(abs(Y(cor(1), cor(2), cor(3)) - 6.9122) < 1e-3);
 
+
+
 %{
 
 %% load the KL betas and compute the structure learning effect
@@ -166,6 +168,7 @@ save('kl_structure_learning_effect.mat');
 
 %}
 
+
 % State versus Reward paper
 %
 % 39 ?54 39    Angular
@@ -249,32 +252,56 @@ title('Betas from ccnl_view(EXPT, 123, ''surprise - wrong'')', 'Interpreter', 'n
 r_means = [];
 r_sems = [];
 
-all_rs = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of correlation coefficients (for group-level stats)
+% for group-level analysis
+all_rs = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of correlation coefficients for each subject (for group-level stats)
+
+% for Figure 4B
+slopes = nan(size(kl_betas, 3), n_subjects); % for each voxel, a list of slopes for least squares line (lsline) each subject (= correlation coefficient * SD(Y) / SD(X) -- see https://stats.stackexchange.com/questions/32464/how-does-the-correlation-coefficient-differ-from-regression-slope)
+intercepts = nan(size(kl_betas, 3), n_subjects); % same but intercept
+std_x = nan(size(kl_betas, 3), n_subjects); % for each voxel for each subject, SD(X), X = structure learning effect or test choice likelihoods or whatever we're correlating with
+std_y = nan(size(kl_betas, 3), n_subjects); % for each voxel for each subject, SD(Y), Y = KL betas
 
 figure;
 
-% TODO HACKSAUCE FIXME -- this is how you get log likelihoods instead of
-% structure learning for the correlations
-%structure_learnings = test_liks;
 
 for roi = 1:size(kl_betas, 3)
     kl_betas_roi = kl_betas(:, :, roi);
     rs = [];
     for subj_idx = 1:n_subjects
-        x = structure_learnings(:, subj_idx);
+        %x = structure_learnings(:, subj_idx);   <-- not good with timeouts
+        x = test_liks(:, subj_idx);        
         y = kl_betas_roi(:, subj_idx);
-        [r, p] = corrcoef(x, y);
+        
+        % z-score for Figure 4B        
+        x = zscore(x);
+        y = zscore(y);
+        
+        r = corrcoef(x, y);
         r = r(1,2);
-        p = p(1,2);
         % fprintf('       subj = %d, r = %f, p = %f\n', roi, r(1,2), p(1,2));
         rs = [rs, r];
         all_rs(roi, subj_idx) = r;
         
         % plot stuff
         if roi <= numel(rois)
+            % for Figure 4B
+            fit = polyfit(x, y, 1);
+            slopes(roi, subj_idx) = fit(1);
+            intercepts(roi, subj_idx) = fit(2);
+            std_x(roi, subj_idx) = std(x);
+            std_y(roi, subj_idx) = std(y);
+            yfit = polyval(fit, x);
+            
+            % plot KL beta correlations for each ROI
+            %{
             subplot(numel(rois), n_subjects, (roi - 1) * n_subjects + subj_idx);
             scatter(x, y);
+            
+            hold on;
             lsline;
+            plot(x, yfit);
+            hold off;
+            
             %set(gca, 'XTick', []);
             %set(gca, 'YTick', []);
             if subj_idx == 1
@@ -286,10 +313,10 @@ for roi = 1:size(kl_betas, 3)
             if roi == 1 && subj_idx == 10
                 title('structure learning effect (x-axis) vs. KL betas from ''surprise - wrong'' contrast (y-axis):  within-subject analysis');
             end
+            %}
         end
     end
     % average correlation across subjects
-    % TODO is it okay to average the p's?
     if roi < numel(rois)
         fprintf(' within-subject: ROI = %25s, avg r = %f\n', rois{roi}, mean(rs));
     end
@@ -304,8 +331,8 @@ end
 % to get the group-level stats you should Fisher z-transform the correlation coefficients 
 % (atanh function in matlab) and then do a one-sample t-test against 0.
 %
-all_rs = atanh(all_rs);
-[h, ps] = ttest(all_rs');
+fisher_all_rs = atanh(all_rs);
+[h, ps] = ttest(fisher_all_rs');
 assert(numel(ps) == size(kl_betas, 3));
 
 figure;
@@ -364,19 +391,7 @@ for roi = 1:numel(rois)
     end
 end
 
+%% save for show_figure.m
 
-
-%% all -- this is WRONG but just for funzies
-%
-for roi = 1:numel(rois)
-    kl_betas_roi = kl_betas(:, :, roi);
-    % list all kl_beta and structure learning (subjects and runs lumped together)
-    all_kl_betas = kl_betas_roi(:);
-    all_structure_learnings = structure_learnings(:);
-    
-    [r, p] = corrcoef(all_kl_betas, all_structure_learnings);
-    r = r(1,2);
-    p = p(1,2);
-    fprintf(' overall (WRONG): ROI = %25s, avg r = %f, avg p = %f\n', rois{roi}, r, p);
-end
+save('kl_analysis.mat');
 
