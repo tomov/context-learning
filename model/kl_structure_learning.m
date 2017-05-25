@@ -302,8 +302,8 @@ for roi = 1:size(kl_betas, 3)
             plot(x, yfit);
             hold off;
             
-            %set(gca, 'XTick', []);
-            %set(gca, 'YTick', []);
+            set(gca, 'XTick', []);
+            set(gca, 'YTick', []);
             if subj_idx == 1
                 ylabel(rois{roi}, 'Interpreter', 'none');
             end
@@ -318,7 +318,7 @@ for roi = 1:size(kl_betas, 3)
     end
     % average correlation across subjects
     if roi < numel(rois)
-        fprintf(' within-subject: ROI = %25s, avg r = %f\n', rois{roi}, mean(rs));
+        fprintf(' within-subject: ROI = %25s, avg r = %f +- %f\n', rois{roi}, mean(rs), sem(rs));
     end
     
     r_means = [r_means; mean(rs) 0];

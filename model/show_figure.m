@@ -8,6 +8,9 @@ function show_figure(figure_name)
 
 switch figure_name
     
+    % TODO SAM use subplots
+    % TODO linspecr.m -- nicer color map (don't have to use it)
+    %
     case 'Figure_3A'
         % Posterior probabilities over structures in each condition
         %
@@ -33,12 +36,18 @@ switch figure_name
             SEMs = [SEMs; sem(P1_n) sem(P2_n) sem(P3_n)];
         end
 
+        % TODO SAM remove error bars here
         barweb(Ms, SEMs, 1, {'Irrelevant training', 'Modulatory training', 'Additive training'});
         ylabel('Posterior probability');
         legend({'M1', 'M2', 'M3'}, 'Position', [0.2 0.3 1 1]);
     
         
     case 'Figure_3B'
+        % TODO SAM superimpose human dots w/ error bars; rm error bars from model
+        %
+        % TODO SAM also SEMs -- within-subject errors: wse.m (in the dropbox)
+        % TODO SAM also mytitle.m -- easier to plot left-oriented panel titles
+        
         % Test performance: model predictions as bars, human data as dots + standard error bars overlaid on the bars
         %
         load('analyze.mat');
@@ -111,7 +120,10 @@ switch figure_name
         ccnl_view(contextExpt(), 123, 'surprise - wrong');
         
         
-    case 'Figure_4B'        
+    case 'Figure_4B'     
+        % TODO plot fischer Z transform of fischer_all_rs
+        %
+        
         % Plot showing the least-squares lines relating AG KL beta to the structure learning effect, one line per subject, plus a thicker line showing the average linear relationship.    
         %
         z_scored = false;

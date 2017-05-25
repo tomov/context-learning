@@ -455,6 +455,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % M2 & M1 posterior pmods @ outcome
+        % result: nothing BUT also do the individual regressors! omg...
         %
         case 18
             % M2 (modulatory) & M1 (irrelevant) posteriors @ feedback / outcome onset (trials 1..20)
@@ -470,7 +471,7 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.pmod(1).poly{1} = 1; % first order        
 
             multi.pmod(1).name{2} = 'M1_posterior';
-            multi.pmod(1).param{2} = P(:,1)'; % entropy of P(M1 | h_1:n) for trials 1..20, excluding M4
+            multi.pmod(1).param{2} = P(:,1)'; % posterior of P(M1 | h_1:n) for trials 1..20, excluding M4
             multi.pmod(1).poly{2} = 1; % first order
             
             % const @ trial onset (trials 1..20)

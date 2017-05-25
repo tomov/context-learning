@@ -63,7 +63,7 @@ param(2).ub = 20; % can't make it too large b/c you get prob = 0 and -Inf likeli
 
 % run optimization
 %
-nstarts = 2;    % number of random parameter initializations
+nstarts = 5;    % number of random parameter initializations
 disp('... Fitting model 1');
 results(1) = mfit_optimize(@kalman_lik, param, data, nstarts);
 
