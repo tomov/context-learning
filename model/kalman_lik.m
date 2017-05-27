@@ -1,20 +1,31 @@
-function lik = kalman_lik( params, fake_data )
+function log_lik = kalman_lik( params, multisubject_data, which_structures )
 % Likelihood function for Kalman filter given a prior variance and an
 % inverse softmax temperature
 %
+% multisubject_data is a 'supersubject' that contains two fields -- N is the total
+% number of trials, subjects is a cell array that actually has all the
+% subjects' data
+% this is to do a fixed effects analysis where we get one set of params for
+% all subjects
+%
+% which_models = binary vector of which causal structures to use, e.g. 
+%    [1 1 1 0] for M1, 2, 3 (but not M4)
+
 prior_variance = params(1);
 inv_softmax_temp = params(2);
 
-lik = 0;
+log_lik = 0;
 
-for s = 1:numel(fake_data.subjects)
-    subject_data = fake_data.subjects(s);
+for s = 1:numel(multisubject_data.subjects)
+    subject_data = multisubject_data.subjects(s);
     for i = 1:numel(subject_data.runs)
         run_data = subject_data.runs(i);  
         train_trials = 1:20;
         test_trials = 21:24;
        
         % get training choice probabilities
+        %
+        % which_models = [1 1 1 0]; -- parameter
         cues = run_data.cues(train_trials);
         N = length(cues); % # of trials
         D = 3; % # of stimuli
@@ -22,7 +33,7 @@ for s = 1:numel(fake_data.subjects)
         x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
         c = run_data.contexts(train_trials);
         r = run_data.sick(train_trials);
-        [P_choose_sick_train, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, false);
+        [P_choose_sick_train, P_n, ww_n, P, ww, values] = train(x, c, r, prior_variance, inv_softmax_temp, which_structures, false);
 
         % get test choice probabilities
         test_cues = run_data.cues(test_trials);
@@ -38,7 +49,7 @@ for s = 1:numel(fake_data.subjects)
         human_choices = run_data.human_choices; % 1 = sick, 0 = not sick
 
         % add to log likelihood
-        lik = lik + sum(log(P_choose_sick .* (human_choices == 1) + (1 - P_choose_sick) .* (human_choices == 0)));
+        log_lik = log_lik + sum(log(P_choose_sick .* (human_choices == 1) + (1 - P_choose_sick) .* (human_choices == 0)));
 
         % Same as above but unoptimized
         %

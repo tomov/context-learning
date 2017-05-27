@@ -6,9 +6,9 @@
 close all;
 clear all;
 
-%rois = {'hippocampus.nii', 'striatum.nii', 'pallidum.nii', 'ofc.nii', 'vmpfc.nii', 'visual.nii', 'motor.nii', 'sensory.nii'};
+%rois = {'mask.nii', 'hippocampus.nii', 'striatum.nii', 'pallidum.nii', 'ofc.nii', 'vmpfc.nii', 'visual.nii', 'motor.nii', 'sensory.nii'};
 
-mask = 'striatum.nii';
+mask = 'sensory.nii';
 distance_measure = 'correlation';
 
 % as output by representational_similarity_part2.m
@@ -113,7 +113,7 @@ sem = @(x) std(x) / sqrt(length(x));
 
 conditions = {'irr', 'mod', 'add'};
 
-%{
+
 %
 % aggregates
 %
@@ -151,7 +151,7 @@ res.ttests(3)
 subplot(1, 4, 1);
 barweb(means1, sems1);
 legend(labels);
-ylabel('mean trial distance (from subject-average RDM)');
+ylabel('mean trial distance (subject-average RDM)');
 ylim([min(means1) * 0.95, max(means1) * 1.05]);
 
 title(['ROI: ', m{1}]);
@@ -187,7 +187,7 @@ means2 = [mean_diff_cond, mean_same_cond, mean_same_run];
 sems2 = [sem_diff_cond,  sem_same_cond,  sem_same_run];
 barweb(means2, sems2);
 legend({'Different cond (e.g. Add/Mod)', 'Same cond, diff runs (e.g. Add/Add)', 'Same run'});
-ylabel('mean trial distance (from subject-average RDM)');
+ylabel('mean trial distance (subject-average RDM)');
 ylim([min(means2) * 0.95, max(means2) * 1.05]);
 
 
@@ -239,11 +239,9 @@ end
 subplot(1, 4, 4);
 barweb(means4, sems4);
 legend(labels);
-ylabel('mean trial distance (from subject-average RDM)');
+ylabel('mean trial distance (subject-average RDM)');
 ylim([min(means4(:)) * 0.95, max(means4(:)) * 1.05]);
 xticklabels(conditions);
-
-%}
 
 
 %% all pairs of conditions, by trial

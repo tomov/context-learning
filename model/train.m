@@ -1,4 +1,4 @@
-function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, k, r, prior_variance, inv_softmax_temp, which_models, DO_PRINT)
+function [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, k, r, prior_variance, inv_softmax_temp, which_structures, DO_PRINT)
 % Kalman filter to learn the context-cue-reward associations & posteriors
 % for each context role model
 %
@@ -29,7 +29,7 @@ Sigma_n{2} = repmat(sigma_w^2 * eye(D + 1), 1, 1, K); % note the third dimension
 Sigma_n{3} = sigma_w^2 * eye(D + K);
 Sigma_n{4} = sigma_w^2 * eye(K);
 
-P_n = which_models; % prior = 1 if we're including the model, 0 if not
+P_n = which_structures; % prior = 1 if we're including the model, 0 if not
 P_n = P_n / sum(P_n);
 
 % Store history for plotting and analysis
@@ -77,7 +77,7 @@ for n = 1:N % for each trial
     values = [values; V_n];
     valuess = [valuess; x_n' * ww_n{1}, xb_n' * ww_n{2}(:, k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
     
-    save(['kalman_state_', num2str(n), '.mat']);
+    % save(['kalman_state_', num2str(n), '.mat']);
     
     if DO_PRINT, fprintf('\npredction for x = %d, c = %d is %f (actual is %f)\n\n', find(x_n), c_n, out, r_n); end
 
@@ -132,7 +132,18 @@ for n = 1:N % for each trial
     P_n(3) = P_n(3) * likelihood(3);
     P_n(4) = P_n(4) * likelihood(4);
     P_n = P_n / sum(P_n);
-
+    if isnan(P_n(1))
+        % edge case -- all likelihoods are 0, or the likelihoods of all
+        % non-zero P_n's are 0 => the P_n's become all 0 after this => then
+        % we divide by 0 and they all become NaNs
+        % in to fix, interpret this scenario as them being all "equally
+        % bad" => revert to the uniform
+        %
+        % TODO ask sam what to do
+        %
+        P_n = which_structures / sum(which_structures);
+    end
+    
     shit = [x_n' * ww_n{1}, xb_n' * ww_n{2}(:,k_n), xx_n' * ww_n{3}, c_n' * ww_n{4}];
     wtf = [x_n' * SSigma_n{1} * x_n + sigma_r^2, xb_n' * SSigma_n{2} * xb_n + sigma_r^2, xx_n' * SSigma_n{3} * xx_n + sigma_r^2, c_n' * SSigma_n{4} * c_n + sigma_r^2];
     pdfs = [normpdf(r_n, x_n' * ww_n{1}, x_n' * SSigma_n{1} * x_n + sigma_r^2), ...

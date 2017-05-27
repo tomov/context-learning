@@ -3200,6 +3200,8 @@ function multi = context_create_multi(glmodel, subj, run)
             multi.durations{2} = zeros(size(contextRole(which_train)));
             
         % Main effect boxcar for whole trial @ trial onset
+        % result: nothing; the 'additive - irrelevant' hippocampus thing
+        % disappears
         %
         case 126
             % context role @ feedback/outcome onset

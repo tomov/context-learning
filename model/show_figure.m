@@ -8,7 +8,8 @@ function show_figure(figure_name)
 
 switch figure_name
     
-    % TODO SAM use subplots
+    % TODO SAM use subplots -- you need to give editor a separate PDF for
+    % each fiure
     % TODO linspecr.m -- nicer color map (don't have to use it)
     %
     case 'Figure_3A'

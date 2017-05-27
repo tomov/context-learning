@@ -455,7 +455,7 @@ Model 109 -- same as 110 except for M2 and M1
         ccnl_view(contextExpt(), 109, 'M2_update')
         ccnl_view(contextExpt(), 109, 'M1_update')
 
-
+Model 126 -- main effect of condition with entire trials
 
 
 

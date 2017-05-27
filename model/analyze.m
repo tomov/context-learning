@@ -9,6 +9,7 @@ if ~exist('analyze_with_gui') || ~analyze_with_gui
     which_models = [1 1 1 0]; % consider M1, M2, and M3
 end
 
+
 %
 % Simulate
 %
@@ -42,6 +43,8 @@ model.Sigma4 = []; % Sigma for M4 at each trial
 % HACKSAUCE TODO FIXME
 % to predict stuff based on the classifier
 %
+% use only "good" subjects
+%
 sss = getGoodSubjects();
 [all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
 subjects = all_subjects(sss);
@@ -68,11 +71,11 @@ for who = subjects
             cues = cueId(which_train);
             N = length(cues); % # of trials
             D = 3; % # of stimuli
-            prev_trials_surprise = zeros(N, D);
-            prev_trials_surprise(sub2ind(size(prev_trials_surprise), 1:N, cues' + 1)) = 1;
+            x = zeros(N, D);
+            x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
             c = contextId(which_train) + 1;
             r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(prev_trials_surprise, c, r, prior_variance, inv_softmax_temp, which_models, false);
+            [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
 
             if make_optimal_choices
                 model_choices = choices > 0.5;
@@ -516,3 +519,12 @@ which = which_rows;
 x = strcmp(response.keys(which), 'left');
 y = model.pred(which);
 [r, p] = corrcoef(x, y);
+fprintf('correlation between model and subject choices = %f (p = %f)\n', r(1,2), p(1,2));
+
+% same but for test trials only
+%
+which = which_rows & ~isTrain;
+x = strcmp(response.keys(which), 'left');
+y = model.pred(which);
+[r, p] = corrcoef(x, y);
+fprintf('correlation between model and subject choices (test trials only) = %f (p = %f)\n', r(1,2), p(1,2));
