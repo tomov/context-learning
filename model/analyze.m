@@ -1,6 +1,7 @@
 
 % Load data from file with all subjects, as well as some constants.
 %
+fmri_data = true; % load from the fmri data only
 load_data;
 
 % In case we're not using the GUI (i.e. analyze_gui2.m)
@@ -11,179 +12,272 @@ end
 
 DO_PLOT = false;
 
-structures = {[1 1 1 0], [1 0 0 0], [0 1 0 0], [0 0 1 0], [1 1 0 0], [1 0 1 0], [0 1 1 0]};
+%structures = {[1 1 1 0], [1 0 0 0], [0 1 0 0], [0 0 1 0], [1 1 0 0], [1 0 1 0], [0 1 1 0]};
 struct_names = {'M1, ', 'M2, ', 'M3, ', 'M4, '};
+
+% must be same order as fit.m TODO FIXME COUPLING
+% also dedupe with fit_plot.m
 
 table_rowNames = {};
 table_colNames = {'corr_all', 'corr_test', 'test_log_lik'};
 table = nan(numel(structures), numel(table_colNames));
 table_row = 0;
 
-for which_models = structures
+for fmri_data = [0 1]
+    for fixed_effects = [0 1]
+        which_structuress = {[1 1 1 0], [1 0 0 0], [0 1 0 0], [0 0 1 0]}; % COUPLING -- should be same as in fit.m
+        for which_models = which_structuress
+
     
-which_models = which_models{1};
-fprintf('\nstructures %s params = %f %f\n', strcat(struct_names{logical(which_models)}), prior_variance, inv_softmax_temp);
-table_rowNames = [table_rowNames, {strcat(struct_names{logical(which_models)})}];
-table_row = table_row + 1;
+            which_models = which_models{1};
 
-%
-% Simulate
-%
+            table_row = table_row + 1;
+            fprintf('\nstructures %s\n', strcat(struct_names{logical(which_models)}));
+            fprintf(' result name = %s\n', results_names{table_row});
 
-human_correct_all_runs = [];
-model_correct_all_runs = [];
+            rowName = sprintf('%s; %s; %s', pilot_or_fmri{fmri_data + 1}, ...
+                fixed_or_random_effects{fixed_effects + 1}, strcat(struct_names{logical(which_models)}));
+            table_rowNames = [table_rowNames, {rowName}];
 
-clear model;
-model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
-model.pred = []; % the choice probability (not the actual choice) for each trial
-model.P1 = []; % posterior P(M1 | ...) at each trial
-model.P2 = []; % posterior P(M2 | ...) at each trial
-model.P3 = []; % posterior P(M3 | ...) at each trial
-model.P4 = []; % posterior P(M4 | ...) at each trial
-model.P = []; % concatenated posteriors
-model.ww1 = []; % weights for M1 
-model.ww2 = []; % weights for M2
-model.ww3 = []; % weights for M3
-model.ww4 = []; % weights for M4
-model.values = []; % values at each trial
-model.valuess = []; % values for each sturcture at each trial
-model.surprise = []; % D_KL at each trial
-model.likelihoods = []; % likelihoods for each causal structure
-model.new_values = []; % updated values AFTER the trial
-model.new_valuess = []; % updated values for each sturcture AFTER each trial
-model.Sigma1 = []; % Sigma for M1 at each trial
-model.Sigma2 = []; % Sigma for M2 at each trial
-model.Sigma3 = []; % Sigma for M3 at each trial
-model.Sigma4 = []; % Sigma for M4 at each trial
-
-% HACKSAUCE TODO FIXME
-% to predict stuff based on the classifier
-%
-% use only "good" subjects
-%
-sss = getGoodSubjects();
-[all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
-subjects = all_subjects(sss);
-which_rows = which_rows & ismember(participant, subjects);
-%load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
-%ppp = outputss(:,:,end);
-
-
-%make_optimal_choices = true;
-
-s_id = 0;
-for who = subjects
-    s_id = s_id + 1;
-    for condition = unique(contextRole)'
-        which_runs = which_rows & strcmp(participant, who) & strcmp(contextRole, condition);
-        runs = unique(roundId(which_runs))';
-        for run = runs
-            which_train = which_runs & isTrain & roundId == run;
-            which_test = which_runs & ~isTrain & roundId == run;
-
-            % For a given run of a given subject, run the model on the same
-            % sequence of stimuli and see what it does.
-            %
-            cues = cueId(which_train);
-            N = length(cues); % # of trials
-            D = 3; % # of stimuli
-            x = zeros(N, D);
-            x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
-            c = contextId(which_train) + 1;
-            r = strcmp(sick(which_train), 'Yes');
-            [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
-
-            if make_optimal_choices
-                model_choices = choices > 0.5;
-            else
-                model_choices = choices > rand;
-            end
-            model_response_keys = {};
-            model_response_keys(model_choices) = {'left'};
-            model_response_keys(~model_choices) = {'right'};
-            model.keys(which_train) = model_response_keys;
-            model.pred(which_train) = choices;
-            model.P1(which_train) = P(:,1);
-            model.P2(which_train) = P(:,2);
-            model.P3(which_train) = P(:,3);
-            model.P4(which_train) = P(:,4);
-            model.P(which_train, :) = P;
-            priors = which_models / sum(which_models);
-            Q = [priors; P(1:end-1,:)];
-            model.Q1(which_train) = Q(:,1);
-            model.Q2(which_train) = Q(:,2);
-            model.Q3(which_train) = Q(:,3);
-            model.Q4(which_train) = Q(:,4);
-            model.ww1(which_train, :) = ww{1};
-            model.ww2(which_train, :) = ww{2};
-            model.ww3(which_train, :) = ww{3};
-            model.ww4(which_train, :) = ww{4};
-            model.values(which_train, :) = values;
-            model.valuess(which_train, :) = valuess;
-            logs = log2(P ./ Q); 
-            logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
-            surprise = sum(P .* logs, 2);
-            surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
-            model.surprise(which_train, :) = surprise;
-            model.likelihoods(which_train, :) = likelihoods;
-            model.new_values(which_train, :) = new_values;
-            model.new_valuess(which_train, :) = new_valuess;
-            model.Sigma1(which_train, :) = Sigma{1};
-            model.Sigma2(which_train, :) = Sigma{2};
-            model.Sigma3(which_train, :) = Sigma{3};
-            model.Sigma4(which_train, :) = Sigma{4};
+            result = results(table_row);
             
-
-            % See what the model predicts for the test trials of that run
+            % must iterate the same way we iterate in fit.m...
+            % so we skip the cases that are not applicable / we can't
+            % simulate
             %
-            test_cues = cueId(which_test);
-            test_N = length(test_cues); % # of trials
-            D = 3; % # of stimuli
-            test_x = zeros(test_N, D);
-            test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
-            test_c = contextId(which_test) + 1;
-            
-            %P_n = [ppp((s_id - 1) * 9 + run,:) 0]; % HACKSAUCE TODO FIXME -- this is to predict based on the classifier
-            [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
-
-            if make_optimal_choices
-                model_test_choices = test_choices > 0.5;
-            else
-                model_test_choices = test_choices > rand;
+            if ~fmri_data && ~fixed_effects
+                continue
             end
-            model_test_response_keys = {};
-            model_test_response_keys(model_test_choices) = {'left'};
-            model_test_response_keys(~model_test_choices) = {'right'};
-            model.keys(which_test) = model_test_response_keys;
-            model.pred(which_test) = test_choices;
 
-            % Get the subject's responses too.
             %
-            resp = response.keys(which_train);
-            human_choices = strcmp(resp, 'left'); % sick == 1            
+            % Simulate
+            %
+
+            human_correct_all_runs = [];
+            model_correct_all_runs = [];
+
+            clear model;
+            model.keys = {}; % equivalent to response.keys but for the model (i.e. the responses)
+            model.pred = []; % the choice probability (not the actual choice) for each trial
+            model.P1 = []; % posterior P(M1 | ...) at each trial
+            model.P2 = []; % posterior P(M2 | ...) at each trial
+            model.P3 = []; % posterior P(M3 | ...) at each trial
+            model.P4 = []; % posterior P(M4 | ...) at each trial
+            model.P = []; % concatenated posteriors
+            model.ww1 = []; % weights for M1 
+            model.ww2 = []; % weights for M2
+            model.ww3 = []; % weights for M3
+            model.ww4 = []; % weights for M4
+            model.values = []; % values at each trial
+            model.valuess = []; % values for each sturcture at each trial
+            model.surprise = []; % D_KL at each trial
+            model.likelihoods = []; % likelihoods for each causal structure
+            model.new_values = []; % updated values AFTER the trial
+            model.new_valuess = []; % updated values for each sturcture AFTER each trial
+            model.Sigma1 = []; % Sigma for M1 at each trial
+            model.Sigma2 = []; % Sigma for M2 at each trial
+            model.Sigma3 = []; % Sigma for M3 at each trial
+            model.Sigma4 = []; % Sigma for M4 at each trial
+
+            % HACKSAUCE TODO FIXME
+            % to predict stuff based on the classifier
+            %
+            % use only "good" subjects
+            %
+            sss = getGoodSubjects();
+            [all_subjects, ~, ~] = contextGetSubjectsDirsAndRuns();
+            subjects = all_subjects(sss);
+            which_rows = which_rows & ismember(participant, subjects);
+            %load('classify_glmnet_outputss_1-19_mask_scramble_runs_20.mat');
+            %ppp = outputss(:,:,end);
+
+
+            %make_optimal_choices = true;
+
+            s_id = 0;
+            for who = subjects
+                disp(who)
+                s_id = s_id + 1;
+                for condition = unique(contextRole)'
+                    disp(condition)
+                    which_runs = which_rows & strcmp(participant, who) & strcmp(contextRole, condition);
+                    runs = unique(roundId(which_runs))';
+                    for run = runs
+                        disp(run)
+                        which_train = which_runs & isTrain & roundId == run;
+                        which_test = which_runs & ~isTrain & roundId == run;
+
+                        % figure out the parameters
+                        %
+                        if fixed_effects
+                            prior_variance = result.x(1);
+                            inv_softmax_temp = result.x(2);
+                        else
+                            prior_variance = result.x(s_id, 1);
+                            inv_softmax_temp = result.x(s_id, 2);
+                        end
+
+                        % For a given run of a given subject, run the model on the same
+                        % sequence of stimuli and see what it does.
+                        %
+                        cues = cueId(which_train);
+                        N = length(cues); % # of trials
+                        D = 3; % # of stimuli
+                        x = zeros(N, D);
+                        x(sub2ind(size(x), 1:N, cues' + 1)) = 1;
+                        c = contextId(which_train) + 1;
+                        r = strcmp(sick(which_train), 'Yes');
+                        [choices, P_n, ww_n, P, ww, values, valuess, likelihoods, new_values, new_valuess, Sigma] = train(x, c, r, prior_variance, inv_softmax_temp, which_models, false);
+
+                        if make_optimal_choices
+                            model_choices = choices > 0.5;
+                        else
+                            model_choices = choices > rand;
+                        end
+                        model_response_keys = {};
+                        model_response_keys(model_choices) = {'left'};
+                        model_response_keys(~model_choices) = {'right'};
+                        model.keys(which_train) = model_response_keys;
+                        model.pred(which_train) = choices;
+                        model.P1(which_train) = P(:,1);
+                        model.P2(which_train) = P(:,2);
+                        model.P3(which_train) = P(:,3);
+                        model.P4(which_train) = P(:,4);
+                        model.P(which_train, :) = P;
+                        priors = which_models / sum(which_models);
+                        Q = [priors; P(1:end-1,:)];
+                        model.Q1(which_train) = Q(:,1);
+                        model.Q2(which_train) = Q(:,2);
+                        model.Q3(which_train) = Q(:,3);
+                        model.Q4(which_train) = Q(:,4);
+                        model.ww1(which_train, :) = ww{1};
+                        model.ww2(which_train, :) = ww{2};
+                        model.ww3(which_train, :) = ww{3};
+                        model.ww4(which_train, :) = ww{4};
+                        model.values(which_train, :) = values;
+                        model.valuess(which_train, :) = valuess;
+                        logs = log2(P ./ Q); 
+                        logs(isnan(logs)) = 0; % lim_{x->0} x log(x) = 0
+                        surprise = sum(P .* logs, 2);
+                        surprise(isnan(surprise)) = 0; % weird things happen when P --> 0 TODO FIXME
+                        model.surprise(which_train, :) = surprise;
+                        model.likelihoods(which_train, :) = likelihoods;
+                        model.new_values(which_train, :) = new_values;
+                        model.new_valuess(which_train, :) = new_valuess;
+                        model.Sigma1(which_train, :) = Sigma{1};
+                        model.Sigma2(which_train, :) = Sigma{2};
+                        model.Sigma3(which_train, :) = Sigma{3};
+                        model.Sigma4(which_train, :) = Sigma{4};
+
+
+                        % See what the model predicts for the test trials of that run
+                        %
+                        test_cues = cueId(which_test);
+                        test_N = length(test_cues); % # of trials
+                        D = 3; % # of stimuli
+                        test_x = zeros(test_N, D);
+                        test_x(sub2ind(size(test_x), 1:test_N, test_cues' + 1)) = 1;
+                        test_c = contextId(which_test) + 1;
+
+                        %P_n = [ppp((s_id - 1) * 9 + run,:) 0]; % HACKSAUCE TODO FIXME -- this is to predict based on the classifier
+                        [test_choices] = test(test_x, test_c, P_n, ww_n, inv_softmax_temp);
+
+                        if make_optimal_choices
+                            model_test_choices = test_choices > 0.5;
+                        else
+                            model_test_choices = test_choices > rand;
+                        end
+                        model_test_response_keys = {};
+                        model_test_response_keys(model_test_choices) = {'left'};
+                        model_test_response_keys(~model_test_choices) = {'right'};
+                        model.keys(which_test) = model_test_response_keys;
+                        model.pred(which_test) = test_choices;
+
+                        % Get the subject's responses too.
+                        %
+                        resp = response.keys(which_train);
+                        human_choices = strcmp(resp, 'left'); % sick == 1            
+                    end
+                end
+            end
+
+            model.keys = model.keys';
+            model.pred = model.pred';
+            model.P1 = model.P1';
+            model.P2 = model.P2';
+            model.P3 = model.P3';
+            model.P4 = model.P4';
+            model.Q1 = model.Q1';
+            model.Q2 = model.Q2';
+            model.Q3 = model.Q3';
+            model.Q4 = model.Q4';
+
+
+            % HACKSAUCE -- for the classifier TODO FIXME
+            %
+            %{
+            which = which_rows & ~isTrain;
+            fprintf('MSE for behavioral prediction based on classifier: %.4f\n', ...
+                immse(model.pred(which), double(strcmp(response.keys(which), 'left'))));
+            %}
+
+
+
+            %
+            % do some analysis
+            %
+
+
+            no_response = strcmp(response.keys, 'None');
+
+            %
+            % Get correlation between predicted and actual choices
+            %
+            %which = which_rows & ~isTrain;
+            which = which_rows & ~no_response;
+            x = strcmp(response.keys(which), 'left');
+            y = model.pred(which);
+            [r, p] = corrcoef(x, y);
+            r = r(1,2);
+            p = p(1,2);
+            fprintf('correlation between model and subject choices = %f (p = %e)\n', r, p);
+            table(table_row, 1) = r;
+
+            % Get correlation between predicted and actual choices, but for test trials only
+            %
+            which = which_rows & ~isTrain & ~no_response;
+            x = strcmp(response.keys(which), 'left');
+            y = model.pred(which);
+            [r, p] = corrcoef(x, y);
+            r = r(1,2);
+            p = p(1,2);
+            fprintf('correlation between model and subject choices (test trials only) = %f (p = %e)\n', r, p);
+            table(table_row, 2) = r;
+
+            % Get test choice log likelihood
+            %
+            which = which_rows & ~isTrain & ~no_response;
+            x = strcmp(response.keys(which), 'left');
+            y = model.pred(which);
+
+            test_liks = binopdf(x, 1, y);
+            total_test_log_lik = sum(log(test_liks));
+            fprintf('test choice log likelihood = %f\n', total_test_log_lik);
+            table(table_row, 3) = total_test_log_lik;
+
         end
     end
 end
 
-model.keys = model.keys';
-model.pred = model.pred';
-model.P1 = model.P1';
-model.P2 = model.P2';
-model.P3 = model.P3';
-model.P4 = model.P4';
-model.Q1 = model.Q1';
-model.Q2 = model.Q2';
-model.Q3 = model.Q3';
-model.Q4 = model.Q4';
+T = array2table(table, 'RowNames', table_rowNames, 'VariableNames', table_colNames)
 
 
-% HACKSAUCE -- for the classifier TODO FIXME
-%
-%{
-which = which_rows & ~isTrain;
-fprintf('MSE for behavioral prediction based on classifier: %.4f\n', ...
-    immse(model.pred(which), double(strcmp(response.keys(which), 'left'))));
-%}
+
+
+
+
+
+
 
 
 %
@@ -530,48 +624,3 @@ if DO_PLOT
 
 end
 
-
-%
-% more analysis
-%
-
-no_response = strcmp(response.keys, 'None');
-
-%
-% Get correlation between predicted and actual choices
-%
-%which = which_rows & ~isTrain;
-which = which_rows & ~no_response;
-x = strcmp(response.keys(which), 'left');
-y = model.pred(which);
-[r, p] = corrcoef(x, y);
-r = r(1,2);
-p = p(1,2);
-fprintf('correlation between model and subject choices = %f (p = %e)\n', r, p);
-table(table_row, 1) = r;
-
-% Get correlation between predicted and actual choices, but for test trials only
-%
-which = which_rows & ~isTrain & ~no_response;
-x = strcmp(response.keys(which), 'left');
-y = model.pred(which);
-[r, p] = corrcoef(x, y);
-r = r(1,2);
-p = p(1,2);
-fprintf('correlation between model and subject choices (test trials only) = %f (p = %e)\n', r, p);
-table(table_row, 2) = r;
-
-% Get test choice log likelihood
-%
-which = which_rows & ~isTrain & ~no_response;
-x = strcmp(response.keys(which), 'left');
-y = model.pred(which);
-
-test_liks = binopdf(x, 1, y);
-total_test_log_lik = sum(log(test_liks));
-fprintf('test choice log likelihood = %f\n', total_test_log_lik);
-table(table_row, 3) = total_test_log_lik;
-
-end
-
-T = array2table(table, 'RowNames', table_rowNames, 'VariableNames', table_colNames)

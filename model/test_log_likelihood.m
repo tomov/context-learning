@@ -80,7 +80,7 @@ for which_structures = which_structuress
                     % this is to account for missing trials where subject timed
                     % out. Note that taking the sum would be wrong -- imagine
                     % if subject responded on only 1 trial
-                    test_log_lik = sum(log(test_liks));
+                    test_log_lik = mean(log(test_liks));
 
                     total_log_lik = total_log_lik + test_log_lik;
                 end

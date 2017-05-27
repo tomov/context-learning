@@ -8,7 +8,6 @@ load('fit_from_cluster.mat');
 
 % must be same order as fit.m TODO FIXME COUPLING
 
-structures = {[1 1 1 0], [1 0 0 0], [0 1 0 0], [0 0 1 0], [1 1 0 0], [1 0 1 0], [0 1 1 0]};
 struct_names = {'M1, ', 'M2, ', 'M3, ', 'M4, '};
 
 table_rowNames = {};
