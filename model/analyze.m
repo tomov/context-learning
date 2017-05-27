@@ -14,10 +14,17 @@ DO_PLOT = false;
 structures = {[1 1 1 0], [1 0 0 0], [0 1 0 0], [0 0 1 0], [1 1 0 0], [1 0 1 0], [0 1 1 0]};
 struct_names = {'M1, ', 'M2, ', 'M3, ', 'M4, '};
 
+table_rowNames = {};
+table_colNames = {'corr_all', 'corr_test', 'test_log_lik'};
+table = nan(numel(structures), numel(table_colNames));
+table_row = 0;
+
 for which_models = structures
     
 which_models = which_models{1};
-fprintf('\nstructures %s, params = %f %f\n', strcat(struct_names{logical(which_models)}), prior_variance, inv_softmax_temp);
+fprintf('\nstructures %s params = %f %f\n', strcat(struct_names{logical(which_models)}), prior_variance, inv_softmax_temp);
+table_rowNames = [table_rowNames, {strcat(struct_names{logical(which_models)})}];
+table_row = table_row + 1;
 
 %
 % Simulate
@@ -538,14 +545,33 @@ which = which_rows & ~no_response;
 x = strcmp(response.keys(which), 'left');
 y = model.pred(which);
 [r, p] = corrcoef(x, y);
-fprintf('correlation between model and subject choices = %f (p = %e)\n', r(1,2), p(1,2));
+r = r(1,2);
+p = p(1,2);
+fprintf('correlation between model and subject choices = %f (p = %e)\n', r, p);
+table(table_row, 1) = r;
 
-% same but for test trials only
+% Get correlation between predicted and actual choices, but for test trials only
 %
 which = which_rows & ~isTrain & ~no_response;
 x = strcmp(response.keys(which), 'left');
 y = model.pred(which);
 [r, p] = corrcoef(x, y);
-fprintf('correlation between model and subject choices (test trials only) = %f (p = %e)\n', r(1,2), p(1,2));
+r = r(1,2);
+p = p(1,2);
+fprintf('correlation between model and subject choices (test trials only) = %f (p = %e)\n', r, p);
+table(table_row, 2) = r;
+
+% Get test choice log likelihood
+%
+which = which_rows & ~isTrain & ~no_response;
+x = strcmp(response.keys(which), 'left');
+y = model.pred(which);
+
+test_liks = binopdf(x, 1, y);
+total_test_log_lik = sum(log(test_liks));
+fprintf('test choice log likelihood = %f\n', total_test_log_lik);
+table(table_row, 3) = total_test_log_lik;
 
 end
+
+T = array2table(table, 'RowNames', table_rowNames, 'VariableNames', table_colNames)
